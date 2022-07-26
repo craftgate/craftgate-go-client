@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -94,6 +95,8 @@ func (c *Client) sendRequest(req *http.Request, v interface{}) error {
 func GenerateHash(url, apiKey, secretKey, randomString, body string) string {
 	hashStr := []string{url, apiKey, secretKey, randomString, body}
 	hash := strings.Join(hashStr, "")
+
+	fmt.Println(hash)
 	hasher := sha256.New()
 	hasher.Write([]byte(hash))
 	hashResult := base64.URLEncoding.EncodeToString(hasher.Sum(nil))
@@ -103,9 +106,7 @@ func GenerateHash(url, apiKey, secretKey, randomString, body string) string {
 }
 
 func GenerateRandomString() string {
-	//b := make([]byte, 4)
-	//rand.Read(b)
-	//return base64.URLEncoding.EncodeToString(b)
-
-	return "12345678"
+	s := strconv.FormatInt(time.Now().UnixNano(), 16)
+	fmt.Println(s[8:])
+	return s[8:]
 }
