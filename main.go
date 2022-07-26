@@ -8,9 +8,6 @@ func main() {
 
 	var client = CraftgateClient(apiKey, secretKey)
 
-	res, err := client.Search(InstallmentParams{binNumber: "487074", price: 100})
-	if err == nil {
-		fmt.Println(res)
-	}
-
+	res, _ := client.Search(InstallmentParams{binNumber: "487074", price: 100})
+	fmt.Println(res)
 }

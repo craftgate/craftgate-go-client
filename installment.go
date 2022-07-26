@@ -50,10 +50,7 @@ func (c *Client) Search(installmentParams InstallmentParams) (*Response[Installm
 	//req = req.WithContext(ctx)
 
 	res := Response[Installment]{}
-	if err := c.sendRequest(req, &res); err != nil {
-		panic(err)
-		return nil, err
-	}
+	resErr := c.sendRequest(req, &res)
 
-	return &res, nil
+	return &res, resErr
 }
