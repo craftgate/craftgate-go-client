@@ -12,9 +12,9 @@ import (
 )
 
 type RequestOptions struct {
-	baseURL   string
-	apiKey    string
-	secretKey string
+	BaseURL   string
+	ApiKey    string
+	SecretKey string
 }
 
 func sendRequest(req *http.Request, v interface{}, opts RequestOptions) error {
@@ -23,9 +23,9 @@ func sendRequest(req *http.Request, v interface{}, opts RequestOptions) error {
 	}
 
 	randomStr := GenerateRandomString()
-	hashStr := GenerateHash(req.URL.String(), opts.apiKey, opts.secretKey, randomStr, "")
+	hashStr := GenerateHash(req.URL.String(), opts.ApiKey, opts.SecretKey, randomStr, "")
 	fmt.Println(hashStr)
-	req.Header.Set(ApiKeyHeaderName, opts.apiKey)
+	req.Header.Set(ApiKeyHeaderName, opts.ApiKey)
 	req.Header.Set(RandomHeaderName, randomStr)
 	req.Header.Set(AuthVersionHeaderName, "1")
 	req.Header.Set(ClientVersionHeaderName, "craftgate-go-client:1.0.0")
@@ -34,10 +34,6 @@ func sendRequest(req *http.Request, v interface{}, opts RequestOptions) error {
 	req.Header.Set("Accept", "application/json; charset=utf-8")
 
 	res, err := client.Do(req)
-	if err != nil {
-		return err
-	}
-
 	defer res.Body.Close()
 
 	if res.StatusCode < http.StatusOK || res.StatusCode >= http.StatusBadRequest {

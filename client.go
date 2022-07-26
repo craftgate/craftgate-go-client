@@ -1,7 +1,6 @@
 package main
 
 const (
-	BaseURL                 = "https://sandbox-api.craftgate.io"
 	ApiKeyHeaderName        = "x-api-key"
 	RandomHeaderName        = "x-rnd-key"
 	AuthVersionHeaderName   = "x-auth-version"
@@ -25,17 +24,17 @@ type DataResponse[T any] struct {
 }
 
 type Client struct {
-	InstallmentApi InstallmentApi
+	Installment InstallmentApi
 }
 
-func CraftgateClient(apiKey, secretKey string) *Client {
+func CraftgateClient(apiKey, secretKey, baseURL string) *Client {
 
 	return &Client{
-		InstallmentApi: InstallmentApi{
-			opts: RequestOptions{
-				apiKey:    apiKey,
-				secretKey: secretKey,
-				baseURL:   BaseURL,
+		Installment: InstallmentApi{
+			Opts: RequestOptions{
+				ApiKey:    apiKey,
+				SecretKey: secretKey,
+				BaseURL:   baseURL,
 			},
 		},
 	}

@@ -6,14 +6,14 @@ import (
 )
 
 type InstallmentApi struct {
-	opts RequestOptions
+	Opts RequestOptions
 }
 
-type InstallmentParams struct {
-	binNumber                               string
-	price                                   float64
-	currency                                string
-	distinctCardBrandsWithLowestCommissions bool
+type SearchInstallmentRequest struct {
+	BinNumber                               string
+	Price                                   float64
+	Currency                                string
+	DistinctCardBrandsWithLowestCommissions bool
 }
 
 type InstallmentPrice struct {
@@ -23,7 +23,7 @@ type InstallmentPrice struct {
 	InstallmentLabel  string  `json:"installmentLabel"`
 }
 
-type Installment struct {
+type InstallmentResponse struct {
 	BinNumber         string             `json:"binNumber"`
 	Price             float64            `json:"price"`
 	CardType          string             `json:"cardType"`
@@ -38,22 +38,15 @@ type Installment struct {
 	InstallmentPrices []InstallmentPrice `json:"installmentPrices"`
 }
 
-func (c *InstallmentApi) Search(installmentParams InstallmentParams) (*Response[Installment], error) {
-
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/installment/v1/installments", c.opts.baseURL), nil)
-	if err != nil {
-		panic(err)
-		return nil, err
-	}
+func (api *InstallmentApi) SearchInstallments(request SearchInstallmentRequest) (*Response[InstallmentResponse], error) {
+	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/installment/v1/installments", api.Opts.BaseURL), nil)
 
 	q := req.URL.Query()
-	q.Add("binNumber", installmentParams.binNumber)
-	q.Add("price", fmt.Sprintf("%f", installmentParams.price))
+	q.Add("binNumber", request.BinNumber)
+	q.Add("price", fmt.Sprintf("%f", request.Price))
 	req.URL.RawQuery = q.Encode()
 
-	//req = req.WithContext(ctx)
-
-	res := Response[Installment]{}
-	resErr := sendRequest(req, &res, c.opts)
+	res := Response[InstallmentResponse]{}
+	resErr := sendRequest(req, &res, api.Opts)
 	return &res, resErr
 }
