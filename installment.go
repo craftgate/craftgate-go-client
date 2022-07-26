@@ -5,9 +5,13 @@ import (
 	"net/http"
 )
 
+type InstallmentApi struct {
+	opts RequestOptions
+}
+
 type InstallmentParams struct {
 	binNumber                               string
-	price                                   int
+	price                                   float64
 	currency                                string
 	distinctCardBrandsWithLowestCommissions bool
 }
@@ -34,9 +38,9 @@ type Installment struct {
 	InstallmentPrices []InstallmentPrice `json:"installmentPrices"`
 }
 
-func (c *Client) Search(installmentParams InstallmentParams) (*Response[Installment], error) {
+func (c *InstallmentApi) Search(installmentParams InstallmentParams) (*Response[Installment], error) {
 
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/installment/v1/installments", c.BaseURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/installment/v1/installments", c.opts.baseURL), nil)
 	if err != nil {
 		panic(err)
 		return nil, err
@@ -44,13 +48,12 @@ func (c *Client) Search(installmentParams InstallmentParams) (*Response[Installm
 
 	q := req.URL.Query()
 	q.Add("binNumber", installmentParams.binNumber)
-	q.Add("price", fmt.Sprintf("%d", installmentParams.price))
+	q.Add("price", fmt.Sprintf("%f", installmentParams.price))
 	req.URL.RawQuery = q.Encode()
 
 	//req = req.WithContext(ctx)
 
 	res := Response[Installment]{}
-	resErr := c.sendRequest(req, &res)
-
+	resErr := sendRequest(req, &res, c.opts)
 	return &res, resErr
 }
