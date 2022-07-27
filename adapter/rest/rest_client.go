@@ -50,13 +50,10 @@ func SendRequest(req *http.Request, v interface{}, opts model.RequestOptions) er
 }
 
 func GenerateHash(url, apiKey, secretKey, randomString, body string) string {
-	hashStr := []string{url, apiKey, secretKey, randomString, body}
-	hash := strings.Join(hashStr, "")
-	fmt.Println(hash)
-	hasher := sha256.New()
-	hasher.Write([]byte(hash))
-	hashResult := base64.URLEncoding.EncodeToString(hasher.Sum(nil))
-	return hashResult
+	hashStr := strings.Join([]string{url, apiKey, secretKey, randomString, body}, "")
+	hash := sha256.New()
+	hash.Write([]byte(hashStr))
+	return base64.StdEncoding.EncodeToString(hash.Sum(nil))
 }
 
 func GenerateRandomString() string {

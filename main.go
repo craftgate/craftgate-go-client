@@ -12,7 +12,7 @@ func main() {
 	Craftgate := CraftgateClient(apiKey, secretKey, baseURL)
 
 	for i := 0; i < 10; i++ {
-		res, _ := Craftgate.Installment.SearchInstallments(adapter.SearchInstallmentRequest{BinNumber: "487074", Price: 100.00})
+		res, _ := Craftgate.Installment.SearchInstallments(adapter.SearchInstallmentRequest{BinNumber: "552096", Price: 100.00})
 		fmt.Println(res)
 	}
 
