@@ -13,8 +13,8 @@ type RequestOptions struct {
 }
 
 type Response[T any] struct {
-	DataResponse DataResponse[T] `json:"data"`
-	Errors       ErrorResponse   `json:"errors"`
+	Response T             `json:"data"`
+	Errors   ErrorResponse `json:"errors"`
 }
 
 type ErrorResponse struct {
@@ -24,7 +24,10 @@ type ErrorResponse struct {
 }
 
 type DataResponse[T any] struct {
-	Items []T `json:"items"`
+	Items     []T   `json:"items"`
+	Page      int   `json:"page"`
+	Size      int   `json:"size"`
+	TotalSize int64 `json:"totalSize"`
 }
 
 const (
@@ -39,41 +42,46 @@ const (
 
 // payment type declaration
 const (
-	CARD_PAYMENT            PaymentType = "CARD_PAYMENT"
-	DEPOSIT_PAYMENT         PaymentType = "DEPOSIT_PAYMENT"
-	WALLET_PAYMENT          PaymentType = "WALLET_PAYMENT"
-	CARD_AND_WALLET_PAYMENT PaymentType = "CARD_AND_WALLET_PAYMENT"
-	BANK_TRANSFER           PaymentType = "BANK_TRANSFER"
+	_                       PaymentType = ""
+	CARD_PAYMENT                        = "CARD_PAYMENT"
+	DEPOSIT_PAYMENT                     = "DEPOSIT_PAYMENT"
+	WALLET_PAYMENT                      = "WALLET_PAYMENT"
+	CARD_AND_WALLET_PAYMENT             = "CARD_AND_WALLET_PAYMENT"
+	BANK_TRANSFER                       = "BANK_TRANSFER"
 )
 
 // payment provider declaration
 const (
-	BANK        PaymentProvider = "BANK"
-	CG_WALLET   PaymentProvider = "CG_WALLET"
-	MASTERPASS  PaymentProvider = "MASTERPASS"
-	GARANTI_PAY PaymentProvider = "GARANTI_PAY"
+	_           PaymentProvider = ""
+	BANK                        = "BANK"
+	CG_WALLET                   = "CG_WALLET"
+	MASTERPASS                  = "MASTERPASS"
+	GARANTI_PAY                 = "GARANTI_PAY"
 )
 
 // payment status declaration
 const (
-	FAILURE          PaymentStatus = "FAILURE"
-	SUCCESS          PaymentStatus = "SUCCESS"
-	INIT_THREEDS     PaymentStatus = "INIT_THREEDS"
-	CALLBACK_THREEDS PaymentStatus = "CALLBACK_THREEDS"
-	WAITING          PaymentStatus = "WAITING"
+	_                PaymentStatus = ""
+	FAILURE                        = "FAILURE"
+	SUCCESS                        = "SUCCESS"
+	INIT_THREEDS                   = "INIT_THREEDS"
+	CALLBACK_THREEDS               = "CALLBACK_THREEDS"
+	WAITING                        = "WAITING"
 )
 
 // payment source declaration
 const (
-	API           PaymentSource = "API"
-	CHECKOUT_FORM PaymentSource = "CHECKOUT_FORM"
-	PAY_BY_LINK   PaymentSource = "PAY_BY_LINK"
+	_             PaymentSource = ""
+	API                         = "API"
+	CHECKOUT_FORM               = "CHECKOUT_FORM"
+	PAY_BY_LINK                 = "PAY_BY_LINK"
 )
 
 // currency declaration
 const (
-	TRY Currency = "TRY"
-	USD Currency = "USD"
-	EUR Currency = "EUR"
-	GBP Currency = "GBP"
+	_   Currency = ""
+	TRY          = "TRY"
+	USD          = "USD"
+	EUR          = "EUR"
+	GBP          = "GBP"
 )

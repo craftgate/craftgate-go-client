@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-type PaymentReportingApi struct {
+type PaymentReporting struct {
 	Opts model.RequestOptions
 }
 
@@ -48,7 +48,7 @@ type ReportingPaymentResponse struct {
 	Currency    model.Currency `json:"currency"`
 }
 
-func (api *PaymentReportingApi) SearchPayments(request SearchPaymentsRequest) (*model.Response[ReportingPaymentResponse], error) {
+func (api *PaymentReporting) SearchPayments(request SearchPaymentsRequest) (*model.Response[ReportingPaymentResponse], error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/payment-reporting/v1/payments?", api.Opts.BaseURL), nil)
 
 	q := req.URL.Query()

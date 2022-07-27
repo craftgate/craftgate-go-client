@@ -12,15 +12,8 @@ import (
 
 var encoder = schema.NewEncoder()
 
-type InstallmentApi struct {
+type Installment struct {
 	Opts model.RequestOptions
-}
-
-type SearchInstallmentRequest struct {
-	BinNumber                               string  `schema:"binNumber"`
-	Price                                   float64 `schema:"price"`
-	Currency                                string  `schema:"currency"`
-	DistinctCardBrandsWithLowestCommissions bool    `schema:"distinctCardBrandsWithLowestCommissions"`
 }
 
 type InstallmentPrice struct {
@@ -28,6 +21,13 @@ type InstallmentPrice struct {
 	TotalPrice        float64 `json:"totalPrice"`
 	InstallmentNumber int     `json:"installmentNumber"`
 	InstallmentLabel  string  `json:"installmentLabel"`
+}
+
+type SearchInstallmentRequest struct {
+	BinNumber                               string         `schema:"binNumber"`
+	Price                                   float64        `schema:"price"`
+	Currency                                model.Currency `schema:"currency"`
+	DistinctCardBrandsWithLowestCommissions bool           `schema:"distinctCardBrandsWithLowestCommissions"`
 }
 
 type InstallmentResponse struct {
@@ -45,10 +45,25 @@ type InstallmentResponse struct {
 	InstallmentPrices []InstallmentPrice `json:"installmentPrices"`
 }
 
-func (api *InstallmentApi) SearchInstallments(request SearchInstallmentRequest) (*model.Response[InstallmentResponse], error) {
+type RetrieveBinNumberRequest struct {
+	BinNumber string
+}
+
+type RetrieveBinNumberResponse struct {
+	BinNumber       string `json:"binNumber"`
+	CardType        string `json:"cardType"`
+	CardAssociation string `json:"cardAssociation"`
+	CardBrand       string `json:"cardBrand"`
+	BankName        string `json:"bankName"`
+	BankCode        int    `json:"bankCode"`
+	Commercial      bool   `json:"commercial"`
+}
+
+func (api *Installment) SearchInstallments(request SearchInstallmentRequest) (interface{}, error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/installment/v1/installments", api.Opts.BaseURL), nil)
 
 	request.Currency = "TRY"
+
 	queryParams := url.Values{}
 	err := encoder.Encode(request, queryParams)
 	if err != nil {
@@ -56,7 +71,15 @@ func (api *InstallmentApi) SearchInstallments(request SearchInstallmentRequest) 
 	}
 	req.URL.RawQuery = queryParams.Encode()
 
-	res := model.Response[InstallmentResponse]{}
+	res := model.Response[model.DataResponse[InstallmentResponse]]{}
+	resErr := rest.SendRequest(req, &res, api.Opts)
+	return &res, resErr
+}
+
+func (api *Installment) RetrieveBinNumber(request RetrieveBinNumberRequest) (interface{}, error) {
+	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/installment/v1/bins/%s", api.Opts.BaseURL, request.BinNumber), nil)
+
+	res := model.Response[RetrieveBinNumberResponse]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
 }
