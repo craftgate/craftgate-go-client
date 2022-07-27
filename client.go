@@ -1,41 +1,24 @@
 package main
 
-const (
-	ApiKeyHeaderName        = "x-api-key"
-	RandomHeaderName        = "x-rnd-key"
-	AuthVersionHeaderName   = "x-auth-version"
-	ClientVersionHeaderName = "x-client-version"
-	SignatureHeaderName     = "x-signature"
+import (
+	"craftgate-go-client/adapter"
+	"craftgate-go-client/model"
 )
 
-type Response[T any] struct {
-	DataResponse DataResponse[T] `json:"data"`
-	Errors       ErrorResponse   `json:"errors"`
-}
-
-type ErrorResponse struct {
-	ErrorGroup       string `json:"errorGroup"`
-	ErrorDescription string `json:"errorDescription"`
-	ErrorCode        string `json:"errorCode"`
-}
-
-type DataResponse[T any] struct {
-	Items []T `json:"items"`
-}
-
 type Client struct {
-	Installment InstallmentApi
+	Installment      InstallmentApi
+	PaymentReporting adapter.PaymentReportingApi
 }
 
 func CraftgateClient(apiKey, secretKey, baseURL string) *Client {
+	options := model.RequestOptions{
+		ApiKey:    apiKey,
+		SecretKey: secretKey,
+		BaseURL:   baseURL,
+	}
 
 	return &Client{
-		Installment: InstallmentApi{
-			Opts: RequestOptions{
-				ApiKey:    apiKey,
-				SecretKey: secretKey,
-				BaseURL:   baseURL,
-			},
-		},
+		Installment:      InstallmentApi{Opts: options},
+		PaymentReporting: adapter.PaymentReportingApi{Opts: options},
 	}
 }

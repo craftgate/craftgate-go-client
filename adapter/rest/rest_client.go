@@ -1,6 +1,7 @@
-package main
+package rest
 
 import (
+	"craftgate-go-client/model"
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
@@ -11,13 +12,7 @@ import (
 	"time"
 )
 
-type RequestOptions struct {
-	BaseURL   string
-	ApiKey    string
-	SecretKey string
-}
-
-func sendRequest(req *http.Request, v interface{}, opts RequestOptions) error {
+func SendRequest(req *http.Request, v interface{}, opts model.RequestOptions) error {
 	client := &http.Client{
 		Timeout: time.Minute,
 	}
@@ -25,11 +20,12 @@ func sendRequest(req *http.Request, v interface{}, opts RequestOptions) error {
 	randomStr := GenerateRandomString()
 	hashStr := GenerateHash(req.URL.String(), opts.ApiKey, opts.SecretKey, randomStr, "")
 	fmt.Println(hashStr)
-	req.Header.Set(ApiKeyHeaderName, opts.ApiKey)
-	req.Header.Set(RandomHeaderName, randomStr)
-	req.Header.Set(AuthVersionHeaderName, "1")
-	req.Header.Set(ClientVersionHeaderName, "craftgate-go-client:1.0.0")
-	req.Header.Set(SignatureHeaderName, hashStr)
+
+	req.Header.Set(model.ApiKeyHeaderName, opts.ApiKey)
+	req.Header.Set(model.RandomHeaderName, randomStr)
+	req.Header.Set(model.AuthVersionHeaderName, model.AuthVersion)
+	req.Header.Set(model.ClientVersionHeaderName, model.ClientVersion)
+	req.Header.Set(model.SignatureHeaderName, hashStr)
 	req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	req.Header.Set("Accept", "application/json; charset=utf-8")
 
@@ -37,7 +33,7 @@ func sendRequest(req *http.Request, v interface{}, opts RequestOptions) error {
 	defer res.Body.Close()
 
 	if res.StatusCode < http.StatusOK || res.StatusCode >= http.StatusBadRequest {
-		var errRes Response[any]
+		var errRes model.Response[any]
 		if err = json.NewDecoder(res.Body).Decode(&v); err == nil {
 			return errors.New(errRes.Errors.ErrorGroup)
 		}
@@ -66,5 +62,5 @@ func GenerateRandomString() string {
 	/*s := strconv.FormatInt(time.Now().UnixNano(), 16)
 	fmt.Println(s[8:])
 	return s[8:]*/
-	return "12345678"
+	return "1234567890"
 }

@@ -71,7 +71,7 @@ func (c *Client) Pay(ctx context.Context, paymentParams PaymentParams) (*Payment
 		page = options.Page
 	}
 
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/faces?limit=%d&page=%d", c.BaseURL, limit, page), nil)
+	req, err := rest.NewRequest("GET", fmt.Sprintf("%s/faces?limit=%d&page=%d", c.BaseURL, limit, page), nil)
 	if err != nil {
 		return nil, err
 	}

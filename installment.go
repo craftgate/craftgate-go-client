@@ -1,12 +1,14 @@
 package main
 
 import (
+	rest "craftgate-go-client/adapter/rest"
+	"craftgate-go-client/model"
 	"fmt"
 	"net/http"
 )
 
 type InstallmentApi struct {
-	Opts RequestOptions
+	Opts model.RequestOptions
 }
 
 type SearchInstallmentRequest struct {
@@ -38,7 +40,7 @@ type InstallmentResponse struct {
 	InstallmentPrices []InstallmentPrice `json:"installmentPrices"`
 }
 
-func (api *InstallmentApi) SearchInstallments(request SearchInstallmentRequest) (*Response[InstallmentResponse], error) {
+func (api *InstallmentApi) SearchInstallments(request SearchInstallmentRequest) (*model.Response[InstallmentResponse], error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/installment/v1/installments", api.Opts.BaseURL), nil)
 
 	q := req.URL.Query()
@@ -46,7 +48,7 @@ func (api *InstallmentApi) SearchInstallments(request SearchInstallmentRequest) 
 	q.Add("price", fmt.Sprintf("%f", request.Price))
 	req.URL.RawQuery = q.Encode()
 
-	res := Response[InstallmentResponse]{}
-	resErr := sendRequest(req, &res, api.Opts)
+	res := model.Response[InstallmentResponse]{}
+	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
 }
