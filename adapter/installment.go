@@ -5,12 +5,7 @@ import (
 	"craftgate-go-client/model"
 	"fmt"
 	"net/http"
-	"net/url"
-
-	"github.com/gorilla/schema"
 )
-
-var encoder = schema.NewEncoder()
 
 type Installment struct {
 	Opts model.RequestOptions
@@ -63,13 +58,7 @@ func (api *Installment) SearchInstallments(request SearchInstallmentRequest) (in
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/installment/v1/installments", api.Opts.BaseURL), nil)
 
 	request.Currency = "TRY"
-
-	queryParams := url.Values{}
-	err := encoder.Encode(request, queryParams)
-	if err != nil {
-		return nil, err
-	}
-	req.URL.RawQuery = queryParams.Encode()
+	req.URL.RawQuery, _ = QueryParams(request)
 
 	res := model.Response[model.DataResponse[InstallmentResponse]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
