@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -59,8 +60,7 @@ func GenerateHash(url, apiKey, secretKey, randomString, body string) string {
 }
 
 func GenerateRandomString() string {
-	/*s := strconv.FormatInt(time.Now().UnixNano(), 16)
+	s := strconv.FormatInt(time.Now().UnixNano(), 16)
 	fmt.Println(s[8:])
-	return s[8:]*/
-	return "1234567890"
+	return s[8:]
 }

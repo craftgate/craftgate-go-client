@@ -1,21 +1,26 @@
-package main
+package adapter
 
 import (
-	rest "craftgate-go-client/adapter/rest"
+	"craftgate-go-client/adapter/rest"
 	"craftgate-go-client/model"
 	"fmt"
 	"net/http"
+	"net/url"
+
+	"github.com/gorilla/schema"
 )
+
+var encoder = schema.NewEncoder()
 
 type InstallmentApi struct {
 	Opts model.RequestOptions
 }
 
 type SearchInstallmentRequest struct {
-	BinNumber                               string
-	Price                                   float64
-	Currency                                string
-	DistinctCardBrandsWithLowestCommissions bool
+	BinNumber                               string  `schema:"binNumber"`
+	Price                                   float64 `schema:"price"`
+	Currency                                string  `schema:"currency"`
+	DistinctCardBrandsWithLowestCommissions bool    `schema:"distinctCardBrandsWithLowestCommissions"`
 }
 
 type InstallmentPrice struct {
@@ -43,10 +48,13 @@ type InstallmentResponse struct {
 func (api *InstallmentApi) SearchInstallments(request SearchInstallmentRequest) (*model.Response[InstallmentResponse], error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/installment/v1/installments", api.Opts.BaseURL), nil)
 
-	q := req.URL.Query()
-	q.Add("binNumber", request.BinNumber)
-	q.Add("price", fmt.Sprintf("%f", request.Price))
-	req.URL.RawQuery = q.Encode()
+	request.Currency = "TRY"
+	queryParams := url.Values{}
+	err := encoder.Encode(request, queryParams)
+	if err != nil {
+		return nil, err
+	}
+	req.URL.RawQuery = queryParams.Encode()
 
 	res := model.Response[InstallmentResponse]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
