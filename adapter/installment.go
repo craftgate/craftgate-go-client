@@ -25,7 +25,7 @@ type SearchInstallmentRequest struct {
 	DistinctCardBrandsWithLowestCommissions bool           `schema:"distinctCardBrandsWithLowestCommissions"`
 }
 
-type InstallmentResponse struct {
+type SearchInstallmentResponse struct {
 	BinNumber         string             `json:"binNumber"`
 	Price             float64            `json:"price"`
 	CardType          string             `json:"cardType"`
@@ -60,7 +60,7 @@ func (api *Installment) SearchInstallments(request SearchInstallmentRequest) (in
 	request.Currency = "TRY"
 	req.URL.RawQuery, _ = QueryParams(request)
 
-	res := model.Response[model.DataResponse[InstallmentResponse]]{}
+	res := model.Response[model.DataResponse[SearchInstallmentResponse]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
 }
