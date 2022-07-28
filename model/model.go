@@ -1,5 +1,9 @@
 package model
 
+import (
+	"time"
+)
+
 type PaymentType string
 type PaymentProvider string
 type PaymentStatus string
@@ -16,6 +20,8 @@ type Status string
 type MemberType string
 type SettlementEarningsDestination string
 type RefundDestinationType string
+type TransactionStatus string
+type TransactionPayoutStatus string
 
 const (
 	ApiKeyHeaderName        = "x-api-key"
@@ -167,6 +173,24 @@ const (
 	RefundDestinationTypeWALLET                         = "WALLET"
 )
 
+// transaction status declaration
+const (
+	_                    TransactionStatus = ""
+	WAITING_FOR_APPROVAL                   = "WAITING_FOR_APPROVAL"
+	APPROVED                               = "APPROVED"
+	PAYOUT_STARTED                         = "PAYOUT_STARTED"
+)
+
+// transaction payout status declaration
+const (
+	_                                         TransactionPayoutStatus = ""
+	TransactionPayoutStatusCANCELLED                                  = "CANCELLED"
+	TransactionPayoutStatusNO_PAYOUT                                  = "NO_PAYOUT"
+	TransactionPayoutStatusWAITING_FOR_PAYOUT                         = "WAITING_FOR_PAYOUT"
+	TransactionPayoutStatusPAYOUT_STARTED                             = "PAYOUT_STARTED"
+	TransactionPayoutStatusPAYOUT_COMPLETED                           = "PAYOUT_COMPLETED"
+)
+
 type RequestOptions struct {
 	BaseURL   string
 	ApiKey    string
@@ -215,9 +239,9 @@ type PaymentError struct {
 }
 
 type MemberResponse struct {
-	Id int64 `json:"id"`
-	//CreatedDate                   Time                          `json:"createdDate"`
-	//UpdatedDate                   Time                          `json:"updatedDate"`
+	Id                            int64                         `json:"id"`
+	CreatedDate                   time.Time                     `json:"createdDate"`
+	UpdatedDate                   time.Time                     `json:"updatedDate"`
 	Status                        Status                        `json:"status"`
 	IsBuyer                       bool                          `json:"isBuyer"`
 	IsSubMerchant                 bool                          `json:"isSubMerchant"`
@@ -236,4 +260,18 @@ type MemberResponse struct {
 	SettlementEarningsDestination SettlementEarningsDestination `json:"settlementEarningsDestination"`
 	NegativeWalletAmountLimit     float64                       `json:"negativeWalletAmountLimit"`
 	Iban                          string                        `json:"iban"`
+}
+
+type Payout struct {
+	PaidPrice                     float64  `json:"paidPrice"`
+	Currency                      Currency `json:"currency"`
+	MerchantPayoutAmount          float64  `json:"merchantPayoutAmount"`
+	SubMerchantMemberPayoutAmount float64  `json:"subMerchantMemberPayoutAmount"`
+}
+
+type PayoutStatus struct {
+	MerchantStatus TransactionPayoutStatus `json:"merchantStatus"`
+	//MerchantStatusDate          time.Time               `json:"merchantStatusDate"`
+	SubMerchantMemberStatus TransactionPayoutStatus `json:"subMerchantMemberStatus"`
+	//SubMerchantMemberStatusDate time.Time               `json:"subMerchantMemberStatusDate"`
 }
