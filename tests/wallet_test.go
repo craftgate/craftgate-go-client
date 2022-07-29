@@ -2,6 +2,7 @@ package tests
 
 import (
 	"craftgate-go-client/adapter"
+	"craftgate-go-client/model"
 	"fmt"
 	"testing"
 )
@@ -13,7 +14,7 @@ const (
 )
 
 var wallet = adapter.Wallet{
-	Opts: adapter.RequestOptions{
+	Opts: model.RequestOptions{
 		BaseURL:   baseURL,
 		ApiKey:    apiKey,
 		SecretKey: secretKey,
