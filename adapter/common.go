@@ -200,16 +200,13 @@ func QueryParams(req interface{}) (string, error) {
 	if err != nil {
 		return "", err
 	}
-<<<<<<< HEAD
 	//removeNulls(queryParams)
 
-=======
 	for k, v := range queryParams {
 		if v == nil {
 			queryParams.Del(k)
 		}
 	}
->>>>>>> 73b36ad (wallet)
 	return queryParams.Encode(), nil
 }
 

@@ -8,18 +8,15 @@ func main() {
 
 	//res, _ := Craftgate.Installment.RetrieveBinNumber(adapter.RetrieveBinNumberRequest{BinNumber: "552096"})
 	//fmt.Println(res)
-<<<<<<< HEAD
 	//
 	//res, _ := Craftgate.Installment.SearchInstallments(adapter.SearchInstallmentRequest{BinNumber: "552096", Price: 100.00})
 	//fmt.Println(res)
-=======
 
 	//res, _ := Craftgate.Installment.SearchInstallments(adapter.SearchInstallmentRequest{BinNumber: "552096"})
 	//fmt.Println(res)
 
-	res, _ := Craftgate.Wallet.RetrieveMemberWallet(adapter.RetrieveMemberWalletRequest{MemberId: 66988})
-	fmt.Println(res)
->>>>>>> 73b36ad (wallet)
+	//res, _ := Craftgate.Wallet.RetrieveMemberWallet(adapter.RetrieveMemberWalletRequest{MemberId: 66988})
+	//fmt.Println(res)
 
 	//resPaymentSearch, _ := Craftgate.PaymentReporting.SearchPayments(adapter.SearchPaymentsRequest{Currency: model.TRY})
 	//fmt.Println(resPaymentSearch)
