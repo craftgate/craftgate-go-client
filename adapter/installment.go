@@ -2,13 +2,12 @@ package adapter
 
 import (
 	"craftgate-go-client/adapter/rest"
-	"craftgate-go-client/model"
 	"fmt"
 	"net/http"
 )
 
 type Installment struct {
-	Opts model.RequestOptions
+	Opts RequestOptions
 }
 
 type InstallmentPrice struct {
@@ -19,10 +18,10 @@ type InstallmentPrice struct {
 }
 
 type SearchInstallmentRequest struct {
-	BinNumber                               string         `schema:"binNumber"`
-	Price                                   float64        `schema:"price"`
-	Currency                                model.Currency `schema:"currency"`
-	DistinctCardBrandsWithLowestCommissions bool           `schema:"distinctCardBrandsWithLowestCommissions"`
+	BinNumber                               string   `schema:"binNumber"`
+	Price                                   float64  `schema:"price"`
+	Currency                                Currency `schema:"currency"`
+	DistinctCardBrandsWithLowestCommissions bool     `schema:"distinctCardBrandsWithLowestCommissions"`
 }
 
 type SearchInstallmentResponse struct {
@@ -60,7 +59,7 @@ func (api *Installment) SearchInstallments(request SearchInstallmentRequest) (in
 	request.Currency = "TRY"
 	req.URL.RawQuery, _ = QueryParams(request)
 
-	res := model.Response[model.DataResponse[SearchInstallmentResponse]]{}
+	res := Response[DataResponse[SearchInstallmentResponse]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
 }
@@ -68,7 +67,7 @@ func (api *Installment) SearchInstallments(request SearchInstallmentRequest) (in
 func (api *Installment) RetrieveBinNumber(request RetrieveBinNumberRequest) (interface{}, error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/installment/v1/bins/%s", api.Opts.BaseURL, request.BinNumber), nil)
 
-	res := model.Response[RetrieveBinNumberResponse]{}
+	res := Response[RetrieveBinNumberResponse]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
 }

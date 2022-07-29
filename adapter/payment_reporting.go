@@ -2,13 +2,12 @@ package adapter
 
 import (
 	"craftgate-go-client/adapter/rest"
-	"craftgate-go-client/model"
 	"fmt"
 	"net/http"
 )
 
 type PaymentReporting struct {
-	Opts model.RequestOptions
+	Opts RequestOptions
 }
 
 type SearchPaymentsRequest struct {
@@ -21,14 +20,14 @@ type SearchPaymentsRequest struct {
 	ConversationId       string
 	ExternalId           string
 	OrderId              string
-	PaymentType          model.PaymentType
-	PaymentProvider      model.PaymentProvider
-	PaymentStatus        model.PaymentStatus
-	PaymentSource        model.PaymentSource
+	PaymentType          PaymentType
+	PaymentProvider      PaymentProvider
+	PaymentStatus        PaymentStatus
+	PaymentSource        PaymentSource
 	PaymentChannel       string
 	BinNumber            string
 	LastFourDigits       string
-	Currency             model.Currency
+	Currency             Currency
 	MinPaidPrice         float64
 	MaxPaidPrice         float64
 	Installment          int
@@ -44,8 +43,8 @@ type SearchPaymentRefundsRequest struct {
 	PaymentId      int64
 	BuyerMemberId  int64
 	ConversationId string
-	Status         model.RefundStatus
-	Currency       model.Currency
+	Status         RefundStatus
+	Currency       Currency
 	MinRefundPrice float64
 	MaxRefundPrice float64
 	MinCreatedDate Time
@@ -60,8 +59,8 @@ type SearchPaymentTransactionRefundsRequest struct {
 	PaymentTransactionId int64
 	BuyerMemberId        int64
 	ConversationId       string
-	Status               model.RefundStatus
-	Currency             model.Currency
+	Status               RefundStatus
+	Currency             Currency
 	IsAfterSettlement    bool
 	MinRefundPrice       float64
 	MaxRefundPrice       float64
@@ -75,17 +74,17 @@ type ReportingPaymentResponse struct {
 	Price                        float64                          `json:"price"`
 	PaidPrice                    float64                          `json:"paidPrice"`
 	WalletPrice                  float64                          `json:"walletPrice"`
-	Currency                     model.Currency                   `json:"currency"`
+	Currency                     Currency                         `json:"currency"`
 	BuyerMemberId                int64                            `json:"buyerMemberId"`
 	Installment                  int32                            `json:"installment"`
 	ConversationId               string                           `json:"conversationId"`
 	ExternalId                   string                           `json:"externalId"`
-	PaymentType                  model.PaymentType                `json:"paymentType"`
-	PaymentProvider              model.PaymentProvider            `json:"paymentProvider"`
-	PaymentSource                model.PaymentSource              `json:"paymentSource"`
-	PaymentGroup                 model.PaymentGroup               `json:"paymentGroup"`
-	PaymentStatus                model.PaymentStatus              `json:"paymentStatus"`
-	PaymentPhase                 model.PaymentPhase               `json:"paymentPhase"`
+	PaymentType                  PaymentType                      `json:"paymentType"`
+	PaymentProvider              PaymentProvider                  `json:"paymentProvider"`
+	PaymentSource                PaymentSource                    `json:"paymentSource"`
+	PaymentGroup                 PaymentGroup                     `json:"paymentGroup"`
+	PaymentStatus                PaymentStatus                    `json:"paymentStatus"`
+	PaymentPhase                 PaymentPhase                     `json:"paymentPhase"`
 	PaymentChannel               string                           `json:"paymentChannel"`
 	IsThreeDS                    bool                             `json:"isThreeDS"`
 	MerchantCommissionRate       float64                          `json:"merchantCommissionRate"`
@@ -101,81 +100,81 @@ type ReportingPaymentResponse struct {
 	TransId                      string                           `json:"transId"`
 	CardHolderName               string                           `json:"cardHolderName"`
 	BankCardHolderName           string                           `json:"bankCardHolderName"`
-	CardType                     model.CardType                   `json:"cardType"`
-	CardAssociation              model.CardAssociation            `json:"cardAssociation"`
+	CardType                     CardType                         `json:"cardType"`
+	CardAssociation              CardAssociation                  `json:"cardAssociation"`
 	CardBrand                    string                           `json:"cardBrand"`
 	RequestedPosAlias            string                           `json:"requestedPosAlias"`
 	RetryCount                   int                              `json:"retryCount"`
 	RefundablePrice              float64                          `json:"refundablePrice"`
-	RefundStatus                 model.PaymentRefundStatus        `json:"refundStatus"`
+	RefundStatus                 PaymentRefundStatus              `json:"refundStatus"`
 	CardIssuerBankName           string                           `json:"cardIssuerBankName"`
 	MdStatus                     int                              `json:"mdStatus"`
-	BuyerMember                  model.MemberResponse             `json:"buyerMember"`
+	BuyerMember                  MemberResponse                   `json:"buyerMember"`
 	Refunds                      []ReportingPaymentRefundResponse `json:"refunds"`
-	Pos                          model.MerchantPos                `json:"pos"`
-	Loyalty                      model.Loyalty                    `json:"loyalty"`
-	PaymentError                 model.PaymentError               `json:"paymentError"`
+	Pos                          MerchantPos                      `json:"pos"`
+	Loyalty                      Loyalty                          `json:"loyalty"`
+	PaymentError                 PaymentError                     `json:"paymentError"`
 }
 
 type ReportingPaymentRefundResponse struct {
-	Id                    int64                       `json:"id"`
-	CreatedDate           Time                        `json:"createdDate"`
-	Status                model.RefundStatus          `json:"status"`
-	RefundDestinationType model.RefundDestinationType `json:"refundDestinationType"`
-	RefundPrice           float64                     `json:"refundPrice"`
-	RefundBankPrice       float64                     `json:"refundBankPrice"`
-	RefundWalletPrice     float64                     `json:"refundWalletPrice"`
-	ConversationId        string                      `json:"conversationId"`
-	AuthCode              string                      `json:"authCode"`
-	HostReference         string                      `json:"hostReference"`
-	PaymentType           model.PaymentType           `json:"paymentType"`
-	TransId               string                      `json:"transId"`
-	PaymentId             int64                       `json:"paymentId"`
-	PaymentError          model.PaymentError          `json:"paymentError"`
+	Id                    int64                 `json:"id"`
+	CreatedDate           Time                  `json:"createdDate"`
+	Status                RefundStatus          `json:"status"`
+	RefundDestinationType RefundDestinationType `json:"refundDestinationType"`
+	RefundPrice           float64               `json:"refundPrice"`
+	RefundBankPrice       float64               `json:"refundBankPrice"`
+	RefundWalletPrice     float64               `json:"refundWalletPrice"`
+	ConversationId        string                `json:"conversationId"`
+	AuthCode              string                `json:"authCode"`
+	HostReference         string                `json:"hostReference"`
+	PaymentType           PaymentType           `json:"paymentType"`
+	TransId               string                `json:"transId"`
+	PaymentId             int64                 `json:"paymentId"`
+	PaymentError          PaymentError          `json:"paymentError"`
 }
 
 type ReportingPaymentTransactionRefundResponse struct {
-	Id                    int64                       `json:"id"`
-	CreatedDate           Time                        `json:"createdDate"`
-	Status                model.RefundStatus          `json:"status"`
-	RefundDestinationType model.RefundDestinationType `json:"refundDestinationType"`
-	RefundPrice           float64                     `json:"refundPrice"`
-	RefundBankPrice       float64                     `json:"refundBankPrice"`
-	RefundWalletPrice     float64                     `json:"refundWalletPrice"`
-	ConversationId        string                      `json:"conversationId"`
-	AuthCode              string                      `json:"authCode"`
-	HostReference         string                      `json:"hostReference"`
-	TransId               string                      `json:"transId"`
-	IsAfterSettlement     bool                        `json:"isAfterSettlement"`
-	PaymentTransactionId  int64                       `json:"paymentTransactionId"`
-	PaymentError          model.PaymentError          `json:"paymentError"`
+	Id                    int64                 `json:"id"`
+	CreatedDate           Time                  `json:"createdDate"`
+	Status                RefundStatus          `json:"status"`
+	RefundDestinationType RefundDestinationType `json:"refundDestinationType"`
+	RefundPrice           float64               `json:"refundPrice"`
+	RefundBankPrice       float64               `json:"refundBankPrice"`
+	RefundWalletPrice     float64               `json:"refundWalletPrice"`
+	ConversationId        string                `json:"conversationId"`
+	AuthCode              string                `json:"authCode"`
+	HostReference         string                `json:"hostReference"`
+	TransId               string                `json:"transId"`
+	IsAfterSettlement     bool                  `json:"isAfterSettlement"`
+	PaymentTransactionId  int64                 `json:"paymentTransactionId"`
+	PaymentError          PaymentError          `json:"paymentError"`
 }
 
 type ReportingPaymentTransaction struct {
-	Id                            int64                     `json:"id"`
-	Name                          string                    `json:"name"`
-	ExternalId                    string                    `json:"externalId"`
-	Price                         float64                   `json:"price"`
-	PaidPrice                     float64                   `json:"paidPrice"`
-	WalletPrice                   float64                   `json:"walletPrice"`
-	MerchantCommissionRate        float64                   `json:"merchantCommissionRate"`
-	MerchantCommissionRateAmount  float64                   `json:"merchantCommissionRateAmount"`
-	MerchantPayoutAmount          float64                   `json:"merchantPayoutAmount"`
-	SubMerchantMemberId           int64                     `json:"subMerchantMemberId"`
-	SubMerchantMemberPrice        float64                   `json:"subMerchantMemberPrice"`
-	SubMerchantMemberPayoutRate   float64                   `json:"subMerchantMemberPayoutRate"`
-	SubMerchantMemberPayoutAmount float64                   `json:"subMerchantMemberPayoutAmount"`
-	TransactionStatus             model.TransactionStatus   `json:"transactionStatus"`
-	BlockageResolvedDate          Time                      `json:"blockageResolvedDate"`
-	CreatedDate                   Time                      `json:"createdDate"`
-	TransactionStatusDate         Time                      `json:"transactionStatusDate"`
-	RefundablePrice               float64                   `json:"refundablePrice"`
-	BankCommissionRate            float64                   `json:"bankCommissionRate"`
-	BankCommissionRateAmount      float64                   `json:"bankCommissionRateAmount"`
-	Payout                        model.Payout              `json:"payout"`
-	SubMerchantMember             model.MemberResponse      `json:"subMerchantMember"`
-	RefundStatus                  model.PaymentRefundStatus `json:"refundStatus"`
-	PayoutStatus                  model.PayoutStatus        `json:"payoutStatus"`
+	Id                            int64               `json:"id"`
+	Name                          string              `json:"name"`
+	ExternalId                    string              `json:"externalId"`
+	Price                         float64             `json:"price"`
+	PaidPrice                     float64             `json:"paidPrice"`
+	WalletPrice                   float64             `json:"walletPrice"`
+	MerchantCommissionRate        float64             `json:"merchantCommissionRate"`
+	MerchantCommissionRateAmount  float64             `json:"merchantCommissionRateAmount"`
+	MerchantPayoutAmount          float64             `json:"merchantPayoutAmount"`
+	SubMerchantMemberId           int64               `json:"subMerchantMemberId"`
+	SubMerchantMemberPrice        float64             `json:"subMerchantMemberPrice"`
+	SubMerchantMemberPayoutRate   float64             `json:"subMerchantMemberPayoutRate"`
+	SubMerchantMemberPayoutAmount float64             `json:"subMerchantMemberPayoutAmount"`
+	TransactionStatus             TransactionStatus   `json:"transactionStatus"`
+	BlockageResolvedDate          Time                `json:"blockageResolvedDate"`
+	CreatedDate                   Time                `json:"createdDate"`
+	TransactionStatusDate         Time                `json:"transactionStatusDate"`
+	RefundablePrice               float64             `json:"refundablePrice"`
+	BankCommissionRate            float64             `json:"bankCommissionRate"`
+	BankCommissionRateAmount      float64             `json:"bankCommissionRateAmount"`
+	Payout                        Payout              `json:"payout"`
+	SubMerchantMember             MemberResponse      `json:"subMerchantMember"`
+	RefundStatus                  PaymentRefundStatus `json:"refundStatus"`
+	PayoutStatus                  PayoutStatus        `json:"payoutStatus"`
 }
 
 func (api *PaymentReporting) SearchPayments(request SearchPaymentsRequest) (interface{}, error) {
@@ -183,7 +182,7 @@ func (api *PaymentReporting) SearchPayments(request SearchPaymentsRequest) (inte
 
 	//req.URL.RawQuery, _ = QueryParams(request)
 
-	res := model.Response[model.DataResponse[ReportingPaymentResponse]]{}
+	res := Response[DataResponse[ReportingPaymentResponse]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
 }
@@ -191,7 +190,7 @@ func (api *PaymentReporting) SearchPayments(request SearchPaymentsRequest) (inte
 func (api *PaymentReporting) SearchPaymentRefunds(request SearchPaymentRefundsRequest) (interface{}, error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/payment-reporting/v1/refunds", api.Opts.BaseURL), nil)
 
-	res := model.Response[model.DataResponse[ReportingPaymentRefundResponse]]{}
+	res := Response[DataResponse[ReportingPaymentRefundResponse]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
 }
@@ -199,7 +198,7 @@ func (api *PaymentReporting) SearchPaymentRefunds(request SearchPaymentRefundsRe
 func (api *PaymentReporting) SearchPaymentTransactionRefunds(request SearchPaymentTransactionRefundsRequest) (interface{}, error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/payment-reporting/v1/refund-transactions", api.Opts.BaseURL), nil)
 
-	res := model.Response[model.DataResponse[ReportingPaymentTransactionRefundResponse]]{}
+	res := Response[DataResponse[ReportingPaymentTransactionRefundResponse]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
 }
@@ -207,7 +206,7 @@ func (api *PaymentReporting) SearchPaymentTransactionRefunds(request SearchPayme
 func (api *PaymentReporting) RetrievePayment(id int64) (interface{}, error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/payment-reporting/v1/payments/%d", api.Opts.BaseURL, id), nil)
 
-	res := model.Response[ReportingPaymentResponse]{}
+	res := Response[ReportingPaymentResponse]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
 }
@@ -215,7 +214,7 @@ func (api *PaymentReporting) RetrievePayment(id int64) (interface{}, error) {
 func (api *PaymentReporting) RetrievePaymentTransactions(id int64) (interface{}, error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/payment-reporting/v1/payments/%d/transactions", api.Opts.BaseURL, id), nil)
 
-	res := model.Response[model.DataResponse[ReportingPaymentTransaction]]{}
+	res := Response[DataResponse[ReportingPaymentTransaction]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
 }
@@ -223,7 +222,7 @@ func (api *PaymentReporting) RetrievePaymentTransactions(id int64) (interface{},
 func (api *PaymentReporting) RetrievePaymentRefunds(id int64) (interface{}, error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/payment-reporting/v1/payments/%d/refunds", api.Opts.BaseURL, id), nil)
 
-	res := model.Response[model.DataResponse[ReportingPaymentRefundResponse]]{}
+	res := Response[DataResponse[ReportingPaymentRefundResponse]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
 }
@@ -231,7 +230,7 @@ func (api *PaymentReporting) RetrievePaymentRefunds(id int64) (interface{}, erro
 func (api *PaymentReporting) RetrievePaymentTransactionRefunds(paymentId, paymentTransactionId int64) (interface{}, error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/payment-reporting/v1/payments/%d/transactions/%d/refunds", api.Opts.BaseURL, paymentId, paymentTransactionId), nil)
 
-	res := model.Response[model.DataResponse[ReportingPaymentTransactionRefundResponse]]{}
+	res := Response[DataResponse[ReportingPaymentTransactionRefundResponse]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
 }

@@ -1,7 +1,7 @@
-package adapter
+package tests
 
 import (
-	"craftgate-go-client/model"
+	"craftgate-go-client/adapter"
 	"fmt"
 	"testing"
 )
@@ -12,8 +12,8 @@ const (
 	secretKey = "sandbox-tBdcdKVGmGupzfaWcULcwDLMoglZZvTz"
 )
 
-var wallet = Wallet{
-	Opts: model.RequestOptions{
+var wallet = adapter.Wallet{
+	Opts: adapter.RequestOptions{
 		BaseURL:   baseURL,
 		ApiKey:    apiKey,
 		SecretKey: secretKey,
@@ -22,7 +22,7 @@ var wallet = Wallet{
 
 // test function
 func TestWallet_RetrieveMemberWallet(t *testing.T) {
-	res, err := wallet.RetrieveMemberWallet(RetrieveMemberWalletRequest{MemberId: *NewLong(66988)})
+	res, err := wallet.RetrieveMemberWallet(adapter.RetrieveMemberWalletRequest{MemberId: *adapter.NewLong(66988)})
 	fmt.Println(res)
 
 	if err != nil {
@@ -31,7 +31,7 @@ func TestWallet_RetrieveMemberWallet(t *testing.T) {
 }
 
 func TestWallet_SearchWalletTransactions(t *testing.T) {
-	res, err := wallet.SearchWalletTransactions(SearchWalletTransactionsRequest{WalletId: 62181})
+	res, err := wallet.SearchWalletTransactions(adapter.SearchWalletTransactionsRequest{WalletId: 62181})
 	fmt.Println(res)
 
 	if err != nil {

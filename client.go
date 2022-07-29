@@ -2,7 +2,6 @@ package main
 
 import (
 	"craftgate-go-client/adapter"
-	"craftgate-go-client/model"
 )
 
 type Client struct {
@@ -12,7 +11,7 @@ type Client struct {
 }
 
 func CraftgateClient(apiKey, secretKey, baseURL string) *Client {
-	options := model.RequestOptions{
+	options := adapter.RequestOptions{
 		ApiKey:    apiKey,
 		SecretKey: secretKey,
 		BaseURL:   baseURL,
