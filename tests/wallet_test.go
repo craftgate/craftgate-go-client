@@ -7,17 +7,11 @@ import (
 	"testing"
 )
 
-const (
-	baseURL   = "https://sandbox-api.craftgate.io"
-	apiKey    = "sandbox-YEhueLgomBjqsnvBlWVVuFsVhlvJlMHE"
-	secretKey = "sandbox-tBdcdKVGmGupzfaWcULcwDLMoglZZvTz"
-)
-
 var wallet = adapter.Wallet{
 	Opts: model.RequestOptions{
-		BaseURL:   baseURL,
-		ApiKey:    apiKey,
-		SecretKey: secretKey,
+		BaseURL:   "https://sandbox-api.craftgate.io",
+		ApiKey:    "sandbox-YEhueLgomBjqsnvBlWVVuFsVhlvJlMHE",
+		SecretKey: "sandbox-tBdcdKVGmGupzfaWcULcwDLMoglZZvTz",
 	},
 }
 
