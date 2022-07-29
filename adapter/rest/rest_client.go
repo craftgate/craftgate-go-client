@@ -20,7 +20,7 @@ func SendRequest(req *http.Request, v interface{}, opts model.RequestOptions) er
 
 	randomStr := GenerateRandomString()
 	hashStr := GenerateHash(req.URL.String(), opts.ApiKey, opts.SecretKey, randomStr, "")
-	fmt.Println(hashStr)
+	fmt.Println(req.URL.String())
 
 	req.Header.Set(model.ApiKeyHeaderName, opts.ApiKey)
 	req.Header.Set(model.RandomHeaderName, randomStr)
