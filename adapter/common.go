@@ -14,7 +14,7 @@ import (
 var ErrNull = errors.New("can't be both IsNull and have value")
 var Null = []byte("null")
 
-var encoder = schema.NewEncoder()
+var schemaEncoder = schema.NewEncoder()
 
 const (
 	TimeLayout = "\"2006-01-02T15:04:05\""
@@ -181,11 +181,6 @@ func (v Time) MarshalJSON() ([]byte, error) {
 }
 
 func (v *Time) UnmarshalJSON(src []byte) error {
-	if bytes.Equal(src, Null) {
-		v.IsNull = true
-		return nil
-	}
-
 	parse, err := time.Parse(TimeLayout, string(src))
 	if err != nil {
 		return err
@@ -196,7 +191,7 @@ func (v *Time) UnmarshalJSON(src []byte) error {
 
 func QueryParams(req interface{}) (string, error) {
 	queryParams := url.Values{}
-	err := encoder.Encode(req, queryParams)
+	err := schemaEncoder.Encode(req, queryParams)
 	if err != nil {
 		return "", err
 	}
@@ -219,4 +214,13 @@ func removeNulls(m map[string]interface{}) {
 			continue
 		}
 	}
+}
+
+func PrepareBody(req interface{}) (*bytes.Buffer, error) {
+	body, err := json.Marshal(req)
+	if err != nil {
+		return nil, err
+	}
+
+	return bytes.NewBuffer(body), nil
 }

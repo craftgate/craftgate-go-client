@@ -1,12 +1,15 @@
 package rest
 
 import (
+	"bytes"
 	"craftgate-go-client/model"
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
+	"io/ioutil"
 	"net/http"
 	"strconv"
 	"strings"
@@ -18,8 +21,18 @@ func SendRequest(req *http.Request, v interface{}, opts model.RequestOptions) er
 		Timeout: time.Minute,
 	}
 
+	body := ""
+	if req.Body != nil {
+		var buf bytes.Buffer
+		tee := io.TeeReader(req.Body, &buf)
+		req.Body = ioutil.NopCloser(&buf)
+		bodyBytes, bodyErr := ioutil.ReadAll(tee)
+		if bodyErr == nil {
+			body = fmt.Sprintf("%s", bodyBytes)
+		}
+	}
 	randomStr := GenerateRandomString()
-	hashStr := GenerateHash(req.URL.String(), opts.ApiKey, opts.SecretKey, randomStr, "")
+	hashStr := GenerateHash(req.URL.String(), opts.ApiKey, opts.SecretKey, randomStr, body)
 	fmt.Println(req.URL.String())
 
 	req.Header.Set(model.ApiKeyHeaderName, opts.ApiKey)
