@@ -5,6 +5,7 @@ import (
 	"craftgate-go-client/model"
 	"fmt"
 	"testing"
+	"time"
 )
 
 var wallet = adapter.Wallet{
@@ -96,14 +97,76 @@ func TestWallet_SendRemittance(t *testing.T) {
 	}
 }
 
-/*
-   (api *Wallet) SendRemittance(request RemittanceRequest) (interface{}, error) {
-   (api *Wallet) ReceiveRemittance(request RemittanceRequest) (interface{}, error) {
-   (api *Wallet) RetrieveRemittance(request RetrieveRemittanceRequest) (interface{}, error) {
+func TestWallet_ReceiveRemittance(t *testing.T) {
+	res, err := wallet.ReceiveRemittance(adapter.RemittanceRequest{
+		Price:                5.25,
+		MemberId:             66988,
+		Description:          "bonus",
+		RemittanceReasonType: "REDEEM_ONLY_LOYALTY",
+	})
+	fmt.Println(res)
 
-   (api *Wallet) CreateWithdraw(request CreateWithdrawRequest) (interface{}, error) {
-   (api *Wallet) CancelWithdraw(request WithdrawRequest) (interface{}, error) {
-   (api *Wallet) RetrieveWithdraw(request WithdrawRequest) (interface{}, error) {
-   (api *Wallet) SearchWithdraws(request SearchWithdrawRequest) (interface{}, error) {
+	if err != nil {
+		t.Errorf("Error %s", err.Error())
+	}
+}
 
-*/
+func TestWallet_RetrieveRemittance(t *testing.T) {
+	res, err := wallet.RetrieveRemittance(adapter.RetrieveRemittanceRequest{RemittanceId: 64774})
+	fmt.Println(res)
+
+	if err != nil {
+		t.Errorf("Error %s", err.Error())
+	}
+}
+
+func TestWallet_CreateWithdraw(t *testing.T) {
+	res, err := wallet.CreateWithdraw(adapter.CreateWithdrawRequest{
+		Price:       5.25,
+		MemberId:    66988,
+		Description: "bonus",
+		Currency:    "TRY",
+	})
+	fmt.Println(res)
+
+	if err != nil {
+		t.Errorf("Error %s", err.Error())
+	}
+}
+
+func TestWallet_CancelWithdraw(t *testing.T) {
+	res, err := wallet.CancelWithdraw(adapter.WithdrawRequest{WithdrawId: 55})
+	fmt.Println(res)
+
+	if err != nil {
+		t.Errorf("Error %s", err.Error())
+	}
+}
+
+func TestWallet_RetrieveWithdraw(t *testing.T) {
+	res, err := wallet.RetrieveWithdraw(adapter.WithdrawRequest{WithdrawId: 55})
+	fmt.Println(res)
+
+	if err != nil {
+		t.Errorf("Error %s", err.Error())
+	}
+}
+
+func TestWallet_SearchWithdraws(t *testing.T) {
+	t1 := time.Now().AddDate(0, 0, -180)
+	t2 := time.Now()
+	res, err := wallet.SearchWithdraws(adapter.SearchWithdrawsRequest{
+		MemberId:         66988,
+		Currency:         "TRY",
+		MinWithdrawPrice: 10.75,
+		MaxWithdrawPrice: 40.40,
+		MinCreatedDate:   t1,
+		MaxCreatedDate:   t2,
+	})
+
+	fmt.Println(res)
+
+	if err != nil {
+		t.Errorf("Error %s", err.Error())
+	}
+}

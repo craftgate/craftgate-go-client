@@ -21,10 +21,10 @@ func Test_SearchPayment(t *testing.T) {
 		PaymentType:   model.PaymentType(model.CARD_PAYMENT),
 		PaymentStatus: model.PaymentStatus(model.SUCCESS),
 		Currency:      model.Currency(model.TRY),
-		//MinCreatedDate: adapter.Time{
+		//MinCreatedDate: adapter.CraftgateTime{
 		//	Time: time.Now().AddDate(0, 0, -180),
 		//},
-		//MaxCreatedDate: adapter.Time{
+		//MaxCreatedDate: adapter.CraftgateTime{
 		//	Time: time.Now(),
 		//},
 	}
@@ -40,10 +40,10 @@ func Test_SearchPaymentRefunds(t *testing.T) {
 	request := adapter.SearchPaymentRefundsRequest{
 		Page: 0, Size: 10,
 		Currency: model.Currency(model.TRY),
-		//MinCreatedDate: adapter.Time{
+		//MinCreatedDate: adapter.CraftgateTime{
 		//	Time: time.Now().AddDate(0, 0, -180),
 		//},
-		//MaxCreatedDate: adapter.Time{
+		//MaxCreatedDate: adapter.CraftgateTime{
 		//	Time: time.Now(),
 		//},
 	}
@@ -59,10 +59,10 @@ func Test_SearchPaymentTransactionRefunds(t *testing.T) {
 	request := adapter.SearchPaymentTransactionRefundsRequest{
 		Page: 0, Size: 10,
 		Currency: model.Currency(model.TRY),
-		//MinCreatedDate: adapter.Time{
+		//MinCreatedDate: adapter.CraftgateTime{
 		//	Time: time.Now().AddDate(0, 0, -180),
 		//},
-		//MaxCreatedDate: adapter.Time{
+		//MaxCreatedDate: adapter.CraftgateTime{
 		//	Time: time.Now(),
 		//},
 	}

@@ -34,8 +34,8 @@ type SearchPaymentsRequest struct {
 	MaxPaidPrice         float64               `schema:"maxPaidPrice,omitempty"`
 	Installment          int                   `schema:"installment,omitempty"`
 	IsThreeDS            bool                  `schema:"isThreeDS,omitempty"`
-	MinCreatedDate       Time                  `schema:"minCreatedDate,omitempty"`
-	MaxCreatedDate       Time                  `schema:"maxCreatedDate,omitempty"`
+	MinCreatedDate       CraftgateTime         `schema:"minCreatedDate,omitempty"`
+	MaxCreatedDate       CraftgateTime         `schema:"maxCreatedDate,omitempty"`
 }
 
 type SearchPaymentRefundsRequest struct {
@@ -49,8 +49,8 @@ type SearchPaymentRefundsRequest struct {
 	Currency       model.Currency     `schema:"currency,omitempty"`
 	MinRefundPrice float64            `schema:"minRefundPrice,omitempty"`
 	MaxRefundPrice float64            `schema:"maxRefundPrice,omitempty"`
-	MinCreatedDate Time               `schema:"minCreatedDate,omitempty"`
-	MaxCreatedDate Time               `schema:"maxCreatedDate,omitempty"`
+	MinCreatedDate CraftgateTime      `schema:"minCreatedDate,omitempty"`
+	MaxCreatedDate CraftgateTime      `schema:"maxCreatedDate,omitempty"`
 }
 
 type SearchPaymentTransactionRefundsRequest struct {
@@ -66,13 +66,13 @@ type SearchPaymentTransactionRefundsRequest struct {
 	IsAfterSettlement    bool               `schema:"isAfterSettlement,omitempty"`
 	MinRefundPrice       float64            `schema:"minRefundPrice,omitempty"`
 	MaxRefundPrice       float64            `schema:"maxRefundPrice,omitempty"`
-	MinCreatedDate       Time               `schema:"minCreatedDate,omitempty"`
-	MaxCreatedDate       Time               `schema:"maxCreatedDate,omitempty"`
+	MinCreatedDate       CraftgateTime      `schema:"minCreatedDate,omitempty"`
+	MaxCreatedDate       CraftgateTime      `schema:"maxCreatedDate,omitempty"`
 }
 
 type ReportingPaymentResponse struct {
 	Id                           int64                            `json:"id"`
-	CreatedDate                  Time                             `json:"createdDate"`
+	CreatedDate                  CraftgateTime                    `json:"createdDate"`
 	Price                        float64                          `json:"price"`
 	PaidPrice                    float64                          `json:"paidPrice"`
 	WalletPrice                  float64                          `json:"walletPrice"`
@@ -120,7 +120,7 @@ type ReportingPaymentResponse struct {
 
 type ReportingPaymentRefundResponse struct {
 	Id                    int64                       `json:"id"`
-	CreatedDate           Time                        `json:"createdDate"`
+	CreatedDate           CraftgateTime               `json:"createdDate"`
 	Status                model.RefundStatus          `json:"status"`
 	RefundDestinationType model.RefundDestinationType `json:"refundDestinationType"`
 	RefundPrice           float64                     `json:"refundPrice"`
@@ -137,7 +137,7 @@ type ReportingPaymentRefundResponse struct {
 
 type ReportingPaymentTransactionRefundResponse struct {
 	Id                    int64                       `json:"id"`
-	CreatedDate           Time                        `json:"createdDate"`
+	CreatedDate           CraftgateTime               `json:"createdDate"`
 	Status                model.RefundStatus          `json:"status"`
 	RefundDestinationType model.RefundDestinationType `json:"refundDestinationType"`
 	RefundPrice           float64                     `json:"refundPrice"`
@@ -167,9 +167,9 @@ type ReportingPaymentTransaction struct {
 	SubMerchantMemberPayoutRate   float64                   `json:"subMerchantMemberPayoutRate"`
 	SubMerchantMemberPayoutAmount float64                   `json:"subMerchantMemberPayoutAmount"`
 	TransactionStatus             model.TransactionStatus   `json:"transactionStatus"`
-	BlockageResolvedDate          Time                      `json:"blockageResolvedDate"`
-	CreatedDate                   Time                      `json:"createdDate"`
-	TransactionStatusDate         Time                      `json:"transactionStatusDate"`
+	BlockageResolvedDate          CraftgateTime             `json:"blockageResolvedDate"`
+	CreatedDate                   CraftgateTime             `json:"createdDate"`
+	TransactionStatusDate         CraftgateTime             `json:"transactionStatusDate"`
 	RefundablePrice               float64                   `json:"refundablePrice"`
 	BankCommissionRate            float64                   `json:"bankCommissionRate"`
 	BankCommissionRateAmount      float64                   `json:"bankCommissionRateAmount"`

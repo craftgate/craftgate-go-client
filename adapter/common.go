@@ -3,183 +3,40 @@ package adapter
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
+	"fmt"
 	"github.com/gorilla/schema"
 	"net/url"
 	"reflect"
+	"strings"
 	"time"
 )
-
-var ErrNull = errors.New("can't be both IsNull and have value")
-var Null = []byte("null")
 
 var schemaEncoder = schema.NewEncoder()
 
 const (
-	TimeLayout = "\"2006-01-02T15:04:05\""
+	craftgateTimeEncodeLayout = "2006-01-02T15:04:05"
+	craftgateTimeDecodeLayout = "\"2006-01-02T15:04:05\""
 )
 
-type Boolean struct {
-	bool
-	IsNull bool
-}
-
-type Integer struct {
-	int
-	IsNull bool
-}
-
-type Long struct {
-	int64
-	IsNull bool
-}
-
-type BigDecimal struct {
-	float64
-	IsNull bool
-}
-
-type String struct {
-	string
-	IsNull bool
-}
-
-type Time struct {
+type CraftgateTime struct {
 	time.Time
 }
 
-func NewBoolean(v bool) *Boolean {
-	return &Boolean{v, false}
-}
-
-func NewInteger(v int) *Integer {
-	return &Integer{v, false}
-}
-
-func NewLong(v int64) *Long {
-	return &Long{v, false}
-}
-
-func NewBigDecimal(v float64) *BigDecimal {
-	return &BigDecimal{v, false}
-}
-
-func NewString(v string) *String {
-	return &String{v, false}
-}
-
-func NewTime(v time.Time) *Time {
-	return &Time{v}
-}
-
-func (v Boolean) MarshalJSON() ([]byte, error) {
-	switch {
-	case v.IsNull && v.bool:
-		return nil, ErrNull
-	case v.IsNull:
-		return Null, nil
-	default:
-		return json.Marshal(v.bool)
+func init() {
+	timeConverter := func(value reflect.Value) string {
+		timestamp := fmt.Sprintf("%s", value.Interface().(time.Time).Format(craftgateTimeEncodeLayout))
+		return timestamp
 	}
+
+	schemaEncoder.RegisterEncoder(time.Time{}, timeConverter)
 }
 
-func (v *Boolean) UnmarshalJSON(src []byte) error {
-	if bytes.Equal(src, Null) {
-		v.IsNull = true
-		return nil
-	}
-	return json.Unmarshal(src, &v.bool)
-}
-
-func (v Integer) MarshalJSON() ([]byte, error) {
-	switch {
-	case v.IsNull && v.int != 0:
-		return nil, ErrNull
-	case v.IsNull:
-		return Null, nil
-	default:
-		return json.Marshal(v.int)
-	}
-}
-
-func (v *Integer) UnmarshalJSON(src []byte) error {
-	if bytes.Equal(src, Null) {
-		v.IsNull = true
-		return nil
-	}
-	return json.Unmarshal(src, &v.int)
-}
-
-func (v Long) MarshalJSON() ([]byte, error) {
-	switch {
-	case v.IsNull && v.int64 != 0:
-		return nil, ErrNull
-	case v.IsNull:
-		return Null, nil
-	default:
-		return json.Marshal(v.int64)
-	}
-}
-
-func (v *Long) UnmarshalJSON(src []byte) error {
-	if bytes.Equal(src, Null) {
-		v.IsNull = true
-		return nil
-	}
-	return json.Unmarshal(src, &v.int64)
-}
-
-func (v BigDecimal) MarshalJSON() ([]byte, error) {
-	switch {
-	case v.IsNull && v.float64 != 0.0:
-		return nil, ErrNull
-	case v.IsNull:
-		return Null, nil
-	default:
-		return json.Marshal(v.float64)
-	}
-}
-
-func (v *BigDecimal) UnmarshalJSON(src []byte) error {
-	if bytes.Equal(src, Null) {
-		v.IsNull = true
-		return nil
-	}
-	return json.Unmarshal(src, &v.float64)
-}
-
-func (v String) MarshalJSON() ([]byte, error) {
-	switch {
-	case v.IsNull && v.string != "":
-		return nil, ErrNull
-	case v.IsNull:
-		return Null, nil
-	default:
-		return json.Marshal(v.string)
-	}
-}
-
-func (v *String) UnmarshalJSON(src []byte) error {
-	if bytes.Equal(src, Null) {
-		v.IsNull = true
-		return nil
-	}
-	return json.Unmarshal(src, &v.string)
-}
-
-func (v Time) MarshalJSON() ([]byte, error) {
-	if reflect.ValueOf(v).IsNil() {
-		return nil, ErrNull
-	}
-	return v.Time.MarshalJSON()
-}
-
-func (t *Time) UnmarshalJSON(b []byte) error {
-	parse, err := time.Parse(TimeLayout, string(b))
+func (v *CraftgateTime) UnmarshalJSON(b []byte) error {
+	parse, err := time.Parse(craftgateTimeDecodeLayout, string(b))
 	if err != nil {
 		return err
 	}
-	t.Time = parse
+	v.Time = parse
 	return nil
 }
 
@@ -189,24 +46,9 @@ func QueryParams(req interface{}) (string, error) {
 	if err != nil {
 		return "", err
 	}
-
-	for k, v := range queryParams {
-		if v == nil {
-			queryParams.Del(k)
-		}
-	}
-	return queryParams.Encode(), nil
-}
-
-func removeNulls(m map[string]interface{}) {
-	val := reflect.ValueOf(m)
-	for _, e := range val.MapKeys() {
-		v := val.MapIndex(e)
-		if v.IsNil() {
-			delete(m, e.String())
-			continue
-		}
-	}
+	encoded := queryParams.Encode()
+	encoded = strings.Replace(encoded, "%3A", ":", -1)
+	return encoded, nil
 }
 
 func PrepareBody(req interface{}) (*bytes.Buffer, error) {
