@@ -65,8 +65,8 @@ func (api *Installment) SearchInstallments(request SearchInstallmentRequest) (in
 	return &res, resErr
 }
 
-func (api *Installment) RetrieveBinNumber(request RetrieveBinNumberRequest) (interface{}, error) {
-	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/installment/v1/bins/%s", api.Opts.BaseURL, request.BinNumber), nil)
+func (api *Installment) RetrieveBinNumber(binNumber string) (interface{}, error) {
+	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/installment/v1/bins/%s", api.Opts.BaseURL, binNumber), nil)
 
 	res := model.Response[RetrieveBinNumberResponse]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
