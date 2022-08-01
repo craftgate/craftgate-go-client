@@ -11,7 +11,6 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"reflect"
 	"strconv"
 	"strings"
 	"time"
@@ -78,8 +77,4 @@ func GenerateRandomString() string {
 	s := strconv.FormatInt(time.Now().UnixNano(), 16)
 	fmt.Println(s[8:])
 	return s[8:]
-}
-
-func IsInstanceOf(objectPtr, typePtr interface{}) bool {
-	return reflect.TypeOf(objectPtr) == reflect.TypeOf(typePtr)
 }
