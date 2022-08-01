@@ -11,6 +11,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"reflect"
 	"strconv"
 	"strings"
 	"time"
@@ -55,6 +56,10 @@ func SendRequest(req *http.Request, v interface{}, opts model.RequestOptions) er
 		return fmt.Errorf("unknown error, status code: %d", res.StatusCode)
 	}
 
+	if _, ok := v.(*model.Void); ok {
+		return nil
+	}
+
 	if err = json.NewDecoder(res.Body).Decode(&v); err != nil {
 		return err
 	}
@@ -73,4 +78,8 @@ func GenerateRandomString() string {
 	s := strconv.FormatInt(time.Now().UnixNano(), 16)
 	fmt.Println(s[8:])
 	return s[8:]
+}
+
+func IsInstanceOf(objectPtr, typePtr interface{}) bool {
+	return reflect.TypeOf(objectPtr) == reflect.TypeOf(typePtr)
 }

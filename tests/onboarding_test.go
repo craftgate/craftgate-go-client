@@ -65,7 +65,34 @@ func Test_CreateSubMerchantMember(t *testing.T) {
 	}
 }
 
-func Test_UpdateMember(t *testing.T) {
+func Test_CreateBuyerAndSubMerchantMember(t *testing.T) {
+	request := adapter.CreateMemberRequest{
+		MemberExternalId:  fmt.Sprintf("%d", time.Now().Nanosecond()),
+		ContactName:       "Haluk",
+		ContactSurname:    "Demir",
+		Email:             "haluk.demir@example.com",
+		PhoneNumber:       "905551111111",
+		Iban:              "TR930006701000000001111111",
+		IdentityNumber:    "11111111110",
+		LegalCompanyTitle: "Dem Zeytinyağı Üretim Ltd. Şti.",
+		Name:              "Dem Zeytinyağı Üretim Ltd. Şti.",
+		MemberType:        model.MemberType(model.LIMITED_OR_JOINT_STOCK_COMPANY),
+		TaxNumber:         "1111111114",
+		TaxOffice:         "Erenköy",
+		Address:           "Suadiye Mah. Örnek Cd. No:23, 34740 Kadıköy/İstanbul",
+		IsBuyer:           true,
+		IsSubMerchant:     true,
+	}
+
+	res, err := onboarding.CreateMember(request)
+	fmt.Println(res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func Test_UpdateSubMerchantMember(t *testing.T) {
 	request := adapter.UpdateMemberRequest{
 		ContactName:                   "Haluk",
 		ContactSurname:                "Demir",
@@ -92,6 +119,32 @@ func Test_UpdateMember(t *testing.T) {
 	}
 }
 
+func Test_UpdateBuyerMember(t *testing.T) {
+	request := adapter.UpdateMemberRequest{
+		ContactName:       "Haluk",
+		ContactSurname:    "Demir",
+		Email:             "haluk.demir@example.com",
+		PhoneNumber:       "905551111111",
+		Iban:              "TR930006701000000001111111",
+		IdentityNumber:    "11111111110",
+		LegalCompanyTitle: "Dem Zeytinyağı Üretim Ltd. Şti.",
+		Name:              "Dem Zeytinyağı Üretim Ltd. Şti.",
+		MemberType:        model.MemberType(model.PERSONAL),
+		TaxNumber:         "1111111114",
+		TaxOffice:         "Erenköy",
+		Address:           "Suadiye Mah. Örnek Cd. No:23, 34740 Kadıköy/İstanbul",
+		IsBuyer:           true,
+		IsSubMerchant:     false,
+	}
+
+	res, err := onboarding.UpdateMember(69271, request)
+	fmt.Println(res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func Test_RetrieveMember(t *testing.T) {
 	res, err := onboarding.RetrieveMember(69271)
 	fmt.Println(res)
@@ -102,11 +155,10 @@ func Test_RetrieveMember(t *testing.T) {
 }
 
 func Test_SearchMembers(t *testing.T) {
-	//int64s := [3]int64{13, 32, 232}
-	//fmt.Println(int64s)
-
 	request := adapter.SearchMembersRequest{
-		//MemberIds: int64s,
+		Page: 0, Size: 10,
+		IsBuyer:       true,
+		IsSubMerchant: true,
 	}
 
 	res, err := onboarding.SearchMembers(request)

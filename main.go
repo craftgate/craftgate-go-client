@@ -1,13 +1,18 @@
 package main
 
+import (
+	"craftgate-go-client/adapter"
+	"fmt"
+)
+
 func main() {
 	baseURL := "https://sandbox-api.craftgate.io"
 	apiKey := "sandbox-YEhueLgomBjqsnvBlWVVuFsVhlvJlMHE"
 	secretKey := "sandbox-tBdcdKVGmGupzfaWcULcwDLMoglZZvTz"
 	Craftgate := CraftgateClient(apiKey, secretKey, baseURL)
 
-	//res, _ := Craftgate.Installment.RetrieveBinNumber(adapter.RetrieveBinNumberRequest{BinNumber: "552096"})
-	//fmt.Println(res)
+	res, _ := Craftgate.Installment.RetrieveBinNumber(adapter.RetrieveBinNumberRequest{BinNumber: "552096"})
+	fmt.Println(res)
 	//
 	//res, _ := Craftgate.Installment.SearchInstallments(adapter.SearchInstallmentRequest{BinNumber: "552096", Price: 100.00})
 	//fmt.Println(res)

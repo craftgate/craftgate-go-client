@@ -10,6 +10,7 @@ type Client struct {
 	PaymentReporting adapter.PaymentReporting
 	Wallet           adapter.Wallet
 	Onboarding       adapter.Onboarding
+	PayByLink        adapter.PayByLink
 }
 
 func CraftgateClient(apiKey, secretKey, baseURL string) *Client {
@@ -24,5 +25,6 @@ func CraftgateClient(apiKey, secretKey, baseURL string) *Client {
 		PaymentReporting: adapter.PaymentReporting{Opts: options},
 		Wallet:           adapter.Wallet{Opts: options},
 		Onboarding:       adapter.Onboarding{Opts: options},
+		PayByLink:        adapter.PayByLink{Opts: options},
 	}
 }

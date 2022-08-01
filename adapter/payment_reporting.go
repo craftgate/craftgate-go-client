@@ -5,7 +5,6 @@ import (
 	"craftgate-go-client/model"
 	"fmt"
 	"net/http"
-	"net/url"
 )
 
 type PaymentReporting struct {
@@ -182,10 +181,7 @@ type ReportingPaymentTransaction struct {
 func (api *PaymentReporting) SearchPayments(request SearchPaymentsRequest) (interface{}, error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/payment-reporting/v1/payments?", api.Opts.BaseURL), nil)
 
-	//q := request.ToParams(*req.URL)
-	//req.URL.RawQuery = q.Encode()
 	req.URL.RawQuery, _ = QueryParams(request)
-
 	res := model.Response[model.DataResponse[ReportingPaymentResponse]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
@@ -239,10 +235,4 @@ func (api *PaymentReporting) RetrievePaymentTransactionRefunds(paymentId, paymen
 	res := model.Response[model.DataResponse[ReportingPaymentTransactionRefundResponse]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
-}
-
-func (request SearchPaymentsRequest) ToParams(url url.URL) url.Values {
-	q := url.Query()
-	q.Add("currency", string(request.Currency))
-	return q
 }

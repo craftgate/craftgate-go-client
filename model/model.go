@@ -247,3 +247,6 @@ type PayoutStatus struct {
 	SubMerchantMemberStatus TransactionPayoutStatus `json:"subMerchantMemberStatus"`
 	//SubMerchantMemberStatusDate time.Time               `json:"subMerchantMemberStatusDate"`
 }
+
+type Void struct {
+}
