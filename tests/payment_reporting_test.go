@@ -5,6 +5,7 @@ import (
 	"craftgate-go-client/model"
 	"fmt"
 	"testing"
+	"time"
 )
 
 var paymentReporting = adapter.PaymentReporting{
@@ -15,9 +16,20 @@ var paymentReporting = adapter.PaymentReporting{
 	},
 }
 
-// test function
 func Test_SearchPayment(t *testing.T) {
-	res, err := paymentReporting.SearchPayments(adapter.SearchPaymentsRequest{})
+	request := adapter.SearchPaymentsRequest{
+		Page: 0, Size: 10,
+		PaymentType:   model.PaymentType(model.CARD_PAYMENT),
+		PaymentStatus: model.PaymentStatus(model.SUCCESS),
+		Currency:      model.Currency(model.TRY),
+		MinCreatedDate: adapter.Time{
+			Time: time.Now().AddDate(0, 0, -180),
+		},
+		MaxCreatedDate: adapter.Time{
+			Time: time.Now(),
+		},
+	}
+	res, err := paymentReporting.SearchPayments(request)
 	fmt.Println(res)
 
 	if err != nil {

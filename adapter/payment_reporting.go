@@ -5,6 +5,7 @@ import (
 	"craftgate-go-client/model"
 	"fmt"
 	"net/http"
+	"net/url"
 )
 
 type PaymentReporting struct {
@@ -12,61 +13,61 @@ type PaymentReporting struct {
 }
 
 type SearchPaymentsRequest struct {
-	Page                 int
-	Size                 int
-	PaymentId            int64
-	PaymentTransactionId int64
-	BuyerMemberId        int64
-	SubMerchantMemberId  int64
-	ConversationId       string
-	ExternalId           string
-	OrderId              string
-	PaymentType          model.PaymentType
-	PaymentProvider      model.PaymentProvider
-	PaymentStatus        model.PaymentStatus
-	PaymentSource        model.PaymentSource
-	PaymentChannel       string
-	BinNumber            string
-	LastFourDigits       string
-	Currency             model.Currency
-	MinPaidPrice         float64
-	MaxPaidPrice         float64
-	Installment          int
-	IsThreeDS            bool
-	MinCreatedDate       Time
-	MaxCreatedDate       Time
+	Page                 int                   `schema:"page,omitempty"`
+	Size                 int                   `schema:"size,omitempty"`
+	PaymentId            int64                 `schema:"paymentId,omitempty"`
+	PaymentTransactionId int64                 `schema:"paymentTransactionId,omitempty"`
+	BuyerMemberId        int64                 `schema:"buyerMemberId,omitempty"`
+	SubMerchantMemberId  int64                 `schema:"subMerchantMemberId,omitempty"`
+	ConversationId       string                `schema:"conversationId,omitempty"`
+	ExternalId           string                `schema:"externalId,omitempty"`
+	OrderId              string                `schema:"orderId,omitempty"`
+	PaymentType          model.PaymentType     `schema:"paymentType,omitempty"`
+	PaymentProvider      model.PaymentProvider `schema:"paymentProvider,omitempty"`
+	PaymentStatus        model.PaymentStatus   `schema:"paymentStatus,omitempty"`
+	PaymentSource        model.PaymentSource   `schema:"paymentSource,omitempty"`
+	PaymentChannel       string                `schema:"paymentChannel,omitempty"`
+	BinNumber            string                `schema:"binNumber,omitempty"`
+	LastFourDigits       string                `schema:"lastFourDigits,omitempty"`
+	Currency             model.Currency        `schema:"currency,omitempty"`
+	MinPaidPrice         float64               `schema:"minPaidPrice,omitempty"`
+	MaxPaidPrice         float64               `schema:"maxPaidPrice,omitempty"`
+	Installment          int                   `schema:"installment,omitempty"`
+	IsThreeDS            bool                  `schema:"isThreeDS,omitempty"`
+	MinCreatedDate       Time                  `schema:"minCreatedDate,omitempty"`
+	MaxCreatedDate       Time                  `schema:"maxCreatedDate,omitempty"`
 }
 
 type SearchPaymentRefundsRequest struct {
-	Page           int
-	Size           int
-	Id             int64
-	PaymentId      int64
-	BuyerMemberId  int64
-	ConversationId string
-	Status         model.RefundStatus
-	Currency       model.Currency
-	MinRefundPrice float64
-	MaxRefundPrice float64
-	MinCreatedDate Time
-	MaxCreatedDate Time
+	Page           int                `schema:"page,omitempty"`
+	Size           int                `schema:"size,omitempty"`
+	Id             int64              `schema:"id,omitempty"`
+	PaymentId      int64              `schema:"paymentId,omitempty"`
+	BuyerMemberId  int64              `schema:"buyerMemberId,omitempty"`
+	ConversationId string             `schema:"conversationId,omitempty"`
+	Status         model.RefundStatus `schema:"status,omitempty"`
+	Currency       model.Currency     `schema:"currency,omitempty"`
+	MinRefundPrice float64            `schema:"minRefundPrice,omitempty"`
+	MaxRefundPrice float64            `schema:"maxRefundPrice,omitempty"`
+	MinCreatedDate Time               `schema:"minCreatedDate,omitempty"`
+	MaxCreatedDate Time               `schema:"maxCreatedDate,omitempty"`
 }
 
 type SearchPaymentTransactionRefundsRequest struct {
-	Page                 int
-	Size                 int
-	Id                   int64
-	PaymentId            int64
-	PaymentTransactionId int64
-	BuyerMemberId        int64
-	ConversationId       string
-	Status               model.RefundStatus
-	Currency             model.Currency
-	IsAfterSettlement    bool
-	MinRefundPrice       float64
-	MaxRefundPrice       float64
-	MinCreatedDate       Time
-	MaxCreatedDate       Time
+	Page                 int                `schema:"page,omitempty"`
+	Size                 int                `schema:"size,omitempty"`
+	Id                   int64              `schema:"id,omitempty"`
+	PaymentId            int64              `schema:"paymentId,omitempty"`
+	PaymentTransactionId int64              `schema:"paymentTransactionId,omitempty"`
+	BuyerMemberId        int64              `schema:"buyerMemberId,omitempty"`
+	ConversationId       string             `schema:"conversationId,omitempty"`
+	Status               model.RefundStatus `schema:"status,omitempty"`
+	Currency             model.Currency     `schema:"currency,omitempty"`
+	IsAfterSettlement    bool               `schema:"isAfterSettlement,omitempty"`
+	MinRefundPrice       float64            `schema:"minRefundPrice,omitempty"`
+	MaxRefundPrice       float64            `schema:"maxRefundPrice,omitempty"`
+	MinCreatedDate       Time               `schema:"minCreatedDate,omitempty"`
+	MaxCreatedDate       Time               `schema:"maxCreatedDate,omitempty"`
 }
 
 type ReportingPaymentResponse struct {
@@ -181,7 +182,9 @@ type ReportingPaymentTransaction struct {
 func (api *PaymentReporting) SearchPayments(request SearchPaymentsRequest) (interface{}, error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/payment-reporting/v1/payments?", api.Opts.BaseURL), nil)
 
-	//req.URL.RawQuery, _ = QueryParams(request)
+	//q := request.ToParams(*req.URL)
+	//req.URL.RawQuery = q.Encode()
+	req.URL.RawQuery, _ = QueryParams(request)
 
 	res := model.Response[model.DataResponse[ReportingPaymentResponse]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
@@ -191,6 +194,7 @@ func (api *PaymentReporting) SearchPayments(request SearchPaymentsRequest) (inte
 func (api *PaymentReporting) SearchPaymentRefunds(request SearchPaymentRefundsRequest) (interface{}, error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/payment-reporting/v1/refunds", api.Opts.BaseURL), nil)
 
+	req.URL.RawQuery, _ = QueryParams(request)
 	res := model.Response[model.DataResponse[ReportingPaymentRefundResponse]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
@@ -199,6 +203,7 @@ func (api *PaymentReporting) SearchPaymentRefunds(request SearchPaymentRefundsRe
 func (api *PaymentReporting) SearchPaymentTransactionRefunds(request SearchPaymentTransactionRefundsRequest) (interface{}, error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/payment-reporting/v1/refund-transactions", api.Opts.BaseURL), nil)
 
+	req.URL.RawQuery, _ = QueryParams(request)
 	res := model.Response[model.DataResponse[ReportingPaymentTransactionRefundResponse]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
@@ -234,4 +239,10 @@ func (api *PaymentReporting) RetrievePaymentTransactionRefunds(paymentId, paymen
 	res := model.Response[model.DataResponse[ReportingPaymentTransactionRefundResponse]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
+}
+
+func (request SearchPaymentsRequest) ToParams(url url.URL) url.Values {
+	q := url.Query()
+	q.Add("currency", string(request.Currency))
+	return q
 }

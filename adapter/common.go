@@ -4,11 +4,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"github.com/gorilla/schema"
 	"net/url"
 	"reflect"
 	"time"
-
-	"github.com/gorilla/schema"
 )
 
 var ErrNull = errors.New("can't be both IsNull and have value")
@@ -47,7 +46,6 @@ type String struct {
 
 type Time struct {
 	time.Time
-	IsNull bool
 }
 
 func NewBoolean(v bool) *Boolean {
@@ -71,7 +69,7 @@ func NewString(v string) *String {
 }
 
 func NewTime(v time.Time) *Time {
-	return &Time{v, false}
+	return &Time{v}
 }
 
 func (v Boolean) MarshalJSON() ([]byte, error) {
@@ -170,22 +168,18 @@ func (v *String) UnmarshalJSON(src []byte) error {
 }
 
 func (v Time) MarshalJSON() ([]byte, error) {
-	switch {
-	case v.IsNull && !v.Time.IsZero():
+	if reflect.ValueOf(v).IsNil() {
 		return nil, ErrNull
-	case v.IsNull:
-		return Null, nil
-	default:
-		return v.Time.MarshalJSON()
 	}
+	return v.Time.MarshalJSON()
 }
 
-func (v *Time) UnmarshalJSON(src []byte) error {
-	parse, err := time.Parse(TimeLayout, string(src))
+func (t *Time) UnmarshalJSON(b []byte) error {
+	parse, err := time.Parse(TimeLayout, string(b))
 	if err != nil {
 		return err
 	}
-	v.Time = parse
+	t.Time = parse
 	return nil
 }
 
@@ -195,7 +189,6 @@ func QueryParams(req interface{}) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	//removeNulls(queryParams)
 
 	for k, v := range queryParams {
 		if v == nil {
