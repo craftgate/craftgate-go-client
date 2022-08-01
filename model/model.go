@@ -1,9 +1,5 @@
 package model
 
-import (
-	"time"
-)
-
 type PaymentType string
 type PaymentProvider string
 type PaymentStatus string
@@ -236,30 +232,6 @@ type PaymentError struct {
 	ErrorGroup       string `json:"errorGroup"`
 	ErrorDescription string `json:"errorDescription"`
 	ErrorCode        string `json:"errorCode"`
-}
-
-type MemberResponse struct {
-	Id                            int64                         `json:"id"`
-	CreatedDate                   time.Time                     `json:"createdDate"`
-	UpdatedDate                   time.Time                     `json:"updatedDate"`
-	Status                        Status                        `json:"status"`
-	IsBuyer                       bool                          `json:"isBuyer"`
-	IsSubMerchant                 bool                          `json:"isSubMerchant"`
-	MemberType                    MemberType                    `json:"memberType"`
-	MemberExternalId              string                        `json:"memberExternalId"`
-	Name                          string                        `json:"name"`
-	Email                         string                        `json:"email"`
-	Address                       string                        `json:"address"`
-	PhoneNumber                   string                        `json:"phoneNumber"`
-	IdentityNumber                string                        `json:"identityNumber"`
-	ContactName                   string                        `json:"contactName"`
-	ContactSurname                string                        `json:"contactSurname"`
-	LegalCompanyTitle             string                        `json:"legalCompanyTitle"`
-	TaxOffice                     string                        `json:"taxOffice"`
-	TaxNumber                     string                        `json:"taxNumber"`
-	SettlementEarningsDestination SettlementEarningsDestination `json:"settlementEarningsDestination"`
-	NegativeWalletAmountLimit     float64                       `json:"negativeWalletAmountLimit"`
-	Iban                          string                        `json:"iban"`
 }
 
 type Payout struct {

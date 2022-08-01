@@ -111,7 +111,7 @@ type ReportingPaymentResponse struct {
 	RefundStatus                 model.PaymentRefundStatus        `json:"refundStatus"`
 	CardIssuerBankName           string                           `json:"cardIssuerBankName"`
 	MdStatus                     int                              `json:"mdStatus"`
-	BuyerMember                  model.MemberResponse             `json:"buyerMember"`
+	BuyerMember                  MemberResponse                   `json:"buyerMember"`
 	Refunds                      []ReportingPaymentRefundResponse `json:"refunds"`
 	Pos                          model.MerchantPos                `json:"pos"`
 	Loyalty                      model.Loyalty                    `json:"loyalty"`
@@ -174,7 +174,7 @@ type ReportingPaymentTransaction struct {
 	BankCommissionRate            float64                   `json:"bankCommissionRate"`
 	BankCommissionRateAmount      float64                   `json:"bankCommissionRateAmount"`
 	Payout                        model.Payout              `json:"payout"`
-	SubMerchantMember             model.MemberResponse      `json:"subMerchantMember"`
+	SubMerchantMember             MemberResponse            `json:"subMerchantMember"`
 	RefundStatus                  model.PaymentRefundStatus `json:"refundStatus"`
 	PayoutStatus                  model.PayoutStatus        `json:"payoutStatus"`
 }
