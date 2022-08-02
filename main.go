@@ -1,7 +1,6 @@
 package main
 
 import (
-	"craftgate-go-client/adapter"
 	"fmt"
 )
 
@@ -11,7 +10,7 @@ func main() {
 	secretKey := "sandbox-tBdcdKVGmGupzfaWcULcwDLMoglZZvTz"
 	Craftgate := CraftgateClient(apiKey, secretKey, baseURL)
 
-	res, _ := Craftgate.Installment.RetrieveBinNumber(adapter.RetrieveBinNumberRequest{BinNumber: "552096"})
+	res, _ := Craftgate.Installment.RetrieveBinNumber("552096")
 	fmt.Println(res)
 	//
 	//res, _ := Craftgate.Installment.SearchInstallments(adapter.SearchInstallmentRequest{BinNumber: "552096", Price: 100.00})
