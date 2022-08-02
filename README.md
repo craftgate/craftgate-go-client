@@ -33,8 +33,6 @@ Once you've obtained your API credentials, you can start using Craftgate by inst
 ```go
 
 Craftgate := CraftgateClient("<YOUR API KEY>", "<YOUR SECRET KEY>", "<BASE URL>")
-...
-
 ```
 
 By default the Craftgate client connects to the production API servers at `https://api.craftgate.io`. For testing purposes, please use the sandbox URL `https://sandbox-api.craftgate.io` using the .
@@ -42,8 +40,6 @@ By default the Craftgate client connects to the production API servers at `https
 ```go
 
 Craftgate := CraftgateClient("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://sandbox-api.craftgate.io");
-...
-
 ```
 
 ## Examples
@@ -67,5 +63,6 @@ fmt.println("Create Payment Result: %s", res);
 ### Contributions
 
 For all contributions to this client please see the contribution guide [here](CONTRIBUTING.md).
+
 ## License
 MIT
