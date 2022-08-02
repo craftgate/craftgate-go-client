@@ -1,6 +1,6 @@
 # Craftgate Go Client
 
-[![Build Status](https://github.com/craftgate/craftgate-java-client/workflows/Craftgate%20Java%20CI/badge.svg?branch=master)](https://github.com/craftgate/craftgate-java-client/actions)
+[![Build Status](https://github.com/craftgate/craftgate-go-client/workflows/Craftgate%20Go%20Client%20CI/badge.svg?branch=master)](https://github.com/craftgate/craftgate-go-client/actions)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.craftgate/craftgate/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.craftgate/craftgate)
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/craftgate/craftgate-java-client)
 
