@@ -14,6 +14,7 @@ type PaymentRefundStatus string
 type RefundStatus string
 type Status string
 type MemberType string
+type SettlementType string
 type SettlementEarningsDestination string
 type RefundDestinationType string
 type TransactionStatus string
@@ -185,6 +186,13 @@ const (
 	TransactionPayoutStatusWAITING_FOR_PAYOUT                         = "WAITING_FOR_PAYOUT"
 	TransactionPayoutStatusPAYOUT_STARTED                             = "PAYOUT_STARTED"
 	TransactionPayoutStatusPAYOUT_COMPLETED                           = "PAYOUT_COMPLETED"
+)
+
+const (
+	_                  SettlementType = ""
+	SETTLEMENT                        = "SETTLEMENT"
+	BOUNCED_SETTLEMENT                = "BOUNCED_SETTLEMENT"
+	WITHDRAW                          = "WITHDRAW"
 )
 
 type RequestOptions struct {

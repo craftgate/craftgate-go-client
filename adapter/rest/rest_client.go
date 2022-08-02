@@ -58,7 +58,6 @@ func SendRequest(req *http.Request, v interface{}, opts model.RequestOptions) er
 	if _, ok := v.(*model.Void); ok {
 		return nil
 	}
-
 	if err = json.NewDecoder(res.Body).Decode(&v); err != nil {
 		return err
 	}

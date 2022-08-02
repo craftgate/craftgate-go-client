@@ -10,8 +10,8 @@ import (
 var settlement = adapter.Settlement{
 	Opts: model.RequestOptions{
 		BaseURL:   "https://sandbox-api.craftgate.io",
-		ApiKey:    "sandbox-YEhueLgomBjqsnvBlWVVuFsVhlvJlMHE",
-		SecretKey: "sandbox-tBdcdKVGmGupzfaWcULcwDLMoglZZvTz",
+		ApiKey:    "sandbox-SpqVrfuINfhbFtDEWBqQTCAhIzTEOedj",
+		SecretKey: "sandbox-aJGxugIvDEdmgUYFByWAyNCrgaEpYWOw",
 	},
 }
 

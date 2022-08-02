@@ -11,17 +11,15 @@ import (
 var settlementReporting = adapter.SettlementReporting{
 	Opts: model.RequestOptions{
 		BaseURL:   "https://sandbox-api.craftgate.io",
-		ApiKey:    "sandbox-YEhueLgomBjqsnvBlWVVuFsVhlvJlMHE",
-		SecretKey: "sandbox-tBdcdKVGmGupzfaWcULcwDLMoglZZvTz",
+		ApiKey:    "sandbox-SpqVrfuINfhbFtDEWBqQTCAhIzTEOedj",
+		SecretKey: "sandbox-aJGxugIvDEdmgUYFByWAyNCrgaEpYWOw",
 	},
 }
 
 func TestSettlementReporting_SearchPayoutCompletedTransactions(t *testing.T) {
 	request := adapter.SearchPayoutCompletedTransactionsRequest{
-		SettlementFileId: 0,
-		SettlementType:   "",
-		StartDate:        time.Now().AddDate(0, 0, -180),
-		EndDate:          time.Now(),
+		StartDate: time.Now().AddDate(0, 0, -180),
+		EndDate:   time.Now(),
 	}
 
 	res, err := settlementReporting.SearchPayoutCompletedTransactions(request)
@@ -47,7 +45,7 @@ func TestSettlementReporting_SearchPayoutBouncedTransactions(t *testing.T) {
 }
 
 func TestSettlementReporting_RetrievePayoutDetails(t *testing.T) {
-	res, err := settlementReporting.RetrievePayoutDetails(adapter.RetrievePayoutDetailsRequest{123})
+	res, err := settlementReporting.RetrievePayoutDetails(adapter.RetrievePayoutDetailsRequest{PayoutDetailId: 49})
 	fmt.Println(res)
 
 	if err != nil {

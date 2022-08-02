@@ -7,6 +7,7 @@ import (
 
 type Client struct {
 	Installment         adapter.Installment
+	Payment             adapter.Payment
 	PaymentReporting    adapter.PaymentReporting
 	Wallet              adapter.Wallet
 	Onboarding          adapter.Onboarding
@@ -24,6 +25,7 @@ func CraftgateClient(apiKey, secretKey, baseURL string) *Client {
 
 	return &Client{
 		Installment:         adapter.Installment{Opts: options},
+		Payment:             adapter.Payment{Opts: options},
 		PaymentReporting:    adapter.PaymentReporting{Opts: options},
 		Wallet:              adapter.Wallet{Opts: options},
 		Onboarding:          adapter.Onboarding{Opts: options},

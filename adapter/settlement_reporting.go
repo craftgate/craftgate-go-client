@@ -13,10 +13,10 @@ type SettlementReporting struct {
 }
 
 type SearchPayoutCompletedTransactionsRequest struct {
-	SettlementFileId int64     `schema:"settlementFileId,omitempty"`
-	SettlementType   string    `schema:"settlementType,omitempty"`
-	StartDate        time.Time `schema:"startDate,omitempty"`
-	EndDate          time.Time `schema:"endDate,omitempty"`
+	SettlementFileId int64                `schema:"settlementFileId,omitempty"`
+	SettlementType   model.SettlementType `schema:"settlementType,omitempty"`
+	StartDate        time.Time            `schema:"startDate,omitempty"`
+	EndDate          time.Time            `schema:"endDate,omitempty"`
 }
 
 type SearchPayoutBouncedTransactionsRequest struct {
@@ -29,15 +29,15 @@ type RetrievePayoutDetailsRequest struct {
 }
 
 type SearchPayoutCompletedTransactionsResponse struct {
-	PayoutId                      int64   `json:"payoutId"`
-	TransactionId                 int64   `json:"transactionId"`
-	TransactionType               string  `json:"transactionType"`
-	PayoutAmount                  float64 `json:"payoutAmount"`
-	Currency                      string  `json:"currency"`
-	MerchantId                    int64   `json:"merchantId"`
-	MerchantType                  string  `json:"merchantType"`
-	SettlementEarningsDestination string  `json:"settlementEarningsDestination"`
-	SettlementSource              string  `json:"settlementSource"`
+	PayoutId                      int64          `json:"payoutId"`
+	TransactionId                 int64          `json:"transactionId"`
+	TransactionType               string         `json:"transactionType"`
+	PayoutAmount                  float64        `json:"payoutAmount"`
+	Currency                      model.Currency `json:"currency"`
+	MerchantId                    int64          `json:"merchantId"`
+	MerchantType                  string         `json:"merchantType"`
+	SettlementEarningsDestination string         `json:"settlementEarningsDestination"`
+	SettlementSource              string         `json:"settlementSource"`
 }
 
 type SearchPayoutBouncedTransactionsResponse struct {
@@ -76,7 +76,7 @@ type PayoutDetailTransactionResponse struct {
 
 func (api *SettlementReporting) SearchPayoutCompletedTransactions(request SearchPayoutCompletedTransactionsRequest) (interface{}, error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/settlement-reporting/v1/settlement-file/payout-completed-transactions", api.Opts.BaseURL), nil)
-	req.URL.RawQuery, _ = QueryParams(req)
+	req.URL.RawQuery, _ = QueryParams(request)
 	res := model.Response[model.DataResponse[SearchPayoutCompletedTransactionsResponse]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
@@ -84,7 +84,7 @@ func (api *SettlementReporting) SearchPayoutCompletedTransactions(request Search
 
 func (api *SettlementReporting) SearchPayoutBouncedTransactions(request SearchPayoutBouncedTransactionsRequest) (interface{}, error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/settlement-reporting/v1/settlement-file/bounced-sub-merchant-rows", api.Opts.BaseURL), nil)
-	req.URL.RawQuery, _ = QueryParams(req)
+	req.URL.RawQuery, _ = QueryParams(request)
 	res := model.Response[model.DataResponse[SearchPayoutBouncedTransactionsResponse]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
@@ -92,7 +92,7 @@ func (api *SettlementReporting) SearchPayoutBouncedTransactions(request SearchPa
 
 func (api *SettlementReporting) RetrievePayoutDetails(request RetrievePayoutDetailsRequest) (interface{}, error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/settlement-reporting/v1/settlement-file/payout-details/%d", api.Opts.BaseURL, request.PayoutDetailId), nil)
-	res := model.Response[model.DataResponse[PayoutDetailResponse]]{}
+	res := model.Response[PayoutDetailResponse]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
 }
