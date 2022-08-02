@@ -11,13 +11,13 @@ import (
 var wallet = adapter.Wallet{
 	Opts: model.RequestOptions{
 		BaseURL:   "https://sandbox-api.craftgate.io",
-		ApiKey:    "sandbox-YEhueLgomBjqsnvBlWVVuFsVhlvJlMHE",
-		SecretKey: "sandbox-tBdcdKVGmGupzfaWcULcwDLMoglZZvTz",
+		ApiKey:    "sandbox-bnqfCZGyogzVmQKuiHPvwilBKDAmYvoB",
+		SecretKey: "sandbox-okZEjZlBlteIPARYChRHewtPgKgHAoXO",
 	},
 }
 
 func TestWallet_RetrieveMemberWallet(t *testing.T) {
-	res, err := wallet.RetrieveMemberWallet(adapter.RetrieveMemberWalletRequest{MemberId: 66988})
+	res, err := wallet.RetrieveMemberWallet(66988)
 	fmt.Println(res)
 
 	if err != nil {
@@ -35,7 +35,7 @@ func TestWallet_RetrieveMerchantMemberWallet(t *testing.T) {
 }
 
 func TestWallet_ResetMerchantMemberWalletBalance(t *testing.T) {
-	res, err := wallet.ResetMerchantMemberWalletBalance(adapter.ResetMerchantMemberWalletBalanceRequest{WalletAmount: 50.25})
+	res, err := wallet.ResetMerchantMemberWalletBalance(adapter.ResetMerchantMemberWalletBalanceRequest{WalletAmount: -15.75000000})
 	fmt.Println(res)
 
 	if err != nil {
@@ -53,7 +53,7 @@ func TestWallet_SearchWalletTransactions(t *testing.T) {
 }
 
 func TestWallet_RetrieveRefundableAmountOfWalletTransaction(t *testing.T) {
-	res, err := wallet.RetrieveRefundableAmountOfWalletTransaction(adapter.RetrieveRefundWalletTransactionRequest{WalletTransactionId: 130459})
+	res, err := wallet.RetrieveRefundableAmountOfWalletTransaction(137832)
 	fmt.Println(res)
 
 	if err != nil {
@@ -62,7 +62,7 @@ func TestWallet_RetrieveRefundableAmountOfWalletTransaction(t *testing.T) {
 }
 
 func TestWallet_RefundWalletTransactionToCard(t *testing.T) {
-	res, err := wallet.RefundWalletTransactionToCard(adapter.RefundWalletTransactionToCardRequest{WalletTransactionId: 130459, RefundPrice: 3.25})
+	res, err := wallet.RefundWalletTransactionToCard(adapter.RefundWalletTransactionToCardRequest{WalletTransactionId: 137832, RefundPrice: 3.25})
 	fmt.Println(res)
 
 	if err != nil {
@@ -71,7 +71,7 @@ func TestWallet_RefundWalletTransactionToCard(t *testing.T) {
 }
 
 func TestWallet_RetrieveRefundWalletTransactionToCard(t *testing.T) {
-	res, err := wallet.RetrieveRefundWalletTransactionToCard(adapter.RetrieveRefundWalletTransactionRequest{WalletTransactionId: 130459})
+	res, err := wallet.RetrieveRefundWalletTransactionToCard(137832)
 	fmt.Println(res)
 
 	if err != nil {
@@ -81,8 +81,8 @@ func TestWallet_RetrieveRefundWalletTransactionToCard(t *testing.T) {
 
 func TestWallet_SendRemittance(t *testing.T) {
 	res, err := wallet.SendRemittance(adapter.RemittanceRequest{
-		Price:                5.25,
-		MemberId:             66988,
+		Price:                100,
+		MemberId:             68350,
 		Description:          "bonus",
 		RemittanceReasonType: "REDEEM_ONLY_LOYALTY",
 	})
@@ -95,8 +95,8 @@ func TestWallet_SendRemittance(t *testing.T) {
 
 func TestWallet_ReceiveRemittance(t *testing.T) {
 	res, err := wallet.ReceiveRemittance(adapter.RemittanceRequest{
-		Price:                5.25,
-		MemberId:             66988,
+		Price:                10,
+		MemberId:             68350,
 		Description:          "bonus",
 		RemittanceReasonType: "REDEEM_ONLY_LOYALTY",
 	})
@@ -108,7 +108,7 @@ func TestWallet_ReceiveRemittance(t *testing.T) {
 }
 
 func TestWallet_RetrieveRemittance(t *testing.T) {
-	res, err := wallet.RetrieveRemittance(adapter.RetrieveRemittanceRequest{RemittanceId: 64774})
+	res, err := wallet.RetrieveRemittance(adapter.RetrieveRemittanceRequest{RemittanceId: 66148})
 	fmt.Println(res)
 
 	if err != nil {
@@ -119,8 +119,8 @@ func TestWallet_RetrieveRemittance(t *testing.T) {
 func TestWallet_CreateWithdraw(t *testing.T) {
 	res, err := wallet.CreateWithdraw(adapter.CreateWithdrawRequest{
 		Price:       5.25,
-		MemberId:    66988,
-		Description: "bonus",
+		MemberId:    3,
+		Description: "Para çekme talebi",
 		Currency:    "TRY",
 	})
 	fmt.Println(res)
@@ -131,7 +131,7 @@ func TestWallet_CreateWithdraw(t *testing.T) {
 }
 
 func TestWallet_CancelWithdraw(t *testing.T) {
-	res, err := wallet.CancelWithdraw(adapter.WithdrawRequest{WithdrawId: 55})
+	res, err := wallet.CancelWithdraw(3)
 	fmt.Println(res)
 
 	if err != nil {
@@ -140,7 +140,7 @@ func TestWallet_CancelWithdraw(t *testing.T) {
 }
 
 func TestWallet_RetrieveWithdraw(t *testing.T) {
-	res, err := wallet.RetrieveWithdraw(adapter.WithdrawRequest{WithdrawId: 55})
+	res, err := wallet.RetrieveWithdraw(3)
 	fmt.Println(res)
 
 	if err != nil {
@@ -149,15 +149,12 @@ func TestWallet_RetrieveWithdraw(t *testing.T) {
 }
 
 func TestWallet_SearchWithdraws(t *testing.T) {
-	t1 := time.Now().AddDate(0, 0, -180)
-	t2 := time.Now()
 	res, err := wallet.SearchWithdraws(adapter.SearchWithdrawsRequest{
-		MemberId:         66988,
 		Currency:         "TRY",
-		MinWithdrawPrice: 10.75,
-		MaxWithdrawPrice: 40.40,
-		MinCreatedDate:   t1,
-		MaxCreatedDate:   t2,
+		MinWithdrawPrice: 0,
+		MaxWithdrawPrice: 10000,
+		MinCreatedDate:   time.Now().AddDate(0, 0, -180),
+		MaxCreatedDate:   time.Now(),
 	})
 
 	fmt.Println(res)

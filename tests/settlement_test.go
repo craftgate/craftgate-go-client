@@ -10,13 +10,13 @@ import (
 var settlement = adapter.Settlement{
 	Opts: model.RequestOptions{
 		BaseURL:   "https://sandbox-api.craftgate.io",
-		ApiKey:    "sandbox-SpqVrfuINfhbFtDEWBqQTCAhIzTEOedj",
-		SecretKey: "sandbox-aJGxugIvDEdmgUYFByWAyNCrgaEpYWOw",
+		ApiKey:    "sandbox-bnqfCZGyogzVmQKuiHPvwilBKDAmYvoB",
+		SecretKey: "sandbox-okZEjZlBlteIPARYChRHewtPgKgHAoXO",
 	},
 }
 
 func TestSettlement_CreateInstantWalletSettlement(t *testing.T) {
-	res, err := settlement.CreateInstantWalletSettlement(adapter.CreateInstantWalletSettlementRequest{ExcludedSubMerchantMemberIds: []int64{1, 2, 3}})
+	res, err := settlement.CreateInstantWalletSettlement(adapter.CreateInstantWalletSettlementRequest{ExcludedSubMerchantMemberIds: []int64{1, 2}})
 	fmt.Println(res)
 
 	if err != nil {

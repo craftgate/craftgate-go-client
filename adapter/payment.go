@@ -8,12 +8,12 @@ type Payment struct {
 	Opts model.RequestOptions
 }
 
-type Payout struct {
-	PaidPrice                     float64 `json:"paidPrice"`
-	Currency                      string  `json:"currency"`
-	MerchantPayoutAmount          float64 `json:"merchantPayoutAmount"`
-	SubMerchantMemberPayoutAmount float64 `json:"subMerchantMemberPayoutAmount"`
-}
+//type Payout struct {
+//	PaidPrice                     float64 `json:"paidPrice"`
+//	Currency                      string  `json:"currency"`
+//	MerchantPayoutAmount          float64 `json:"merchantPayoutAmount"`
+//	SubMerchantMemberPayoutAmount float64 `json:"subMerchantMemberPayoutAmount"`
+//}
 
 type PaymentTransactionResponse struct {
 	ID                            int     `json:"id"`
@@ -31,7 +31,7 @@ type PaymentTransactionResponse struct {
 	SubMerchantMemberPrice        float64 `json:"subMerchantMemberPrice"`
 	SubMerchantMemberPayoutRate   int     `json:"subMerchantMemberPayoutRate"`
 	SubMerchantMemberPayoutAmount float64 `json:"subMerchantMemberPayoutAmount"`
-	Payout                        Payout  `json:"payout"`
+	//Payout                        Payout  `json:"payout"`
 }
 
 type PaymentResponse struct {

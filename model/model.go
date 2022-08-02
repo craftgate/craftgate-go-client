@@ -19,6 +19,7 @@ type SettlementEarningsDestination string
 type RefundDestinationType string
 type TransactionStatus string
 type TransactionPayoutStatus string
+type WalletTransactionRefundCardTransactionType string
 
 const (
 	ApiKeyHeaderName        = "x-api-key"
@@ -188,11 +189,19 @@ const (
 	TransactionPayoutStatusPAYOUT_COMPLETED                           = "PAYOUT_COMPLETED"
 )
 
+// settlement type declaration
 const (
 	_                  SettlementType = ""
 	SETTLEMENT                        = "SETTLEMENT"
 	BOUNCED_SETTLEMENT                = "BOUNCED_SETTLEMENT"
 	WITHDRAW                          = "WITHDRAW"
+)
+
+// wallet transaction refund type declaration
+const (
+	_          WalletTransactionRefundCardTransactionType = ""
+	PAYMENT                                               = "PAYMENT"
+	PAYMENT_TX                                            = "PAYMENT_TX"
 )
 
 type RequestOptions struct {
