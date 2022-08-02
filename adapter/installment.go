@@ -18,7 +18,7 @@ type InstallmentPrice struct {
 	InstallmentLabel  string  `json:"installmentLabel"`
 }
 
-type SearchInstallmentRequest struct {
+type SearchInstallmentsRequest struct {
 	BinNumber                               string         `schema:"binNumber"`
 	Price                                   float64        `schema:"price"`
 	Currency                                model.Currency `schema:"currency"`
@@ -54,7 +54,7 @@ type RetrieveBinNumberResponse struct {
 	Commercial      bool   `json:"commercial"`
 }
 
-func (api *Installment) SearchInstallments(request SearchInstallmentRequest) (interface{}, error) {
+func (api *Installment) SearchInstallments(request SearchInstallmentsRequest) (interface{}, error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/installment/v1/installments", api.Opts.BaseURL), nil)
 
 	request.Currency = "TRY"

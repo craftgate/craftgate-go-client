@@ -25,7 +25,7 @@ func Test_RetrieveBinNumber(t *testing.T) {
 }
 
 func Test_SearchInstallments(t *testing.T) {
-	request := adapter.SearchInstallmentRequest{
+	request := adapter.SearchInstallmentsRequest{
 		BinNumber: "487074",
 		Price:     100,
 		Currency:  model.Currency(model.TRY),
