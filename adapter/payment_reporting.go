@@ -173,10 +173,24 @@ type ReportingPaymentTransactionResponse struct {
 	RefundablePrice               float64                   `json:"refundablePrice"`
 	BankCommissionRate            float64                   `json:"bankCommissionRate"`
 	BankCommissionRateAmount      float64                   `json:"bankCommissionRateAmount"`
-	Payout                        model.Payout              `json:"payout"`
+	Payout                        Payout                    `json:"payout"`
 	SubMerchantMember             MemberResponse            `json:"subMerchantMember"`
 	RefundStatus                  model.PaymentRefundStatus `json:"refundStatus"`
-	PayoutStatus                  model.PayoutStatus        `json:"payoutStatus"`
+	PayoutStatus                  PayoutStatus              `json:"payoutStatus"`
+}
+
+type Payout struct {
+	PaidPrice                     float64        `json:"paidPrice"`
+	Currency                      model.Currency `json:"currency"`
+	MerchantPayoutAmount          float64        `json:"merchantPayoutAmount"`
+	SubMerchantMemberPayoutAmount float64        `json:"subMerchantMemberPayoutAmount"`
+}
+
+type PayoutStatus struct {
+	MerchantStatus              model.TransactionPayoutStatus `json:"merchantStatus"`
+	MerchantStatusDate          TimeResponse                  `json:"merchantStatusDate"`
+	SubMerchantMemberStatus     model.TransactionPayoutStatus `json:"subMerchantMemberStatus"`
+	SubMerchantMemberStatusDate TimeResponse                  `json:"subMerchantMemberStatusDate"`
 }
 
 func (api *PaymentReporting) SearchPayments(request SearchPaymentsRequest) (interface{}, error) {

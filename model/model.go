@@ -234,19 +234,5 @@ type PaymentError struct {
 	ErrorCode        string `json:"errorCode"`
 }
 
-type Payout struct {
-	PaidPrice                     float64  `json:"paidPrice"`
-	Currency                      Currency `json:"currency"`
-	MerchantPayoutAmount          float64  `json:"merchantPayoutAmount"`
-	SubMerchantMemberPayoutAmount float64  `json:"subMerchantMemberPayoutAmount"`
-}
-
-type PayoutStatus struct {
-	MerchantStatus TransactionPayoutStatus `json:"merchantStatus"`
-	//MerchantStatusDate          time.Time               `json:"merchantStatusDate"`
-	SubMerchantMemberStatus TransactionPayoutStatus `json:"subMerchantMemberStatus"`
-	//SubMerchantMemberStatusDate time.Time               `json:"subMerchantMemberStatusDate"`
-}
-
 type Void struct {
 }
