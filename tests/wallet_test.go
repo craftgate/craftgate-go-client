@@ -16,7 +16,6 @@ var wallet = adapter.Wallet{
 	},
 }
 
-// test function
 func TestWallet_RetrieveMemberWallet(t *testing.T) {
 	res, err := wallet.RetrieveMemberWallet(adapter.RetrieveMemberWalletRequest{MemberId: 66988})
 	fmt.Println(res)
@@ -26,7 +25,6 @@ func TestWallet_RetrieveMemberWallet(t *testing.T) {
 	}
 }
 
-// test function
 func TestWallet_RetrieveMerchantMemberWallet(t *testing.T) {
 	res, err := wallet.RetrieveMerchantMemberWallet()
 	fmt.Println(res)
@@ -36,7 +34,6 @@ func TestWallet_RetrieveMerchantMemberWallet(t *testing.T) {
 	}
 }
 
-//?????????
 func TestWallet_ResetMerchantMemberWalletBalance(t *testing.T) {
 	res, err := wallet.ResetMerchantMemberWalletBalance(adapter.ResetMerchantMemberWalletBalanceRequest{WalletAmount: 50.25})
 	fmt.Println(res)
@@ -64,7 +61,6 @@ func TestWallet_RetrieveRefundableAmountOfWalletTransaction(t *testing.T) {
 	}
 }
 
-//?????????
 func TestWallet_RefundWalletTransactionToCard(t *testing.T) {
 	res, err := wallet.RefundWalletTransactionToCard(adapter.RefundWalletTransactionToCardRequest{WalletTransactionId: 130459, RefundPrice: 3.25})
 	fmt.Println(res)

@@ -63,8 +63,8 @@ type SearchMembersRequest struct {
 
 type MemberResponse struct {
 	Id                            int64                               `json:"id"`
-	CreatedDate                   CraftgateTime                       `json:"createdDate"`
-	UpdatedDate                   CraftgateTime                       `json:"updatedDate"`
+	CreatedDate                   TimeResponse                        `json:"createdDate"`
+	UpdatedDate                   TimeResponse                        `json:"updatedDate"`
 	Status                        model.Status                        `json:"status"`
 	IsBuyer                       bool                                `json:"isBuyer"`
 	IsSubMerchant                 bool                                `json:"isSubMerchant"`

@@ -14,25 +14,25 @@ import (
 var schemaEncoder = schema.NewEncoder()
 
 const (
-	craftgateTimeEncodeLayout = "2006-01-02T15:04:05"
-	craftgateTimeDecodeLayout = "\"2006-01-02T15:04:05\""
+	timeEncodeLayout = "2006-01-02T15:04:05"
+	timeDecodeLayout = "\"2006-01-02T15:04:05\""
 )
 
-type CraftgateTime struct {
+type TimeResponse struct {
 	time.Time
 }
 
 func init() {
 	timeConverter := func(value reflect.Value) string {
-		timestamp := fmt.Sprintf("%s", value.Interface().(time.Time).Format(craftgateTimeEncodeLayout))
+		timestamp := fmt.Sprintf("%s", value.Interface().(time.Time).Format(timeEncodeLayout))
 		return timestamp
 	}
 
 	schemaEncoder.RegisterEncoder(time.Time{}, timeConverter)
 }
 
-func (v *CraftgateTime) UnmarshalJSON(b []byte) error {
-	parse, err := time.Parse(craftgateTimeDecodeLayout, string(b))
+func (v *TimeResponse) UnmarshalJSON(b []byte) error {
+	parse, err := time.Parse(timeDecodeLayout, string(b))
 	if err != nil {
 		return err
 	}

@@ -68,8 +68,8 @@ type SearchWithdrawsRequest struct {
 
 type MemberWalletResponse struct {
 	Id               int64          `json:"id"`
-	CreatedDate      CraftgateTime  `json:"createdDate"`
-	UpdatedDate      CraftgateTime  `json:"updatedDate"`
+	CreatedDate      TimeResponse   `json:"createdDate"`
+	UpdatedDate      TimeResponse   `json:"updatedDate"`
 	Amount           float64        `json:"amount"`
 	WithdrawalAmount float64        `json:"withdrawalAmount"`
 	Currency         model.Currency `json:"currency"`
@@ -77,19 +77,19 @@ type MemberWalletResponse struct {
 }
 
 type RemittanceResponse struct {
-	Id                   int64         `json:"id"`
-	CreatedDate          CraftgateTime `json:"createdDate"`
-	Active               int           `json:"active"`
-	Price                float64       `json:"price"`
-	MemberId             int64         `json:"memberId"`
-	RemittanceType       string        `json:"remittanceType"`
-	RemittanceReasonType string        `json:"remittanceReasonType"`
-	Description          string        `json:"description"`
+	Id                   int64        `json:"id"`
+	CreatedDate          TimeResponse `json:"createdDate"`
+	Active               int          `json:"active"`
+	Price                float64      `json:"price"`
+	MemberId             int64        `json:"memberId"`
+	RemittanceType       string       `json:"remittanceType"`
+	RemittanceReasonType string       `json:"remittanceReasonType"`
+	Description          string       `json:"description"`
 }
 
 type WithdrawResponse struct {
 	Id           int64          `json:"id"`
-	CreatedDate  CraftgateTime  `json:"createdDate"`
+	CreatedDate  TimeResponse   `json:"createdDate"`
 	Status       int            `json:"status"`
 	MemberId     int64          `json:"memberId"`
 	PayoutId     int64          `json:"payoutId"`
@@ -100,26 +100,26 @@ type WithdrawResponse struct {
 }
 
 type RefundWalletTransactionToCardResponse struct {
-	Id                  int64         `json:"id"`
-	CreatedDate         CraftgateTime `json:"createdDate"`
-	RefundStatus        string        `json:"refundStatus"`
-	RefundPrice         float64       `json:"refundPrice"`
-	AuthCode            string        `json:"authCode"`
-	HostReference       string        `json:"hostReference"`
-	TransId             string        `json:"transId"`
-	TransactionId       int64         `json:"transactionId"`
-	WalletTransactionId int64         `json:"walletTransactionId"`
-	PaymentError        string        `json:"paymentError"`
-	TransactionType     string        `json:"transactionType"`
+	Id                  int64        `json:"id"`
+	CreatedDate         TimeResponse `json:"createdDate"`
+	RefundStatus        string       `json:"refundStatus"`
+	RefundPrice         float64      `json:"refundPrice"`
+	AuthCode            string       `json:"authCode"`
+	HostReference       string       `json:"hostReference"`
+	TransId             string       `json:"transId"`
+	TransactionId       int64        `json:"transactionId"`
+	WalletTransactionId int64        `json:"walletTransactionId"`
+	PaymentError        string       `json:"paymentError"`
+	TransactionType     string       `json:"transactionType"`
 }
 
 type SearchWalletTransactionsResponse struct {
-	ID                    int64         `json:"id"`
-	CreatedDate           CraftgateTime `json:"createdDate"`
-	WalletTransactionType string        `json:"walletTransactionType"`
-	Amount                float64       `json:"amount"`
-	TransactionID         int64         `json:"transactionId"`
-	WalletID              int64         `json:"walletId"`
+	ID                    int64        `json:"id"`
+	CreatedDate           TimeResponse `json:"createdDate"`
+	WalletTransactionType string       `json:"walletTransactionType"`
+	Amount                float64      `json:"amount"`
+	TransactionID         int64        `json:"transactionId"`
+	WalletID              int64        `json:"walletId"`
 }
 
 type ResetMerchantMemberWalletBalanceRequest struct {
