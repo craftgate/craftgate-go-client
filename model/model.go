@@ -6,12 +6,15 @@ type PaymentStatus string
 type PaymentSource string
 type PaymentGroup string
 type PaymentPhase string
+type PaymentMethod string
 type CardType string
 type CardAssociation string
 type Currency string
 type LoyaltyType string
 type PaymentRefundStatus string
 type RefundStatus string
+type RefundType string
+type ApprovalStatus string
 type Status string
 type MemberType string
 type SettlementType string
@@ -92,6 +95,13 @@ const (
 	POST_AUTH              = "POST_AUTH"
 )
 
+// payment method declaration
+const (
+	_                        PaymentMethod = ""
+	PaymentMethod_CARD                     = "CARD"
+	PaymentMethod_MASTERPASS               = "MASTERPASS"
+)
+
 // card type declaration
 const (
 	_            CardType = ""
@@ -139,6 +149,20 @@ const (
 	_                   RefundStatus = ""
 	SuccessRefundStatus              = "SUCCESS"
 	FailureRefundStatus              = "FAILURE"
+)
+
+// refund type declaration
+const (
+	_      RefundType = ""
+	CANCEL            = "CANCEL"
+	REFUND            = "REFUND"
+)
+
+// approval status declaration
+const (
+	_                     ApprovalStatus = ""
+	SuccessApprovalStatus                = "SUCCESS"
+	FailureApprovalStatus                = "FAILURE"
 )
 
 // status declaration
@@ -211,8 +235,8 @@ type RequestOptions struct {
 }
 
 type Response[T any] struct {
-	Response T             `json:"data"`
-	Errors   ErrorResponse `json:"errors"`
+	Response *T             `json:"data"`
+	Errors   *ErrorResponse `json:"errors"`
 }
 
 type ErrorResponse struct {
@@ -245,11 +269,31 @@ type Loyalty struct {
 	Reward      Reward      `json:"reward"`
 }
 
-type PaymentError struct {
-	ErrorGroup       string `json:"errorGroup"`
-	ErrorDescription string `json:"errorDescription"`
-	ErrorCode        string `json:"errorCode"`
+type Card struct {
+	CardHolderName               string  `json:"cardHolderName"`
+	CardNumber                   string  `json:"cardNumber"`
+	ExpireYear                   string  `json:"expireYear"`
+	ExpireMonth                  string  `json:"expireMonth"`
+	Cvc                          string  `json:"cvc"`
+	CardAlias                    string  `json:"cardAlias"`
+	CardUserKey                  string  `json:"cardUserKey"`
+	CardToken                    string  `json:"cardToken"`
+	BinNumber                    string  `json:"binNumber"`
+	LastFourDigits               string  `json:"lastFourDigits"`
+	CardHolderIdentityNumber     string  `json:"cardHolderIdentityNumber"`
+	Loyalty                      Loyalty `json:"loyalty"`
+	StoreCardAfterSuccessPayment bool    `json:"storeCardAfterSuccessPayment"`
 }
+
+type PaymentItem struct {
+	Name                   string  `json:"name"`
+	Price                  float64 `json:"price"`
+	ExternalId             string  `json:"externalId"`
+	SubMerchantMemberId    int64   `json:"subMerchantMemberId"`
+	SubMerchantMemberPrice float64 `json:"subMerchantMemberPrice"`
+}
+
+type PaymentError ErrorResponse
 
 type Void struct {
 }

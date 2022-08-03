@@ -29,49 +29,49 @@ type RetrievePayoutDetailsRequest struct {
 }
 
 type SearchPayoutCompletedTransactionsResponse struct {
-	PayoutId                      int64          `json:"payoutId"`
-	TransactionId                 int64          `json:"transactionId"`
-	TransactionType               string         `json:"transactionType"`
-	PayoutAmount                  float64        `json:"payoutAmount"`
-	Currency                      model.Currency `json:"currency"`
-	MerchantId                    int64          `json:"merchantId"`
-	MerchantType                  string         `json:"merchantType"`
-	SettlementEarningsDestination string         `json:"settlementEarningsDestination"`
-	SettlementSource              string         `json:"settlementSource"`
+	PayoutId                      *int64          `json:"payoutId"`
+	TransactionId                 *int64          `json:"transactionId"`
+	TransactionType               *string         `json:"transactionType"`
+	PayoutAmount                  *float64        `json:"payoutAmount"`
+	Currency                      *model.Currency `json:"currency"`
+	MerchantId                    *int64          `json:"merchantId"`
+	MerchantType                  *string         `json:"merchantType"`
+	SettlementEarningsDestination *string         `json:"settlementEarningsDestination"`
+	SettlementSource              *string         `json:"settlementSource"`
 }
 
 type SearchPayoutBouncedTransactionsResponse struct {
-	Id                int64        `json:"id"`
-	Iban              string       `json:"iban"`
-	CreatedDate       TimeResponse `json:"createdDate"`
-	UpdatedDate       TimeResponse `json:"updatedDate"`
-	PayoutId          int64        `json:"payoutId"`
-	PayoutAmount      float64      `json:"payoutAmount"`
-	ContactName       string       `json:"contactName"`
-	ContactSurname    string       `json:"contactSurname"`
-	LegalCompanyTitle string       `json:"legalCompanyTitle"`
-	RowDescription    string       `json:"rowDescription"`
+	Id                *int64        `json:"id"`
+	Iban              *string       `json:"iban"`
+	CreatedDate       *TimeResponse `json:"createdDate"`
+	UpdatedDate       *TimeResponse `json:"updatedDate"`
+	PayoutId          *int64        `json:"payoutId"`
+	PayoutAmount      *float64      `json:"payoutAmount"`
+	ContactName       *string       `json:"contactName"`
+	ContactSurname    *string       `json:"contactSurname"`
+	LegalCompanyTitle *string       `json:"legalCompanyTitle"`
+	RowDescription    *string       `json:"rowDescription"`
 }
 
 type PayoutDetailResponse struct {
-	RowDescription                string                            `json:"rowDescription"`
-	PayoutDate                    TimeResponse                      `json:"payoutDate"`
-	Name                          string                            `json:"name"`
-	Iban                          string                            `json:"iban"`
-	PayoutAmount                  float64                           `json:"payoutAmount"`
-	Currency                      string                            `json:"currency"`
-	MerchantId                    int64                             `json:"merchantId"`
-	MerchantType                  string                            `json:"merchantType"`
-	SettlementEarningsDestination string                            `json:"settlementEarningsDestination"`
-	SettlementSource              string                            `json:"settlementSource"`
-	BounceStatus                  string                            `json:"bounceStatus"`
+	RowDescription                *string                           `json:"rowDescription"`
+	PayoutDate                    *TimeResponse                     `json:"payoutDate"`
+	Name                          *string                           `json:"name"`
+	Iban                          *string                           `json:"iban"`
+	PayoutAmount                  *float64                          `json:"payoutAmount"`
+	Currency                      *string                           `json:"currency"`
+	MerchantId                    *int64                            `json:"merchantId"`
+	MerchantType                  *string                           `json:"merchantType"`
+	SettlementEarningsDestination *string                           `json:"settlementEarningsDestination"`
+	SettlementSource              *string                           `json:"settlementSource"`
+	BounceStatus                  *string                           `json:"bounceStatus"`
 	PayoutTransactions            []PayoutDetailTransactionResponse `json:"payoutTransactions"`
 }
 
 type PayoutDetailTransactionResponse struct {
-	TransactionId   int64   `json:"transactionId"`
-	TransactionType string  `json:"transactionType"`
-	PayoutAmount    float64 `json:"payoutAmount"`
+	TransactionId   *int64   `json:"transactionId"`
+	TransactionType *string  `json:"transactionType"`
+	PayoutAmount    *float64 `json:"payoutAmount"`
 }
 
 func (api *SettlementReporting) SearchPayoutCompletedTransactions(request SearchPayoutCompletedTransactionsRequest) (interface{}, error) {

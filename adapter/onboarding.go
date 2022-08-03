@@ -62,27 +62,27 @@ type SearchMembersRequest struct {
 }
 
 type MemberResponse struct {
-	Id                            int64                               `json:"id"`
-	CreatedDate                   TimeResponse                        `json:"createdDate"`
-	UpdatedDate                   TimeResponse                        `json:"updatedDate"`
-	Status                        model.Status                        `json:"status"`
-	IsBuyer                       bool                                `json:"isBuyer"`
-	IsSubMerchant                 bool                                `json:"isSubMerchant"`
-	MemberType                    model.MemberType                    `json:"memberType"`
-	MemberExternalId              string                              `json:"memberExternalId"`
-	Name                          string                              `json:"name"`
-	Email                         string                              `json:"email"`
-	Address                       string                              `json:"address"`
-	PhoneNumber                   string                              `json:"phoneNumber"`
-	IdentityNumber                string                              `json:"identityNumber"`
-	ContactName                   string                              `json:"contactName"`
-	ContactSurname                string                              `json:"contactSurname"`
-	LegalCompanyTitle             string                              `json:"legalCompanyTitle"`
-	TaxOffice                     string                              `json:"taxOffice"`
-	TaxNumber                     string                              `json:"taxNumber"`
-	SettlementEarningsDestination model.SettlementEarningsDestination `json:"settlementEarningsDestination"`
-	NegativeWalletAmountLimit     float64                             `json:"negativeWalletAmountLimit"`
-	Iban                          string                              `json:"iban"`
+	Id                            *int64                               `json:"id"`
+	CreatedDate                   *TimeResponse                        `json:"createdDate"`
+	UpdatedDate                   *TimeResponse                        `json:"updatedDate"`
+	Status                        *model.Status                        `json:"status"`
+	IsBuyer                       *bool                                `json:"isBuyer"`
+	IsSubMerchant                 *bool                                `json:"isSubMerchant"`
+	MemberType                    *model.MemberType                    `json:"memberType"`
+	MemberExternalId              *string                              `json:"memberExternalId"`
+	Name                          *string                              `json:"name"`
+	Email                         *string                              `json:"email"`
+	Address                       *string                              `json:"address"`
+	PhoneNumber                   *string                              `json:"phoneNumber"`
+	IdentityNumber                *string                              `json:"identityNumber"`
+	ContactName                   *string                              `json:"contactName"`
+	ContactSurname                *string                              `json:"contactSurname"`
+	LegalCompanyTitle             *string                              `json:"legalCompanyTitle"`
+	TaxOffice                     *string                              `json:"taxOffice"`
+	TaxNumber                     *string                              `json:"taxNumber"`
+	SettlementEarningsDestination *model.SettlementEarningsDestination `json:"settlementEarningsDestination"`
+	NegativeWalletAmountLimit     *float64                             `json:"negativeWalletAmountLimit"`
+	Iban                          *string                              `json:"iban"`
 }
 
 func (api *Onboarding) CreateMember(request CreateMemberRequest) (interface{}, error) {

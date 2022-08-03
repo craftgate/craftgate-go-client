@@ -26,17 +26,17 @@ type SearchInstallmentsRequest struct {
 }
 
 type SearchInstallmentResponse struct {
-	BinNumber         string             `json:"binNumber"`
-	Price             float64            `json:"price"`
-	CardType          string             `json:"cardType"`
-	CardAssociation   string             `json:"cardAssociation"`
-	CardBrand         string             `json:"cardBrand"`
-	BankName          string             `json:"bankName"`
-	BankCode          int                `json:"bankCode"`
-	Force3Ds          bool               `json:"force3ds"`
-	CvcRequired       bool               `json:"cvcRequired"`
-	Commercial        bool               `json:"commercial"`
-	PosAlias          string             `json:"posAlias"`
+	BinNumber         *string            `json:"binNumber"`
+	Price             *float64           `json:"price"`
+	CardType          *string            `json:"cardType"`
+	CardAssociation   *string            `json:"cardAssociation"`
+	CardBrand         *string            `json:"cardBrand"`
+	BankName          *string            `json:"bankName"`
+	BankCode          *int               `json:"bankCode"`
+	Force3Ds          *bool              `json:"force3ds"`
+	CvcRequired       *bool              `json:"cvcRequired"`
+	Commercial        *bool              `json:"commercial"`
+	PosAlias          *string            `json:"posAlias"`
 	InstallmentPrices []InstallmentPrice `json:"installmentPrices"`
 }
 
@@ -45,13 +45,13 @@ type RetrieveBinNumberRequest struct {
 }
 
 type RetrieveBinNumberResponse struct {
-	BinNumber       string `json:"binNumber"`
-	CardType        string `json:"cardType"`
-	CardAssociation string `json:"cardAssociation"`
-	CardBrand       string `json:"cardBrand"`
-	BankName        string `json:"bankName"`
-	BankCode        int    `json:"bankCode"`
-	Commercial      bool   `json:"commercial"`
+	BinNumber       *string `json:"binNumber"`
+	CardType        *string `json:"cardType"`
+	CardAssociation *string `json:"cardAssociation"`
+	CardBrand       *string `json:"cardBrand"`
+	BankName        *string `json:"bankName"`
+	BankCode        *int    `json:"bankCode"`
+	Commercial      *bool   `json:"commercial"`
 }
 
 func (api *Installment) SearchInstallments(request SearchInstallmentsRequest) (interface{}, error) {

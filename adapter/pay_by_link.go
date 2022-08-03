@@ -43,19 +43,19 @@ type SearchProductsRequest struct {
 }
 
 type ProductResponse struct {
-	Id                  int64          `json:"id"`
-	Name                string         `json:"name"`
-	Description         string         `json:"description"`
-	Status              model.Status   `json:"status"`
-	Price               float64        `json:"price"`
-	Currency            model.Currency `json:"currency"`
-	Stock               int            `json:"stock"`
-	SoldCount           int            `json:"soldCount"`
-	Token               string         `json:"token"`
-	EnabledInstallments []int          `json:"enabledInstallments"`
-	Url                 string         `json:"url"`
-	QrCodeUrl           string         `json:"qrCodeUrl"`
-	Channel             string         `json:"channel"`
+	Id                  *int64          `json:"id"`
+	Name                *string         `json:"name"`
+	Description         *string         `json:"description"`
+	Status              *model.Status   `json:"status"`
+	Price               *float64        `json:"price"`
+	Currency            *model.Currency `json:"currency"`
+	Stock               *int            `json:"stock"`
+	SoldCount           *int            `json:"soldCount"`
+	Token               *string         `json:"token"`
+	EnabledInstallments []int           `json:"enabledInstallments"`
+	Url                 *string         `json:"url"`
+	QrCodeUrl           *string         `json:"qrCodeUrl"`
+	Channel             *string         `json:"channel"`
 }
 
 func (api *PayByLink) CreateProduct(request CreateProductRequest) (interface{}, error) {

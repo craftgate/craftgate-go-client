@@ -55,59 +55,59 @@ type SearchWithdrawsRequest struct {
 }
 
 type MemberWalletResponse struct {
-	Id               int64          `json:"id"`
-	CreatedDate      TimeResponse   `json:"createdDate"`
-	UpdatedDate      TimeResponse   `json:"updatedDate"`
-	Amount           float64        `json:"amount"`
-	WithdrawalAmount float64        `json:"withdrawalAmount"`
-	Currency         model.Currency `json:"currency"`
-	MemberId         int64          `json:"memberId"`
+	Id               *int64          `json:"id"`
+	CreatedDate      *TimeResponse   `json:"createdDate"`
+	UpdatedDate      *TimeResponse   `json:"updatedDate"`
+	Amount           *float64        `json:"amount"`
+	WithdrawalAmount *float64        `json:"withdrawalAmount"`
+	Currency         *model.Currency `json:"currency"`
+	MemberId         *int64          `json:"memberId"`
 }
 
 type RemittanceResponse struct {
-	Id                   int64        `json:"id"`
-	CreatedDate          TimeResponse `json:"createdDate"`
-	Active               int          `json:"active"`
-	Price                float64      `json:"price"`
-	MemberId             int64        `json:"memberId"`
-	RemittanceType       string       `json:"remittanceType"`
-	RemittanceReasonType string       `json:"remittanceReasonType"`
-	Description          string       `json:"description"`
+	Id                   *int64        `json:"id"`
+	CreatedDate          *TimeResponse `json:"createdDate"`
+	Active               *int          `json:"active"`
+	Price                *float64      `json:"price"`
+	MemberId             *int64        `json:"memberId"`
+	RemittanceType       *string       `json:"remittanceType"`
+	RemittanceReasonType *string       `json:"remittanceReasonType"`
+	Description          *string       `json:"description"`
 }
 
 type WithdrawResponse struct {
-	Id           int64                         `json:"id"`
-	CreatedDate  TimeResponse                  `json:"createdDate"`
-	Status       model.Status                  `json:"status"`
-	MemberId     int64                         `json:"memberId"`
-	PayoutId     int64                         `json:"payoutId"`
-	Price        float64                       `json:"price"`
-	Description  string                        `json:"description"`
-	Currency     model.Currency                `json:"currency"`
-	PayoutStatus model.TransactionPayoutStatus `json:"payoutStatus"`
+	Id           *int64                         `json:"id"`
+	CreatedDate  *TimeResponse                  `json:"createdDate"`
+	Status       *model.Status                  `json:"status"`
+	MemberId     *int64                         `json:"memberId"`
+	PayoutId     *int64                         `json:"payoutId"`
+	Price        *float64                       `json:"price"`
+	Description  *string                        `json:"description"`
+	Currency     *model.Currency                `json:"currency"`
+	PayoutStatus *model.TransactionPayoutStatus `json:"payoutStatus"`
 }
 
 type RefundWalletTransactionToCardResponse struct {
-	Id                  int64                                            `json:"id"`
-	CreatedDate         TimeResponse                                     `json:"createdDate"`
-	RefundStatus        string                                           `json:"refundStatus"`
-	RefundPrice         float64                                          `json:"refundPrice"`
-	AuthCode            string                                           `json:"authCode"`
-	HostReference       string                                           `json:"hostReference"`
-	TransId             string                                           `json:"transId"`
-	TransactionId       int64                                            `json:"transactionId"`
-	WalletTransactionId int64                                            `json:"walletTransactionId"`
-	PaymentError        model.PaymentError                               `json:"paymentError"`
-	TransactionType     model.WalletTransactionRefundCardTransactionType `json:"transactionType"`
+	Id                  *int64                                            `json:"id"`
+	CreatedDate         *TimeResponse                                     `json:"createdDate"`
+	RefundStatus        *string                                           `json:"refundStatus"`
+	RefundPrice         *float64                                          `json:"refundPrice"`
+	AuthCode            *string                                           `json:"authCode"`
+	HostReference       *string                                           `json:"hostReference"`
+	TransId             *string                                           `json:"transId"`
+	TransactionId       *int64                                            `json:"transactionId"`
+	WalletTransactionId *int64                                            `json:"walletTransactionId"`
+	PaymentError        *model.PaymentError                               `json:"paymentError"`
+	TransactionType     *model.WalletTransactionRefundCardTransactionType `json:"transactionType"`
 }
 
 type SearchWalletTransactionsResponse struct {
-	ID                    int64        `json:"id"`
-	CreatedDate           TimeResponse `json:"createdDate"`
-	WalletTransactionType string       `json:"walletTransactionType"`
-	Amount                float64      `json:"amount"`
-	TransactionID         int64        `json:"transactionId"`
-	WalletID              int64        `json:"walletId"`
+	ID                    *int64        `json:"id"`
+	CreatedDate           *TimeResponse `json:"createdDate"`
+	WalletTransactionType *string       `json:"walletTransactionType"`
+	Amount                *float64      `json:"amount"`
+	TransactionID         *int64        `json:"transactionId"`
+	WalletID              *int64        `json:"walletId"`
 }
 
 type ResetMerchantMemberWalletBalanceRequest struct {
@@ -115,7 +115,7 @@ type ResetMerchantMemberWalletBalanceRequest struct {
 }
 
 type RetrieveWalletTransactionRefundableAmountResponse struct {
-	RefundableAmount float64 `json:"refundableAmount"`
+	RefundableAmount *float64 `json:"refundableAmount"`
 }
 
 func (api *Wallet) RetrieveMemberWallet(memberId int64) (interface{}, error) {

@@ -16,7 +16,7 @@ type CreateInstantWalletSettlementRequest struct {
 }
 
 type CreateInstantWalletSettlementResponse struct {
-	SettlementResultStatus string `json:"settlementResultStatus"`
+	SettlementResultStatus *string `json:"settlementResultStatus"`
 }
 
 func (api *Settlement) CreateInstantWalletSettlement(request CreateInstantWalletSettlementRequest) (interface{}, error) {
