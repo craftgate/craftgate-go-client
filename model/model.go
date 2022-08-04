@@ -260,37 +260,37 @@ type MerchantPos struct {
 }
 
 type Reward struct {
-	CardRewardMoney float64 `json:"cardRewardMoney"`
-	FirmRewardMoney float64 `json:"firmRewardMoney"`
+	CardRewardMoney float64 `json:"cardRewardMoney,omitempty"`
+	FirmRewardMoney float64 `json:"firmRewardMoney,omitempty"`
 }
 
 type Loyalty struct {
-	LoyaltyType LoyaltyType `json:"type"`
-	Reward      Reward      `json:"reward"`
+	LoyaltyType LoyaltyType `json:"type,omitempty"`
+	Reward      Reward      `json:"reward,omitempty"`
 }
 
 type Card struct {
-	CardHolderName               string  `json:"cardHolderName"`
-	CardNumber                   string  `json:"cardNumber"`
-	ExpireYear                   string  `json:"expireYear"`
-	ExpireMonth                  string  `json:"expireMonth"`
-	Cvc                          string  `json:"cvc"`
-	CardAlias                    string  `json:"cardAlias"`
-	CardUserKey                  string  `json:"cardUserKey"`
-	CardToken                    string  `json:"cardToken"`
-	BinNumber                    string  `json:"binNumber"`
-	LastFourDigits               string  `json:"lastFourDigits"`
-	CardHolderIdentityNumber     string  `json:"cardHolderIdentityNumber"`
-	Loyalty                      Loyalty `json:"loyalty"`
-	StoreCardAfterSuccessPayment bool    `json:"storeCardAfterSuccessPayment"`
+	CardHolderName               string   `json:"cardHolderName,omitempty"`
+	CardNumber                   string   `json:"cardNumber,omitempty"`
+	ExpireYear                   string   `json:"expireYear,omitempty"`
+	ExpireMonth                  string   `json:"expireMonth,omitempty"`
+	Cvc                          string   `json:"cvc,omitempty"`
+	CardAlias                    string   `json:"cardAlias,omitempty"`
+	CardUserKey                  string   `json:"cardUserKey,omitempty"`
+	CardToken                    string   `json:"cardToken,omitempty"`
+	BinNumber                    string   `json:"binNumber,omitempty"`
+	LastFourDigits               string   `json:"lastFourDigits,omitempty"`
+	CardHolderIdentityNumber     string   `json:"cardHolderIdentityNumber,omitempty"`
+	Loyalty                      *Loyalty `json:"loyalty,omitempty"`
+	StoreCardAfterSuccessPayment bool     `json:"storeCardAfterSuccessPayment,omitempty"`
 }
 
 type PaymentItem struct {
-	Name                   string  `json:"name"`
-	Price                  float64 `json:"price"`
-	ExternalId             string  `json:"externalId"`
-	SubMerchantMemberId    int64   `json:"subMerchantMemberId"`
-	SubMerchantMemberPrice float64 `json:"subMerchantMemberPrice"`
+	Name                   string  `json:"name,omitempty"`
+	Price                  float64 `json:"price,omitempty"`
+	ExternalId             string  `json:"externalId,omitempty"`
+	SubMerchantMemberId    int64   `json:"subMerchantMemberId,omitempty"`
+	SubMerchantMemberPrice float64 `json:"subMerchantMemberPrice,omitempty"`
 }
 
 type PaymentError ErrorResponse

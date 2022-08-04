@@ -12,6 +12,7 @@ func main() {
 
 	res, _ := Craftgate.Installment.RetrieveBinNumber("552096")
 	fmt.Println(res)
+
 	//
 	//res, _ := Craftgate.Installment.SearchInstallments(adapter.SearchInstallmentRequest{BinNumber: "552096", Price: 100.00})
 	//fmt.Println(res)

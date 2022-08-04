@@ -48,8 +48,8 @@ func SendRequest(req *http.Request, v interface{}, opts model.RequestOptions) er
 
 	if res.StatusCode < http.StatusOK || res.StatusCode >= http.StatusBadRequest {
 		var errRes model.Response[any]
-		if err = json.NewDecoder(res.Body).Decode(&v); err == nil {
-			return errors.New(errRes.Errors.ErrorGroup)
+		if err = json.NewDecoder(res.Body).Decode(&errRes); err == nil {
+			return errors.New(errRes.Errors.ErrorDescription)
 		}
 
 		return fmt.Errorf("unknown error, status code: %d", res.StatusCode)

@@ -3,7 +3,7 @@ package tests
 import (
 	"craftgate-go-client/adapter"
 	"craftgate-go-client/model"
-	"fmt"
+	"github.com/davecgh/go-spew/spew"
 	"testing"
 	"time"
 )
@@ -26,7 +26,7 @@ func Test_SearchPayment(t *testing.T) {
 		MaxCreatedDate: time.Now(),
 	}
 	res, err := paymentReporting.SearchPayments(request)
-	fmt.Println(res)
+	spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -41,7 +41,7 @@ func Test_SearchPaymentRefunds(t *testing.T) {
 		MaxCreatedDate: time.Now(),
 	}
 	res, err := paymentReporting.SearchPaymentRefunds(request)
-	fmt.Println(res)
+	spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -56,7 +56,7 @@ func Test_SearchPaymentTransactionRefunds(t *testing.T) {
 		MaxCreatedDate: time.Now(),
 	}
 	res, err := paymentReporting.SearchPaymentTransactionRefunds(request)
-	fmt.Println(res)
+	spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -65,7 +65,7 @@ func Test_SearchPaymentTransactionRefunds(t *testing.T) {
 
 func Test_RetrievePayment(t *testing.T) {
 	res, err := paymentReporting.RetrievePayment(118185)
-	fmt.Println(res)
+	spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -74,7 +74,7 @@ func Test_RetrievePayment(t *testing.T) {
 
 func Test_RetrievePaymentTransactions(t *testing.T) {
 	res, err := paymentReporting.RetrievePaymentTransactions(118185)
-	fmt.Println(res)
+	spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -83,7 +83,7 @@ func Test_RetrievePaymentTransactions(t *testing.T) {
 
 func Test_RetrievePaymentRefunds(t *testing.T) {
 	res, err := paymentReporting.RetrievePaymentRefunds(118185)
-	fmt.Println(res)
+	spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -92,7 +92,7 @@ func Test_RetrievePaymentRefunds(t *testing.T) {
 
 func Test_RetrievePaymentTransactionRefunds(t *testing.T) {
 	res, err := paymentReporting.RetrievePaymentTransactionRefunds(118185, 101131)
-	fmt.Println(res)
+	spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)

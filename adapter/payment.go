@@ -520,33 +520,33 @@ func (api *Payment) DeleteStoredCard(request DeleteStoredCardRequest) error {
 	return resErr
 }
 
-func (api *Payment) SearchStoredCards(request SearchStoredCardsRequest) error {
+func (api *Payment) SearchStoredCards(request SearchStoredCardsRequest) (interface{}, error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/payment/v1/cards", api.Opts.BaseURL), nil)
 	req.URL.RawQuery, _ = QueryParams(request)
 	res := model.Response[model.DataResponse[StoredCardResponse]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
-	return resErr
+	return res, resErr
 }
-func (api *Payment) ApprovePaymentTransactions(request PaymentTransactionsApprovalRequest) error {
+func (api *Payment) ApprovePaymentTransactions(request PaymentTransactionsApprovalRequest) (interface{}, error) {
 	body, _ := PrepareBody(request)
 	req, _ := http.NewRequest("POST", fmt.Sprintf("%s/payment/v1/payment-transactions/approve", api.Opts.BaseURL), body)
 	res := model.Response[model.DataResponse[PaymentTransactionsApprovalResponse]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
-	return resErr
+	return res, resErr
 }
 
-func (api *Payment) DisapprovePaymentTransactions(request PaymentTransactionsApprovalRequest) error {
+func (api *Payment) DisapprovePaymentTransactions(request PaymentTransactionsApprovalRequest) (interface{}, error) {
 	body, _ := PrepareBody(request)
 	req, _ := http.NewRequest("POST", fmt.Sprintf("%s/payment/v1/payment-transactions/disapprove", api.Opts.BaseURL), body)
 	res := model.Response[model.DataResponse[PaymentTransactionsApprovalResponse]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
-	return resErr
+	return res, resErr
 }
 
-func (api *Payment) CheckMasterpassUser(request CheckMasterpassUserRequest) error {
+func (api *Payment) CheckMasterpassUser(request CheckMasterpassUserRequest) (interface{}, error) {
 	body, _ := PrepareBody(request)
 	req, _ := http.NewRequest("POST", fmt.Sprintf("%s/payment/v1/masterpass-payments/check-user", api.Opts.BaseURL), body)
 	res := model.Response[model.DataResponse[CheckMasterpassUserResponse]]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
-	return resErr
+	return res, resErr
 }

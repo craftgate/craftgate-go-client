@@ -3,7 +3,7 @@ package tests
 import (
 	"craftgate-go-client/adapter"
 	"craftgate-go-client/model"
-	"fmt"
+	"github.com/davecgh/go-spew/spew"
 	"testing"
 	"time"
 )
@@ -23,7 +23,7 @@ func TestSettlementReporting_SearchPayoutCompletedTransactions(t *testing.T) {
 	}
 
 	res, err := settlementReporting.SearchPayoutCompletedTransactions(request)
-	fmt.Println(res)
+	spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -37,7 +37,7 @@ func TestSettlementReporting_SearchPayoutBouncedTransactions(t *testing.T) {
 	}
 
 	res, err := settlementReporting.SearchPayoutBouncedTransactions(request)
-	fmt.Println(res)
+	spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -46,7 +46,7 @@ func TestSettlementReporting_SearchPayoutBouncedTransactions(t *testing.T) {
 
 func TestSettlementReporting_RetrievePayoutDetails(t *testing.T) {
 	res, err := settlementReporting.RetrievePayoutDetails(adapter.RetrievePayoutDetailsRequest{PayoutDetailId: 49})
-	fmt.Println(res)
+	spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
