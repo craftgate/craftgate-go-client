@@ -146,7 +146,7 @@ type InitCheckoutPaymentRequest struct {
 	ClientIp                    string                `json:"clientIp,omitempty"`
 	PaymentPhase                model.PaymentPhase    `json:"paymentPhase,omitempty"`
 	PaymentChannel              string                `json:"paymentChannel,omitempty"`
-	EnabledPaymentMethods       []model.PaymentMethod `json:"enabledPaymentMethods"`
+	EnabledPaymentMethods       []model.PaymentMethod `json:"enabledPaymentMethods,omitempty"`
 	MasterpassGsmNumber         string                `json:"masterpassGsmNumber,omitempty"`
 	MasterpassUserId            string                `json:"masterpassUserId,omitempty"`
 	CardUserKey                 string                `json:"cardUserKey,omitempty"`
@@ -214,7 +214,7 @@ type InitGarantiPayPaymentRequest struct {
 	BuyerMemberId  int64                   `json:"buyerMemberId,omitempty"`
 	BankOrderId    string                  `json:"bankOrderId,omitempty"`
 	Items          []model.PaymentItem     `json:"items"`
-	Installments   []GarantiPayInstallment `json:"installments"`
+	Installments   []GarantiPayInstallment `json:"installments,omitempty"`
 }
 
 type GarantiPayInstallment struct {
@@ -323,8 +323,8 @@ type UpdateStoredCardRequest struct {
 }
 
 type DeleteStoredCardRequest struct {
-	cardUserKey string `schema:"cardUserKey,omitempty"`
-	cardToken   string `schema:"cardToken,omitempty"`
+	CardUserKey string `schema:"cardUserKey,omitempty"`
+	CardToken   string `schema:"cardToken,omitempty"`
 }
 
 type SearchStoredCardsRequest struct {
