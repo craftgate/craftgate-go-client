@@ -11,8 +11,8 @@ import (
 var paymentReporting = adapter.PaymentReporting{
 	Opts: model.RequestOptions{
 		BaseURL:   "https://sandbox-api.craftgate.io",
-		ApiKey:    "sandbox-YEhueLgomBjqsnvBlWVVuFsVhlvJlMHE",
-		SecretKey: "sandbox-tBdcdKVGmGupzfaWcULcwDLMoglZZvTz",
+		ApiKey:    "api-key",
+		SecretKey: "secret-key",
 	},
 }
 

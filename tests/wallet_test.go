@@ -11,8 +11,8 @@ import (
 var wallet = adapter.Wallet{
 	Opts: model.RequestOptions{
 		BaseURL:   "https://sandbox-api.craftgate.io",
-		ApiKey:    "sandbox-bnqfCZGyogzVmQKuiHPvwilBKDAmYvoB",
-		SecretKey: "sandbox-okZEjZlBlteIPARYChRHewtPgKgHAoXO",
+		ApiKey:    "api-key",
+		SecretKey: "secret-key",
 	},
 }
 

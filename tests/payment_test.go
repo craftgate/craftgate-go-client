@@ -10,8 +10,8 @@ import (
 var payment = adapter.Payment{
 	Opts: model.RequestOptions{
 		BaseURL:   "https://sandbox-api.craftgate.io",
-		ApiKey:    "sandbox-YEhueLgomBjqsnvBlWVVuFsVhlvJlMHE",
-		SecretKey: "sandbox-tBdcdKVGmGupzfaWcULcwDLMoglZZvTz",
+		ApiKey:    "api-key",
+		SecretKey: "secret-key",
 	},
 }
 

@@ -10,8 +10,8 @@ import (
 var installment = adapter.Installment{
 	Opts: model.RequestOptions{
 		BaseURL:   "https://sandbox-api.craftgate.io",
-		ApiKey:    "sandbox-SpqVrfuINfhbFtDEWBqQTCAhIzTEOedj",
-		SecretKey: "sandbox-aJGxugIvDEdmgUYFByWAyNCrgaEpYWOw",
+		ApiKey:    "api-key",
+		SecretKey: "secret-key",
 	},
 }
 
