@@ -27,8 +27,12 @@ To access the Craftgate API you'll first need to obtain API credentials (e.g. an
 Once you've obtained your API credentials, you can start using Craftgate by instantiating a `Craftgate` with your credentials.
 
 ```go
-
-Craftgate := CraftgateClient("<YOUR API KEY>", "<YOUR SECRET KEY>", "<BASE URL>")
+client := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>")
+searchRequest := SearchInstallmentRequest{}
+if res, err:=client.Installment.Search(context.Background(), searchRequest); err != nil {
+	log.Fatalf("Failed to search %v", err)
+}
+log.Infof("Search installment result %v", res)
 ```
 
 By default the Craftgate client connects to the production API servers at `https://api.craftgate.io`. For testing purposes, please use the sandbox URL `https://sandbox-api.craftgate.io` using the .

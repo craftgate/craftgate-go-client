@@ -1,6 +1,8 @@
 package adapter
 
 import (
+	"context"
+	craftgate "craftgate-go-client"
 	"craftgate-go-client/adapter/rest"
 	"craftgate-go-client/model"
 	"fmt"
@@ -8,7 +10,7 @@ import (
 )
 
 type Installment struct {
-	Opts model.RequestOptions
+	client *craftgate.Client
 }
 
 type InstallmentPrice struct {
@@ -54,15 +56,19 @@ type RetrieveBinNumberResponse struct {
 	Commercial      *bool   `json:"commercial"`
 }
 
-func (api *Installment) SearchInstallments(request SearchInstallmentsRequest) (interface{}, error) {
-	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/installment/v1/installments", api.Opts.BaseURL), nil)
+func (api *Installment) SearchInstallments(ctx context.Context, request SearchInstallmentsRequest) (*SearchInstallmentResponse, error) {
 
-	request.Currency = "TRY"
-	req.URL.RawQuery, _ = QueryParams(request)
+	newRequest, err := api.client.NewRequest(ctx, http.MethodGet, "/installment/v1/installments", request)
+	if err != nil {
+		return nil, err
+	}
+	installmentResponse := new(SearchInstallmentResponse)
+	_, respErr := api.client.Do(ctx, newRequest, installmentResponse)
+	if err != nil {
+		return nil, respErr
+	}
 
-	res := model.Response[model.DataResponse[SearchInstallmentResponse]]{}
-	resErr := rest.SendRequest(req, &res, api.Opts)
-	return &res, resErr
+	return installmentResponse, err
 }
 
 func (api *Installment) RetrieveBinNumber(binNumber string) (interface{}, error) {
