@@ -28,6 +28,8 @@ Once you've obtained your API credentials, you can start using Craftgate by inst
 
 ```go
 client := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>")
+client := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", SetHttpClient("yourclient")
+client := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", SetBaseURL("http://"))
 searchRequest := SearchInstallmentRequest{}
 if res, err:=client.Installment.Search(context.Background(), searchRequest); err != nil {
 	log.Fatalf("Failed to search %v", err)
