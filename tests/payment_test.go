@@ -415,3 +415,112 @@ func TestPayment_CheckMasterpassUser(t *testing.T) {
 		t.Errorf("Error %s", err)
 	}
 }
+
+func TestPayment_InitApmPayment(t *testing.T) {
+	res, err := payment.InitApmPayment(adapter.InitApmPaymentRequest{
+		ApmType:        model.PAPARA,
+		Price:          1,
+		PaidPrice:      1,
+		Currency:       model.TRY,
+		PaymentGroup:   model.LISTING_OR_SUBSCRIPTION,
+		ConversationId: "456d1297-908e-4bd6-a13b-4be31a6e47d5",
+		ExternalId:     "optional-external-id",
+		CallbackUrl:    "https://www.your-website.com/craftgate-apm-callback",
+		Items: []model.PaymentItem{
+			{
+				Name:       "Item 1",
+				Price:      0.6,
+				ExternalId: "1",
+			},
+			{
+				Name:       "Item 2",
+				Price:      0.4,
+				ExternalId: "2",
+			},
+		},
+	})
+	spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_InitSodexoApmPayment(t *testing.T) {
+	res, err := payment.InitApmPayment(adapter.InitApmPaymentRequest{
+		ApmType:         model.SODEXO,
+		ApmUserIdentity: "5555555555",
+		AdditionalParams: map[string]interface{}{
+			"sodexoCode": "843195",
+		},
+		Price:          1,
+		PaidPrice:      1,
+		Currency:       model.TRY,
+		PaymentGroup:   model.LISTING_OR_SUBSCRIPTION,
+		ConversationId: "456d1297-908e-4bd6-a13b-4be31a6e47d5",
+		ExternalId:     "optional-external-id",
+		CallbackUrl:    "https://www.your-website.com/craftgate-apm-callback",
+		Items: []model.PaymentItem{
+			{
+				Name:       "Item 1",
+				Price:      0.6,
+				ExternalId: "1",
+			},
+			{
+				Name:       "Item 2",
+				Price:      0.4,
+				ExternalId: "2",
+			},
+		},
+	})
+	spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_InitEdenredApmPayment(t *testing.T) {
+	res, err := payment.InitApmPayment(adapter.InitApmPaymentRequest{
+		ApmType:         model.EDENRED,
+		ApmUserIdentity: "6036819041742253",
+		Price:           1,
+		PaidPrice:       1,
+		Currency:        model.TRY,
+		PaymentGroup:    model.LISTING_OR_SUBSCRIPTION,
+		ConversationId:  "456d1297-908e-4bd6-a13b-4be31a6e47d5",
+		ExternalId:      "optional-external-id",
+		CallbackUrl:     "https://www.your-website.com/craftgate-apm-callback",
+		Items: []model.PaymentItem{
+			{
+				Name:       "Item 1",
+				Price:      0.6,
+				ExternalId: "1",
+			},
+			{
+				Name:       "Item 2",
+				Price:      0.4,
+				ExternalId: "2",
+			},
+		},
+	})
+	spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_CompleteEdenredApmPayment(t *testing.T) {
+	res, err := payment.CompleteApmPayment(adapter.CompleteApmPaymentRequest{
+		PaymentId: 1,
+		AdditionalParams: map[string]interface{}{
+			"otpCode": "784294",
+		},
+	})
+	spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}

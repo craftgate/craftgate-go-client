@@ -23,6 +23,8 @@ type RefundDestinationType string
 type TransactionStatus string
 type TransactionPayoutStatus string
 type WalletTransactionRefundCardTransactionType string
+type ApmType string
+type ApmAdditionalAction string
 
 const (
 	ApiKeyHeaderName        = "x-api-key"
@@ -226,6 +228,22 @@ const (
 	_          WalletTransactionRefundCardTransactionType = ""
 	PAYMENT                                               = "PAYMENT"
 	PAYMENT_TX                                            = "PAYMENT_TX"
+)
+
+// apm type declaration
+const (
+	_        ApmType = ""
+	PAPARA           = "PAPARA"
+	PAYONEER         = "PAYONEER"
+	SODEXO           = "SODEXO"
+	EDENRED          = "EDENRED"
+)
+
+const (
+	_               ApmAdditionalAction = ""
+	REDIRECT_TO_URL                     = "REDIRECT_TO_URL"
+	OTP_REQUIRED                        = "OTP_REQUIRED"
+	NONE                                = "NONE"
 )
 
 type RequestOptions struct {

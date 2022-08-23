@@ -365,6 +365,40 @@ type CheckMasterpassUserResponse struct {
 	AccountStatus                         *string `json:"accountStatus"`
 }
 
+type InitApmPaymentRequest struct {
+	ApmType          model.ApmType          `json:"apmType,omitempty"`
+	Price            float64                `json:"price,omitempty"`
+	PaidPrice        float64                `json:"paidPrice,omitempty"`
+	Currency         model.Currency         `json:"currency,omitempty"`
+	PaymentGroup     model.PaymentGroup     `json:"paymentGroup,omitempty"`
+	PaymentChannel   string                 `json:"paymentChannel,omitempty"`
+	ConversationId   string                 `json:"conversationId,omitempty"`
+	ExternalId       string                 `json:"externalId,omitempty"`
+	CallbackUrl      string                 `json:"callbackUrl,omitempty"`
+	ApmOrderId       string                 `json:"apmOrderId,omitempty"`
+	ApmUserIdentity  string                 `json:"apmUserIdentity,omitempty"`
+	ClientIp         string                 `json:"clientIp,omitempty"`
+	Items            []model.PaymentItem    `json:"items"`
+	AdditionalParams map[string]interface{} `json:"additionalParams"`
+}
+
+type InitApmPaymentResponse struct {
+	PaymentId        *int64                     `json:"paymentId"`
+	RedirectUrl      *string                    `json:"redirectUrl"`
+	PaymentStatus    *model.PaymentStatus       `json:"paymentStatus"`
+	AdditionalAction *model.ApmAdditionalAction `json:"additionalAction"`
+}
+
+type CompleteApmPaymentRequest struct {
+	PaymentId        int64                  `json:"paymentId"`
+	AdditionalParams map[string]interface{} `json:"additionalParams"`
+}
+
+type CompleteApmPaymentResponse struct {
+	PaymentId     *int64               `json:"paymentId"`
+	PaymentStatus *model.PaymentStatus `json:"paymentStatus"`
+}
+
 func (api *Payment) CreatePayment(request CreatePaymentRequest) (interface{}, error) {
 	body, _ := PrepareBody(request)
 	req, _ := http.NewRequest("POST", fmt.Sprintf("%s/payment/v1/card-payments", api.Opts.BaseURL), body)
@@ -450,10 +484,27 @@ func (api *Payment) CreateFundTransferDepositPayment(request CreateFundTransferD
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return resErr
 }
+
 func (api *Payment) InitGarantiPayPayment(request InitGarantiPayPaymentRequest) (interface{}, error) {
 	body, _ := PrepareBody(request)
 	req, _ := http.NewRequest("POST", fmt.Sprintf("%s/payment/v1/garanti-pay-payments", api.Opts.BaseURL), body)
 	res := model.Response[InitGarantiPayPaymentResponse]{}
+	resErr := rest.SendRequest(req, &res, api.Opts)
+	return &res, resErr
+}
+
+func (api *Payment) InitApmPayment(request InitApmPaymentRequest) (interface{}, error) {
+	body, _ := PrepareBody(request)
+	req, _ := http.NewRequest("POST", fmt.Sprintf("%s/payment/v1/apm-payments/init", api.Opts.BaseURL), body)
+	res := model.Response[InitApmPaymentResponse]{}
+	resErr := rest.SendRequest(req, &res, api.Opts)
+	return &res, resErr
+}
+
+func (api *Payment) CompleteApmPayment(request CompleteApmPaymentRequest) (interface{}, error) {
+	body, _ := PrepareBody(request)
+	req, _ := http.NewRequest("POST", fmt.Sprintf("%s/payment/v1/apm-payments/complete", api.Opts.BaseURL), body)
+	res := model.Response[CompleteApmPaymentResponse]{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
 	return &res, resErr
 }
