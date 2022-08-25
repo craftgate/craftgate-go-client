@@ -71,7 +71,7 @@ func (c *Client) NewRequest(ctx context.Context, method, urlStr string, body int
 	var req *http.Request
 	switch method {
 	case http.MethodGet, http.MethodHead, http.MethodOptions:
-		req, err = http.NewRequest(method, u.String(), nil)
+		req, err = http.NewRequestWithContext(ctx, method, u.String(), nil)
 		if err != nil {
 			return nil, err
 		}
