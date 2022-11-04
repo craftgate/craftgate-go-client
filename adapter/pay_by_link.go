@@ -14,6 +14,7 @@ type PayByLink struct {
 type CreateProductRequest struct {
 	Name                string         `json:"name"`
 	Channel             string         `json:"channel,omitempty"`
+	OrderId             string         `json:"orderId,omitempty"`
 	Stock               int            `json:"stock,omitempty"`
 	Price               float64        `json:"price"`
 	Currency            model.Currency `json:"currency"`
@@ -24,6 +25,7 @@ type CreateProductRequest struct {
 type UpdateProductRequest struct {
 	Name                string         `json:"name"`
 	Channel             string         `json:"channel,omitempty"`
+	OrderId             string         `json:"orderId,omitempty"`
 	Stock               int            `json:"stock,omitempty"`
 	Status              model.Status   `json:"status"`
 	Price               float64        `json:"price"`
@@ -46,6 +48,7 @@ type ProductResponse struct {
 	Id                  *int64          `json:"id"`
 	Name                *string         `json:"name"`
 	Description         *string         `json:"description"`
+	OrderId             string          `json:"orderId,omitempty"`
 	Status              *model.Status   `json:"status"`
 	Price               *float64        `json:"price"`
 	Currency            *model.Currency `json:"currency"`

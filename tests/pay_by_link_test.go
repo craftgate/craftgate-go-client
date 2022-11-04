@@ -25,7 +25,7 @@ func Test_CreateProduct(t *testing.T) {
 	}
 
 	res, err := payByLink.CreateProduct(request)
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -43,7 +43,7 @@ func Test_UpdateProduct(t *testing.T) {
 	}
 
 	res, err := payByLink.UpdateProduct(193, request)
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -52,7 +52,7 @@ func Test_UpdateProduct(t *testing.T) {
 
 func Test_RetrieveProduct(t *testing.T) {
 	res, err := payByLink.RetrieveProduct(193)
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -75,7 +75,7 @@ func Test_SearchProducts(t *testing.T) {
 	}
 
 	res, err := payByLink.SearchProducts(request)
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)

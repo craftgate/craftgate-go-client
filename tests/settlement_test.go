@@ -17,7 +17,7 @@ var settlement = adapter.Settlement{
 
 func TestSettlement_CreateInstantWalletSettlement(t *testing.T) {
 	res, err := settlement.CreateInstantWalletSettlement(adapter.CreateInstantWalletSettlementRequest{ExcludedSubMerchantMemberIds: []int64{1, 2}})
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)

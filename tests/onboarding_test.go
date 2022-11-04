@@ -32,7 +32,7 @@ func Test_CreateBuyerMember(t *testing.T) {
 	}
 
 	res, err := onboarding.CreateMember(request)
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -59,7 +59,7 @@ func Test_CreateSubMerchantMember(t *testing.T) {
 	}
 
 	res, err := onboarding.CreateMember(request)
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -86,7 +86,7 @@ func Test_CreateBuyerAndSubMerchantMember(t *testing.T) {
 	}
 
 	res, err := onboarding.CreateMember(request)
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -113,7 +113,7 @@ func Test_UpdateSubMerchantMember(t *testing.T) {
 	}
 
 	res, err := onboarding.UpdateMember(69271, request)
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -139,7 +139,7 @@ func Test_UpdateBuyerMember(t *testing.T) {
 	}
 
 	res, err := onboarding.UpdateMember(69271, request)
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -148,7 +148,7 @@ func Test_UpdateBuyerMember(t *testing.T) {
 
 func Test_RetrieveMember(t *testing.T) {
 	res, err := onboarding.RetrieveMember(69271)
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -163,7 +163,7 @@ func Test_SearchMembers(t *testing.T) {
 	}
 
 	res, err := onboarding.SearchMembers(request)
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)

@@ -17,7 +17,7 @@ var installment = adapter.Installment{
 
 func Test_RetrieveBinNumber(t *testing.T) {
 	res, err := installment.RetrieveBinNumber("487074")
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -31,7 +31,7 @@ func Test_SearchInstallments(t *testing.T) {
 		Currency:  model.Currency(model.TRY),
 	}
 	res, err := installment.SearchInstallments(request)
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)

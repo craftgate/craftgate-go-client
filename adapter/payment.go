@@ -11,13 +11,6 @@ type Payment struct {
 	Opts model.RequestOptions
 }
 
-//type Payout struct {
-//	PaidPrice                     float64 `json:"paidPrice"`
-//	Currency                      string  `json:"currency"`
-//	MerchantPayoutAmount          float64 `json:"merchantPayoutAmount"`
-//	SubMerchantMemberPayoutAmount float64 `json:"subMerchantMemberPayoutAmount"`
-//}
-
 type PaymentTransactionResponse struct {
 	ID                            *int     `json:"id"`
 	ExternalID                    *string  `json:"externalId"`
@@ -443,12 +436,12 @@ func (api *Payment) Complete3DSDepositPayment(request Complete3DSPaymentRequest)
 	return &res, resErr
 }
 
-func (api *Payment) CreateFundTransferDepositPayment(request CreateFundTransferDepositPaymentRequest) error {
+func (api *Payment) CreateFundTransferDepositPayment(request CreateFundTransferDepositPaymentRequest) (interface{}, error) {
 	body, _ := PrepareBody(request)
 	req, _ := http.NewRequest("POST", fmt.Sprintf("%s/payment/v1/deposits/fund-transfer", api.Opts.BaseURL), body)
 	res := model.Void{}
 	resErr := rest.SendRequest(req, &res, api.Opts)
-	return resErr
+	return &res, resErr
 }
 func (api *Payment) InitGarantiPayPayment(request InitGarantiPayPaymentRequest) (interface{}, error) {
 	body, _ := PrepareBody(request)

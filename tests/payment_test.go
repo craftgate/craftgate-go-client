@@ -10,8 +10,8 @@ import (
 var payment = adapter.Payment{
 	Opts: model.RequestOptions{
 		BaseURL:   "https://sandbox-api.craftgate.io",
-		ApiKey:    "api-key",
-		SecretKey: "secret-key",
+		ApiKey:    "sandbox-YEhueLgomBjqsnvBlWVVuFsVhlvJlMHE",
+		SecretKey: "sandbox-tBdcdKVGmGupzfaWcULcwDLMoglZZvTz",
 	},
 }
 
@@ -46,7 +46,7 @@ func TestPayment_CreatePayment(t *testing.T) {
 	}
 
 	res, err := payment.CreatePayment(request)
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -55,7 +55,7 @@ func TestPayment_CreatePayment(t *testing.T) {
 
 func TestPayment_RetrievePayment(t *testing.T) {
 	res, err := payment.RetrievePayment(123)
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -94,7 +94,7 @@ func TestPayment_Init3DSPayment(t *testing.T) {
 	}
 
 	res, err := payment.Init3DSPayment(request)
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -105,7 +105,7 @@ func TestPayment_Complete3DSPayment(t *testing.T) {
 	res, err := payment.Complete3DSPayment(adapter.Complete3DSPaymentRequest{
 		PaymentId: 123,
 	})
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -116,7 +116,7 @@ func TestPayment_PostAuthPayment(t *testing.T) {
 	res, err := payment.PostAuthPayment(123, adapter.PostAuthPaymentRequest{
 		PaidPrice: 15.3,
 	})
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -148,7 +148,7 @@ func TestPayment_InitCheckoutPayment(t *testing.T) {
 		CallbackUrl: "www.callback.url",
 	}
 	res, err := payment.InitCheckoutPayment(request)
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -157,7 +157,7 @@ func TestPayment_InitCheckoutPayment(t *testing.T) {
 
 func TestPayment_RetrieveCheckoutPayment(t *testing.T) {
 	res, err := payment.RetrieveCheckoutPayment("foo-bar")
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -177,7 +177,7 @@ func TestPayment_CreateDepositPayment(t *testing.T) {
 			Cvc:            "000",
 		},
 	})
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -198,7 +198,7 @@ func TestPayment_Init3DSDepositPayment(t *testing.T) {
 			Cvc:            "000",
 		},
 	})
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -209,7 +209,7 @@ func TestPayment_Complete3DSDepositPayment(t *testing.T) {
 	res, err := payment.Complete3DSDepositPayment(adapter.Complete3DSPaymentRequest{
 		PaymentId: 1,
 	})
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -217,11 +217,12 @@ func TestPayment_Complete3DSDepositPayment(t *testing.T) {
 }
 
 func TestPayment_CreateFundTransferDepositPayment(t *testing.T) {
-	err := payment.CreateFundTransferDepositPayment(adapter.CreateFundTransferDepositPaymentRequest{
+	res, err := payment.CreateFundTransferDepositPayment(adapter.CreateFundTransferDepositPaymentRequest{
 		Price:          100,
 		BuyerMemberId:  1,
 		ConversationId: "456d1297-908e-4bd6-a13b-4be31a6e47d5",
 	})
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -259,7 +260,7 @@ func TestPayment_InitGarantiPayPayment(t *testing.T) {
 			},
 		},
 	})
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -273,7 +274,7 @@ func TestPayment_RetrieveLoyalties(t *testing.T) {
 		ExpireMonth: "07",
 		Cvc:         "000",
 	})
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -287,7 +288,7 @@ func TestPayment_RefundPaymentTransaction(t *testing.T) {
 		RefundPrice:           20,
 		RefundDestinationType: model.RefundDestinationTypeCARD,
 	})
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -296,7 +297,7 @@ func TestPayment_RefundPaymentTransaction(t *testing.T) {
 
 func TestPayment_RetrievePaymentTransactionRefund(t *testing.T) {
 	res, err := payment.RetrievePaymentTransactionRefund(123)
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -308,7 +309,7 @@ func TestPayment_RefundPayment(t *testing.T) {
 		PaymentId:             1,
 		RefundDestinationType: model.RefundDestinationTypeCARD,
 	})
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -317,7 +318,7 @@ func TestPayment_RefundPayment(t *testing.T) {
 
 func TestPayment_RetrievePaymentRefund(t *testing.T) {
 	res, err := payment.RetrievePaymentRefund(123)
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -332,7 +333,7 @@ func TestPayment_StoreCard(t *testing.T) {
 		ExpireMonth:    "07",
 		CardAlias:      "My Card",
 	})
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -346,7 +347,7 @@ func TestPayment_UpdateStoredCard(t *testing.T) {
 		ExpireYear:  "2044",
 		ExpireMonth: "07",
 	})
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -374,7 +375,7 @@ func TestPayment_SearchStoredCards(t *testing.T) {
 		CardUserKey:     "c115ecdf-0afc-4d83-8a1b-719c2af19cbd",
 		CardToken:       "d9b19d1a-243c-43dc-a498-add08162df72",
 	})
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -386,7 +387,7 @@ func TestPayment_ApprovePaymentTransactions(t *testing.T) {
 		PaymentTransactionIds: []int64{1, 2},
 		IsTransactional:       true,
 	})
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -398,7 +399,7 @@ func TestPayment_DisapprovePaymentTransactions(t *testing.T) {
 		PaymentTransactionIds: []int64{1, 2},
 		IsTransactional:       true,
 	})
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -409,7 +410,7 @@ func TestPayment_CheckMasterpassUser(t *testing.T) {
 	res, err := payment.CheckMasterpassUser(adapter.CheckMasterpassUserRequest{
 		MasterpassGsmNumber: "903000000000",
 	})
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)

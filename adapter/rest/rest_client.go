@@ -44,7 +44,12 @@ func SendRequest(req *http.Request, v interface{}, opts model.RequestOptions) er
 	req.Header.Set("Accept", "application/json; charset=utf-8")
 
 	res, err := client.Do(req)
-	defer res.Body.Close()
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+
+		}
+	}(res.Body)
 
 	if res.StatusCode < http.StatusOK || res.StatusCode >= http.StatusBadRequest {
 		var errRes model.Response[any]
