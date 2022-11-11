@@ -1,20 +1,15 @@
 package tests
 
 import (
+	"context"
 	"craftgate-go-client/adapter"
-	"craftgate-go-client/model"
+	craftgate "craftgate-go-client/adapter"
 	"github.com/davecgh/go-spew/spew"
 	"testing"
 	"time"
 )
 
-var settlementReporting = adapter.SettlementReporting{
-	Opts: model.RequestOptions{
-		BaseURL:   "https://sandbox-api.craftgate.io",
-		ApiKey:    "api-key",
-		SecretKey: "secret-key",
-	},
-}
+var settlementReportingClient, _ = craftgate.New("sandbox-SpqVrfuINfhbFtDEWBqQTCAhIzTEOedj", "sandbox-aJGxugIvDEdmgUYFByWAyNCrgaEpYWOw", "https://sandbox-api.craftgate.io")
 
 func TestSettlementReporting_SearchPayoutCompletedTransactions(t *testing.T) {
 	request := adapter.SearchPayoutCompletedTransactionsRequest{
@@ -22,7 +17,7 @@ func TestSettlementReporting_SearchPayoutCompletedTransactions(t *testing.T) {
 		EndDate:   time.Now(),
 	}
 
-	res, err := settlementReporting.SearchPayoutCompletedTransactions(request)
+	res, err := settlementReportingClient.SettlementReporting.SearchPayoutCompletedTransactions(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -36,7 +31,7 @@ func TestSettlementReporting_SearchPayoutBouncedTransactions(t *testing.T) {
 		EndDate:   time.Now(),
 	}
 
-	res, err := settlementReporting.SearchPayoutBouncedTransactions(request)
+	res, err := settlementReportingClient.SettlementReporting.SearchPayoutBouncedTransactions(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -45,7 +40,7 @@ func TestSettlementReporting_SearchPayoutBouncedTransactions(t *testing.T) {
 }
 
 func TestSettlementReporting_RetrievePayoutDetails(t *testing.T) {
-	res, err := settlementReporting.RetrievePayoutDetails(adapter.RetrievePayoutDetailsRequest{PayoutDetailId: 49})
+	res, err := settlementReportingClient.SettlementReporting.RetrievePayoutDetails(context.Background(), 123)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {

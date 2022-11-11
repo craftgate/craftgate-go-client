@@ -1,28 +1,25 @@
 package adapter
 
 import (
-	"craftgate-go-client/adapter/rest"
-	"craftgate-go-client/model"
-	"fmt"
+	"context"
 	"net/http"
 )
 
 type Settlement struct {
-	Opts model.RequestOptions
+	Client *Client
 }
 
-type CreateInstantWalletSettlementRequest struct {
-	ExcludedSubMerchantMemberIds []int64
-}
+func (api *Settlement) CreateInstantWalletSettlement(ctx context.Context, request CreateInstantWalletSettlementRequest) (*CreateInstantWalletSettlementResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/settlement/v1/instant-wallet-settlements", request)
+	if err != nil {
+		return nil, err
+	}
 
-type CreateInstantWalletSettlementResponse struct {
-	SettlementResultStatus *string `json:"settlementResultStatus"`
-}
+	response := &Response[CreateInstantWalletSettlementResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
 
-func (api *Settlement) CreateInstantWalletSettlement(request CreateInstantWalletSettlementRequest) (interface{}, error) {
-	body, _ := PrepareBody(request)
-	req, _ := http.NewRequest("POST", fmt.Sprintf("%s/settlement/v1/instant-wallet-settlements", api.Opts.BaseURL), body)
-	res := model.Response[CreateInstantWalletSettlementResponse]{}
-	resErr := rest.SendRequest(req, &res, api.Opts)
-	return &res, resErr
+	return response.Data, nil
 }

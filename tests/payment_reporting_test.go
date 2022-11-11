@@ -1,31 +1,26 @@
 package tests
 
 import (
+	"context"
 	"craftgate-go-client/adapter"
-	"craftgate-go-client/model"
+	craftgate "craftgate-go-client/adapter"
 	"github.com/davecgh/go-spew/spew"
 	"testing"
 	"time"
 )
 
-var paymentReporting = adapter.PaymentReporting{
-	Opts: model.RequestOptions{
-		BaseURL:   "https://sandbox-api.craftgate.io",
-		ApiKey:    "api-key",
-		SecretKey: "secret-key",
-	},
-}
+var paymentReportingClient, _ = craftgate.New("sandbox-YEhueLgomBjqsnvBlWVVuFsVhlvJlMHE", "sandbox-tBdcdKVGmGupzfaWcULcwDLMoglZZvTz", "https://sandbox-api.craftgate.io")
 
 func Test_SearchPayment(t *testing.T) {
 	request := adapter.SearchPaymentsRequest{
 		Page: 0, Size: 10,
-		PaymentType:    model.PaymentType(model.CARD_PAYMENT),
-		PaymentStatus:  model.PaymentStatus(model.SUCCESS),
-		Currency:       model.Currency(model.TRY),
+		PaymentType:    craftgate.PaymentType(craftgate.CARD_PAYMENT),
+		PaymentStatus:  craftgate.PaymentStatus(craftgate.SUCCESS),
+		Currency:       craftgate.Currency(craftgate.TRY),
 		MinCreatedDate: time.Now().AddDate(0, 0, -180),
 		MaxCreatedDate: time.Now(),
 	}
-	res, err := paymentReporting.SearchPayments(request)
+	res, err := paymentReportingClient.PaymentReporting.SearchPayments(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -36,11 +31,11 @@ func Test_SearchPayment(t *testing.T) {
 func Test_SearchPaymentRefunds(t *testing.T) {
 	request := adapter.SearchPaymentRefundsRequest{
 		Page: 0, Size: 10,
-		Currency:       model.Currency(model.TRY),
+		Currency:       craftgate.Currency(craftgate.TRY),
 		MinCreatedDate: time.Now().AddDate(0, 0, -180),
 		MaxCreatedDate: time.Now(),
 	}
-	res, err := paymentReporting.SearchPaymentRefunds(request)
+	res, err := paymentReportingClient.PaymentReporting.SearchPaymentRefunds(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -51,11 +46,11 @@ func Test_SearchPaymentRefunds(t *testing.T) {
 func Test_SearchPaymentTransactionRefunds(t *testing.T) {
 	request := adapter.SearchPaymentTransactionRefundsRequest{
 		Page: 0, Size: 10,
-		Currency:       model.Currency(model.TRY),
+		Currency:       craftgate.Currency(craftgate.TRY),
 		MinCreatedDate: time.Now().AddDate(0, 0, -180),
 		MaxCreatedDate: time.Now(),
 	}
-	res, err := paymentReporting.SearchPaymentTransactionRefunds(request)
+	res, err := paymentReportingClient.PaymentReporting.SearchPaymentTransactionRefunds(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -64,7 +59,7 @@ func Test_SearchPaymentTransactionRefunds(t *testing.T) {
 }
 
 func Test_RetrievePayment(t *testing.T) {
-	res, err := paymentReporting.RetrievePayment(118185)
+	res, err := paymentReportingClient.PaymentReporting.RetrievePayment(context.Background(), 123)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -73,7 +68,7 @@ func Test_RetrievePayment(t *testing.T) {
 }
 
 func Test_RetrievePaymentTransactions(t *testing.T) {
-	res, err := paymentReporting.RetrievePaymentTransactions(118185)
+	res, err := paymentReportingClient.PaymentReporting.RetrievePaymentTransactions(context.Background(), 123)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -82,7 +77,7 @@ func Test_RetrievePaymentTransactions(t *testing.T) {
 }
 
 func Test_RetrievePaymentRefunds(t *testing.T) {
-	res, err := paymentReporting.RetrievePaymentRefunds(118185)
+	res, err := paymentReportingClient.PaymentReporting.RetrievePaymentRefunds(context.Background(), 123)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -91,7 +86,7 @@ func Test_RetrievePaymentRefunds(t *testing.T) {
 }
 
 func Test_RetrievePaymentTransactionRefunds(t *testing.T) {
-	res, err := paymentReporting.RetrievePaymentTransactionRefunds(118185, 101131)
+	res, err := paymentReportingClient.PaymentReporting.RetrievePaymentTransactionRefunds(context.Background(), 123, 789)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {

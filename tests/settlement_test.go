@@ -1,22 +1,19 @@
 package tests
 
 import (
+	"context"
 	"craftgate-go-client/adapter"
-	"craftgate-go-client/model"
+	craftgate "craftgate-go-client/adapter"
 	"github.com/davecgh/go-spew/spew"
 	"testing"
 )
 
-var settlement = adapter.Settlement{
-	Opts: model.RequestOptions{
-		BaseURL:   "https://sandbox-api.craftgate.io",
-		ApiKey:    "api-key",
-		SecretKey: "secret-key",
-	},
-}
+var settlementClient, _ = craftgate.New("sandbox-SpqVrfuINfhbFtDEWBqQTCAhIzTEOedj", "sandbox-aJGxugIvDEdmgUYFByWAyNCrgaEpYWOw", "https://sandbox-api.craftgate.io")
 
 func TestSettlement_CreateInstantWalletSettlement(t *testing.T) {
-	res, err := settlement.CreateInstantWalletSettlement(adapter.CreateInstantWalletSettlementRequest{ExcludedSubMerchantMemberIds: []int64{1, 2}})
+	request := adapter.CreateInstantWalletSettlementRequest{ExcludedSubMerchantMemberIds: []int64{1, 2}}
+
+	res, err := settlementClient.Settlement.CreateInstantWalletSettlement(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {

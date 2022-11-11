@@ -1,30 +1,25 @@
 package tests
 
 import (
+	"context"
 	"craftgate-go-client/adapter"
-	"craftgate-go-client/model"
+	craftgate "craftgate-go-client/adapter"
 	"github.com/davecgh/go-spew/spew"
 	"testing"
 )
 
-var payByLink = adapter.PayByLink{
-	Opts: model.RequestOptions{
-		BaseURL:   "https://sandbox-api.craftgate.io",
-		ApiKey:    "api-key",
-		SecretKey: "secret-key",
-	},
-}
+var payByLinkClient, _ = craftgate.New("sandbox-YEhueLgomBjqsnvBlWVVuFsVhlvJlMHE", "sandbox-tBdcdKVGmGupzfaWcULcwDLMoglZZvTz", "https://sandbox-api.craftgate.io")
 
 func Test_CreateProduct(t *testing.T) {
 	request := adapter.CreateProductRequest{
 		Name:                "A new Product",
 		Channel:             "API",
 		Price:               12.32,
-		Currency:            model.Currency(model.TRY),
+		Currency:            craftgate.Currency(craftgate.TRY),
 		EnabledInstallments: []int{1, 2, 3, 6},
 	}
 
-	res, err := payByLink.CreateProduct(request)
+	res, err := payByLinkClient.PayByLink.CreateProduct(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -35,14 +30,14 @@ func Test_CreateProduct(t *testing.T) {
 func Test_UpdateProduct(t *testing.T) {
 	request := adapter.UpdateProductRequest{
 		Name:                "A new Product",
-		Status:              model.Status(model.ACTIVE),
+		Status:              craftgate.Status(craftgate.ACTIVE),
 		Channel:             "API",
 		Price:               12.32,
-		Currency:            model.Currency(model.TRY),
+		Currency:            craftgate.Currency(craftgate.TRY),
 		EnabledInstallments: []int{1, 2, 3, 6, 9},
 	}
 
-	res, err := payByLink.UpdateProduct(193, request)
+	res, err := payByLinkClient.PayByLink.UpdateProduct(context.Background(), 123, request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -51,7 +46,7 @@ func Test_UpdateProduct(t *testing.T) {
 }
 
 func Test_RetrieveProduct(t *testing.T) {
-	res, err := payByLink.RetrieveProduct(193)
+	res, err := payByLinkClient.PayByLink.RetrieveProduct(context.Background(), 123)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -60,7 +55,7 @@ func Test_RetrieveProduct(t *testing.T) {
 }
 
 func Test_DeleteProduct(t *testing.T) {
-	err := payByLink.DeleteProduct(202)
+	err := payByLinkClient.PayByLink.DeleteProduct(context.Background(), 123)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -71,10 +66,10 @@ func Test_SearchProducts(t *testing.T) {
 	request := adapter.SearchProductsRequest{
 		Page:     0,
 		Size:     10,
-		Currency: model.Currency(model.TRY),
+		Currency: craftgate.Currency(craftgate.TRY),
 	}
 
-	res, err := payByLink.SearchProducts(request)
+	res, err := payByLinkClient.PayByLink.SearchProducts(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {

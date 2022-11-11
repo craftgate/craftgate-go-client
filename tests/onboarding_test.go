@@ -1,21 +1,16 @@
 package tests
 
 import (
+	"context"
 	"craftgate-go-client/adapter"
-	"craftgate-go-client/model"
+	craftgate "craftgate-go-client/adapter"
 	"fmt"
 	"github.com/davecgh/go-spew/spew"
 	"testing"
 	"time"
 )
 
-var onboarding = adapter.Onboarding{
-	Opts: model.RequestOptions{
-		BaseURL:   "https://sandbox-api.craftgate.io",
-		ApiKey:    "api-key",
-		SecretKey: "secret-key",
-	},
-}
+var onboardingClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func Test_CreateBuyerMember(t *testing.T) {
 	request := adapter.CreateMemberRequest{
@@ -31,7 +26,7 @@ func Test_CreateBuyerMember(t *testing.T) {
 		IsSubMerchant:             false,
 	}
 
-	res, err := onboarding.CreateMember(request)
+	res, err := onboardingClient.Onboarding.CreateMember(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -50,7 +45,7 @@ func Test_CreateSubMerchantMember(t *testing.T) {
 		IdentityNumber:    "11111111110",
 		LegalCompanyTitle: "Dem Zeytinyağı Üretim Ltd. Şti.",
 		Name:              "Dem Zeytinyağı Üretim Ltd. Şti.",
-		MemberType:        model.MemberType(model.LIMITED_OR_JOINT_STOCK_COMPANY),
+		MemberType:        craftgate.MemberType(craftgate.LIMITED_OR_JOINT_STOCK_COMPANY),
 		TaxNumber:         "1111111114",
 		TaxOffice:         "Erenköy",
 		Address:           "Suadiye Mah. Örnek Cd. No:23, 34740 Kadıköy/İstanbul",
@@ -58,7 +53,7 @@ func Test_CreateSubMerchantMember(t *testing.T) {
 		IsSubMerchant:     true,
 	}
 
-	res, err := onboarding.CreateMember(request)
+	res, err := onboardingClient.Onboarding.CreateMember(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -77,7 +72,7 @@ func Test_CreateBuyerAndSubMerchantMember(t *testing.T) {
 		IdentityNumber:    "11111111110",
 		LegalCompanyTitle: "Dem Zeytinyağı Üretim Ltd. Şti.",
 		Name:              "Dem Zeytinyağı Üretim Ltd. Şti.",
-		MemberType:        model.MemberType(model.LIMITED_OR_JOINT_STOCK_COMPANY),
+		MemberType:        craftgate.MemberType(craftgate.LIMITED_OR_JOINT_STOCK_COMPANY),
 		TaxNumber:         "1111111114",
 		TaxOffice:         "Erenköy",
 		Address:           "Suadiye Mah. Örnek Cd. No:23, 34740 Kadıköy/İstanbul",
@@ -85,7 +80,7 @@ func Test_CreateBuyerAndSubMerchantMember(t *testing.T) {
 		IsSubMerchant:     true,
 	}
 
-	res, err := onboarding.CreateMember(request)
+	res, err := onboardingClient.Onboarding.CreateMember(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -103,8 +98,8 @@ func Test_UpdateSubMerchantMember(t *testing.T) {
 		IdentityNumber:                "11111111110",
 		LegalCompanyTitle:             "Dem Zeytinyağı Üretim Ltd. Şti.",
 		Name:                          "Dem Zeytinyağı Üretim Ltd. Şti.",
-		MemberType:                    model.MemberType(model.LIMITED_OR_JOINT_STOCK_COMPANY),
-		SettlementEarningsDestination: model.SettlementEarningsDestination(model.SettlementEarningsDestinationIBAN),
+		MemberType:                    craftgate.MemberType(craftgate.LIMITED_OR_JOINT_STOCK_COMPANY),
+		SettlementEarningsDestination: craftgate.SettlementEarningsDestination(craftgate.SettlementEarningsDestinationIBAN),
 		TaxNumber:                     "1111111114",
 		TaxOffice:                     "Erenköy",
 		Address:                       "Suadiye Mah. Örnek Cd. No:23, 34740 Kadıköy/İstanbul",
@@ -112,7 +107,7 @@ func Test_UpdateSubMerchantMember(t *testing.T) {
 		IsSubMerchant:                 true,
 	}
 
-	res, err := onboarding.UpdateMember(69271, request)
+	res, err := onboardingClient.Onboarding.UpdateMember(context.Background(), 86821, request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -130,7 +125,7 @@ func Test_UpdateBuyerMember(t *testing.T) {
 		IdentityNumber:    "11111111110",
 		LegalCompanyTitle: "Dem Zeytinyağı Üretim Ltd. Şti.",
 		Name:              "Dem Zeytinyağı Üretim Ltd. Şti.",
-		MemberType:        model.MemberType(model.PERSONAL),
+		MemberType:        craftgate.MemberType(craftgate.PERSONAL),
 		TaxNumber:         "1111111114",
 		TaxOffice:         "Erenköy",
 		Address:           "Suadiye Mah. Örnek Cd. No:23, 34740 Kadıköy/İstanbul",
@@ -138,7 +133,7 @@ func Test_UpdateBuyerMember(t *testing.T) {
 		IsSubMerchant:     false,
 	}
 
-	res, err := onboarding.UpdateMember(69271, request)
+	res, err := onboardingClient.Onboarding.UpdateMember(context.Background(), 86819, request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -147,7 +142,7 @@ func Test_UpdateBuyerMember(t *testing.T) {
 }
 
 func Test_RetrieveMember(t *testing.T) {
-	res, err := onboarding.RetrieveMember(69271)
+	res, err := onboardingClient.Onboarding.RetrieveMember(context.Background(), 86821)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -162,7 +157,7 @@ func Test_SearchMembers(t *testing.T) {
 		IsSubMerchant: true,
 	}
 
-	res, err := onboarding.SearchMembers(request)
+	res, err := onboardingClient.Onboarding.SearchMembers(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
