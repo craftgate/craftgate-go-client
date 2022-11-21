@@ -9,14 +9,13 @@ type FileReporting struct {
 	Client *Client
 }
 
-func (api *FileReporting) RetrieveDailyTransactionReport(ctx context.Context, request RetrieveDailyTransactionReportRequest) (*[]byte, error) {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/file-reporting/v1/transaction-reports", request)
+func (api *FileReporting) RetrieveDailyTransactionReport(ctx context.Context, request RetrieveDailyTransactionReportRequest) ([]byte, error) {
+	newRequest, err := api.Client.NewRequestForByteResponse(ctx, http.MethodGet, "/file-reporting/v1/transaction-reports", request)
 	if err != nil {
 		return nil, err
 	}
 
-	response := &[]byte{}
-	err = api.Client.Do(ctx, newRequest, response)
+	response, err := api.Client.DoForByteResponse(ctx, newRequest)
 	if err != nil {
 		return nil, err
 	}

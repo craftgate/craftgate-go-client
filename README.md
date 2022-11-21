@@ -18,7 +18,7 @@ You can import `Craftgate` client using:
 
 ```go
 import (
-    "github.com/craftgate/craftgate-go-client"
+    "github.com/craftgate/craftgate-go-client/v1.0.0"
 )
 ```
 
@@ -28,21 +28,21 @@ Once you've obtained your API credentials, you can start using Craftgate by inst
 
 ```go
 client := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>")
-client := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", SetHttpClient("yourclient")
-client := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", SetBaseURL("http://"))
-searchRequest := SearchInstallmentRequest{}
-if res, err:=client.Installment.Search(context.Background(), searchRequest); err != nil {
-	log.Fatalf("Failed to search %v", err)
+
+request := adapter.SearchInstallmentsRequest{
+    BinNumber: "487074",
+    Price:     100,
+    Currency:  craftgate.Currency(craftgate.TRY),
 }
-log.Infof("Search installment result %v", res)
+
+res, err := client.Installment.SearchInstallments(context.Background(), request)
+
+if err != nil {
+    t.Errorf("Error %s", err)
+}
 ```
 
-By default the Craftgate client connects to the production API servers at `https://api.craftgate.io`. For testing purposes, please use the sandbox URL `https://sandbox-api.craftgate.io` using the .
-
-```go
-
-Craftgate := CraftgateClient("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://sandbox-api.craftgate.io");
-```
+You should use production API servers at `https://api.craftgate.io` for real world. For testing purposes, please use the sandbox URL `https://sandbox-api.craftgate.io`.
 
 ## Examples
 Included in the project are a number of examples that cover almost all use-cases. Refer to [the `tests/` folder](./tests/)] for more info.

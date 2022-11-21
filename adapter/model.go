@@ -28,8 +28,10 @@ type TransactionStatus string
 type TransactionPayoutStatus string
 type WalletTransactionRefundCardTransactionType string
 type FraudAction string
+type FraudCheckStatus string
 type ApmAdditionalAction string
 type ReportFileType string
+type WalletTransactionType string
 
 const (
 	ApiKeyHeaderName        = "x-api-key"
@@ -246,10 +248,10 @@ const (
 
 // settlement type declaration
 const (
-	_                  SettlementType = ""
-	SETTLEMENT                        = "SETTLEMENT"
-	BOUNCED_SETTLEMENT                = "BOUNCED_SETTLEMENT"
-	WITHDRAW                          = "WITHDRAW"
+	_                                SettlementType = ""
+	SettlementTypeSETTLEMENT                        = "SETTLEMENT"
+	SettlementTypeBOUNCED_SETTLEMENT                = "BOUNCED_SETTLEMENT"
+	SettlementTypeWITHDRAW                          = "WITHDRAW"
 )
 
 // wallet transaction refund type declaration
@@ -266,6 +268,14 @@ const (
 	REVIEW             = "REVIEW"
 )
 
+// fraud check status type declaration
+const (
+	_                         FraudCheckStatus = ""
+	FraudCheckStatusWAITING                    = "WAITING"
+	FraudCheckStatusNOT_FRAUD                  = "NOT_FRAUD"
+	FraudCheckStatusFRAUD                      = "FRAUD"
+)
+
 // apm additional action type declaration
 const (
 	_               ApmAdditionalAction = ""
@@ -279,6 +289,27 @@ const (
 	_    ReportFileType = ""
 	CSV                 = "CSV"
 	XLSX                = "XLSX"
+)
+
+// wallet transaction type declaration
+const (
+	_                            WalletTransactionType = ""
+	PAYMENT_REDEEM                                     = "PAYMENT_REDEEM"
+	REFUND_DEPOSIT                                     = "REFUND_DEPOSIT"
+	REFUND_TX_DEPOSIT                                  = "REFUND_TX_DEPOSIT"
+	WITHDRAW                                           = "WITHDRAW"
+	CANCEL_REFUND_WALLET_TO_CARD                       = "CANCEL_REFUND_WALLET_TO_CARD"
+	REFUND_WALLET_TX_TO_CARD                           = "REFUND_WALLET_TX_TO_CARD"
+	CANCEL_REFUND_TO_WALLET                            = "CANCEL_REFUND_TO_WALLET"
+	REFUND_TX_TO_WALLET                                = "REFUND_TX_TO_WALLET"
+	MANUAL_REFUND_TX_TO_WALLET                         = "MANUAL_REFUND_TX_TO_WALLET"
+	SETTLEMENT_EARNINGS                                = "SETTLEMENT_EARNINGS"
+	DEPOSIT_FROM_CARD                                  = "DEPOSIT_FROM_CARD"
+	REMITTANCE                                         = "REMITTANCE"
+	LOYALTY                                            = "LOYALTY"
+	WITHDRAW_CANCEL                                    = "WITHDRAW_CANCEL"
+	MERCHANT_BALANCE_RESET                             = "MERCHANT_BALANCE_RESET"
+	DEPOSIT_FROM_FUND_TRANSFER                         = "DEPOSIT_FROM_FUND_TRANSFER"
 )
 
 // requests
@@ -588,22 +619,138 @@ type CompleteApmPaymentResponse struct {
 }
 
 type DepositPaymentResponse struct {
-	Id                       *int64         `json:"id"`
-	CreatedDate              *TimeResponse  `json:"createdDate"`
-	Price                    *float64       `json:"price"`
-	Currency                 *string        `json:"currency"`
-	BuyerMemberId            *int64         `json:"buyerMemberId"`
-	ConversationId           *string        `json:"conversationId"`
-	BankCommissionRate       *float64       `json:"bankCommissionRate"`
-	BankCommissionRateAmount *float64       `json:"bankCommissionRateAmount"`
-	AuthCode                 *string        `json:"authCode"`
-	HostReference            *string        `json:"hostReference"`
-	TransId                  *string        `json:"transId"`
-	OrderId                  *string        `json:"orderId"`
-	PaymentType              *PaymentType   `json:"paymentType"`
-	PaymentStatus            *PaymentStatus `json:"paymentStatus"`
-	CardUserKey              *string        `json:"cardUserKey"`
-	CardToken                *string        `json:"cardToken"`
+	Id                       *int64             `json:"id"`
+	CreatedDate              *TimeResponse      `json:"createdDate"`
+	Price                    *float64           `json:"price"`
+	Currency                 *string            `json:"currency"`
+	BuyerMemberId            *int64             `json:"buyerMemberId"`
+	ConversationId           *string            `json:"conversationId"`
+	BankCommissionRate       *float64           `json:"bankCommissionRate"`
+	BankCommissionRateAmount *float64           `json:"bankCommissionRateAmount"`
+	AuthCode                 *string            `json:"authCode"`
+	HostReference            *string            `json:"hostReference"`
+	TransId                  *string            `json:"transId"`
+	OrderId                  *string            `json:"orderId"`
+	PaymentType              *PaymentType       `json:"paymentType"`
+	PaymentStatus            *PaymentStatus     `json:"paymentStatus"`
+	CardUserKey              *string            `json:"cardUserKey"`
+	CardToken                *string            `json:"cardToken"`
+	WalletTransaction        *WalletTransaction `json:"walletTransaction"`
+}
+
+type RefundWalletTransactionToCardRequest struct {
+	RefundPrice float64 `json:"refundPrice"`
+}
+
+type RemittanceRequest struct {
+	MemberId             int64   `json:"memberId"`
+	Price                float64 `json:"price"`
+	Description          string  `json:"description"`
+	RemittanceReasonType string  `json:"remittanceReasonType"`
+}
+
+type CreateWithdrawRequest struct {
+	MemberId    int64    `json:"memberId"`
+	Price       float64  `json:"price"`
+	Description string   `json:"description"`
+	Currency    Currency `json:"currency"`
+}
+
+type SearchWalletTransactionsRequest struct {
+	WalletTransactionType WalletTransactionType `schema:"walletTransactionType,omitempty"`
+	Page                  int                   `schema:"page,omitempty"`
+	Size                  int                   `schema:"size,omitempty"`
+}
+
+type SearchWithdrawsRequest struct {
+	MemberId         int64     `schema:"walletId,omitempty"`
+	PayoutStatus     string    `schema:"payoutStatus,omitempty"`
+	Currency         Currency  `schema:"currency,omitempty"`
+	MinWithdrawPrice float64   `schema:"minWithdrawPrice,omitempty"`
+	MaxWithdrawPrice float64   `schema:"maxWithdrawPrice,omitempty"`
+	MinCreatedDate   time.Time `schema:"minCreatedDate,omitempty"`
+	MaxCreatedDate   time.Time `schema:"maxCreatedDate,omitempty"`
+	Page             int       `schema:"page,omitempty"`
+	Size             int       `schema:"size,omitempty"`
+}
+
+type MemberWalletResponse struct {
+	Id               *int64        `json:"id"`
+	CreatedDate      *TimeResponse `json:"createdDate"`
+	UpdatedDate      *TimeResponse `json:"updatedDate"`
+	Amount           *float64      `json:"amount"`
+	WithdrawalAmount *float64      `json:"withdrawalAmount"`
+	Currency         *Currency     `json:"currency"`
+	MemberId         *int64        `json:"memberId"`
+}
+
+type RemittanceResponse struct {
+	Id                   *int64        `json:"id"`
+	CreatedDate          *TimeResponse `json:"createdDate"`
+	Status               *Status       `json:"status"`
+	Price                *float64      `json:"price"`
+	MemberId             *int64        `json:"memberId"`
+	RemittanceType       *string       `json:"remittanceType"`
+	RemittanceReasonType *string       `json:"remittanceReasonType"`
+	Description          *string       `json:"description"`
+}
+
+type WithdrawResponse struct {
+	Id           *int64                   `json:"id"`
+	CreatedDate  *TimeResponse            `json:"createdDate"`
+	Status       *Status                  `json:"status"`
+	MemberId     *int64                   `json:"memberId"`
+	PayoutId     *int64                   `json:"payoutId"`
+	Price        *float64                 `json:"price"`
+	Description  *string                  `json:"description"`
+	Currency     *Currency                `json:"currency"`
+	PayoutStatus *TransactionPayoutStatus `json:"payoutStatus"`
+}
+
+type RefundWalletTransactionToCardResponse struct {
+	Id                  *int64                                      `json:"id"`
+	CreatedDate         *TimeResponse                               `json:"createdDate"`
+	RefundStatus        *string                                     `json:"refundStatus"`
+	RefundPrice         *float64                                    `json:"refundPrice"`
+	AuthCode            *string                                     `json:"authCode"`
+	HostReference       *string                                     `json:"hostReference"`
+	TransId             *string                                     `json:"transId"`
+	TransactionId       *int64                                      `json:"transactionId"`
+	WalletTransactionId *int64                                      `json:"walletTransactionId"`
+	PaymentError        *PaymentError                               `json:"paymentError"`
+	TransactionType     *WalletTransactionRefundCardTransactionType `json:"transactionType"`
+}
+
+type SearchWalletTransactionsResponse struct {
+	ID                    *int64        `json:"id"`
+	CreatedDate           *TimeResponse `json:"createdDate"`
+	WalletTransactionType *string       `json:"walletTransactionType"`
+	Amount                *float64      `json:"amount"`
+	TransactionID         *int64        `json:"transactionId"`
+	WalletID              *int64        `json:"walletId"`
+}
+
+type ResetMerchantMemberWalletBalanceRequest struct {
+	WalletAmount float64 `json:"walletAmount"`
+}
+
+type RetrieveWalletTransactionRefundableAmountResponse struct {
+	RefundableAmount *float64 `json:"refundableAmount"`
+}
+
+type FundTransferDepositPaymentResponse struct {
+	Price             *float64           `json:"price"`
+	Currency          *string            `json:"currency"`
+	ConversationId    *string            `json:"conversationId"`
+	BuyerMemberId     *int64             `json:"buyerMemberId"`
+	WalletTransaction *WalletTransaction `json:"walletTransaction"`
+}
+
+type WalletTransaction struct {
+	Id                    *int64                 `json:"id"`
+	WalletTransactionType *WalletTransactionType `json:"walletTransactionType"`
+	Amount                *float64               `json:"amount"`
+	WalletId              *int64                 `json:"walletId"`
 }
 
 type GarantiPayInstallment struct {
@@ -1111,6 +1258,58 @@ type PayoutDetailTransactionResponse struct {
 type RetrieveDailyTransactionReportRequest struct {
 	ReportDate Date           `schema:"reportDate,omitempty"`
 	FileType   ReportFileType `schema:"fileType,omitempty"`
+}
+
+type SearchFraudChecksRequest struct {
+	Page           int              `schema:"page,omitempty"`
+	Size           int              `schema:"size,omitempty"`
+	Action         FraudAction      `schema:"action,omitempty"`
+	CheckStatus    FraudCheckStatus `schema:"checkStatus,omitempty"`
+	MinCreatedDate time.Time        `schema:"minCreatedDate,omitempty"`
+	MaxCreatedDate time.Time        `schema:"maxCreatedDate,omitempty"`
+	RuleId         int64            `schema:"ruleId,omitempty"`
+	PaymentId      int64            `schema:"paymentId,omitempty"`
+	PaymentStatus  PaymentStatus    `schema:"paymentStatus,omitempty"`
+}
+
+type FraudCheckResponse struct {
+	Id             *int64            `json:"id"`
+	Status         *Status           `json:"status"`
+	Action         *FraudAction      `json:"action"`
+	CheckStatus    *FraudCheckStatus `json:"checkStatus"`
+	PaymentData    *FraudPaymentData `json:"paymentData"`
+	RuleId         *int64            `json:"ruleId"`
+	RuleName       *string           `json:"ruleName"`
+	RuleConditions *string           `json:"ruleConditions"`
+	PaymentId      *int64            `json:"paymentId"`
+	PaymentStatus  *PaymentStatus    `json:"paymentStatus"`
+}
+
+type FraudPaymentData struct {
+	PaymentDate                   *time.Time `json:"paymentDate"`
+	ConversationId                *string    `json:"conversationId"`
+	PaidPrice                     *float64   `json:"paidPrice"`
+	Currency                      *Currency  `json:"currency"`
+	CardFingerprintId             *string    `json:"cardFingerprintId"`
+	CardFingerprintExpirationDate *time.Time `json:"cardFingerprintExpirationDate"`
+	BuyerId                       *int64     `json:"buyerId"`
+	ClientIp                      *string    `json:"clientIp"`
+}
+
+type FraudValueListRequest struct {
+	ListName          string `json:"listName,omitempty"`
+	Value             string `json:"value,omitempty"`
+	DurationInSeconds int    `json:"durationInSeconds,omitempty"`
+}
+
+type FraudValuesResponse struct {
+	Name   string       `json:"name"`
+	Values []FraudValue `json:"values"`
+}
+
+type FraudValue struct {
+	Value           *string `json:"value"`
+	ExpireInSeconds *int    `json:"expireInSeconds"`
 }
 
 type RequestOptions struct {

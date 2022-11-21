@@ -11,7 +11,6 @@ import (
 	"github.com/gorilla/schema"
 	"io"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"reflect"
@@ -84,6 +83,7 @@ type Client struct {
 	Settlement          *Settlement
 	SettlementReporting *SettlementReporting
 	FileReporting       *FileReporting
+	Fraud               *Fraud
 }
 
 func New(apiKey, apiSecret, baseURL string, opts ...ClientOption) (*Client, error) {
@@ -116,6 +116,7 @@ func newClient(apiKey, secretKey string) *Client {
 	client.Settlement = &Settlement{Client: client}
 	client.SettlementReporting = &SettlementReporting{Client: client}
 	client.FileReporting = &FileReporting{Client: client}
+	client.Fraud = &Fraud{Client: client}
 
 	return client
 }
@@ -167,11 +168,61 @@ func (c *Client) NewRequest(ctx context.Context, method, urlStr string, body int
 	req.Header.Set(AuthVersionHeaderName, AuthVersion)
 	req.Header.Set(ClientVersionHeaderName, ClientVersion)
 	req.Header.Set(SignatureHeaderName, hashStr)
-	req.Header.Set("Content-Type", "application/octet-stream; charset=utf-8")
+	req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	req.Header.Set("Accept", "application/json; charset=utf-8")
 
-	//private static final String CONTENT_TYPE = "Content-Type";
-	//private static final String APPLICATION_OCTET_STREAM = "application/octet-stream";
+	return req, nil
+}
+
+func (c *Client) NewRequestForByteResponse(ctx context.Context, method, urlStr string, body interface{}) (*http.Request, error) {
+	u, err := c.baseURL.Parse(urlStr)
+	if err != nil {
+		return nil, err
+	}
+
+	var req *http.Request
+
+	switch method {
+	case http.MethodGet, http.MethodDelete, http.MethodHead, http.MethodOptions:
+		req, err = http.NewRequestWithContext(ctx, method, u.String(), nil)
+		if err != nil {
+			return nil, err
+		}
+
+		if body != nil {
+			req.URL.RawQuery, _ = QueryParams(body)
+		}
+	default:
+		buf := new(bytes.Buffer)
+		if body != nil {
+			err = json.NewEncoder(buf).Encode(body)
+			if err != nil {
+				return nil, err
+			}
+		}
+
+		req, err = http.NewRequest(method, u.String(), buf)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	for k, v := range c.headers {
+		req.Header.Add(k, v)
+	}
+
+	authorizationRequestBody := c.extractRequestBodyForAuthorization(body, method, req)
+	randomStr := GenerateRandomString()
+	hashStr := GenerateHash(req.URL.String(), c.apiKey, c.secretKey, randomStr, authorizationRequestBody)
+	fmt.Println(req.URL.String())
+
+	req.Header.Set(ApiKeyHeaderName, c.apiKey)
+	req.Header.Set(RandomHeaderName, randomStr)
+	req.Header.Set(AuthVersionHeaderName, AuthVersion)
+	req.Header.Set(ClientVersionHeaderName, ClientVersion)
+	req.Header.Set(SignatureHeaderName, hashStr)
+	req.Header.Set("Content-Type", "application/octet-stream; charset=utf-8")
+	req.Header.Set("Accept", "application/octet-stream; charset=utf-8")
 
 	return req, nil
 }
@@ -203,11 +254,11 @@ func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) error
 		}
 	}(resp.Body)
 
-	b, err := io.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	print(b)
+	//b, err := io.ReadAll(resp.Body)
+	//if err != nil {
+	//	log.Fatalln(err)
+	//}
+	//print(b)
 
 	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusBadRequest {
 		errRes := &Response[ErrorResponse]{}
@@ -220,16 +271,42 @@ func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) error
 
 	switch v.(type) {
 	case *Void:
-	case *[]byte:
-		if v, err = io.ReadAll(resp.Body); err != nil {
-			return err
-		}
 	default:
 		if err = json.NewDecoder(resp.Body).Decode(&v); err != nil {
 			return err
 		}
 	}
 	return nil
+}
+
+func (c *Client) DoForByteResponse(ctx context.Context, req *http.Request) ([]byte, error) {
+	resp, err := DoRequestWithClient(ctx, c.httpClient, req)
+	if err != nil {
+		return nil, err
+	}
+
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+
+		}
+	}(resp.Body)
+
+	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusBadRequest {
+		errRes := &Response[ErrorResponse]{}
+		if err = json.NewDecoder(resp.Body).Decode(errRes); errRes == nil {
+			return nil, errors.New(*errRes.Errors.ErrorDescription)
+		}
+
+		return nil, errRes
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return body, nil
 }
 
 func (r *ErrorResponse) Error() string {

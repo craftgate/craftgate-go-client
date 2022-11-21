@@ -225,20 +225,20 @@ func (api *Payment) Complete3DSDepositPayment(ctx context.Context, request Compl
 	return response.Data, nil
 }
 
-func (api *Payment) CreateFundTransferDepositPayment(ctx context.Context, request CreateFundTransferDepositPaymentRequest) error {
+func (api *Payment) CreateFundTransferDepositPayment(ctx context.Context, request CreateFundTransferDepositPaymentRequest) (*FundTransferDepositPaymentResponse, error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/deposits/fund-transfer", request)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	response := &Void{}
+	response := &Response[FundTransferDepositPaymentResponse]{}
 	err = api.Client.Do(ctx, newRequest, response)
 
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	return response.Data, nil
 }
 
 func (api *Payment) InitGarantiPayPayment(ctx context.Context, request InitGarantiPayPaymentRequest) (*InitGarantiPayPaymentResponse, error) {
