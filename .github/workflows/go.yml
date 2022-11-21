@@ -2,9 +2,11 @@ name: Craftgate Go Client CI
 
 on:
     push:
-        branches: master
+        branches:
+            - master
     pull_request:
-        branches: *
+        branches:
+            - *
 
 jobs:
   build:
