@@ -254,12 +254,6 @@ func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) error
 		}
 	}(resp.Body)
 
-	//b, err := io.ReadAll(resp.Body)
-	//if err != nil {
-	//	log.Fatalln(err)
-	//}
-	//print(b)
-
 	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusBadRequest {
 		errRes := &Response[ErrorResponse]{}
 		if err = json.NewDecoder(resp.Body).Decode(errRes); errRes == nil {
@@ -352,4 +346,8 @@ func QueryParams(req interface{}) (string, error) {
 	encoded := queryParams.Encode()
 	encoded = strings.Replace(encoded, "%3A", ":", -1)
 	return encoded, nil
+}
+
+func (c *Client) Info() string {
+	return "Craftgate Go Client. Api Key: " + c.apiKey
 }
