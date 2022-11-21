@@ -1,6 +1,6 @@
 # Craftgate Go Client
 
-[![Build Status](https://github.com/craftgate/craftgate-go-client/workflows/Craftgate%20Go%20Client%20CI/badge.svg?branch=master)](https://github.com/craftgate/craftgate-go-client/actions)
+[![Build Status](https://github.com/craftgate/github.com/craftgate/craftgate-go-client/workflows/Craftgate%20Go%20Client%20CI/badge.svg?branch=master)](https://github.com/craftgate/github.com/craftgate/craftgate-go-client/actions)
 
 This repo contains the Go library for Craftgate API.
 
@@ -10,7 +10,7 @@ This repo contains the Go library for Craftgate API.
 ## Installation
 
 ```sh
-go get github.com/craftgate/craftgate-go-client/v1
+go get github.com/craftgate/craftgate-go-client/v1.0.0
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ You can import `Craftgate` client using:
 
 ```go
 import (
-    "github.com/craftgate/craftgate-go-client/v1"
+    "github.com/craftgate/craftgate-go-client/v1.0.0"
 )
 ```
 
@@ -56,10 +56,10 @@ Let's quickly review an example where we implement a credit card payment scenari
 > For more examples covering almost all use-cases, check out the [examples in the `tests/` folder](./tests)
 
 ```go
-Craftgate := CraftgateClient("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://sandbox-api.craftgate.io");
+client := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://sandbox-api.craftgate.io");
 
-res, err = craftgate.payment().createPayment(request);
-fmt.println("Create Payment Result: %s", res);
+res, err := paymentClient.Payment.CreatePayment(context.Background(), request)
+spew.Printf("%#v\n", res)
 ```
 
 ### Contributions

@@ -8,7 +8,7 @@ package main
 
 import (
 	"context"
-	craftgate "craftgate-go-client/adapter"
+	craftgate "github.com/craftgate/craftgate-go-client/v1/adapter"
 	"strings"
 	"testing"
 

@@ -1171,18 +1171,18 @@ type ReportingPaymentTransactionResponse struct {
 }
 
 type Payout struct {
-	PaidPrice                     float64  `json:"paidPrice"`
-	Parity                        float64  `json:"parity"`
-	Currency                      Currency `json:"currency"`
-	MerchantPayoutAmount          float64  `json:"merchantPayoutAmount"`
-	SubMerchantMemberPayoutAmount float64  `json:"subMerchantMemberPayoutAmount"`
+	PaidPrice                     *float64  `json:"paidPrice"`
+	Parity                        *float64  `json:"parity"`
+	Currency                      *Currency `json:"currency"`
+	MerchantPayoutAmount          *float64  `json:"merchantPayoutAmount"`
+	SubMerchantMemberPayoutAmount *float64  `json:"subMerchantMemberPayoutAmount"`
 }
 
 type PayoutStatus struct {
-	MerchantStatus              TransactionPayoutStatus `json:"merchantStatus"`
-	MerchantStatusDate          TimeResponse            `json:"merchantStatusDate"`
-	SubMerchantMemberStatus     TransactionPayoutStatus `json:"subMerchantMemberStatus"`
-	SubMerchantMemberStatusDate TimeResponse            `json:"subMerchantMemberStatusDate"`
+	MerchantStatus              *TransactionPayoutStatus `json:"merchantStatus"`
+	MerchantStatusDate          *TimeResponse            `json:"merchantStatusDate"`
+	SubMerchantMemberStatus     *TransactionPayoutStatus `json:"subMerchantMemberStatus"`
+	SubMerchantMemberStatusDate *TimeResponse            `json:"subMerchantMemberStatusDate"`
 }
 
 type CreateInstantWalletSettlementRequest struct {
@@ -1345,20 +1345,21 @@ type DataResponse[T any] struct {
 }
 
 type MerchantPos struct {
-	Id     int64  `json:"id"`
-	Name   string `json:"name"`
-	Alias  string `json:"alias"`
-	BankId int64  `json:"bankId"`
+	Id     *int64  `json:"id"`
+	Name   *string `json:"name"`
+	Alias  *string `json:"alias"`
+	BankId *int64  `json:"bankId"`
 }
 
 type Reward struct {
-	CardRewardMoney float64 `json:"cardRewardMoney,omitempty"`
-	FirmRewardMoney float64 `json:"firmRewardMoney,omitempty"`
+	CardRewardMoney *float64 `json:"cardRewardMoney,omitempty"`
+	FirmRewardMoney *float64 `json:"firmRewardMoney,omitempty"`
 }
 
 type Loyalty struct {
-	LoyaltyType LoyaltyType `json:"type,omitempty"`
-	Reward      Reward      `json:"reward,omitempty"`
+	LoyaltyType *LoyaltyType `json:"type,omitempty"`
+	Reward      *Reward      `json:"reward,omitempty"`
+	Message     *string      `json:"message,omitempty"`
 }
 
 type Card struct {
