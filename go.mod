@@ -1,4 +1,4 @@
-module craftgate-go-client
+module github.com/craftgate/craftgate-go-client/v1
 
 go 1.18
 
