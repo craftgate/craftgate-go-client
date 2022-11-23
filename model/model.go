@@ -78,6 +78,7 @@ const (
 	USD          = "USD"
 	EUR          = "EUR"
 	GBP          = "GBP"
+	CNY          = "CNY"
 )
 
 // payment group declaration
