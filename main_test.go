@@ -1,7 +1,7 @@
 /*
- * Adyen API Client
+ * Craftgate API Client
  *
- * Contact: support@adyen.com
+ * Contact: destek@craftgate.io
  */
 
 package main
