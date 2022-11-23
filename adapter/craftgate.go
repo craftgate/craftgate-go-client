@@ -161,7 +161,6 @@ func (c *Client) NewRequest(ctx context.Context, method, urlStr string, body int
 	authorizationRequestBody := c.extractRequestBodyForAuthorization(body, method, req)
 	randomStr := GenerateRandomString()
 	hashStr := GenerateHash(req.URL.String(), c.apiKey, c.secretKey, randomStr, authorizationRequestBody)
-	fmt.Println(req.URL.String())
 
 	req.Header.Set(ApiKeyHeaderName, c.apiKey)
 	req.Header.Set(RandomHeaderName, randomStr)
@@ -214,7 +213,6 @@ func (c *Client) NewRequestForByteResponse(ctx context.Context, method, urlStr s
 	authorizationRequestBody := c.extractRequestBodyForAuthorization(body, method, req)
 	randomStr := GenerateRandomString()
 	hashStr := GenerateHash(req.URL.String(), c.apiKey, c.secretKey, randomStr, authorizationRequestBody)
-	fmt.Println(req.URL.String())
 
 	req.Header.Set(ApiKeyHeaderName, c.apiKey)
 	req.Header.Set(RandomHeaderName, randomStr)
@@ -324,7 +322,6 @@ func GenerateHash(url, apiKey, secretKey, randomString, body string) string {
 
 func GenerateRandomString() string {
 	s := strconv.FormatInt(time.Now().UnixNano(), 16)
-	fmt.Println(s[8:])
 	return s[8:]
 }
 
