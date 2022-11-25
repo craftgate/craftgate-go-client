@@ -611,11 +611,13 @@ type InitApmPaymentResponse struct {
 	RedirectUrl         *string              `json:"redirectUrl"`
 	PaymentStatus       *PaymentStatus       `json:"paymentStatus"`
 	ApmAdditionalAction *ApmAdditionalAction `json:"additionalAction"`
+	PaymentError        *PaymentError        `json:"paymentError"`
 }
 
 type CompleteApmPaymentResponse struct {
 	PaymentId     *int64         `json:"paymentId"`
 	PaymentStatus *PaymentStatus `json:"paymentStatus"`
+	PaymentError  *PaymentError  `json:"paymentError"`
 }
 
 type DepositPaymentResponse struct {
