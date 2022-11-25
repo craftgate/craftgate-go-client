@@ -501,6 +501,8 @@ type SearchStoredCardsRequest struct {
 	CardToken       string          `schema:"cardToken,omitempty"`
 	CardBankName    string          `schema:"cardBankName,omitempty"`
 	CardAssociation CardAssociation `schema:"cardAssociation,omitempty"`
+	MinCreatedDate  time.Time       `schema:"minCreatedDate,omitempty"`
+	MaxCreatedDate  time.Time       `schema:"maxCreatedDate,omitempty"`
 	Page            int             `schema:"page,omitempty"`
 	Size            int             `schema:"size,omitempty"`
 }
