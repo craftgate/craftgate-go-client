@@ -1,253 +1,116 @@
 package adapter
 
 import (
-	"craftgate-go-client/adapter/rest"
-	"craftgate-go-client/model"
+	"context"
 	"fmt"
 	"net/http"
-	"time"
 )
 
 type PaymentReporting struct {
-	Opts model.RequestOptions
+	Client *Client
 }
 
-type SearchPaymentsRequest struct {
-	Page                 int                   `schema:"page,omitempty"`
-	Size                 int                   `schema:"size,omitempty"`
-	PaymentId            int64                 `schema:"paymentId,omitempty"`
-	PaymentTransactionId int64                 `schema:"paymentTransactionId,omitempty"`
-	BuyerMemberId        int64                 `schema:"buyerMemberId,omitempty"`
-	SubMerchantMemberId  int64                 `schema:"subMerchantMemberId,omitempty"`
-	ConversationId       string                `schema:"conversationId,omitempty"`
-	ExternalId           string                `schema:"externalId,omitempty"`
-	OrderId              string                `schema:"orderId,omitempty"`
-	PaymentType          model.PaymentType     `schema:"paymentType,omitempty"`
-	PaymentProvider      model.PaymentProvider `schema:"paymentProvider,omitempty"`
-	PaymentStatus        model.PaymentStatus   `schema:"paymentStatus,omitempty"`
-	PaymentSource        model.PaymentSource   `schema:"paymentSource,omitempty"`
-	PaymentChannel       string                `schema:"paymentChannel,omitempty"`
-	BinNumber            string                `schema:"binNumber,omitempty"`
-	LastFourDigits       string                `schema:"lastFourDigits,omitempty"`
-	Currency             model.Currency        `schema:"currency,omitempty"`
-	MinPaidPrice         float64               `schema:"minPaidPrice,omitempty"`
-	MaxPaidPrice         float64               `schema:"maxPaidPrice,omitempty"`
-	Installment          int                   `schema:"installment,omitempty"`
-	IsThreeDS            bool                  `schema:"isThreeDS,omitempty"`
-	MinCreatedDate       time.Time             `schema:"minCreatedDate,omitempty"`
-	MaxCreatedDate       time.Time             `schema:"maxCreatedDate,omitempty"`
+func (api *PaymentReporting) SearchPayments(ctx context.Context, request SearchPaymentsRequest) (*DataResponse[ReportingPaymentResponse], error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/payment-reporting/v1/payments", request)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[DataResponse[ReportingPaymentResponse]]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
 }
 
-type SearchPaymentRefundsRequest struct {
-	Page           int                `schema:"page,omitempty"`
-	Size           int                `schema:"size,omitempty"`
-	Id             int64              `schema:"id,omitempty"`
-	PaymentId      int64              `schema:"paymentId,omitempty"`
-	BuyerMemberId  int64              `schema:"buyerMemberId,omitempty"`
-	ConversationId string             `schema:"conversationId,omitempty"`
-	Status         model.RefundStatus `schema:"status,omitempty"`
-	Currency       model.Currency     `schema:"currency,omitempty"`
-	MinRefundPrice float64            `schema:"minRefundPrice,omitempty"`
-	MaxRefundPrice float64            `schema:"maxRefundPrice,omitempty"`
-	MinCreatedDate time.Time          `schema:"minCreatedDate,omitempty"`
-	MaxCreatedDate time.Time          `schema:"maxCreatedDate,omitempty"`
+func (api *PaymentReporting) SearchPaymentRefunds(ctx context.Context, request SearchPaymentRefundsRequest) (*DataResponse[ReportingPaymentRefundResponse], error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/payment-reporting/v1/refunds", request)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[DataResponse[ReportingPaymentRefundResponse]]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
 }
 
-type SearchPaymentTransactionRefundsRequest struct {
-	Page                 int                `schema:"page,omitempty"`
-	Size                 int                `schema:"size,omitempty"`
-	Id                   int64              `schema:"id,omitempty"`
-	PaymentId            int64              `schema:"paymentId,omitempty"`
-	PaymentTransactionId int64              `schema:"paymentTransactionId,omitempty"`
-	BuyerMemberId        int64              `schema:"buyerMemberId,omitempty"`
-	ConversationId       string             `schema:"conversationId,omitempty"`
-	Status               model.RefundStatus `schema:"status,omitempty"`
-	Currency             model.Currency     `schema:"currency,omitempty"`
-	IsAfterSettlement    bool               `schema:"isAfterSettlement,omitempty"`
-	MinRefundPrice       float64            `schema:"minRefundPrice,omitempty"`
-	MaxRefundPrice       float64            `schema:"maxRefundPrice,omitempty"`
-	MinCreatedDate       time.Time          `schema:"minCreatedDate,omitempty"`
-	MaxCreatedDate       time.Time          `schema:"maxCreatedDate,omitempty"`
+func (api *PaymentReporting) SearchPaymentTransactionRefunds(ctx context.Context, request SearchPaymentTransactionRefundsRequest) (*DataResponse[ReportingPaymentTransactionRefundResponse], error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/payment-reporting/v1/refund-transactions", request)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[DataResponse[ReportingPaymentTransactionRefundResponse]]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
 }
 
-type ReportingPaymentResponse struct {
-	Id                           *int64                            `json:"id"`
-	CreatedDate                  *TimeResponse                     `json:"createdDate"`
-	Price                        *float64                          `json:"price"`
-	PaidPrice                    *float64                          `json:"paidPrice"`
-	WalletPrice                  *float64                          `json:"walletPrice"`
-	Currency                     *model.Currency                   `json:"currency"`
-	BuyerMemberId                *int64                            `json:"buyerMemberId"`
-	Installment                  *int                              `json:"installment"`
-	ConversationId               *string                           `json:"conversationId"`
-	ExternalId                   *string                           `json:"externalId"`
-	PaymentType                  *model.PaymentType                `json:"paymentType"`
-	PaymentProvider              *model.PaymentProvider            `json:"paymentProvider"`
-	PaymentSource                *model.PaymentSource              `json:"paymentSource"`
-	PaymentGroup                 *model.PaymentGroup               `json:"paymentGroup"`
-	PaymentStatus                *model.PaymentStatus              `json:"paymentStatus"`
-	PaymentPhase                 *model.PaymentPhase               `json:"paymentPhase"`
-	PaymentChannel               *string                           `json:"paymentChannel"`
-	IsThreeDS                    *bool                             `json:"isThreeDS"`
-	MerchantCommissionRate       *float64                          `json:"merchantCommissionRate"`
-	MerchantCommissionRateAmount *float64                          `json:"merchantCommissionRateAmount"`
-	BankCommissionRate           *float64                          `json:"bankCommissionRate"`
-	BankCommissionRateAmount     *float64                          `json:"bankCommissionRateAmount"`
-	PaidWithStoredCard           *bool                             `json:"paidWithStoredCard"`
-	BinNumber                    *string                           `json:"binNumber"`
-	LastFourDigits               *string                           `json:"lastFourDigits"`
-	AuthCode                     *string                           `json:"authCode"`
-	HostReference                *string                           `json:"hostReference"`
-	OrderId                      *string                           `json:"orderId"`
-	TransId                      *string                           `json:"transId"`
-	CardHolderName               *string                           `json:"cardHolderName"`
-	BankCardHolderName           *string                           `json:"bankCardHolderName"`
-	CardType                     *model.CardType                   `json:"cardType"`
-	CardAssociation              *model.CardAssociation            `json:"cardAssociation"`
-	CardBrand                    *string                           `json:"cardBrand"`
-	RequestedPosAlias            *string                           `json:"requestedPosAlias"`
-	RetryCount                   *int                              `json:"retryCount"`
-	RefundablePrice              *float64                          `json:"refundablePrice"`
-	RefundStatus                 *model.PaymentRefundStatus        `json:"refundStatus"`
-	CardIssuerBankName           *string                           `json:"cardIssuerBankName"`
-	MdStatus                     *int                              `json:"mdStatus"`
-	BuyerMember                  *MemberResponse                   `json:"buyerMember"`
-	Refunds                      *[]ReportingPaymentRefundResponse `json:"refunds"`
-	Pos                          *model.MerchantPos                `json:"pos"`
-	Loyalty                      *model.Loyalty                    `json:"loyalty"`
-	PaymentError                 *model.PaymentError               `json:"paymentError"`
+func (api *PaymentReporting) RetrievePayment(ctx context.Context, id int64) (*ReportingPaymentResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment-reporting/v1/payments/%d", id), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[ReportingPaymentResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
 }
 
-type ReportingPaymentRefundResponse struct {
-	Id                    *int64                       `json:"id"`
-	CreatedDate           *TimeResponse                `json:"createdDate"`
-	Status                *model.RefundStatus          `json:"status"`
-	RefundDestinationType *model.RefundDestinationType `json:"refundDestinationType"`
-	RefundPrice           *float64                     `json:"refundPrice"`
-	RefundBankPrice       *float64                     `json:"refundBankPrice"`
-	RefundWalletPrice     *float64                     `json:"refundWalletPrice"`
-	ConversationId        *string                      `json:"conversationId"`
-	AuthCode              *string                      `json:"authCode"`
-	HostReference         *string                      `json:"hostReference"`
-	PaymentType           *model.PaymentType           `json:"paymentType"`
-	TransId               *string                      `json:"transId"`
-	PaymentId             *int64                       `json:"paymentId"`
-	PaymentError          *model.PaymentError          `json:"paymentError"`
+func (api *PaymentReporting) RetrievePaymentTransactions(ctx context.Context, paymentId int64) (*DataResponse[ReportingPaymentTransactionResponse], error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment-reporting/v1/payments/%d/transactions", paymentId), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[DataResponse[ReportingPaymentTransactionResponse]]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
 }
 
-type ReportingPaymentTransactionRefundResponse struct {
-	Id                    *int64                       `json:"id"`
-	CreatedDate           *TimeResponse                `json:"createdDate"`
-	Status                *model.RefundStatus          `json:"status"`
-	RefundDestinationType *model.RefundDestinationType `json:"refundDestinationType"`
-	RefundPrice           *float64                     `json:"refundPrice"`
-	RefundBankPrice       *float64                     `json:"refundBankPrice"`
-	RefundWalletPrice     *float64                     `json:"refundWalletPrice"`
-	ConversationId        *string                      `json:"conversationId"`
-	AuthCode              *string                      `json:"authCode"`
-	HostReference         *string                      `json:"hostReference"`
-	TransId               *string                      `json:"transId"`
-	IsAfterSettlement     *bool                        `json:"isAfterSettlement"`
-	PaymentTransactionId  *int64                       `json:"paymentTransactionId"`
-	PaymentError          *model.PaymentError          `json:"paymentError"`
+func (api *PaymentReporting) RetrievePaymentRefunds(ctx context.Context, paymentId int64) (*DataResponse[ReportingPaymentRefundResponse], error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment-reporting/v1/payments/%d/refunds", paymentId), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[DataResponse[ReportingPaymentRefundResponse]]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
 }
 
-type ReportingPaymentTransactionResponse struct {
-	Id                            *int64                     `json:"id"`
-	Name                          *string                    `json:"name"`
-	ExternalId                    *string                    `json:"externalId"`
-	Price                         *float64                   `json:"price"`
-	PaidPrice                     *float64                   `json:"paidPrice"`
-	WalletPrice                   *float64                   `json:"walletPrice"`
-	MerchantCommissionRate        *float64                   `json:"merchantCommissionRate"`
-	MerchantCommissionRateAmount  *float64                   `json:"merchantCommissionRateAmount"`
-	MerchantPayoutAmount          *float64                   `json:"merchantPayoutAmount"`
-	SubMerchantMemberId           *int64                     `json:"subMerchantMemberId"`
-	SubMerchantMemberPrice        *float64                   `json:"subMerchantMemberPrice"`
-	SubMerchantMemberPayoutRate   *float64                   `json:"subMerchantMemberPayoutRate"`
-	SubMerchantMemberPayoutAmount *float64                   `json:"subMerchantMemberPayoutAmount"`
-	TransactionStatus             *model.TransactionStatus   `json:"transactionStatus"`
-	BlockageResolvedDate          *TimeResponse              `json:"blockageResolvedDate"`
-	CreatedDate                   *TimeResponse              `json:"createdDate"`
-	TransactionStatusDate         *TimeResponse              `json:"transactionStatusDate"`
-	RefundablePrice               *float64                   `json:"refundablePrice"`
-	BankCommissionRate            *float64                   `json:"bankCommissionRate"`
-	BankCommissionRateAmount      *float64                   `json:"bankCommissionRateAmount"`
-	Payout                        *Payout                    `json:"payout"`
-	SubMerchantMember             *MemberResponse            `json:"subMerchantMember"`
-	RefundStatus                  *model.PaymentRefundStatus `json:"refundStatus"`
-	PayoutStatus                  *PayoutStatus              `json:"payoutStatus"`
-}
+func (api *PaymentReporting) RetrievePaymentTransactionRefunds(ctx context.Context, paymentId, paymentTransactionId int64) (*DataResponse[ReportingPaymentTransactionRefundResponse], error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment-reporting/v1/payments/%d/transactions/%d/refunds", paymentId, paymentTransactionId), nil)
+	if err != nil {
+		return nil, err
+	}
 
-type Payout struct {
-	PaidPrice                     float64        `json:"paidPrice"`
-	Currency                      model.Currency `json:"currency"`
-	MerchantPayoutAmount          float64        `json:"merchantPayoutAmount"`
-	SubMerchantMemberPayoutAmount float64        `json:"subMerchantMemberPayoutAmount"`
-}
+	response := &Response[DataResponse[ReportingPaymentTransactionRefundResponse]]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
 
-type PayoutStatus struct {
-	MerchantStatus              model.TransactionPayoutStatus `json:"merchantStatus"`
-	MerchantStatusDate          TimeResponse                  `json:"merchantStatusDate"`
-	SubMerchantMemberStatus     model.TransactionPayoutStatus `json:"subMerchantMemberStatus"`
-	SubMerchantMemberStatusDate TimeResponse                  `json:"subMerchantMemberStatusDate"`
-}
-
-func (api *PaymentReporting) SearchPayments(request SearchPaymentsRequest) (interface{}, error) {
-	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/payment-reporting/v1/payments?", api.Opts.BaseURL), nil)
-
-	req.URL.RawQuery, _ = QueryParams(request)
-	res := model.Response[model.DataResponse[ReportingPaymentResponse]]{}
-	resErr := rest.SendRequest(req, &res, api.Opts)
-	return &res, resErr
-}
-
-func (api *PaymentReporting) SearchPaymentRefunds(request SearchPaymentRefundsRequest) (interface{}, error) {
-	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/payment-reporting/v1/refunds", api.Opts.BaseURL), nil)
-
-	req.URL.RawQuery, _ = QueryParams(request)
-	res := model.Response[model.DataResponse[ReportingPaymentRefundResponse]]{}
-	resErr := rest.SendRequest(req, &res, api.Opts)
-	return &res, resErr
-}
-
-func (api *PaymentReporting) SearchPaymentTransactionRefunds(request SearchPaymentTransactionRefundsRequest) (interface{}, error) {
-	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/payment-reporting/v1/refund-transactions", api.Opts.BaseURL), nil)
-
-	req.URL.RawQuery, _ = QueryParams(request)
-	res := model.Response[model.DataResponse[ReportingPaymentTransactionRefundResponse]]{}
-	resErr := rest.SendRequest(req, &res, api.Opts)
-	return &res, resErr
-}
-
-func (api *PaymentReporting) RetrievePayment(id int64) (interface{}, error) {
-	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/payment-reporting/v1/payments/%d", api.Opts.BaseURL, id), nil)
-
-	res := model.Response[ReportingPaymentResponse]{}
-	resErr := rest.SendRequest(req, &res, api.Opts)
-	return &res, resErr
-}
-
-func (api *PaymentReporting) RetrievePaymentTransactions(id int64) (interface{}, error) {
-	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/payment-reporting/v1/payments/%d/transactions", api.Opts.BaseURL, id), nil)
-
-	res := model.Response[model.DataResponse[ReportingPaymentTransactionResponse]]{}
-	resErr := rest.SendRequest(req, &res, api.Opts)
-	return &res, resErr
-}
-
-func (api *PaymentReporting) RetrievePaymentRefunds(id int64) (interface{}, error) {
-	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/payment-reporting/v1/payments/%d/refunds", api.Opts.BaseURL, id), nil)
-
-	res := model.Response[model.DataResponse[ReportingPaymentRefundResponse]]{}
-	resErr := rest.SendRequest(req, &res, api.Opts)
-	return &res, resErr
-}
-
-func (api *PaymentReporting) RetrievePaymentTransactionRefunds(paymentId, paymentTransactionId int64) (interface{}, error) {
-	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/payment-reporting/v1/payments/%d/transactions/%d/refunds", api.Opts.BaseURL, paymentId, paymentTransactionId), nil)
-
-	res := model.Response[model.DataResponse[ReportingPaymentTransactionRefundResponse]]{}
-	resErr := rest.SendRequest(req, &res, api.Opts)
-	return &res, resErr
+	return response.Data, nil
 }

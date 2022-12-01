@@ -1,20 +1,15 @@
 package tests
 
 import (
-	"craftgate-go-client/adapter"
-	"craftgate-go-client/model"
+	"context"
+	"github.com/craftgate/craftgate-go-client/v1.0.0/adapter"
+	craftgate "github.com/craftgate/craftgate-go-client/v1.0.0/adapter"
 	"github.com/davecgh/go-spew/spew"
 	"testing"
 	"time"
 )
 
-var settlementReporting = adapter.SettlementReporting{
-	Opts: model.RequestOptions{
-		BaseURL:   "https://sandbox-api.craftgate.io",
-		ApiKey:    "api-key",
-		SecretKey: "secret-key",
-	},
-}
+var settlementReportingClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func TestSettlementReporting_SearchPayoutCompletedTransactions(t *testing.T) {
 	request := adapter.SearchPayoutCompletedTransactionsRequest{
@@ -22,8 +17,8 @@ func TestSettlementReporting_SearchPayoutCompletedTransactions(t *testing.T) {
 		EndDate:   time.Now(),
 	}
 
-	res, err := settlementReporting.SearchPayoutCompletedTransactions(request)
-	spew.Printf("%#v\n", res)
+	res, err := settlementReportingClient.SettlementReporting.SearchPayoutCompletedTransactions(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -36,8 +31,8 @@ func TestSettlementReporting_SearchPayoutBouncedTransactions(t *testing.T) {
 		EndDate:   time.Now(),
 	}
 
-	res, err := settlementReporting.SearchPayoutBouncedTransactions(request)
-	spew.Printf("%#v\n", res)
+	res, err := settlementReportingClient.SettlementReporting.SearchPayoutBouncedTransactions(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -45,8 +40,8 @@ func TestSettlementReporting_SearchPayoutBouncedTransactions(t *testing.T) {
 }
 
 func TestSettlementReporting_RetrievePayoutDetails(t *testing.T) {
-	res, err := settlementReporting.RetrievePayoutDetails(adapter.RetrievePayoutDetailsRequest{PayoutDetailId: 49})
-	spew.Printf("%#v\n", res)
+	res, err := settlementReportingClient.SettlementReporting.RetrievePayoutDetails(context.Background(), 123)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)

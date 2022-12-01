@@ -1,37 +1,33 @@
 package tests
 
 import (
-	"craftgate-go-client/adapter"
-	"craftgate-go-client/model"
+	"context"
+	"github.com/craftgate/craftgate-go-client/v1.0.0/adapter"
+	craftgate "github.com/craftgate/craftgate-go-client/v1.0.0/adapter"
 	"github.com/davecgh/go-spew/spew"
+	"github.com/stretchr/testify/require"
 	"testing"
 )
 
-var payment = adapter.Payment{
-	Opts: model.RequestOptions{
-		BaseURL:   "https://sandbox-api.craftgate.io",
-		ApiKey:    "api-key",
-		SecretKey: "secret-key",
-	},
-}
+var paymentClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func TestPayment_CreatePayment(t *testing.T) {
 	request := adapter.CreatePaymentRequest{
 		Price:          1.25,
 		PaidPrice:      1.25,
 		Installment:    1,
-		Currency:       model.Currency(model.TRY),
-		PaymentGroup:   model.PaymentGroup(model.LISTING_OR_SUBSCRIPTION),
+		Currency:       craftgate.Currency(craftgate.TRY),
+		PaymentGroup:   craftgate.PaymentGroup(craftgate.LISTING_OR_SUBSCRIPTION),
 		ConversationId: "foo-bar",
 		ExternalId:     "115",
-		Card: model.Card{
+		Card: craftgate.Card{
 			CardHolderName: "Card Holder",
 			CardNumber:     "4256690000000001",
 			ExpireYear:     "2035",
 			ExpireMonth:    "11",
 			Cvc:            "123",
 		},
-		Items: []model.PaymentItem{
+		Items: []craftgate.PaymentItem{
 			{
 				Name:       "Item 1",
 				Price:      1,
@@ -45,18 +41,50 @@ func TestPayment_CreatePayment(t *testing.T) {
 		},
 	}
 
-	res, err := payment.CreatePayment(request)
-	spew.Printf("%#v\n", res)
+	res, err := paymentClient.Payment.CreatePayment(context.Background(), request)
 
+	require.NotNil(t, res.Id)
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_CreateApmPayment(t *testing.T) {
+	request := adapter.CreateApmPaymentRequest{
+		ApmType:        craftgate.ApmCASH_ON_DELIVERY,
+		Price:          1.25,
+		PaidPrice:      1.25,
+		Currency:       craftgate.Currency(craftgate.TRY),
+		PaymentGroup:   craftgate.PaymentGroup(craftgate.LISTING_OR_SUBSCRIPTION),
+		ConversationId: "foo-bar",
+		ExternalId:     "115",
+		Items: []craftgate.PaymentItem{
+			{
+				Name:       "Item 1",
+				Price:      1,
+				ExternalId: "1",
+			},
+			{
+				Name:       "Item 2",
+				Price:      0.25,
+				ExternalId: "2",
+			},
+		},
+	}
+
+	res, err := paymentClient.Payment.CreateApmPayment(context.Background(), request)
+
+	require.NotNil(t, res.Id)
 	if err != nil {
 		t.Errorf("Error %s", err)
 	}
 }
 
 func TestPayment_RetrievePayment(t *testing.T) {
-	res, err := payment.RetrievePayment(123)
-	spew.Printf("%#v\n", res)
+	paymentId := int64(179878)
+	res, err := paymentClient.Payment.RetrievePayment(context.Background(), paymentId)
 
+	require.Equal(t, *res.Id, paymentId)
 	if err != nil {
 		t.Errorf("Error %s", err)
 	}
@@ -67,18 +95,18 @@ func TestPayment_Init3DSPayment(t *testing.T) {
 		Price:          1.25,
 		PaidPrice:      1.25,
 		Installment:    1,
-		Currency:       model.Currency(model.TRY),
-		PaymentGroup:   model.PaymentGroup(model.LISTING_OR_SUBSCRIPTION),
+		Currency:       craftgate.Currency(craftgate.TRY),
+		PaymentGroup:   craftgate.PaymentGroup(craftgate.LISTING_OR_SUBSCRIPTION),
 		ConversationId: "foo-bar",
 		ExternalId:     "115",
-		Card: model.Card{
+		Card: craftgate.Card{
 			CardHolderName: "Card Holder",
 			CardNumber:     "4256690000000001",
 			ExpireYear:     "2035",
 			ExpireMonth:    "11",
 			Cvc:            "123",
 		},
-		Items: []model.PaymentItem{
+		Items: []craftgate.PaymentItem{
 			{
 				Name:       "Item 1",
 				Price:      1,
@@ -90,33 +118,75 @@ func TestPayment_Init3DSPayment(t *testing.T) {
 				ExternalId: "2",
 			},
 		},
-		CallbackUrl: "www.callback.url",
+		CallbackUrl: "https://www.your-website.com/callback",
 	}
 
-	res, err := payment.Init3DSPayment(request)
-	spew.Printf("%#v\n", res)
+	res, err := paymentClient.Payment.Init3DSPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
+	require.NotEmpty(t, *res.HtmlContent)
 	if err != nil {
 		t.Errorf("Error %s", err)
 	}
 }
 
 func TestPayment_Complete3DSPayment(t *testing.T) {
-	res, err := payment.Complete3DSPayment(adapter.Complete3DSPaymentRequest{
+	request := adapter.Complete3DSPaymentRequest{
 		PaymentId: 123,
-	})
-	spew.Printf("%#v\n", res)
+	}
+	res, err := paymentClient.Payment.Complete3DSPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
 	}
 }
 
+func TestPayment_CreatePreAuthPayment(t *testing.T) {
+	request := adapter.CreatePaymentRequest{
+		Price:          1.25,
+		PaidPrice:      1.25,
+		Installment:    1,
+		Currency:       craftgate.Currency(craftgate.TRY),
+		PaymentGroup:   craftgate.PaymentGroup(craftgate.LISTING_OR_SUBSCRIPTION),
+		PaymentPhase:   craftgate.PRE_AUTH,
+		ConversationId: "foo-bar",
+		ExternalId:     "115",
+		Card: craftgate.Card{
+			CardHolderName: "Card Holder",
+			CardNumber:     "4256690000000001",
+			ExpireYear:     "2035",
+			ExpireMonth:    "11",
+			Cvc:            "123",
+		},
+		Items: []craftgate.PaymentItem{
+			{
+				Name:       "Item 1",
+				Price:      1,
+				ExternalId: "1",
+			},
+			{
+				Name:       "Item 2",
+				Price:      0.25,
+				ExternalId: "2",
+			},
+		},
+	}
+
+	res, err := paymentClient.Payment.CreatePayment(context.Background(), request)
+
+	require.NotNil(t, res.Id)
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_PostAuthPayment(t *testing.T) {
-	res, err := payment.PostAuthPayment(123, adapter.PostAuthPaymentRequest{
-		PaidPrice: 15.3,
-	})
-	spew.Printf("%#v\n", res)
+	request := adapter.PostAuthPaymentRequest{
+		PaidPrice: 1.25,
+	}
+	res, err := paymentClient.Payment.PostAuthPayment(context.Background(), 123, request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -127,13 +197,12 @@ func TestPayment_InitCheckoutPayment(t *testing.T) {
 	request := adapter.InitCheckoutPaymentRequest{
 		Price:          1.25,
 		PaidPrice:      1.25,
-		BuyerMemberId:  1,
-		Currency:       model.TRY,
-		PaymentGroup:   model.LISTING_OR_SUBSCRIPTION,
-		PaymentPhase:   model.AUTH,
+		Currency:       craftgate.TRY,
+		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
+		PaymentPhase:   craftgate.AUTH,
 		ConversationId: "foo-bar",
 		ExternalId:     "115",
-		Items: []model.PaymentItem{
+		Items: []craftgate.PaymentItem{
 			{
 				Name:       "Item 1",
 				Price:      1,
@@ -145,10 +214,10 @@ func TestPayment_InitCheckoutPayment(t *testing.T) {
 				ExternalId: "2",
 			},
 		},
-		CallbackUrl: "www.callback.url",
+		CallbackUrl: "https://www.your-website.com/callback",
 	}
-	res, err := payment.InitCheckoutPayment(request)
-	spew.Printf("%#v\n", res)
+	res, err := paymentClient.Payment.InitCheckoutPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -156,8 +225,8 @@ func TestPayment_InitCheckoutPayment(t *testing.T) {
 }
 
 func TestPayment_RetrieveCheckoutPayment(t *testing.T) {
-	res, err := payment.RetrieveCheckoutPayment("foo-bar")
-	spew.Printf("%#v\n", res)
+	res, err := paymentClient.Payment.RetrieveCheckoutPayment(context.Background(), "foo-bar")
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -165,19 +234,20 @@ func TestPayment_RetrieveCheckoutPayment(t *testing.T) {
 }
 
 func TestPayment_CreateDepositPayment(t *testing.T) {
-	res, err := payment.CreateDepositPayment(adapter.DepositPaymentRequest{
+	request := adapter.DepositPaymentRequest{
 		Price:          100,
 		BuyerMemberId:  1,
 		ConversationId: "456d1297-908e-4bd6-a13b-4be31a6e47d5",
-		Card: model.Card{
+		Card: craftgate.Card{
 			CardHolderName: "Haluk Demir",
 			CardNumber:     "5258640000000001",
 			ExpireYear:     "2044",
 			ExpireMonth:    "07",
 			Cvc:            "000",
 		},
-	})
-	spew.Printf("%#v\n", res)
+	}
+	res, err := paymentClient.Payment.CreateDepositPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -185,20 +255,21 @@ func TestPayment_CreateDepositPayment(t *testing.T) {
 }
 
 func TestPayment_Init3DSDepositPayment(t *testing.T) {
-	res, err := payment.Init3DSDepositPayment(adapter.DepositPaymentRequest{
+	request := adapter.DepositPaymentRequest{
 		Price:          100,
 		BuyerMemberId:  1,
 		CallbackUrl:    "https://www.your-website.com/craftgate-3DSecure-callback",
 		ConversationId: "456d1297-908e-4bd6-a13b-4be31a6e47d5",
-		Card: model.Card{
+		Card: craftgate.Card{
 			CardHolderName: "Haluk Demir",
 			CardNumber:     "5258640000000001",
 			ExpireYear:     "2044",
 			ExpireMonth:    "07",
 			Cvc:            "000",
 		},
-	})
-	spew.Printf("%#v\n", res)
+	}
+	res, err := paymentClient.Payment.Init3DSDepositPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -206,10 +277,11 @@ func TestPayment_Init3DSDepositPayment(t *testing.T) {
 }
 
 func TestPayment_Complete3DSDepositPayment(t *testing.T) {
-	res, err := payment.Complete3DSDepositPayment(adapter.Complete3DSPaymentRequest{
+	request := adapter.Complete3DSPaymentRequest{
 		PaymentId: 1,
-	})
-	spew.Printf("%#v\n", res)
+	}
+	res, err := paymentClient.Payment.Complete3DSDepositPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -217,11 +289,14 @@ func TestPayment_Complete3DSDepositPayment(t *testing.T) {
 }
 
 func TestPayment_CreateFundTransferDepositPayment(t *testing.T) {
-	err := payment.CreateFundTransferDepositPayment(adapter.CreateFundTransferDepositPaymentRequest{
+	request := adapter.CreateFundTransferDepositPaymentRequest{
 		Price:          100,
 		BuyerMemberId:  1,
 		ConversationId: "456d1297-908e-4bd6-a13b-4be31a6e47d5",
-	})
+	}
+
+	res, err := paymentClient.Payment.CreateFundTransferDepositPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -229,14 +304,14 @@ func TestPayment_CreateFundTransferDepositPayment(t *testing.T) {
 }
 
 func TestPayment_InitGarantiPayPayment(t *testing.T) {
-	res, err := payment.InitGarantiPayPayment(adapter.InitGarantiPayPaymentRequest{
+	request := adapter.InitGarantiPayPaymentRequest{
 		Price:          100,
 		PaidPrice:      100,
-		Currency:       model.TRY,
-		PaymentGroup:   model.LISTING_OR_SUBSCRIPTION,
+		Currency:       craftgate.TRY,
+		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
 		ConversationId: "456d1297-908e-4bd6-a13b-4be31a6e47d5",
 		CallbackUrl:    "https://www.your-website.com/craftgate-garantipay-callback",
-		Items: []model.PaymentItem{
+		Items: []craftgate.PaymentItem{
 			{
 				Name:       "Item 1",
 				Price:      60,
@@ -258,8 +333,53 @@ func TestPayment_InitGarantiPayPayment(t *testing.T) {
 				TotalPrice: 125,
 			},
 		},
-	})
-	spew.Printf("%#v\n", res)
+	}
+	res, err := paymentClient.Payment.InitGarantiPayPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_InitApmPayment(t *testing.T) {
+	request := adapter.InitApmPaymentRequest{
+		ApmType:         craftgate.EDENRED,
+		Price:           1.25,
+		PaidPrice:       1.25,
+		Currency:        craftgate.Currency(craftgate.TRY),
+		PaymentGroup:    craftgate.PaymentGroup(craftgate.LISTING_OR_SUBSCRIPTION),
+		ConversationId:  "foo-bar",
+		ApmUserIdentity: "4242424242424242",
+		CallbackUrl:     "https://www.your-website.com/callback",
+		Items: []craftgate.PaymentItem{
+			{
+				Name:       "Item 1",
+				Price:      1,
+				ExternalId: "1",
+			},
+			{
+				Name:       "Item 2",
+				Price:      0.25,
+				ExternalId: "2",
+			},
+		},
+	}
+	res, err := paymentClient.Payment.InitApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_CompleteApmPayment(t *testing.T) {
+	request := adapter.CompleteApmPaymentRequest{
+		PaymentId:        123,
+		AdditionalParams: map[string]string{"otpCode": "123456"},
+	}
+	res, err := paymentClient.Payment.CompleteApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -267,13 +387,14 @@ func TestPayment_InitGarantiPayPayment(t *testing.T) {
 }
 
 func TestPayment_RetrieveLoyalties(t *testing.T) {
-	res, err := payment.RetrieveLoyalties(adapter.RetrieveLoyaltiesRequest{
+	request := adapter.RetrieveLoyaltiesRequest{
 		CardNumber:  "4043080000000003",
 		ExpireYear:  "2044",
 		ExpireMonth: "07",
 		Cvc:         "000",
-	})
-	spew.Printf("%#v\n", res)
+	}
+	res, err := paymentClient.Payment.RetrieveLoyalties(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -281,13 +402,15 @@ func TestPayment_RetrieveLoyalties(t *testing.T) {
 }
 
 func TestPayment_RefundPaymentTransaction(t *testing.T) {
-	res, err := payment.RefundPaymentTransaction(adapter.RefundPaymentTransactionRequest{
+	request := adapter.RefundPaymentTransactionRequest{
 		PaymentTransactionId:  1,
 		ConversationId:        "456d1297-908e-4bd6-a13b-4be31a6e47d5",
 		RefundPrice:           20,
-		RefundDestinationType: model.RefundDestinationTypeCARD,
-	})
-	spew.Printf("%#v\n", res)
+		RefundDestinationType: craftgate.RefundDestinationTypeCARD,
+	}
+
+	res, err := paymentClient.Payment.RefundPaymentTransaction(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -295,8 +418,8 @@ func TestPayment_RefundPaymentTransaction(t *testing.T) {
 }
 
 func TestPayment_RetrievePaymentTransactionRefund(t *testing.T) {
-	res, err := payment.RetrievePaymentTransactionRefund(123)
-	spew.Printf("%#v\n", res)
+	res, err := paymentClient.Payment.RetrievePaymentTransactionRefund(context.Background(), 123)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -304,11 +427,12 @@ func TestPayment_RetrievePaymentTransactionRefund(t *testing.T) {
 }
 
 func TestPayment_RefundPayment(t *testing.T) {
-	res, err := payment.RefundPayment(adapter.RefundPaymentRequest{
+	request := adapter.RefundPaymentRequest{
 		PaymentId:             1,
-		RefundDestinationType: model.RefundDestinationTypeCARD,
-	})
-	spew.Printf("%#v\n", res)
+		RefundDestinationType: craftgate.RefundDestinationTypeCARD,
+	}
+	res, err := paymentClient.Payment.RefundPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -316,8 +440,8 @@ func TestPayment_RefundPayment(t *testing.T) {
 }
 
 func TestPayment_RetrievePaymentRefund(t *testing.T) {
-	res, err := payment.RetrievePaymentRefund(123)
-	spew.Printf("%#v\n", res)
+	res, err := paymentClient.Payment.RetrievePaymentRefund(context.Background(), 123)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -325,14 +449,15 @@ func TestPayment_RetrievePaymentRefund(t *testing.T) {
 }
 
 func TestPayment_StoreCard(t *testing.T) {
-	res, err := payment.StoreCard(adapter.StoreCardRequest{
+	request := adapter.StoreCardRequest{
 		CardHolderName: "Haluk Demir",
 		CardNumber:     "5258640000000001",
 		ExpireYear:     "2044",
 		ExpireMonth:    "07",
 		CardAlias:      "My Card",
-	})
-	spew.Printf("%#v\n", res)
+	}
+	res, err := paymentClient.Payment.StoreCard(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -340,13 +465,14 @@ func TestPayment_StoreCard(t *testing.T) {
 }
 
 func TestPayment_UpdateStoredCard(t *testing.T) {
-	res, err := payment.UpdateStoredCard(adapter.UpdateStoredCardRequest{
-		CardUserKey: "fac377f2-ab15-4696-88d2-5e71b27ec378",
-		CardToken:   "11a078c4-3c32-4796-90b1-51ee5517a212",
-		ExpireYear:  "2044",
-		ExpireMonth: "07",
-	})
-	spew.Printf("%#v\n", res)
+	request := adapter.UpdateStoredCardRequest{
+		CardUserKey: "6bcbac4b-6460-418d-b060-2d9896c08156",
+		CardToken:   "aa57f470-7423-449e-87b7-afb1fba151fb",
+		ExpireYear:  "2050",
+		ExpireMonth: "12",
+	}
+	res, err := paymentClient.Payment.UpdateStoredCard(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -354,10 +480,11 @@ func TestPayment_UpdateStoredCard(t *testing.T) {
 }
 
 func TestPayment_DeleteStoredCard(t *testing.T) {
-	err := payment.DeleteStoredCard(adapter.DeleteStoredCardRequest{
-		CardUserKey: "fac377f2-ab15-4696-88d2-5e71b27ec378",
-		CardToken:   "11a078c4-3c32-4796-90b1-51ee5517a212",
-	})
+	request := adapter.DeleteStoredCardRequest{
+		CardUserKey: "d94018bb-baa9-4418-84f8-760942f669af",
+		CardToken:   "76efcbfd-6bef-4b85-bc85-f0beb0baf664",
+	}
+	err := paymentClient.Payment.DeleteStoredCard(context.Background(), request)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -365,16 +492,29 @@ func TestPayment_DeleteStoredCard(t *testing.T) {
 }
 
 func TestPayment_SearchStoredCards(t *testing.T) {
-	res, err := payment.SearchStoredCards(adapter.SearchStoredCardsRequest{
+	request := adapter.SearchStoredCardsRequest{
 		CardAlias:       "My YKB Card",
 		CardBankName:    "YAPI VE KREDI BANKASI A.S.",
 		CardBrand:       "World",
-		CardType:        model.CREDIT_CARD,
-		CardAssociation: model.MASTER_CARD,
-		CardUserKey:     "c115ecdf-0afc-4d83-8a1b-719c2af19cbd",
-		CardToken:       "d9b19d1a-243c-43dc-a498-add08162df72",
-	})
-	spew.Printf("%#v\n", res)
+		CardType:        craftgate.CREDIT_CARD,
+		CardAssociation: craftgate.MASTER_CARD,
+	}
+
+	res, err := paymentClient.Payment.SearchStoredCards(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_UpdatePaymentTransaction(t *testing.T) {
+	request := adapter.UpdatePaymentTransactionRequest{
+		SubMerchantMemberId:    1,
+		SubMerchantMemberPrice: 0.60,
+	}
+	res, err := paymentClient.Payment.UpdatePaymentTransaction(context.Background(), 123, request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -382,11 +522,12 @@ func TestPayment_SearchStoredCards(t *testing.T) {
 }
 
 func TestPayment_ApprovePaymentTransactions(t *testing.T) {
-	res, err := payment.ApprovePaymentTransactions(adapter.PaymentTransactionsApprovalRequest{
+	request := adapter.PaymentTransactionsApprovalRequest{
 		PaymentTransactionIds: []int64{1, 2},
 		IsTransactional:       true,
-	})
-	spew.Printf("%#v\n", res)
+	}
+	res, err := paymentClient.Payment.ApprovePaymentTransactions(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -394,11 +535,12 @@ func TestPayment_ApprovePaymentTransactions(t *testing.T) {
 }
 
 func TestPayment_DisapprovePaymentTransactions(t *testing.T) {
-	res, err := payment.DisapprovePaymentTransactions(adapter.PaymentTransactionsApprovalRequest{
+	request := adapter.PaymentTransactionsApprovalRequest{
 		PaymentTransactionIds: []int64{1, 2},
 		IsTransactional:       true,
-	})
-	spew.Printf("%#v\n", res)
+	}
+	res, err := paymentClient.Payment.DisapprovePaymentTransactions(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -406,10 +548,11 @@ func TestPayment_DisapprovePaymentTransactions(t *testing.T) {
 }
 
 func TestPayment_CheckMasterpassUser(t *testing.T) {
-	res, err := payment.CheckMasterpassUser(adapter.CheckMasterpassUserRequest{
+	request := adapter.CheckMasterpassUserRequest{
 		MasterpassGsmNumber: "903000000000",
-	})
-	spew.Printf("%#v\n", res)
+	}
+	res, err := paymentClient.Payment.CheckMasterpassUser(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
