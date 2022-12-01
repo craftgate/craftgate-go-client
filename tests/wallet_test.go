@@ -1,24 +1,19 @@
 package tests
 
 import (
-	"craftgate-go-client/adapter"
-	"craftgate-go-client/model"
+	"context"
+	"github.com/craftgate/craftgate-go-client/v1.0.0/adapter"
+	craftgate "github.com/craftgate/craftgate-go-client/v1.0.0/adapter"
 	"github.com/davecgh/go-spew/spew"
 	"testing"
 	"time"
 )
 
-var wallet = adapter.Wallet{
-	Opts: model.RequestOptions{
-		BaseURL:   "https://sandbox-api.craftgate.io",
-		ApiKey:    "api-key",
-		SecretKey: "secret-key",
-	},
-}
+var walletClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func TestWallet_RetrieveMemberWallet(t *testing.T) {
-	res, err := wallet.RetrieveMemberWallet(66988)
-	spew.Printf("%#v\n", res)
+	res, err := walletClient.Wallet.RetrieveMemberWallet(context.Background(), 68350)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -26,8 +21,8 @@ func TestWallet_RetrieveMemberWallet(t *testing.T) {
 }
 
 func TestWallet_RetrieveMerchantMemberWallet(t *testing.T) {
-	res, err := wallet.RetrieveMerchantMemberWallet()
-	spew.Printf("%#v\n", res)
+	res, err := walletClient.Wallet.RetrieveMerchantMemberWallet(context.Background())
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -35,8 +30,9 @@ func TestWallet_RetrieveMerchantMemberWallet(t *testing.T) {
 }
 
 func TestWallet_ResetMerchantMemberWalletBalance(t *testing.T) {
-	res, err := wallet.ResetMerchantMemberWalletBalance(adapter.ResetMerchantMemberWalletBalanceRequest{WalletAmount: -15.75000000})
-	spew.Printf("%#v\n", res)
+	request := adapter.ResetMerchantMemberWalletBalanceRequest{WalletAmount: -190}
+	res, err := walletClient.Wallet.ResetMerchantMemberWalletBalance(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err.Error())
@@ -44,8 +40,9 @@ func TestWallet_ResetMerchantMemberWalletBalance(t *testing.T) {
 }
 
 func TestWallet_SearchWalletTransactions(t *testing.T) {
-	res, err := wallet.SearchWalletTransactions(adapter.SearchWalletTransactionsRequest{WalletId: 62181})
-	spew.Printf("%#v\n", res)
+	request := adapter.SearchWalletTransactionsRequest{}
+	res, err := walletClient.Wallet.SearchWalletTransactions(context.Background(), 81686, request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err.Error())
@@ -53,8 +50,8 @@ func TestWallet_SearchWalletTransactions(t *testing.T) {
 }
 
 func TestWallet_RetrieveRefundableAmountOfWalletTransaction(t *testing.T) {
-	res, err := wallet.RetrieveRefundableAmountOfWalletTransaction(137832)
-	spew.Printf("%#v\n", res)
+	res, err := walletClient.Wallet.RetrieveRefundableAmountOfWalletTransaction(context.Background(), 172485)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err.Error())
@@ -62,17 +59,18 @@ func TestWallet_RetrieveRefundableAmountOfWalletTransaction(t *testing.T) {
 }
 
 func TestWallet_RefundWalletTransactionToCard(t *testing.T) {
-	res, err := wallet.RefundWalletTransactionToCard(adapter.RefundWalletTransactionToCardRequest{WalletTransactionId: 137832, RefundPrice: 3.25})
-	spew.Printf("%#v\n", res)
+	request := adapter.RefundWalletTransactionToCardRequest{RefundPrice: 3.25}
+	res, err := walletClient.Wallet.RefundWalletTransactionToCard(context.Background(), 172485, request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err.Error())
 	}
 }
 
-func TestWallet_RetrieveRefundWalletTransactionToCard(t *testing.T) {
-	res, err := wallet.RetrieveRefundWalletTransactionToCard(137832)
-	spew.Printf("%#v\n", res)
+func TestWallet_RetrieveRefundWalletTransactionsToCard(t *testing.T) {
+	res, err := walletClient.Wallet.RetrieveRefundWalletTransactionsToCard(context.Background(), 172485)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err.Error())
@@ -80,13 +78,14 @@ func TestWallet_RetrieveRefundWalletTransactionToCard(t *testing.T) {
 }
 
 func TestWallet_SendRemittance(t *testing.T) {
-	res, err := wallet.SendRemittance(adapter.RemittanceRequest{
+	request := adapter.RemittanceRequest{
 		Price:                100,
-		MemberId:             68350,
+		MemberId:             86816,
 		Description:          "bonus",
 		RemittanceReasonType: "REDEEM_ONLY_LOYALTY",
-	})
-	spew.Printf("%#v\n", res)
+	}
+	res, err := walletClient.Wallet.SendRemittance(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err.Error())
@@ -94,13 +93,14 @@ func TestWallet_SendRemittance(t *testing.T) {
 }
 
 func TestWallet_ReceiveRemittance(t *testing.T) {
-	res, err := wallet.ReceiveRemittance(adapter.RemittanceRequest{
+	request := adapter.RemittanceRequest{
 		Price:                10,
-		MemberId:             68350,
+		MemberId:             86816,
 		Description:          "bonus",
 		RemittanceReasonType: "REDEEM_ONLY_LOYALTY",
-	})
-	spew.Printf("%#v\n", res)
+	}
+	res, err := walletClient.Wallet.ReceiveRemittance(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err.Error())
@@ -108,8 +108,8 @@ func TestWallet_ReceiveRemittance(t *testing.T) {
 }
 
 func TestWallet_RetrieveRemittance(t *testing.T) {
-	res, err := wallet.RetrieveRemittance(adapter.RetrieveRemittanceRequest{RemittanceId: 66148})
-	spew.Printf("%#v\n", res)
+	res, err := walletClient.Wallet.RetrieveRemittance(context.Background(), 82068)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err.Error())
@@ -117,13 +117,14 @@ func TestWallet_RetrieveRemittance(t *testing.T) {
 }
 
 func TestWallet_CreateWithdraw(t *testing.T) {
-	res, err := wallet.CreateWithdraw(adapter.CreateWithdrawRequest{
+	request := adapter.CreateWithdrawRequest{
 		Price:       5.25,
-		MemberId:    3,
+		MemberId:    86747,
 		Description: "Para çekme talebi",
 		Currency:    "TRY",
-	})
-	spew.Printf("%#v\n", res)
+	}
+	res, err := walletClient.Wallet.CreateWithdraw(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err.Error())
@@ -131,8 +132,8 @@ func TestWallet_CreateWithdraw(t *testing.T) {
 }
 
 func TestWallet_CancelWithdraw(t *testing.T) {
-	res, err := wallet.CancelWithdraw(3)
-	spew.Printf("%#v\n", res)
+	res, err := walletClient.Wallet.CancelWithdraw(context.Background(), 10)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err.Error())
@@ -140,8 +141,8 @@ func TestWallet_CancelWithdraw(t *testing.T) {
 }
 
 func TestWallet_RetrieveWithdraw(t *testing.T) {
-	res, err := wallet.RetrieveWithdraw(3)
-	spew.Printf("%#v\n", res)
+	res, err := walletClient.Wallet.RetrieveWithdraw(context.Background(), 9)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err.Error())
@@ -149,15 +150,16 @@ func TestWallet_RetrieveWithdraw(t *testing.T) {
 }
 
 func TestWallet_SearchWithdraws(t *testing.T) {
-	res, err := wallet.SearchWithdraws(adapter.SearchWithdrawsRequest{
+	request := adapter.SearchWithdrawsRequest{
 		Currency:         "TRY",
 		MinWithdrawPrice: 0,
 		MaxWithdrawPrice: 10000,
 		MinCreatedDate:   time.Now().AddDate(0, 0, -180),
 		MaxCreatedDate:   time.Now(),
-	})
+	}
+	res, err := walletClient.Wallet.SearchWithdraws(context.Background(), request)
 
-	spew.Printf("%#v\n", res)
+	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
 		t.Errorf("Error %s", err.Error())

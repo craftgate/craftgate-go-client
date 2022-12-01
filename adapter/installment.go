@@ -1,74 +1,41 @@
 package adapter
 
 import (
-	"craftgate-go-client/adapter/rest"
-	"craftgate-go-client/model"
+	"context"
 	"fmt"
 	"net/http"
 )
 
 type Installment struct {
-	Opts model.RequestOptions
+	Client *Client
 }
 
-type InstallmentPrice struct {
-	InstallmentPrice  float64 `json:"installmentPrice"`
-	TotalPrice        float64 `json:"totalPrice"`
-	InstallmentNumber int     `json:"installmentNumber"`
-	InstallmentLabel  string  `json:"installmentLabel"`
+func (api *Installment) SearchInstallments(ctx context.Context, request SearchInstallmentsRequest) (*InstallmentListResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/installment/v1/installments", request)
+	if err != nil {
+		return nil, err
+	}
+	response := &Response[InstallmentListResponse]{}
+	respErr := api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, respErr
+	}
+
+	return response.Data, nil
 }
 
-type SearchInstallmentsRequest struct {
-	BinNumber                               string         `schema:"binNumber"`
-	Price                                   float64        `schema:"price"`
-	Currency                                model.Currency `schema:"currency"`
-	DistinctCardBrandsWithLowestCommissions bool           `schema:"distinctCardBrandsWithLowestCommissions"`
-}
+func (api *Installment) RetrieveBinNumber(ctx context.Context, binNumber string) (*RetrieveBinNumberResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/installment/v1/bins/%s", binNumber), nil)
 
-type SearchInstallmentResponse struct {
-	BinNumber         *string            `json:"binNumber"`
-	Price             *float64           `json:"price"`
-	CardType          *string            `json:"cardType"`
-	CardAssociation   *string            `json:"cardAssociation"`
-	CardBrand         *string            `json:"cardBrand"`
-	BankName          *string            `json:"bankName"`
-	BankCode          *int               `json:"bankCode"`
-	Force3Ds          *bool              `json:"force3ds"`
-	CvcRequired       *bool              `json:"cvcRequired"`
-	Commercial        *bool              `json:"commercial"`
-	PosAlias          *string            `json:"posAlias"`
-	InstallmentPrices []InstallmentPrice `json:"installmentPrices"`
-}
+	if err != nil {
+		return nil, err
+	}
 
-type RetrieveBinNumberRequest struct {
-	BinNumber string
-}
+	response := &Response[RetrieveBinNumberResponse]{}
+	respErr := api.Client.Do(ctx, newRequest, response)
+	if respErr != nil {
+		return nil, respErr
+	}
 
-type RetrieveBinNumberResponse struct {
-	BinNumber       *string `json:"binNumber"`
-	CardType        *string `json:"cardType"`
-	CardAssociation *string `json:"cardAssociation"`
-	CardBrand       *string `json:"cardBrand"`
-	BankName        *string `json:"bankName"`
-	BankCode        *int    `json:"bankCode"`
-	Commercial      *bool   `json:"commercial"`
-}
-
-func (api *Installment) SearchInstallments(request SearchInstallmentsRequest) (interface{}, error) {
-	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/installment/v1/installments", api.Opts.BaseURL), nil)
-
-	request.Currency = "TRY"
-	req.URL.RawQuery, _ = QueryParams(request)
-
-	res := model.Response[model.DataResponse[SearchInstallmentResponse]]{}
-	resErr := rest.SendRequest(req, &res, api.Opts)
-	return &res, resErr
-}
-
-func (api *Installment) RetrieveBinNumber(binNumber string) (interface{}, error) {
-	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/installment/v1/bins/%s", api.Opts.BaseURL, binNumber), nil)
-
-	res := model.Response[RetrieveBinNumberResponse]{}
-	resErr := rest.SendRequest(req, &res, api.Opts)
-	return &res, resErr
+	return response.Data, nil
 }

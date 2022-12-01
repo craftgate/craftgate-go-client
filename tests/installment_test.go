@@ -1,24 +1,19 @@
 package tests
 
 import (
-	"craftgate-go-client/adapter"
-	"craftgate-go-client/model"
-	"github.com/davecgh/go-spew/spew"
+	"context"
+	"github.com/craftgate/craftgate-go-client/v1.0.0/adapter"
+	craftgate "github.com/craftgate/craftgate-go-client/v1.0.0/adapter"
+	"github.com/stretchr/testify/require"
 	"testing"
 )
 
-var installment = adapter.Installment{
-	Opts: model.RequestOptions{
-		BaseURL:   "https://sandbox-api.craftgate.io",
-		ApiKey:    "api-key",
-		SecretKey: "secret-key",
-	},
-}
+var installmentClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func Test_RetrieveBinNumber(t *testing.T) {
-	res, err := installment.RetrieveBinNumber("487074")
-	spew.Printf("%#v\n", res)
+	res, err := installmentClient.Installment.RetrieveBinNumber(context.Background(), "487074")
 
+	require.Equal(t, *res.BinNumber, "487074")
 	if err != nil {
 		t.Errorf("Error %s", err)
 	}
@@ -28,11 +23,11 @@ func Test_SearchInstallments(t *testing.T) {
 	request := adapter.SearchInstallmentsRequest{
 		BinNumber: "487074",
 		Price:     100,
-		Currency:  model.Currency(model.TRY),
+		Currency:  craftgate.Currency(craftgate.TRY),
 	}
-	res, err := installment.SearchInstallments(request)
-	spew.Printf("%#v\n", res)
+	res, err := installmentClient.Installment.SearchInstallments(context.Background(), request)
 
+	require.Equal(t, *res.Items[0].BinNumber, "487074")
 	if err != nil {
 		t.Errorf("Error %s", err)
 	}

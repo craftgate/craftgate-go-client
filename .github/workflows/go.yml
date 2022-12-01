@@ -1,0 +1,30 @@
+name: Craftgate Go Client CI
+
+on: [ push, pull_request ]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Go 1.19
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
+          cache: true
+          cache-dependency-path: go.sum
+
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+
+      - name: Get dependencies
+        run: |
+          go get -v -t -d
+
+      - name: Build
+        run: go build -v .
+
+      - name: Test
+        run: go test
