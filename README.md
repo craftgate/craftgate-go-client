@@ -18,7 +18,7 @@ You can import `Craftgate` client using:
 
 ```go
 import (
-    "github.com/craftgate/craftgate-go-client/v1.0.0"
+    craftgate "github.com/craftgate/craftgate-go-client/adapter"
 )
 ```
 
