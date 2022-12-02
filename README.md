@@ -5,12 +5,12 @@
 This repo contains the Go library for Craftgate API.
 
 ## Requirements
-- Go 1.18 or newer
+- Go 1.19 or newer
 
 ## Installation
 
 ```sh
-go get github.com/craftgate/craftgate-go-client/v1.0.0
+go get github.com/craftgate/craftgate-go-client@v1.0.0
 ```
 
 ## Usage
@@ -27,12 +27,12 @@ To access the Craftgate API you'll first need to obtain API credentials (e.g. an
 Once you've obtained your API credentials, you can start using Craftgate by instantiating a `Craftgate` with your credentials.
 
 ```go
-client := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>")
+client, _ := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://api.craftgate.io")
 
-request := adapter.SearchInstallmentsRequest{
+request := craftgate.SearchInstallmentsRequest{
     BinNumber: "487074",
     Price:     100,
-    Currency:  craftgate.Currency(craftgate.TRY),
+    Currency:  craftgate.TRY,
 }
 
 res, err := client.Installment.SearchInstallments(context.Background(), request)
@@ -56,10 +56,20 @@ Let's quickly review an example where we implement a credit card payment scenari
 > For more examples covering almost all use-cases, check out the [examples in the `tests/` folder](./tests)
 
 ```go
-client := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://sandbox-api.craftgate.io");
+client, _ := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://sandbox-api.craftgate.io");
 
-res, err := paymentClient.Payment.CreatePayment(context.Background(), request)
-spew.Printf("%#v\n", res)
+request := craftgate.CreatePaymentRequest{
+    Price:     100,
+    PaidPrice: 100,
+    Currency:  craftgate.TRY,
+    ...
+}
+
+res, err := client.Payment.CreatePayment(context.Background(), request)
+
+if err != nil {
+    t.Errorf("Error %s", err)
+}
 ```
 
 ### Contributions

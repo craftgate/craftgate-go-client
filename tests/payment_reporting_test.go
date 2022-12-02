@@ -2,8 +2,8 @@ package tests
 
 import (
     "context"
-    "github.com/craftgate/craftgate-go-client/v1.0.0/adapter"
-    craftgate "github.com/craftgate/craftgate-go-client/v1.0.0/adapter"
+    "github.com/craftgate/craftgate-go-client/adapter"
+    craftgate "github.com/craftgate/craftgate-go-client/adapter"
     "github.com/davecgh/go-spew/spew"
     "testing"
     "time"
