@@ -8,7 +8,7 @@ package main
 
 import (
 	"fmt"
-	craftgate "github.com/craftgate/craftgate-go-client/v1.0.0/adapter"
+	craftgate "github.com/craftgate/craftgate-go-client/adapter"
 )
 
 func main() {
