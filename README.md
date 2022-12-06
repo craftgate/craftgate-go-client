@@ -10,7 +10,7 @@ This repo contains the Go library for Craftgate API.
 ## Installation
 
 ```sh
-go get github.com/craftgate/craftgate-go-client@v1.0.0
+go get github.com/craftgate/craftgate-go-client@1.0.0
 ```
 
 ## Usage
