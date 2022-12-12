@@ -14,12 +14,4 @@ import (
 func main() {
 	client, _ := craftgate.New("api-key", "secret-key", "https://api.craftgate.io")
 	fmt.Println(client.Info())
-
-	m := make(map[string]string)
-	m["hash"] = "asdasdas"
-
-	fmt.Println(m["hash"])
-	s := m["no"]
-	fmt.Println(s)
-	fmt.Println(len(s))
 }
