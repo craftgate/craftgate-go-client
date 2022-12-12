@@ -32,6 +32,8 @@ type FraudCheckStatus string
 type ApmAdditionalAction string
 type ReportFileType string
 type WalletTransactionType string
+type WebhookEventType string
+type WebhookStatus string
 
 const (
 	ApiKeyHeaderName        = "x-api-key"
@@ -103,7 +105,7 @@ const (
 	USD          = "USD"
 	EUR          = "EUR"
 	GBP          = "GBP"
-    CNY          = "CNY"
+	CNY          = "CNY"
 )
 
 // payment group declaration
@@ -311,6 +313,20 @@ const (
 	WITHDRAW_CANCEL                                    = "WITHDRAW_CANCEL"
 	MERCHANT_BALANCE_RESET                             = "MERCHANT_BALANCE_RESET"
 	DEPOSIT_FROM_FUND_TRANSFER                         = "DEPOSIT_FROM_FUND_TRANSFER"
+)
+
+const (
+	_                   WebhookEventType = ""
+	API_AUTH                             = "API_AUTH"
+	API_VERIFY_AND_AUTH                  = "API_VERIFY_AND_AUTH"
+	CHECKOUTFORM_AUTH                    = "CHECKOUTFORM_AUTH"
+	THREEDS_VERIFY                       = "THREEDS_VERIFY"
+)
+
+const (
+	_                    WebhookStatus = ""
+	WebhookStatusSUCCESS               = "SUCCESS"
+	WebhookStatusFAILURE               = "FAILURE"
 )
 
 // requests
@@ -1315,6 +1331,14 @@ type FraudValuesResponse struct {
 type FraudValue struct {
 	Value           *string `json:"value"`
 	ExpireInSeconds *int    `json:"expireInSeconds"`
+}
+
+type WebhookData struct {
+	EventType      WebhookEventType
+	EventTime      time.Time
+	EventTimestamp int64
+	Status         WebhookStatus
+	PayloadId      string
 }
 
 type RequestOptions struct {
