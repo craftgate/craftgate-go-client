@@ -8,9 +8,10 @@ This repo contains the Go library for Craftgate API.
 - Go 1.19 or newer
 
 ## Installation
+Please check the latest version from the release page.
 
 ```sh
-go get github.com/craftgate/craftgate-go-client@v1.0.0
+go get github.com/craftgate/craftgate-go-client@v1.0.1
 ```
 
 ## Usage
