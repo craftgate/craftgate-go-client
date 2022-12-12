@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-var paymentClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var paymentClient, _ = craftgate.New("api-key-2", "secret-key", "http://localhost:8000")
 
 func TestPayment_CreatePayment(t *testing.T) {
 	request := adapter.CreatePaymentRequest{
@@ -344,7 +344,7 @@ func TestPayment_InitGarantiPayPayment(t *testing.T) {
 
 func TestPayment_InitApmPayment(t *testing.T) {
 	request := adapter.InitApmPaymentRequest{
-		ApmType:         craftgate.EDENRED,
+		ApmType:         craftgate.ApmEDENRED,
 		Price:           1.25,
 		PaidPrice:       1.25,
 		Currency:        craftgate.Currency(craftgate.TRY),
@@ -362,6 +362,34 @@ func TestPayment_InitApmPayment(t *testing.T) {
 				Name:       "Item 2",
 				Price:      0.25,
 				ExternalId: "2",
+			},
+		},
+	}
+	res, err := paymentClient.Payment.InitApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_InitAfterpayApmPayment(t *testing.T) {
+	request := adapter.InitApmPaymentRequest{
+		ApmType:        craftgate.ApmAFTERPAY,
+		Price:          1,
+		PaidPrice:      1,
+		Currency:       craftgate.Currency(craftgate.USD),
+		PaymentGroup:   craftgate.PaymentGroup(craftgate.LISTING_OR_SUBSCRIPTION),
+		ConversationId: "foo-bar",
+		CallbackUrl:    "https://www.your-website.com/callback",
+		Items: []craftgate.PaymentItem{
+			{
+				Name:  "Item 1",
+				Price: 0.6,
+			},
+			{
+				Name:  "Item 2",
+				Price: 0.4,
 			},
 		},
 	}
