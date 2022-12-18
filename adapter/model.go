@@ -47,287 +47,255 @@ const (
 
 // payment type declaration
 const (
-	_                       PaymentType = ""
-	CARD_PAYMENT                        = "CARD_PAYMENT"
-	DEPOSIT_PAYMENT                     = "DEPOSIT_PAYMENT"
-	WALLET_PAYMENT                      = "WALLET_PAYMENT"
-	CARD_AND_WALLET_PAYMENT             = "CARD_AND_WALLET_PAYMENT"
-	BANK_TRANSFER                       = "BANK_TRANSFER"
+	CARD_PAYMENT            PaymentType = "CARD_PAYMENT"
+	DEPOSIT_PAYMENT         PaymentType = "DEPOSIT_PAYMENT"
+	WALLET_PAYMENT          PaymentType = "WALLET_PAYMENT"
+	CARD_AND_WALLET_PAYMENT PaymentType = "CARD_AND_WALLET_PAYMENT"
+	BANK_TRANSFER           PaymentType = "BANK_TRANSFER"
 	APM                                 = "APM"
 )
 
 const (
-	_                   ApmType = ""
-	ApmPAPARA                   = "PAPARA"
-	ApmPAYONEER                 = "PAYONEER"
-	ApmSODEXO                   = "SODEXO"
-	ApmEDENRED                  = "EDENRED"
-	ApmPAYPAL                   = "PAYPAL"
-	ApmAFTERPAY                 = "AFTERPAY"
-	ApmFUND_TRANSFER            = "FUND_TRANSFER"
-	ApmCASH_ON_DELIVERY         = "CASH_ON_DELIVERY"
+	ApmPAPARA           ApmType = "PAPARA"
+	ApmPAYONEER         ApmType = "PAYONEER"
+	ApmSODEXO           ApmType = "SODEXO"
+	ApmEDENRED          ApmType = "EDENRED"
+	ApmPAYPAL           ApmType = "PAYPAL"
+	ApmAFTERPAY         ApmType = "AFTERPAY"
+	ApmFUND_TRANSFER    ApmType = "FUND_TRANSFER"
+	ApmCASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
 )
 
 // payment provider declaration
 const (
-	_           PaymentProvider = ""
-	BANK                        = "BANK"
-	CG_WALLET                   = "CG_WALLET"
-	MASTERPASS                  = "MASTERPASS"
-	GARANTI_PAY                 = "GARANTI_PAY"
-	PAPARA                      = "PAPARA"
-	PAYONEER                    = "PAYONEER"
-	SODEXO                      = "SODEXO"
-	EDENRED                     = "EDENRED"
+	BANK        PaymentProvider = "BANK"
+	CG_WALLET   PaymentProvider = "CG_WALLET"
+	MASTERPASS  PaymentProvider = "MASTERPASS"
+	GARANTI_PAY PaymentProvider = "GARANTI_PAY"
+	PAPARA      PaymentProvider = "PAPARA"
+	PAYONEER    PaymentProvider = "PAYONEER"
+	SODEXO      PaymentProvider = "SODEXO"
+	EDENRED     PaymentProvider = "EDENRED"
 )
 
 // payment status declaration
 const (
-	_                PaymentStatus = ""
-	FAILURE                        = "FAILURE"
-	SUCCESS                        = "SUCCESS"
-	INIT_THREEDS                   = "INIT_THREEDS"
-	CALLBACK_THREEDS               = "CALLBACK_THREEDS"
-	WAITING                        = "WAITING"
+	FAILURE          PaymentStatus = "FAILURE"
+	SUCCESS          PaymentStatus = "SUCCESS"
+	INIT_THREEDS     PaymentStatus = "INIT_THREEDS"
+	CALLBACK_THREEDS PaymentStatus = "CALLBACK_THREEDS"
+	WAITING          PaymentStatus = "WAITING"
 )
 
 // payment source declaration
 const (
-	_             PaymentSource = ""
-	API                         = "API"
-	CHECKOUT_FORM               = "CHECKOUT_FORM"
-	PAY_BY_LINK                 = "PAY_BY_LINK"
+	API           PaymentSource = "API"
+	CHECKOUT_FORM PaymentSource = "CHECKOUT_FORM"
+	PAY_BY_LINK   PaymentSource = "PAY_BY_LINK"
 )
 
 // currency declaration
 const (
-	_   Currency = ""
-	TRY          = "TRY"
-	USD          = "USD"
-	EUR          = "EUR"
-	GBP          = "GBP"
-	CNY          = "CNY"
+	TRY Currency = "TRY"
+	USD Currency = "USD"
+	EUR Currency = "EUR"
+	GBP Currency = "GBP"
+	CNY Currency = "CNY"
 )
 
 // payment group declaration
 const (
-	_                       PaymentGroup = ""
-	PRODUCT                              = "PRODUCT"
-	LISTING_OR_SUBSCRIPTION              = "LISTING_OR_SUBSCRIPTION"
+	PRODUCT                 PaymentGroup = "PRODUCT"
+	LISTING_OR_SUBSCRIPTION PaymentGroup = "LISTING_OR_SUBSCRIPTION"
 )
 
 // payment phase declaration
 const (
-	_         PaymentPhase = ""
-	AUTH                   = "AUTH"
-	PRE_AUTH               = "PRE_AUTH"
-	POST_AUTH              = "POST_AUTH"
+	AUTH      PaymentPhase = "AUTH"
+	PRE_AUTH  PaymentPhase = "PRE_AUTH"
+	POST_AUTH PaymentPhase = "POST_AUTH"
 )
 
 // payment method declaration
 const (
-	_                        PaymentMethod = ""
-	PaymentMethod_CARD                     = "CARD"
-	PaymentMethod_MASTERPASS               = "MASTERPASS"
+	PaymentMethod_CARD       PaymentMethod = "CARD"
+	PaymentMethod_MASTERPASS PaymentMethod = "MASTERPASS"
 )
 
 // card type declaration
 const (
-	_            CardType = ""
-	CREDIT_CARD           = "CREDIT_CARD"
-	DEBIT_CARD            = "DEBIT_CARD"
-	PREPAID_CARD          = "PREPAID_CARD"
+	CREDIT_CARD  CardType = "CREDIT_CARD"
+	DEBIT_CARD   CardType = "DEBIT_CARD"
+	PREPAID_CARD CardType = "PREPAID_CARD"
 )
 
 // card association declaration
 const (
-	_           CardAssociation = ""
-	VISA                        = "VISA"
-	MASTER_CARD                 = "MASTER_CARD"
-	AMEX                        = "AMEX"
-	TROY                        = "TROY"
-	JCB                         = "JCB"
-	UNION_PAY                   = "UNION_PAY"
-	MAESTRO                     = "MAESTRO"
-	DISCOVER                    = "DISCOVER"
-	DINERS_CLUB                 = "DINERS_CLUB"
+	VISA        CardAssociation = "VISA"
+	MASTER_CARD CardAssociation = "MASTER_CARD"
+	AMEX        CardAssociation = "AMEX"
+	TROY        CardAssociation = "TROY"
+	JCB         CardAssociation = "JCB"
+	UNION_PAY   CardAssociation = "UNION_PAY"
+	MAESTRO     CardAssociation = "MAESTRO"
+	DISCOVER    CardAssociation = "DISCOVER"
+	DINERS_CLUB CardAssociation = "DINERS_CLUB"
 )
 
 // card expiry status declaration
 const (
-	_                      CardExpiryStatus = ""
-	EXPIRED                                 = "EXPIRED"
-	WILL_EXPIRE_NEXT_MONTH                  = "WILL_EXPIRE_NEXT_MONTH"
-	NOT_EXPIRED                             = "NOT_EXPIRED"
+	EXPIRED                CardExpiryStatus = "EXPIRED"
+	WILL_EXPIRE_NEXT_MONTH CardExpiryStatus = "WILL_EXPIRE_NEXT_MONTH"
+	NOT_EXPIRED            CardExpiryStatus = "NOT_EXPIRED"
 )
 
 // loyalty type declaration
 const (
-	_                      LoyaltyType = ""
-	REWARD_MONEY                       = "REWARD_MONEY"
-	ADDITIONAL_INSTALLMENT             = "ADDITIONAL_INSTALLMENT"
-	POSTPONING_INSTALLMENT             = "POSTPONING_INSTALLMENT"
-	EXTRA_POINTS                       = "EXTRA_POINTS"
-	GAINING_MINUTES                    = "GAINING_MINUTES"
-	POSTPONING_STATEMENT               = "POSTPONING_STATEMENT"
+	REWARD_MONEY           LoyaltyType = "REWARD_MONEY"
+	ADDITIONAL_INSTALLMENT LoyaltyType = "ADDITIONAL_INSTALLMENT"
+	POSTPONING_INSTALLMENT LoyaltyType = "POSTPONING_INSTALLMENT"
+	EXTRA_POINTS           LoyaltyType = "EXTRA_POINTS"
+	GAINING_MINUTES        LoyaltyType = "GAINING_MINUTES"
+	POSTPONING_STATEMENT   LoyaltyType = "POSTPONING_STATEMENT"
 )
 
 // payment refund status declaration
 const (
-	_                PaymentRefundStatus = ""
-	NO_REFUND                            = "NO_REFUND"
-	NOT_REFUNDED                         = "NOT_REFUNDED"
-	PARTIAL_REFUNDED                     = "PARTIAL_REFUNDED"
-	FULLY_REFUNDED                       = "FULLY_REFUNDED"
+	NO_REFUND        PaymentRefundStatus = "NO_REFUND"
+	NOT_REFUNDED     PaymentRefundStatus = "NOT_REFUNDED"
+	PARTIAL_REFUNDED PaymentRefundStatus = "PARTIAL_REFUNDED"
+	FULLY_REFUNDED   PaymentRefundStatus = "FULLY_REFUNDED"
 )
 
 // refund status declaration
 const (
-	_                   RefundStatus = ""
-	SuccessRefundStatus              = "SUCCESS"
-	FailureRefundStatus              = "FAILURE"
+	SuccessRefundStatus RefundStatus = "SUCCESS"
+	FailureRefundStatus RefundStatus = "FAILURE"
 )
 
 // refund type declaration
 const (
-	_      RefundType = ""
-	CANCEL            = "CANCEL"
-	REFUND            = "REFUND"
+	CANCEL RefundType = "CANCEL"
+	REFUND RefundType = "REFUND"
 )
 
 // approval status declaration
 const (
-	_                     ApprovalStatus = ""
-	SuccessApprovalStatus                = "SUCCESS"
-	FailureApprovalStatus                = "FAILURE"
+	SuccessApprovalStatus ApprovalStatus = "SUCCESS"
+	FailureApprovalStatus ApprovalStatus = "FAILURE"
 )
 
 // status declaration
 const (
-	_       Status = ""
-	ACTIVE         = "ACTIVE"
-	PASSIVE        = "PASSIVE"
+	ACTIVE  Status = "ACTIVE"
+	PASSIVE Status = "PASSIVE"
 )
 
 // member type declaration
 const (
-	_                              MemberType = ""
-	PERSONAL                                  = "PERSONAL"
-	PRIVATE_COMPANY                           = "PRIVATE_COMPANY"
-	LIMITED_OR_JOINT_STOCK_COMPANY            = "LIMITED_OR_JOINT_STOCK_COMPANY"
+	PERSONAL                       MemberType = "PERSONAL"
+	PRIVATE_COMPANY                MemberType = "PRIVATE_COMPANY"
+	LIMITED_OR_JOINT_STOCK_COMPANY MemberType = "LIMITED_OR_JOINT_STOCK_COMPANY"
 )
 
 // settlementEarningsDestination type declaration
 const (
-	_                                   SettlementEarningsDestination = ""
-	SettlementEarningsDestinationIBAN                                 = "IBAN"
-	SettlementEarningsDestinationWALLET                               = "WALLET"
+	SettlementEarningsDestinationIBAN   SettlementEarningsDestination = "IBAN"
+	SettlementEarningsDestinationWALLET SettlementEarningsDestination = "WALLET"
 )
 
 // refundDestinationType type declaration
 const (
-	_                             RefundDestinationType = ""
-	RefundDestinationTypeCARD                           = "CARD"
-	RefundDestinationTypePROVIDER                       = "PROVIDER"
-	RefundDestinationTypeWALLET                         = "WALLET"
+	RefundDestinationTypeCARD     RefundDestinationType = "CARD"
+	RefundDestinationTypePROVIDER RefundDestinationType = "PROVIDER"
+	RefundDestinationTypeWALLET   RefundDestinationType = "WALLET"
 )
 
 // transaction status declaration
 const (
-	_                    TransactionStatus = ""
-	WAITING_FOR_APPROVAL                   = "WAITING_FOR_APPROVAL"
-	APPROVED                               = "APPROVED"
-	PAYOUT_STARTED                         = "PAYOUT_STARTED"
+	WAITING_FOR_APPROVAL TransactionStatus = "WAITING_FOR_APPROVAL"
+	APPROVED             TransactionStatus = "APPROVED"
+	PAYOUT_STARTED       TransactionStatus = "PAYOUT_STARTED"
 )
 
 // transaction payout status declaration
 const (
-	_                                         TransactionPayoutStatus = ""
-	TransactionPayoutStatusCANCELLED                                  = "CANCELLED"
-	TransactionPayoutStatusNO_PAYOUT                                  = "NO_PAYOUT"
-	TransactionPayoutStatusWAITING_FOR_PAYOUT                         = "WAITING_FOR_PAYOUT"
-	TransactionPayoutStatusPAYOUT_STARTED                             = "PAYOUT_STARTED"
-	TransactionPayoutStatusPAYOUT_COMPLETED                           = "PAYOUT_COMPLETED"
+	TransactionPayoutStatusCANCELLED          TransactionPayoutStatus = "CANCELLED"
+	TransactionPayoutStatusNO_PAYOUT          TransactionPayoutStatus = "NO_PAYOUT"
+	TransactionPayoutStatusWAITING_FOR_PAYOUT TransactionPayoutStatus = "WAITING_FOR_PAYOUT"
+	TransactionPayoutStatusPAYOUT_STARTED     TransactionPayoutStatus = "PAYOUT_STARTED"
+	TransactionPayoutStatusPAYOUT_COMPLETED   TransactionPayoutStatus = "PAYOUT_COMPLETED"
 )
 
 // settlement type declaration
 const (
-	_                                SettlementType = ""
-	SettlementTypeSETTLEMENT                        = "SETTLEMENT"
-	SettlementTypeBOUNCED_SETTLEMENT                = "BOUNCED_SETTLEMENT"
-	SettlementTypeWITHDRAW                          = "WITHDRAW"
+	SettlementTypeSETTLEMENT         SettlementType = "SETTLEMENT"
+	SettlementTypeBOUNCED_SETTLEMENT SettlementType = "BOUNCED_SETTLEMENT"
+	SettlementTypeWITHDRAW           SettlementType = "WITHDRAW"
 )
 
 // wallet transaction refund type declaration
 const (
-	_          WalletTransactionRefundCardTransactionType = ""
-	PAYMENT                                               = "PAYMENT"
-	PAYMENT_TX                                            = "PAYMENT_TX"
+	PAYMENT    WalletTransactionRefundCardTransactionType = "PAYMENT"
+	PAYMENT_TX WalletTransactionRefundCardTransactionType = "PAYMENT_TX"
 )
 
 // fraud action type declaration
 const (
-	_      FraudAction = ""
-	BLOCK              = "BLOCK"
-	REVIEW             = "REVIEW"
+	BLOCK  FraudAction = "BLOCK"
+	REVIEW FraudAction = "REVIEW"
 )
 
 // fraud check status type declaration
 const (
-	_                         FraudCheckStatus = ""
-	FraudCheckStatusWAITING                    = "WAITING"
-	FraudCheckStatusNOT_FRAUD                  = "NOT_FRAUD"
-	FraudCheckStatusFRAUD                      = "FRAUD"
+	FraudCheckStatusWAITING   FraudCheckStatus = "WAITING"
+	FraudCheckStatusNOT_FRAUD FraudCheckStatus = "NOT_FRAUD"
+	FraudCheckStatusFRAUD     FraudCheckStatus = "FRAUD"
 )
 
 // apm additional action type declaration
 const (
-	_               ApmAdditionalAction = ""
-	REDIRECT_TO_URL                     = "REDIRECT_TO_URL"
-	OTP_REQUIRED                        = "OTP_REQUIRED"
-	NONE                                = "NONE"
+	REDIRECT_TO_URL ApmAdditionalAction = "REDIRECT_TO_URL"
+	OTP_REQUIRED    ApmAdditionalAction = "OTP_REQUIRED"
+	NONE            ApmAdditionalAction = "NONE"
 )
 
 // report file type declaration
 const (
-	_    ReportFileType = ""
-	CSV                 = "CSV"
-	XLSX                = "XLSX"
+	CSV  ReportFileType = "CSV"
+	XLSX ReportFileType = "XLSX"
 )
 
 // wallet transaction type declaration
 const (
-	_                            WalletTransactionType = ""
-	PAYMENT_REDEEM                                     = "PAYMENT_REDEEM"
-	REFUND_DEPOSIT                                     = "REFUND_DEPOSIT"
-	REFUND_TX_DEPOSIT                                  = "REFUND_TX_DEPOSIT"
-	WITHDRAW                                           = "WITHDRAW"
-	CANCEL_REFUND_WALLET_TO_CARD                       = "CANCEL_REFUND_WALLET_TO_CARD"
-	REFUND_WALLET_TX_TO_CARD                           = "REFUND_WALLET_TX_TO_CARD"
-	CANCEL_REFUND_TO_WALLET                            = "CANCEL_REFUND_TO_WALLET"
-	REFUND_TX_TO_WALLET                                = "REFUND_TX_TO_WALLET"
-	MANUAL_REFUND_TX_TO_WALLET                         = "MANUAL_REFUND_TX_TO_WALLET"
-	SETTLEMENT_EARNINGS                                = "SETTLEMENT_EARNINGS"
-	DEPOSIT_FROM_CARD                                  = "DEPOSIT_FROM_CARD"
-	REMITTANCE                                         = "REMITTANCE"
-	LOYALTY                                            = "LOYALTY"
-	WITHDRAW_CANCEL                                    = "WITHDRAW_CANCEL"
-	MERCHANT_BALANCE_RESET                             = "MERCHANT_BALANCE_RESET"
-	DEPOSIT_FROM_FUND_TRANSFER                         = "DEPOSIT_FROM_FUND_TRANSFER"
+	PAYMENT_REDEEM               WalletTransactionType = "PAYMENT_REDEEM"
+	REFUND_DEPOSIT               WalletTransactionType = "REFUND_DEPOSIT"
+	REFUND_TX_DEPOSIT            WalletTransactionType = "REFUND_TX_DEPOSIT"
+	WITHDRAW                     WalletTransactionType = "WITHDRAW"
+	CANCEL_REFUND_WALLET_TO_CARD WalletTransactionType = "CANCEL_REFUND_WALLET_TO_CARD"
+	REFUND_WALLET_TX_TO_CARD     WalletTransactionType = "REFUND_WALLET_TX_TO_CARD"
+	CANCEL_REFUND_TO_WALLET      WalletTransactionType = "CANCEL_REFUND_TO_WALLET"
+	REFUND_TX_TO_WALLET          WalletTransactionType = "REFUND_TX_TO_WALLET"
+	MANUAL_REFUND_TX_TO_WALLET   WalletTransactionType = "MANUAL_REFUND_TX_TO_WALLET"
+	SETTLEMENT_EARNINGS          WalletTransactionType = "SETTLEMENT_EARNINGS"
+	DEPOSIT_FROM_CARD            WalletTransactionType = "DEPOSIT_FROM_CARD"
+	REMITTANCE                   WalletTransactionType = "REMITTANCE"
+	LOYALTY                      WalletTransactionType = "LOYALTY"
+	WITHDRAW_CANCEL              WalletTransactionType = "WITHDRAW_CANCEL"
+	MERCHANT_BALANCE_RESET       WalletTransactionType = "MERCHANT_BALANCE_RESET"
+	DEPOSIT_FROM_FUND_TRANSFER   WalletTransactionType = "DEPOSIT_FROM_FUND_TRANSFER"
 )
 
 const (
-	_                   WebhookEventType = ""
-	API_AUTH                             = "API_AUTH"
-	API_VERIFY_AND_AUTH                  = "API_VERIFY_AND_AUTH"
-	CHECKOUTFORM_AUTH                    = "CHECKOUTFORM_AUTH"
-	THREEDS_VERIFY                       = "THREEDS_VERIFY"
+	API_AUTH            WebhookEventType = "API_AUTH"
+	API_VERIFY_AND_AUTH WebhookEventType = "API_VERIFY_AND_AUTH"
+	CHECKOUTFORM_AUTH   WebhookEventType = "CHECKOUTFORM_AUTH"
+	THREEDS_VERIFY      WebhookEventType = "THREEDS_VERIFY"
 )
 
 const (
-	_                    WebhookStatus = ""
-	WebhookStatusSUCCESS               = "SUCCESS"
-	WebhookStatusFAILURE               = "FAILURE"
+	WebhookStatusSUCCESS WebhookStatus = "SUCCESS"
+	WebhookStatusFAILURE WebhookStatus = "FAILURE"
 )
 
 // requests
