@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-var paymentClient, _ = craftgate.New("Z65JpMHTT4uZLg9cZFKvaWLZqvWfandE", "HNnUQ3Pc2BGVAR9wlnc2XEbsC1TSKNXZ", "http://localhost:8000")
+var paymentClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func TestPayment_CreatePayment(t *testing.T) {
 	request := adapter.CreatePaymentRequest{
