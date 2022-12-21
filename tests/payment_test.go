@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-var paymentClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var paymentClient, _ = craftgate.New("Z65JpMHTT4uZLg9cZFKvaWLZqvWfandE", "HNnUQ3Pc2BGVAR9wlnc2XEbsC1TSKNXZ", "http://localhost:8000")
 
 func TestPayment_CreatePayment(t *testing.T) {
 	request := adapter.CreatePaymentRequest{
@@ -363,6 +363,38 @@ func TestPayment_InitApmPayment(t *testing.T) {
 				Price:      0.25,
 				ExternalId: "2",
 			},
+		},
+	}
+	res, err := paymentClient.Payment.InitApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_InitKlarnaApmPayment(t *testing.T) {
+	request := adapter.InitApmPaymentRequest{
+		ApmType:        craftgate.ApmKLARNA,
+		Price:          1,
+		PaidPrice:      1,
+		Currency:       craftgate.Currency(craftgate.USD),
+		PaymentGroup:   craftgate.PaymentGroup(craftgate.LISTING_OR_SUBSCRIPTION),
+		ConversationId: "foo-bar",
+		CallbackUrl:    "https://www.your-website.com/callback",
+		Items: []craftgate.PaymentItem{
+			{
+				Name:  "Item 1",
+				Price: 0.6,
+			},
+			{
+				Name:  "Item 2",
+				Price: 0.4,
+			},
+		},
+		AdditionalParams: map[string]string{
+			"country": "de",
+			"locale":  "en-DE",
 		},
 	}
 	res, err := paymentClient.Payment.InitApmPayment(context.Background(), request)
