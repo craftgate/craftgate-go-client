@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-var paymentClient, _ = craftgate.New("sandbox-bnqfCZGyogzVmQKuiHPvwilBKDAmYvoB", "sandbox-okZEjZlBlteIPARYChRHewtPgKgHAoXO", "https://sandbox-api.craftgate.io")
+var paymentClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func TestPayment_CreatePayment(t *testing.T) {
 	request := adapter.CreatePaymentRequest{
@@ -51,7 +51,7 @@ func TestPayment_CreatePayment(t *testing.T) {
 
 func TestPayment_CreateApmPayment(t *testing.T) {
 	request := adapter.CreateApmPaymentRequest{
-		ApmType:        craftgate.ApmCASH_ON_DELIVERY,
+		ApmType:        craftgate.ApmTypeCASH_ON_DELIVERY,
 		Price:          1.25,
 		PaidPrice:      1.25,
 		Currency:       craftgate.TRY,
@@ -344,7 +344,7 @@ func TestPayment_InitGarantiPayPayment(t *testing.T) {
 
 func TestPayment_InitApmPayment(t *testing.T) {
 	request := adapter.InitApmPaymentRequest{
-		ApmType:         craftgate.ApmEDENRED,
+		ApmType:         craftgate.ApmTypeEDENRED,
 		Price:           1.25,
 		PaidPrice:       1.25,
 		Currency:        craftgate.TRY,
@@ -407,7 +407,7 @@ func TestPayment_InitKlarnaApmPayment(t *testing.T) {
 
 func TestPayment_InitAfterpayApmPayment(t *testing.T) {
 	request := adapter.InitApmPaymentRequest{
-		ApmType:        craftgate.ApmAFTERPAY,
+		ApmType:        craftgate.ApmTypeAFTERPAY,
 		Price:          1,
 		PaidPrice:      1,
 		Currency:       craftgate.USD,
