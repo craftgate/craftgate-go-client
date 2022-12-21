@@ -14,8 +14,8 @@ func Test_CreateProduct(t *testing.T) {
     request := adapter.CreateProductRequest{
         Name:                "A new Product",
         Channel:             "API",
-        Price:               12.32,
-        Currency:            craftgate.Currency(craftgate.TRY),
+        Price:               10,
+        Currency:            craftgate.TRY,
         EnabledInstallments: []int{1, 2, 3, 6},
     }
 
@@ -30,14 +30,14 @@ func Test_CreateProduct(t *testing.T) {
 func Test_UpdateProduct(t *testing.T) {
     request := adapter.UpdateProductRequest{
         Name:                "A new Product",
-        Status:              craftgate.Status(craftgate.ACTIVE),
+        Status:              craftgate.ACTIVE,
         Channel:             "API",
-        Price:               12.32,
-        Currency:            craftgate.Currency(craftgate.TRY),
+        Price:               10,
+        Currency:            craftgate.TRY,
         EnabledInstallments: []int{1, 2, 3, 6, 9},
     }
 
-    res, err := payByLinkClient.PayByLink.UpdateProduct(context.Background(), 123, request)
+    res, err := payByLinkClient.PayByLink.UpdateProduct(context.Background(), 1, request)
     _, _ = spew.Printf("%#v\n", res)
 
     if err != nil {
@@ -46,7 +46,7 @@ func Test_UpdateProduct(t *testing.T) {
 }
 
 func Test_RetrieveProduct(t *testing.T) {
-    res, err := payByLinkClient.PayByLink.RetrieveProduct(context.Background(), 123)
+    res, err := payByLinkClient.PayByLink.RetrieveProduct(context.Background(), 1)
     _, _ = spew.Printf("%#v\n", res)
 
     if err != nil {
@@ -55,7 +55,7 @@ func Test_RetrieveProduct(t *testing.T) {
 }
 
 func Test_DeleteProduct(t *testing.T) {
-    err := payByLinkClient.PayByLink.DeleteProduct(context.Background(), 123)
+    err := payByLinkClient.PayByLink.DeleteProduct(context.Background(), 1)
 
     if err != nil {
         t.Errorf("Error %s", err)
@@ -66,7 +66,7 @@ func Test_SearchProducts(t *testing.T) {
     request := adapter.SearchProductsRequest{
         Page:     0,
         Size:     10,
-        Currency: craftgate.Currency(craftgate.TRY),
+        Currency: craftgate.TRY,
     }
 
     res, err := payByLinkClient.PayByLink.SearchProducts(context.Background(), request)

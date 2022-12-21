@@ -56,14 +56,14 @@ const (
 )
 
 const (
-	ApmPAPARA           ApmType = "PAPARA"
-	ApmPAYONEER         ApmType = "PAYONEER"
-	ApmSODEXO           ApmType = "SODEXO"
-	ApmEDENRED          ApmType = "EDENRED"
-	ApmPAYPAL           ApmType = "PAYPAL"
-	ApmAFTERPAY         ApmType = "AFTERPAY"
-	ApmFUND_TRANSFER    ApmType = "FUND_TRANSFER"
-	ApmCASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
+	ApmTypePAPARA           ApmType = "PAPARA"
+	ApmTypePAYONEER         ApmType = "PAYONEER"
+	ApmTypeSODEXO           ApmType = "SODEXO"
+	ApmTypeEDENRED          ApmType = "EDENRED"
+	ApmTypePAYPAL           ApmType = "PAYPAL"
+	ApmTypeAFTERPAY         ApmType = "AFTERPAY"
+	ApmTypeFUND_TRANSFER    ApmType = "FUND_TRANSFER"
+	ApmTypeCASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
 )
 
 // payment provider declaration

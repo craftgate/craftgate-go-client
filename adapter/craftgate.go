@@ -239,7 +239,7 @@ func (c *Client) extractRequestBodyForAuthorization(body interface{}, method str
 	return authorizationRequestBody
 }
 
-func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) (err error) {
+func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) error {
 	resp, err := DoRequestWithClient(ctx, c.httpClient, req)
 	if err != nil {
 		return err
@@ -250,8 +250,8 @@ func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) (err 
 	}(resp.Body)
 
 	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusBadRequest {
-		errRes := Response[ErrorResponse]{}
-		if err = json.NewDecoder(resp.Body).Decode(&errRes); err == nil {
+		errRes := &Response[ErrorResponse]{}
+		if err = json.NewDecoder(resp.Body).Decode(errRes); nil == errRes {
 			return errors.New(*errRes.Errors.ErrorDescription)
 		}
 
@@ -268,7 +268,7 @@ func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) (err 
 	return nil
 }
 
-func (c *Client) DoForByteResponse(ctx context.Context, req *http.Request) (b []byte, err error) {
+func (c *Client) DoForByteResponse(ctx context.Context, req *http.Request) ([]byte, error) {
 	resp, err := DoRequestWithClient(ctx, c.httpClient, req)
 	if err != nil {
 		return nil, err
@@ -279,8 +279,8 @@ func (c *Client) DoForByteResponse(ctx context.Context, req *http.Request) (b []
 	}(resp.Body)
 
 	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusBadRequest {
-		errRes := Response[ErrorResponse]{}
-		if err = json.NewDecoder(resp.Body).Decode(&errRes); err == nil {
+		errRes := &Response[ErrorResponse]{}
+		if err = json.NewDecoder(resp.Body).Decode(errRes); nil == errRes {
 			return nil, errors.New(*errRes.Errors.ErrorDescription)
 		}
 
