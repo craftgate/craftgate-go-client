@@ -61,6 +61,7 @@ const (
 	ApmTypeSODEXO           ApmType = "SODEXO"
 	ApmTypeEDENRED          ApmType = "EDENRED"
 	ApmTypePAYPAL           ApmType = "PAYPAL"
+    ApmTypeKLARNA           ApmType = "KLARNA"
 	ApmTypeAFTERPAY         ApmType = "AFTERPAY"
 	ApmTypeFUND_TRANSFER    ApmType = "FUND_TRANSFER"
 	ApmTypeCASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
