@@ -16,13 +16,13 @@ func TestPayment_CreatePayment(t *testing.T) {
 		Price:          1.25,
 		PaidPrice:      1.25,
 		Installment:    1,
-		Currency:       craftgate.Currency(craftgate.TRY),
-		PaymentGroup:   craftgate.PaymentGroup(craftgate.LISTING_OR_SUBSCRIPTION),
+		Currency:       craftgate.TRY,
+		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
 		ConversationId: "foo-bar",
 		ExternalId:     "115",
 		Card: craftgate.Card{
 			CardHolderName: "Card Holder",
-			CardNumber:     "4256690000000001",
+			CardNumber:     "5117280000006665",
 			ExpireYear:     "2035",
 			ExpireMonth:    "11",
 			Cvc:            "123",
@@ -51,11 +51,11 @@ func TestPayment_CreatePayment(t *testing.T) {
 
 func TestPayment_CreateApmPayment(t *testing.T) {
 	request := adapter.CreateApmPaymentRequest{
-		ApmType:        craftgate.ApmCASH_ON_DELIVERY,
+		ApmType:        craftgate.ApmTypeCASH_ON_DELIVERY,
 		Price:          1.25,
 		PaidPrice:      1.25,
-		Currency:       craftgate.Currency(craftgate.TRY),
-		PaymentGroup:   craftgate.PaymentGroup(craftgate.LISTING_OR_SUBSCRIPTION),
+		Currency:       craftgate.TRY,
+		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
 		ConversationId: "foo-bar",
 		ExternalId:     "115",
 		Items: []craftgate.PaymentItem{
@@ -81,7 +81,7 @@ func TestPayment_CreateApmPayment(t *testing.T) {
 }
 
 func TestPayment_RetrievePayment(t *testing.T) {
-	paymentId := int64(179878)
+	paymentId := int64(1)
 	res, err := paymentClient.Payment.RetrievePayment(context.Background(), paymentId)
 
 	require.Equal(t, *res.Id, paymentId)
@@ -95,8 +95,8 @@ func TestPayment_Init3DSPayment(t *testing.T) {
 		Price:          1.25,
 		PaidPrice:      1.25,
 		Installment:    1,
-		Currency:       craftgate.Currency(craftgate.TRY),
-		PaymentGroup:   craftgate.PaymentGroup(craftgate.LISTING_OR_SUBSCRIPTION),
+		Currency:       craftgate.TRY,
+		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
 		ConversationId: "foo-bar",
 		ExternalId:     "115",
 		Card: craftgate.Card{
@@ -147,8 +147,8 @@ func TestPayment_CreatePreAuthPayment(t *testing.T) {
 		Price:          1.25,
 		PaidPrice:      1.25,
 		Installment:    1,
-		Currency:       craftgate.Currency(craftgate.TRY),
-		PaymentGroup:   craftgate.PaymentGroup(craftgate.LISTING_OR_SUBSCRIPTION),
+		Currency:       craftgate.TRY,
+		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
 		PaymentPhase:   craftgate.PRE_AUTH,
 		ConversationId: "foo-bar",
 		ExternalId:     "115",
@@ -344,11 +344,11 @@ func TestPayment_InitGarantiPayPayment(t *testing.T) {
 
 func TestPayment_InitApmPayment(t *testing.T) {
 	request := adapter.InitApmPaymentRequest{
-		ApmType:         craftgate.ApmEDENRED,
+		ApmType:         craftgate.ApmTypeEDENRED,
 		Price:           1.25,
 		PaidPrice:       1.25,
-		Currency:        craftgate.Currency(craftgate.TRY),
-		PaymentGroup:    craftgate.PaymentGroup(craftgate.LISTING_OR_SUBSCRIPTION),
+		Currency:        craftgate.TRY,
+		PaymentGroup:    craftgate.LISTING_OR_SUBSCRIPTION,
 		ConversationId:  "foo-bar",
 		ApmUserIdentity: "4242424242424242",
 		CallbackUrl:     "https://www.your-website.com/callback",
@@ -375,11 +375,11 @@ func TestPayment_InitApmPayment(t *testing.T) {
 
 func TestPayment_InitKlarnaApmPayment(t *testing.T) {
 	request := adapter.InitApmPaymentRequest{
-		ApmType:        craftgate.ApmKLARNA,
+		ApmType:        craftgate.ApmTypeKLARNA,
 		Price:          1,
 		PaidPrice:      1,
-		Currency:       craftgate.Currency(craftgate.USD),
-		PaymentGroup:   craftgate.PaymentGroup(craftgate.LISTING_OR_SUBSCRIPTION),
+		Currency:       craftgate.USD,
+		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
 		ConversationId: "foo-bar",
 		CallbackUrl:    "https://www.your-website.com/callback",
 		Items: []craftgate.PaymentItem{
@@ -407,11 +407,11 @@ func TestPayment_InitKlarnaApmPayment(t *testing.T) {
 
 func TestPayment_InitAfterpayApmPayment(t *testing.T) {
 	request := adapter.InitApmPaymentRequest{
-		ApmType:        craftgate.ApmAFTERPAY,
+		ApmType:        craftgate.ApmTypeAFTERPAY,
 		Price:          1,
 		PaidPrice:      1,
-		Currency:       craftgate.Currency(craftgate.USD),
-		PaymentGroup:   craftgate.PaymentGroup(craftgate.LISTING_OR_SUBSCRIPTION),
+		Currency:       craftgate.USD,
+		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
 		ConversationId: "foo-bar",
 		CallbackUrl:    "https://www.your-website.com/callback",
 		Items: []craftgate.PaymentItem{

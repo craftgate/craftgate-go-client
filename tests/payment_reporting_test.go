@@ -14,9 +14,9 @@ var paymentReportingClient, _ = craftgate.New("api-key", "secret-key", "https://
 func Test_SearchPayment(t *testing.T) {
     request := adapter.SearchPaymentsRequest{
         Page: 0, Size: 10,
-        PaymentType:    craftgate.PaymentType(craftgate.CARD_PAYMENT),
-        PaymentStatus:  craftgate.PaymentStatus(craftgate.SUCCESS),
-        Currency:       craftgate.Currency(craftgate.TRY),
+        PaymentType:    craftgate.CARD_PAYMENT,
+        PaymentStatus:  craftgate.SUCCESS,
+        Currency:       craftgate.TRY,
         MinCreatedDate: time.Now().AddDate(0, 0, -180),
         MaxCreatedDate: time.Now(),
     }
@@ -31,7 +31,7 @@ func Test_SearchPayment(t *testing.T) {
 func Test_SearchPaymentRefunds(t *testing.T) {
     request := adapter.SearchPaymentRefundsRequest{
         Page: 0, Size: 10,
-        Currency:       craftgate.Currency(craftgate.TRY),
+        Currency:       craftgate.TRY,
         MinCreatedDate: time.Now().AddDate(0, 0, -180),
         MaxCreatedDate: time.Now(),
     }
@@ -46,7 +46,7 @@ func Test_SearchPaymentRefunds(t *testing.T) {
 func Test_SearchPaymentTransactionRefunds(t *testing.T) {
     request := adapter.SearchPaymentTransactionRefundsRequest{
         Page: 0, Size: 10,
-        Currency:       craftgate.Currency(craftgate.TRY),
+        Currency:       craftgate.TRY,
         MinCreatedDate: time.Now().AddDate(0, 0, -180),
         MaxCreatedDate: time.Now(),
     }

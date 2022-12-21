@@ -10,7 +10,6 @@ import (
 	"fmt"
 	"github.com/gorilla/schema"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"reflect"
@@ -44,8 +43,7 @@ func DateOf(t time.Time) Date {
 
 func init() {
 	timeConverter := func(value reflect.Value) string {
-		timestamp := fmt.Sprintf("%s", value.Interface().(time.Time).Format(timeEncodeLayout))
-		return timestamp
+		return value.Interface().(time.Time).Format(timeEncodeLayout)
 	}
 	dateConverter := func(value reflect.Value) string {
 		date := value.Interface().(Date)
@@ -232,10 +230,10 @@ func (c *Client) extractRequestBodyForAuthorization(body interface{}, method str
 	if body != nil && method != http.MethodGet && method != http.MethodDelete {
 		var buf bytes.Buffer
 		tee := io.TeeReader(req.Body, &buf)
-		req.Body = ioutil.NopCloser(&buf)
-		bodyBytes, bodyErr := ioutil.ReadAll(tee)
+		req.Body = io.NopCloser(&buf)
+		bodyBytes, bodyErr := io.ReadAll(tee)
 		if bodyErr == nil {
-			authorizationRequestBody = fmt.Sprintf("%s", bodyBytes)
+			authorizationRequestBody = string(bodyBytes)
 		}
 	}
 	return authorizationRequestBody
@@ -248,15 +246,12 @@ func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) error
 	}
 
 	defer func(Body io.ReadCloser) {
-		err := Body.Close()
-		if err != nil {
-
-		}
+		err = Body.Close()
 	}(resp.Body)
 
 	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusBadRequest {
 		errRes := &Response[ErrorResponse]{}
-		if err = json.NewDecoder(resp.Body).Decode(errRes); errRes == nil {
+		if err = json.NewDecoder(resp.Body).Decode(errRes); nil == errRes {
 			return errors.New(*errRes.Errors.ErrorDescription)
 		}
 
@@ -280,15 +275,12 @@ func (c *Client) DoForByteResponse(ctx context.Context, req *http.Request) ([]by
 	}
 
 	defer func(Body io.ReadCloser) {
-		err := Body.Close()
-		if err != nil {
-
-		}
+		err = Body.Close()
 	}(resp.Body)
 
 	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusBadRequest {
 		errRes := &Response[ErrorResponse]{}
-		if err = json.NewDecoder(resp.Body).Decode(errRes); errRes == nil {
+		if err = json.NewDecoder(resp.Body).Decode(errRes); nil == errRes {
 			return nil, errors.New(*errRes.Errors.ErrorDescription)
 		}
 
