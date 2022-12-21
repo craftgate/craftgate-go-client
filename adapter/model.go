@@ -63,6 +63,7 @@ const (
 	ApmSODEXO                   = "SODEXO"
 	ApmEDENRED                  = "EDENRED"
 	ApmPAYPAL                   = "PAYPAL"
+	ApmKLARNA                   = "KLARNA"
 	ApmAFTERPAY                 = "AFTERPAY"
 	ApmFUND_TRANSFER            = "FUND_TRANSFER"
 	ApmCASH_ON_DELIVERY         = "CASH_ON_DELIVERY"
