@@ -61,7 +61,7 @@ const (
 	ApmTypeSODEXO           ApmType = "SODEXO"
 	ApmTypeEDENRED          ApmType = "EDENRED"
 	ApmTypePAYPAL           ApmType = "PAYPAL"
-    ApmTypeKLARNA           ApmType = "KLARNA"
+	ApmTypeKLARNA           ApmType = "KLARNA"
 	ApmTypeAFTERPAY         ApmType = "AFTERPAY"
 	ApmTypeFUND_TRANSFER    ApmType = "FUND_TRANSFER"
 	ApmTypeCASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
@@ -627,6 +627,8 @@ type DepositPaymentResponse struct {
 	CardUserKey              *string            `json:"cardUserKey"`
 	CardToken                *string            `json:"cardToken"`
 	WalletTransaction        *WalletTransaction `json:"walletTransaction"`
+	FraudId                  *int64             `json:"fraudId"`
+	FraudAction              *FraudAction       `json:"fraudAction"`
 }
 
 type RefundWalletTransactionToCardRequest struct {
