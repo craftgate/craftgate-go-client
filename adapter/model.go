@@ -315,7 +315,7 @@ type CreatePaymentRequest struct {
 	PaymentChannel   string                 `json:"paymentChannel,omitempty"`
 	BuyerMemberId    int64                  `json:"buyerMemberId,omitempty"`
 	BankOrderId      string                 `json:"bankOrderId,omitempty"`
-	Card             Card                   `json:"card,omitempty"`
+	Card             *Card                  `json:"card,omitempty"`
 	Items            []PaymentItem          `json:"items"`
 	AdditionalParams map[string]interface{} `json:"additionalParams,omitempty"`
 }
@@ -350,7 +350,7 @@ type Init3DSPaymentRequest struct {
 	PaymentChannel   string                 `json:"paymentChannel,omitempty"`
 	BuyerMemberId    int64                  `json:"buyerMemberId,omitempty"`
 	BankOrderId      string                 `json:"bankOrderId,omitempty"`
-	Card             Card                   `json:"card,omitempty"`
+	Card             *Card                  `json:"card,omitempty"`
 	CallbackUrl      string                 `json:"callbackUrl,omitempty"`
 	Items            []PaymentItem          `json:"items"`
 	AdditionalParams map[string]interface{} `json:"additionalParams"`

@@ -20,7 +20,7 @@ func TestPayment_CreatePayment(t *testing.T) {
 		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
 		ConversationId: "foo-bar",
 		ExternalId:     "115",
-		Card: craftgate.Card{
+		Card: &craftgate.Card{
 			CardHolderName: "Card Holder",
 			CardNumber:     "5117280000006665",
 			ExpireYear:     "2035",
@@ -99,7 +99,7 @@ func TestPayment_Init3DSPayment(t *testing.T) {
 		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
 		ConversationId: "foo-bar",
 		ExternalId:     "115",
-		Card: craftgate.Card{
+		Card: &craftgate.Card{
 			CardHolderName: "Card Holder",
 			CardNumber:     "4256690000000001",
 			ExpireYear:     "2035",
@@ -152,7 +152,7 @@ func TestPayment_CreatePreAuthPayment(t *testing.T) {
 		PaymentPhase:   craftgate.PRE_AUTH,
 		ConversationId: "foo-bar",
 		ExternalId:     "115",
-		Card: craftgate.Card{
+		Card: &craftgate.Card{
 			CardHolderName: "Card Holder",
 			CardNumber:     "4256690000000001",
 			ExpireYear:     "2035",
