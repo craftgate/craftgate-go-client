@@ -22,7 +22,7 @@ func TestPayment_CreatePayment(t *testing.T) {
 		ExternalId:     "115",
 		Card: &craftgate.Card{
 			CardHolderName: "Card Holder",
-			CardNumber:     "5117280000006665",
+			CardNumber:     "4256690000000001",
 			ExpireYear:     "2035",
 			ExpireMonth:    "11",
 			Cvc:            "123",
