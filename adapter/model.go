@@ -830,10 +830,12 @@ type CheckMasterpassUserResponse struct {
 }
 
 type InstallmentPrice struct {
-	InstallmentPrice  *float64 `json:"installmentPrice"`
-	TotalPrice        *float64 `json:"totalPrice"`
-	InstallmentNumber *int     `json:"installmentNumber"`
-	InstallmentLabel  *string  `json:"installmentLabel"`
+	InstallmentPrice       *float64 `json:"installmentPrice"`
+	BankCommissionRate     *float64 `json:"bankCommissionRate"`
+	MerchantCommissionRate *float64 `json:"merchantCommissionRate"`
+	TotalPrice             *float64 `json:"totalPrice"`
+	InstallmentNumber      *int     `json:"installmentNumber"`
+	InstallmentLabel       *string  `json:"installmentLabel"`
 }
 
 type SearchInstallmentsRequest struct {
