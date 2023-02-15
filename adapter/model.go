@@ -643,6 +643,11 @@ type RemittanceRequest struct {
 	RemittanceReasonType string  `json:"remittanceReasonType"`
 }
 
+type CreateMemberWalletRequest struct {
+	NegativeAmountLimit float64  `json:"negativeAmountLimit"`
+	Currency            Currency `json:"currency"`
+}
+
 type CreateWithdrawRequest struct {
 	MemberId    int64    `json:"memberId"`
 	Price       float64  `json:"price"`
