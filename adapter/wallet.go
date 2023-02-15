@@ -10,6 +10,21 @@ type Wallet struct {
 	Client *Client
 }
 
+func (api *Wallet) CreateMemberWallet(ctx context.Context, memberId int64, request CreateMemberWalletRequest) (*MemberWalletResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, fmt.Sprintf("/wallet/v1/members/%d/wallets", memberId), request)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[MemberWalletResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
 func (api *Wallet) RetrieveMemberWallet(ctx context.Context, memberId int64) (*MemberWalletResponse, error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/wallet/v1/members/%d/wallet", memberId), nil)
 	if err != nil {
