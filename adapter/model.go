@@ -383,6 +383,7 @@ type InitCheckoutPaymentRequest struct {
 
 type InitApmPaymentRequest struct {
 	ApmType          ApmType           `json:"apmType,omitempty"`
+	MerchantApmId    int64             `json:"merchantApmId,omitempty"`
 	Price            float64           `json:"price,omitempty"`
 	PaidPrice        float64           `json:"paidPrice,omitempty"`
 	Currency         Currency          `json:"currency,omitempty"`
