@@ -15,7 +15,7 @@ func Test_CreateProduct(t *testing.T) {
         Name:                "A new Product",
         Channel:             "API",
         Price:               10,
-        Currency:            craftgate.TRY,
+        Currency:            craftgate.Currency_TRY,
         EnabledInstallments: []int{1, 2, 3, 6},
     }
 
@@ -30,10 +30,10 @@ func Test_CreateProduct(t *testing.T) {
 func Test_UpdateProduct(t *testing.T) {
     request := adapter.UpdateProductRequest{
         Name:                "A new Product",
-        Status:              craftgate.ACTIVE,
+        Status:              craftgate.Status_ACTIVE,
         Channel:             "API",
         Price:               10,
-        Currency:            craftgate.TRY,
+        Currency:            craftgate.Currency_TRY,
         EnabledInstallments: []int{1, 2, 3, 6, 9},
     }
 
@@ -66,7 +66,7 @@ func Test_SearchProducts(t *testing.T) {
     request := adapter.SearchProductsRequest{
         Page:     0,
         Size:     10,
-        Currency: craftgate.TRY,
+        Currency: craftgate.Currency_TRY,
     }
 
     res, err := payByLinkClient.PayByLink.SearchProducts(context.Background(), request)

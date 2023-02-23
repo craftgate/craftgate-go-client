@@ -32,7 +32,7 @@ client, _ := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://api.c
 request := craftgate.SearchInstallmentsRequest{
     BinNumber: "487074",
     Price:     100,
-    Currency:  craftgate.TRY,
+    Currency:  craftgate.Currency_TRY,
 }
 
 res, err := client.Installment.SearchInstallments(context.Background(), request)
@@ -61,7 +61,7 @@ client, _ := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://sandb
 request := craftgate.CreatePaymentRequest{
     Price:     100,
     PaidPrice: 100,
-    Currency:  craftgate.TRY,
+    Currency:  craftgate.Currency_TRY,
     ...
 }
 

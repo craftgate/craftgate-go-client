@@ -48,78 +48,80 @@ const (
 
 // payment type declaration
 const (
-	CARD_PAYMENT            PaymentType = "CARD_PAYMENT"
-	WALLET_PAYMENT          PaymentType = "WALLET_PAYMENT"
-	CARD_AND_WALLET_PAYMENT PaymentType = "CARD_AND_WALLET_PAYMENT"
-	DEPOSIT_PAYMENT         PaymentType = "DEPOSIT_PAYMENT"
-	APM                                 = "APM"
+	PaymentType_CARD_PAYMENT            PaymentType = "CARD_PAYMENT"
+	PaymentType_WALLET_PAYMENT          PaymentType = "WALLET_PAYMENT"
+	PaymentType_CARD_AND_WALLET_PAYMENT PaymentType = "CARD_AND_WALLET_PAYMENT"
+	PaymentType_DEPOSIT_PAYMENT         PaymentType = "DEPOSIT_PAYMENT"
+	PaymentType_BANK_TRANSFER           PaymentType = "BANK_TRANSFER"
+	PaymentType_APM                     PaymentType = "APM"
 )
 
+// apm type declaration
 const (
-	ApmTypePAPARA           ApmType = "PAPARA"
-	ApmTypePAYONEER         ApmType = "PAYONEER"
-	ApmTypeSODEXO           ApmType = "SODEXO"
-	ApmTypeEDENRED          ApmType = "EDENRED"
-	ApmTypeEDENRED_GIFT     ApmType = "EDENRED_GIFT"
-	ApmTypePAYPAL           ApmType = "PAYPAL"
-	ApmTypeKLARNA           ApmType = "KLARNA"
-	ApmTypeAFTERPAY         ApmType = "AFTERPAY"
-	ApmTypeFUND_TRANSFER    ApmType = "FUND_TRANSFER"
-	ApmTypeCASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
+	ApmType_PAPARA           ApmType = "PAPARA"
+	ApmType_PAYONEER         ApmType = "PAYONEER"
+	ApmType_SODEXO           ApmType = "SODEXO"
+	ApmType_EDENRED          ApmType = "EDENRED"
+	ApmType_EDENRED_GIFT     ApmType = "EDENRED_GIFT"
+	ApmType_PAYPAL           ApmType = "PAYPAL"
+	ApmType_KLARNA           ApmType = "KLARNA"
+	ApmType_AFTERPAY         ApmType = "AFTERPAY"
+	ApmType_FUND_TRANSFER    ApmType = "FUND_TRANSFER"
+	ApmType_CASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
 )
 
 // payment provider declaration
 const (
-	BANK        PaymentProvider = "BANK"
-	CG_WALLET   PaymentProvider = "CG_WALLET"
-	MASTERPASS  PaymentProvider = "MASTERPASS"
-	GARANTI_PAY PaymentProvider = "GARANTI_PAY"
-	PAPARA      PaymentProvider = "PAPARA"
-	PAYONEER    PaymentProvider = "PAYONEER"
-	SODEXO      PaymentProvider = "SODEXO"
-	EDENRED     PaymentProvider = "EDENRED"
+	PaymentProvider_BANK        PaymentProvider = "BANK"
+	PaymentProvider_CG_WALLET   PaymentProvider = "CG_WALLET"
+	PaymentProvider_MASTERPASS  PaymentProvider = "MASTERPASS"
+	PaymentProvider_GARANTI_PAY PaymentProvider = "GARANTI_PAY"
+	PaymentProvider_PAPARA      PaymentProvider = "PAPARA"
+	PaymentProvider_PAYONEER    PaymentProvider = "PAYONEER"
+	PaymentProvider_SODEXO      PaymentProvider = "SODEXO"
+	PaymentProvider_EDENRED     PaymentProvider = "EDENRED"
 )
 
 // payment status declaration
 const (
-	FAILURE          PaymentStatus = "FAILURE"
-	SUCCESS          PaymentStatus = "SUCCESS"
-	INIT_THREEDS     PaymentStatus = "INIT_THREEDS"
-	CALLBACK_THREEDS PaymentStatus = "CALLBACK_THREEDS"
-	WAITING          PaymentStatus = "WAITING"
+	PaymentStatus_FAILURE          PaymentStatus = "FAILURE"
+	PaymentStatus_SUCCESS          PaymentStatus = "SUCCESS"
+	PaymentStatus_INIT_THREEDS     PaymentStatus = "INIT_THREEDS"
+	PaymentStatus_CALLBACK_THREEDS PaymentStatus = "CALLBACK_THREEDS"
+	PaymentStatus_WAITING          PaymentStatus = "WAITING"
 )
 
 // payment source declaration
 const (
-	API           PaymentSource = "API"
-	CHECKOUT_FORM PaymentSource = "CHECKOUT_FORM"
-	PAY_BY_LINK   PaymentSource = "PAY_BY_LINK"
+	PaymentSource_API           PaymentSource = "API"
+	PaymentSource_CHECKOUT_FORM PaymentSource = "CHECKOUT_FORM"
+	PaymentSource_PAY_BY_LINK   PaymentSource = "PAY_BY_LINK"
 )
 
 // currency declaration
 const (
-	TRY Currency = "TRY"
-	USD Currency = "USD"
-	EUR Currency = "EUR"
-	GBP Currency = "GBP"
-	CNY Currency = "CNY"
-	ARS Currency = "ARS"
-	BRL Currency = "BRL"
-	AED Currency = "AED"
-	IQD Currency = "IQD"
+	Currency_TRY Currency = "TRY"
+	Currency_USD Currency = "USD"
+	Currency_EUR Currency = "EUR"
+	Currency_GBP Currency = "GBP"
+	Currency_CNY Currency = "CNY"
+	Currency_ARS Currency = "ARS"
+	Currency_BRL Currency = "BRL"
+	Currency_AED Currency = "AED"
+	Currency_IQD Currency = "IQD"
 )
 
 // payment group declaration
 const (
-	PRODUCT                 PaymentGroup = "PRODUCT"
-	LISTING_OR_SUBSCRIPTION PaymentGroup = "LISTING_OR_SUBSCRIPTION"
+	PaymentGroup_PRODUCT                 PaymentGroup = "PRODUCT"
+	PaymentGroup_LISTING_OR_SUBSCRIPTION PaymentGroup = "LISTING_OR_SUBSCRIPTION"
 )
 
 // payment phase declaration
 const (
-	AUTH      PaymentPhase = "AUTH"
-	PRE_AUTH  PaymentPhase = "PRE_AUTH"
-	POST_AUTH PaymentPhase = "POST_AUTH"
+	PaymentPhase_AUTH      PaymentPhase = "AUTH"
+	PaymentPhase_PRE_AUTH  PaymentPhase = "PRE_AUTH"
+	PaymentPhase_POST_AUTH PaymentPhase = "POST_AUTH"
 )
 
 // payment method declaration
@@ -139,186 +141,186 @@ const (
 
 // card type declaration
 const (
-	CREDIT_CARD  CardType = "CREDIT_CARD"
-	DEBIT_CARD   CardType = "DEBIT_CARD"
-	PREPAID_CARD CardType = "PREPAID_CARD"
+	CardType_CREDIT_CARD  CardType = "CREDIT_CARD"
+	CardType_DEBIT_CARD   CardType = "DEBIT_CARD"
+	CardType_PREPAID_CARD CardType = "PREPAID_CARD"
 )
 
 // card association declaration
 const (
-	VISA        CardAssociation = "VISA"
-	MASTER_CARD CardAssociation = "MASTER_CARD"
-	AMEX        CardAssociation = "AMEX"
-	TROY        CardAssociation = "TROY"
-	JCB         CardAssociation = "JCB"
-	UNION_PAY   CardAssociation = "UNION_PAY"
-	MAESTRO     CardAssociation = "MAESTRO"
-	DISCOVER    CardAssociation = "DISCOVER"
-	DINERS_CLUB CardAssociation = "DINERS_CLUB"
+	CardAssociation_VISA        CardAssociation = "VISA"
+	CardAssociation_MASTER_CARD CardAssociation = "MASTER_CARD"
+	CardAssociation_AMEX        CardAssociation = "AMEX"
+	CardAssociation_TROY        CardAssociation = "TROY"
+	CardAssociation_JCB         CardAssociation = "JCB"
+	CardAssociation_UNION_PAY   CardAssociation = "UNION_PAY"
+	CardAssociation_MAESTRO     CardAssociation = "MAESTRO"
+	CardAssociation_DISCOVER    CardAssociation = "DISCOVER"
+	CardAssociation_DINERS_CLUB CardAssociation = "DINERS_CLUB"
 )
 
 // card expiry status declaration
 const (
-	EXPIRED                CardExpiryStatus = "EXPIRED"
-	WILL_EXPIRE_NEXT_MONTH CardExpiryStatus = "WILL_EXPIRE_NEXT_MONTH"
-	NOT_EXPIRED            CardExpiryStatus = "NOT_EXPIRED"
+	CardExpiryStatus_EXPIRED                CardExpiryStatus = "EXPIRED"
+	CardExpiryStatus_WILL_EXPIRE_NEXT_MONTH CardExpiryStatus = "WILL_EXPIRE_NEXT_MONTH"
+	CardExpiryStatus_NOT_EXPIRED            CardExpiryStatus = "NOT_EXPIRED"
 )
 
 // loyalty type declaration
 const (
-	REWARD_MONEY           LoyaltyType = "REWARD_MONEY"
-	ADDITIONAL_INSTALLMENT LoyaltyType = "ADDITIONAL_INSTALLMENT"
-	POSTPONING_INSTALLMENT LoyaltyType = "POSTPONING_INSTALLMENT"
-	EXTRA_POINTS           LoyaltyType = "EXTRA_POINTS"
-	GAINING_MINUTES        LoyaltyType = "GAINING_MINUTES"
-	POSTPONING_STATEMENT   LoyaltyType = "POSTPONING_STATEMENT"
+	LoyaltyType_REWARD_MONEY           LoyaltyType = "REWARD_MONEY"
+	LoyaltyType_ADDITIONAL_INSTALLMENT LoyaltyType = "ADDITIONAL_INSTALLMENT"
+	LoyaltyType_POSTPONING_INSTALLMENT LoyaltyType = "POSTPONING_INSTALLMENT"
+	LoyaltyType_EXTRA_POINTS           LoyaltyType = "EXTRA_POINTS"
+	LoyaltyType_GAINING_MINUTES        LoyaltyType = "GAINING_MINUTES"
+	LoyaltyType_POSTPONING_STATEMENT   LoyaltyType = "POSTPONING_STATEMENT"
 )
 
 // payment refund status declaration
 const (
-	NO_REFUND        PaymentRefundStatus = "NO_REFUND"
-	NOT_REFUNDED     PaymentRefundStatus = "NOT_REFUNDED"
-	PARTIAL_REFUNDED PaymentRefundStatus = "PARTIAL_REFUNDED"
-	FULLY_REFUNDED   PaymentRefundStatus = "FULLY_REFUNDED"
+	PaymentRefundStatus_NO_REFUND        PaymentRefundStatus = "NO_REFUND"
+	PaymentRefundStatus_NOT_REFUNDED     PaymentRefundStatus = "NOT_REFUNDED"
+	PaymentRefundStatus_PARTIAL_REFUNDED PaymentRefundStatus = "PARTIAL_REFUNDED"
+	PaymentRefundStatus_FULLY_REFUNDED   PaymentRefundStatus = "FULLY_REFUNDED"
 )
 
 // refund status declaration
 const (
-	SuccessRefundStatus RefundStatus = "SUCCESS"
-	FailureRefundStatus RefundStatus = "FAILURE"
+	RefundStatus_SUCCESS RefundStatus = "SUCCESS"
+	RefundStatus_FAILURE RefundStatus = "FAILURE"
 )
 
 // refund type declaration
 const (
-	CANCEL RefundType = "CANCEL"
-	REFUND RefundType = "REFUND"
+	RefundType_CANCEL RefundType = "CANCEL"
+	RefundType_REFUND RefundType = "REFUND"
 )
 
 // approval status declaration
 const (
-	SuccessApprovalStatus ApprovalStatus = "SUCCESS"
-	FailureApprovalStatus ApprovalStatus = "FAILURE"
+	ApprovalStatus_SUCCESS ApprovalStatus = "SUCCESS"
+	ApprovalStatus_FAILURE ApprovalStatus = "FAILURE"
 )
 
 // status declaration
 const (
-	ACTIVE  Status = "ACTIVE"
-	PASSIVE Status = "PASSIVE"
+	Status_ACTIVE  Status = "ACTIVE"
+	Status_PASSIVE Status = "PASSIVE"
 )
 
 // member type declaration
 const (
-	PERSONAL                       MemberType = "PERSONAL"
-	PRIVATE_COMPANY                MemberType = "PRIVATE_COMPANY"
-	LIMITED_OR_JOINT_STOCK_COMPANY MemberType = "LIMITED_OR_JOINT_STOCK_COMPANY"
+	MemberType_PERSONAL                       MemberType = "PERSONAL"
+	MemberType_PRIVATE_COMPANY                MemberType = "PRIVATE_COMPANY"
+	MemberType_LIMITED_OR_JOINT_STOCK_COMPANY MemberType = "LIMITED_OR_JOINT_STOCK_COMPANY"
 )
 
 // settlementEarningsDestination type declaration
 const (
-	SettlementEarningsDestinationIBAN   SettlementEarningsDestination = "IBAN"
-	SettlementEarningsDestinationWALLET SettlementEarningsDestination = "WALLET"
+	SettlementEarningsDestination_IBAN   SettlementEarningsDestination = "IBAN"
+	SettlementEarningsDestination_WALLET SettlementEarningsDestination = "WALLET"
 )
 
 // refundDestinationType type declaration
 const (
-	RefundDestinationTypePROVIDER RefundDestinationType = "PROVIDER"
-	RefundDestinationTypeWALLET   RefundDestinationType = "WALLET"
+	RefundDestinationType_PROVIDER RefundDestinationType = "PROVIDER"
+	RefundDestinationType_WALLET   RefundDestinationType = "WALLET"
 )
 
 // transaction status declaration
 const (
-	WAITING_FOR_APPROVAL TransactionStatus = "WAITING_FOR_APPROVAL"
-	APPROVED             TransactionStatus = "APPROVED"
-	PAYOUT_STARTED       TransactionStatus = "PAYOUT_STARTED"
+	TransactionStatus_WAITING_FOR_APPROVAL TransactionStatus = "WAITING_FOR_APPROVAL"
+	TransactionStatus_APPROVED             TransactionStatus = "APPROVED"
+	TransactionStatus_PAYOUT_STARTED       TransactionStatus = "PAYOUT_STARTED"
 )
 
 // transaction payout status declaration
 const (
-	TransactionPayoutStatusCANCELLED          TransactionPayoutStatus = "CANCELLED"
-	TransactionPayoutStatusNO_PAYOUT          TransactionPayoutStatus = "NO_PAYOUT"
-	TransactionPayoutStatusWAITING_FOR_PAYOUT TransactionPayoutStatus = "WAITING_FOR_PAYOUT"
-	TransactionPayoutStatusPAYOUT_STARTED     TransactionPayoutStatus = "PAYOUT_STARTED"
-	TransactionPayoutStatusPAYOUT_COMPLETED   TransactionPayoutStatus = "PAYOUT_COMPLETED"
+	TransactionPayoutStatus_CANCELLED          TransactionPayoutStatus = "CANCELLED"
+	TransactionPayoutStatus_NO_PAYOUT          TransactionPayoutStatus = "NO_PAYOUT"
+	TransactionPayoutStatus_WAITING_FOR_PAYOUT TransactionPayoutStatus = "WAITING_FOR_PAYOUT"
+	TransactionPayoutStatus_PAYOUT_STARTED     TransactionPayoutStatus = "PAYOUT_STARTED"
+	TransactionPayoutStatus_PAYOUT_COMPLETED   TransactionPayoutStatus = "PAYOUT_COMPLETED"
 )
 
 // settlement type declaration
 const (
-	SettlementTypeSETTLEMENT         SettlementType = "SETTLEMENT"
-	SettlementTypeBOUNCED_SETTLEMENT SettlementType = "BOUNCED_SETTLEMENT"
-	SettlementTypeWITHDRAW           SettlementType = "WITHDRAW"
+	SettlementType_SETTLEMENT         SettlementType = "SETTLEMENT"
+	SettlementType_BOUNCED_SETTLEMENT SettlementType = "BOUNCED_SETTLEMENT"
+	SettlementType_WITHDRAW           SettlementType = "WITHDRAW"
 )
 
 // wallet transaction refund type declaration
 const (
-	PAYMENT    WalletTransactionRefundTransactionType = "PAYMENT"
-	PAYMENT_TX WalletTransactionRefundTransactionType = "PAYMENT_TX"
-	WALLET_TX  WalletTransactionRefundTransactionType = "WALLET_TX"
+	WalletTransactionRefundCardTransactionType_PAYMENT    WalletTransactionRefundTransactionType = "PAYMENT"
+	WalletTransactionRefundCardTransactionType_PAYMENT_TX WalletTransactionRefundTransactionType = "PAYMENT_TX"
+	WalletTransactionRefundCardTransactionType_WALLET_TX  WalletTransactionRefundTransactionType = "WALLET_TX"
 )
 
 // fraud action type declaration
 const (
-	BLOCK  FraudAction = "BLOCK"
-	REVIEW FraudAction = "REVIEW"
+	FraudAction_BLOCK  FraudAction = "BLOCK"
+	FraudAction_REVIEW FraudAction = "REVIEW"
 )
 
 // fraud check status type declaration
 const (
-	FraudCheckStatusWAITING   FraudCheckStatus = "WAITING"
-	FraudCheckStatusNOT_FRAUD FraudCheckStatus = "NOT_FRAUD"
-	FraudCheckStatusFRAUD     FraudCheckStatus = "FRAUD"
+	FraudCheckStatus_WAITING   FraudCheckStatus = "WAITING"
+	FraudCheckStatus_NOT_FRAUD FraudCheckStatus = "NOT_FRAUD"
+	FraudCheckStatus_FRAUD     FraudCheckStatus = "FRAUD"
 )
 
 // apm additional action type declaration
 const (
-	REDIRECT_TO_URL ApmAdditionalAction = "REDIRECT_TO_URL"
-	OTP_REQUIRED    ApmAdditionalAction = "OTP_REQUIRED"
-	NONE            ApmAdditionalAction = "NONE"
+	ApmAdditionalAction_REDIRECT_TO_URL ApmAdditionalAction = "REDIRECT_TO_URL"
+	ApmAdditionalAction_OTP_REQUIRED    ApmAdditionalAction = "OTP_REQUIRED"
+	ApmAdditionalAction_NONE            ApmAdditionalAction = "NONE"
 )
 
 // report file type declaration
 const (
-	CSV  ReportFileType = "CSV"
-	XLSX ReportFileType = "XLSX"
+	ReportFileType_CSV  ReportFileType = "CSV"
+	ReportFileType_XLSX ReportFileType = "XLSX"
 )
 
 // wallet transaction type declaration
 const (
-	PAYMENT_REDEEM                 WalletTransactionType = "PAYMENT_REDEEM"
-	REFUND_DEPOSIT                 WalletTransactionType = "REFUND_DEPOSIT"
-	REFUND_TX_DEPOSIT              WalletTransactionType = "REFUND_TX_DEPOSIT"
-	WITHDRAW                       WalletTransactionType = "WITHDRAW"
-	CANCEL_REFUND_WALLET_TO_CARD   WalletTransactionType = "CANCEL_REFUND_WALLET_TO_CARD"
-	REFUND_WALLET_TX_TO_CARD       WalletTransactionType = "REFUND_WALLET_TX_TO_CARD"
-	REFUND_WALLET_TX_FUND_TRANSFER WalletTransactionType = "REFUND_WALLET_TX_FUND_TRANSFER"
-	CANCEL_REFUND_TO_WALLET        WalletTransactionType = "CANCEL_REFUND_TO_WALLET"
-	REFUND_TX_TO_WALLET            WalletTransactionType = "REFUND_TX_TO_WALLET"
-	MANUAL_REFUND_TX_TO_WALLET     WalletTransactionType = "MANUAL_REFUND_TX_TO_WALLET"
-	SETTLEMENT_EARNINGS            WalletTransactionType = "SETTLEMENT_EARNINGS"
-	DEPOSIT_FROM_CARD              WalletTransactionType = "DEPOSIT_FROM_CARD"
-	DEPOSIT_FROM_APM               WalletTransactionType = "DEPOSIT_FROM_APM"
-	DEPOSIT_FROM_FUND_TRANSFER     WalletTransactionType = "DEPOSIT_FROM_FUND_TRANSFER"
-	REMITTANCE                     WalletTransactionType = "REMITTANCE"
-	LOYALTY                        WalletTransactionType = "LOYALTY"
-	WITHDRAW_CANCEL                WalletTransactionType = "WITHDRAW_CANCEL"
-	MERCHANT_BALANCE_RESET         WalletTransactionType = "MERCHANT_BALANCE_RESET"
+	WalletTransactionType_PAYMENT_REDEEM                 WalletTransactionType = "PAYMENT_REDEEM"
+	WalletTransactionType_REFUND_DEPOSIT                 WalletTransactionType = "REFUND_DEPOSIT"
+	WalletTransactionType_REFUND_TX_DEPOSIT              WalletTransactionType = "REFUND_TX_DEPOSIT"
+	WalletTransactionType_WITHDRAW                       WalletTransactionType = "WITHDRAW"
+	WalletTransactionType_CANCEL_REFUND_WALLET_TO_CARD   WalletTransactionType = "CANCEL_REFUND_WALLET_TO_CARD"
+	WalletTransactionType_REFUND_WALLET_TX_TO_CARD       WalletTransactionType = "REFUND_WALLET_TX_TO_CARD"
+	WalletTransactionType_REFUND_WALLET_TX_FUND_TRANSFER WalletTransactionType = "REFUND_WALLET_TX_FUND_TRANSFER"
+	WalletTransactionType_CANCEL_REFUND_TO_WALLET        WalletTransactionType = "CANCEL_REFUND_TO_WALLET"
+	WalletTransactionType_REFUND_TX_TO_WALLET            WalletTransactionType = "REFUND_TX_TO_WALLET"
+	WalletTransactionType_MANUAL_REFUND_TX_TO_WALLET     WalletTransactionType = "MANUAL_REFUND_TX_TO_WALLET"
+	WalletTransactionType_SETTLEMENT_EARNINGS            WalletTransactionType = "SETTLEMENT_EARNINGS"
+	WalletTransactionType_DEPOSIT_FROM_CARD              WalletTransactionType = "DEPOSIT_FROM_CARD"
+	WalletTransactionType_DEPOSIT_FROM_APM               WalletTransactionType = "DEPOSIT_FROM_APM"
+	WalletTransactionType_DEPOSIT_FROM_FUND_TRANSFER     WalletTransactionType = "DEPOSIT_FROM_FUND_TRANSFER"
+	WalletTransactionType_REMITTANCE                     WalletTransactionType = "REMITTANCE"
+	WalletTransactionType_LOYALTY                        WalletTransactionType = "LOYALTY"
+	WalletTransactionType_WITHDRAW_CANCEL                WalletTransactionType = "WITHDRAW_CANCEL"
+	WalletTransactionType_MERCHANT_BALANCE_RESET         WalletTransactionType = "MERCHANT_BALANCE_RESET"
 )
 
 const (
-	API_AUTH            WebhookEventType = "API_AUTH"
-	API_VERIFY_AND_AUTH WebhookEventType = "API_VERIFY_AND_AUTH"
-	CHECKOUTFORM_AUTH   WebhookEventType = "CHECKOUTFORM_AUTH"
-	THREEDS_VERIFY      WebhookEventType = "THREEDS_VERIFY"
+	WebhookEventType_API_AUTH            WebhookEventType = "API_AUTH"
+	WebhookEventType_API_VERIFY_AND_AUTH WebhookEventType = "API_VERIFY_AND_AUTH"
+	WebhookEventType_CHECKOUTFORM_AUTH   WebhookEventType = "CHECKOUTFORM_AUTH"
+	WebhookEventType_THREEDS_VERIFY      WebhookEventType = "THREEDS_VERIFY"
 )
 
 const (
-	WebhookStatusSUCCESS WebhookStatus = "SUCCESS"
-	WebhookStatusFAILURE WebhookStatus = "FAILURE"
+	WebhookStatus_SUCCESS WebhookStatus = "SUCCESS"
+	WebhookStatus_FAILURE WebhookStatus = "FAILURE"
 )
 
 const (
-	FileStatusCREATED  FileStatus = "CREATED"
-	FileStatusUPLOADED FileStatus = "UPLOADED"
-	FileStatusAPPROVED FileStatus = "APPROVED"
+	FileStatus_CREATED  FileStatus = "CREATED"
+	FileStatus_UPLOADED FileStatus = "UPLOADED"
+	FileStatus_APPROVED FileStatus = "APPROVED"
 )
 
 // requests
@@ -944,39 +946,39 @@ type RetrieveBinNumberResponse struct {
 }
 
 type CreateMemberRequest struct {
-	MemberExternalId  string     `json:"memberExternalId,omitempty"`
-	Name              string     `json:"name,omitempty"`
-	Address           string     `json:"address,omitempty"`
-	Email             string     `json:"email,omitempty"`
-	PhoneNumber       string     `json:"phoneNumber,omitempty"`
-	IdentityNumber    string     `json:"identityNumber,omitempty"`
-	ContactName       string     `json:"contactName,omitempty"`
-	ContactSurname    string     `json:"contactSurname,omitempty"`
-	MemberType        MemberType `json:"memberType,omitempty"`
-	LegalCompanyTitle string     `json:"legalCompanyTitle,omitempty"`
-	TaxOffice         string     `json:"taxOffice,omitempty"`
-	TaxNumber         string     `json:"taxNumber,omitempty"`
-	Iban              string     `json:"iban,omitempty"`
-	IsBuyer           bool       `json:"isBuyer,omitempty"`
-	IsSubMerchant     bool       `json:"isSubMerchant,omitempty"`
+    MemberExternalId  string     `json:"memberExternalId,omitempty"`
+    Name              string     `json:"name,omitempty"`
+    Address           string     `json:"address,omitempty"`
+    Email             string     `json:"email,omitempty"`
+    PhoneNumber       string     `json:"phoneNumber,omitempty"`
+    IdentityNumber    string     `json:"identityNumber,omitempty"`
+    ContactName       string     `json:"contactName,omitempty"`
+    ContactSurname    string     `json:"contactSurname,omitempty"`
+    MemberType        MemberType `json:"memberType,omitempty"`
+    LegalCompanyTitle string     `json:"legalCompanyTitle,omitempty"`
+    TaxOffice         string     `json:"taxOffice,omitempty"`
+    TaxNumber         string     `json:"taxNumber,omitempty"`
+    Iban              string     `json:"iban,omitempty"`
+    IsBuyer           bool       `json:"isBuyer,omitempty"`
+    IsSubMerchant     bool       `json:"isSubMerchant,omitempty"`
 }
 
 type UpdateMemberRequest struct {
-	Name                          string                        `json:"name,omitempty"`
-	Address                       string                        `json:"address,omitempty"`
-	Email                         string                        `json:"email,omitempty"`
-	PhoneNumber                   string                        `json:"phoneNumber,omitempty"`
-	IdentityNumber                string                        `json:"identityNumber,omitempty"`
-	ContactName                   string                        `json:"contactName,omitempty"`
-	ContactSurname                string                        `json:"contactSurname,omitempty"`
-	MemberType                    MemberType                    `json:"memberType,omitempty"`
-	LegalCompanyTitle             string                        `json:"legalCompanyTitle,omitempty"`
-	TaxOffice                     string                        `json:"taxOffice,omitempty"`
-	TaxNumber                     string                        `json:"taxNumber,omitempty"`
-	Iban                          string                        `json:"iban,omitempty"`
-	SettlementEarningsDestination SettlementEarningsDestination `json:"settlementEarningsDestination,omitempty"`
-	IsBuyer                       bool                          `json:"isBuyer,omitempty"`
-	IsSubMerchant                 bool                          `json:"isSubMerchant,omitempty"`
+    Name                          string                        `json:"name,omitempty"`
+    Address                       string                        `json:"address,omitempty"`
+    Email                         string                        `json:"email,omitempty"`
+    PhoneNumber                   string                        `json:"phoneNumber,omitempty"`
+    IdentityNumber                string                        `json:"identityNumber,omitempty"`
+    ContactName                   string                        `json:"contactName,omitempty"`
+    ContactSurname                string                        `json:"contactSurname,omitempty"`
+    MemberType                    MemberType                    `json:"memberType,omitempty"`
+    LegalCompanyTitle             string                        `json:"legalCompanyTitle,omitempty"`
+    TaxOffice                     string                        `json:"taxOffice,omitempty"`
+    TaxNumber                     string                        `json:"taxNumber,omitempty"`
+    Iban                          string                        `json:"iban,omitempty"`
+    SettlementEarningsDestination SettlementEarningsDestination `json:"settlementEarningsDestination,omitempty"`
+    IsBuyer                       bool                          `json:"isBuyer,omitempty"`
+    IsSubMerchant                 bool                          `json:"isSubMerchant,omitempty"`
 }
 
 type SearchMembersRequest struct {
@@ -1013,27 +1015,39 @@ type MemberResponse struct {
 	Iban                          *string                        `json:"iban"`
 }
 
+type CreateMerchantRequest struct {
+	Name               string `schema:"name,omitempty"`
+	LegalCompanyTitle  string `schema:"legalCompanyTitle,omitempty"`
+	Email              string `schema:"email,omitempty"`
+	SecretWord         string `schema:"secretWord,omitempty"`
+	Website            string `schema:"website,omitempty"`
+	PhoneNumber        string `schema:"phoneNumber,omitempty"`
+	ContactName        string `schema:"contactName,omitempty"`
+	ContactSurname     string `schema:"contactSurname,omitempty"`
+	ContactPhoneNumber string `schema:"contactPhoneNumber,omitempty"`
+}
+
 type CreateProductRequest struct {
-	Name                string   `json:"name"`
-	Channel             string   `json:"channel,omitempty"`
-	OrderId             string   `json:"orderId,omitempty"`
-	Stock               int      `json:"stock,omitempty"`
-	Price               float64  `json:"price"`
-	Currency            Currency `json:"currency"`
-	Description         string   `json:"description,omitempty"`
-	EnabledInstallments []int    `json:"enabledInstallments"`
+	Name                string   `schema:"name"`
+	Channel             string   `schema:"channel,omitempty"`
+	OrderId             string   `schema:"orderId,omitempty"`
+	Stock               int      `schema:"stock,omitempty"`
+	Price               float64  `schema:"price"`
+	Currency            Currency `schema:"currency"`
+	Description         string   `schema:"description,omitempty"`
+	EnabledInstallments []int    `schema:"enabledInstallments"`
 }
 
 type UpdateProductRequest struct {
-	Name                string   `json:"name"`
-	Channel             string   `json:"channel,omitempty"`
-	OrderId             string   `json:"orderId,omitempty"`
-	Stock               int      `json:"stock,omitempty"`
-	Status              Status   `json:"status"`
-	Price               float64  `json:"price"`
-	Currency            Currency `json:"currency"`
-	Description         string   `json:"description,omitempty"`
-	EnabledInstallments []int    `json:"enabledInstallments"`
+	Name                string   `schema:"name"`
+	Channel             string   `schema:"channel,omitempty"`
+	OrderId             string   `schema:"orderId,omitempty"`
+	Stock               int      `schema:"stock,omitempty"`
+	Status              Status   `schema:"status"`
+	Price               float64  `schema:"price"`
+	Currency            Currency `schema:"currency"`
+	Description         string   `schema:"description,omitempty"`
+	EnabledInstallments []int    `schema:"enabledInstallments"`
 }
 
 type SearchProductsRequest struct {
