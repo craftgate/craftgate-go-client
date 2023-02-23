@@ -20,6 +20,7 @@ type RefundStatus string
 type RefundType string
 type ApprovalStatus string
 type Status string
+type OnboardingStatus string
 type MemberType string
 type SettlementType string
 type SettlementEarningsDestination string
@@ -34,6 +35,10 @@ type ReportFileType string
 type WalletTransactionType string
 type WebhookEventType string
 type WebhookStatus string
+type PosStatus string
+type PosIntegrator string
+type PosUserType string
+type PosOperationType string
 type FileStatus string
 
 const (
@@ -190,6 +195,16 @@ const (
 	RefundStatus_FAILURE RefundStatus = "FAILURE"
 )
 
+// onboarding status declaration
+const (
+	OnboardingStatus_APPLICATION_REJECTED OnboardingStatus = "APPLICATION_REJECTED"
+	OnboardingStatus_REGISTERED           OnboardingStatus = "REGISTERED"
+	OnboardingStatus_REGISTER_CONFIRMED   OnboardingStatus = "REGISTER_CONFIRMED"
+	OnboardingStatus_APPLIED              OnboardingStatus = "APPLIED"
+	OnboardingStatus_INTEGRATION          OnboardingStatus = "INTEGRATION"
+	OnboardingStatus_LIVE                 OnboardingStatus = "LIVE"
+)
+
 // refund type declaration
 const (
 	RefundType_CANCEL RefundType = "CANCEL"
@@ -315,6 +330,59 @@ const (
 const (
 	WebhookStatus_SUCCESS WebhookStatus = "SUCCESS"
 	WebhookStatus_FAILURE WebhookStatus = "FAILURE"
+)
+
+const (
+    PosStatus_DELETED     PosStatus = "DELETED"
+    PosStatus_PASSIVE     PosStatus = "PASSIVE"
+    PosStatus_ACTIVE      PosStatus = "ACTIVE"
+    PosStatus_REFUND_ONLY PosStatus = "REFUND_ONLY"
+    PosStatus_AUTOPILOT   PosStatus = "AUTOPILOT"
+)
+
+const (
+    PosIntegrator_YKB               PosIntegrator = "YKB"
+    PosIntegrator_GARANTI           PosIntegrator = "GARANTI"
+    PosIntegrator_ISBANK            PosIntegrator = "ISBANK"
+    PosIntegrator_AKBANK            PosIntegrator = "AKBANK"
+    PosIntegrator_ZIRAATBANK        PosIntegrator = "ZIRAATBANK"
+    PosIntegrator_ZIRAATBANK_INNOVA PosIntegrator = "ZIRAATBANK_INNOVA"
+    PosIntegrator_KUVEYTTURK        PosIntegrator = "KUVEYTTURK"
+    PosIntegrator_HALKBANK          PosIntegrator = "HALKBANK"
+    PosIntegrator_DENIZBANK         PosIntegrator = "DENIZBANK"
+    PosIntegrator_VAKIFBANK         PosIntegrator = "VAKIFBANK"
+    PosIntegrator_FINANSBANK        PosIntegrator = "FINANSBANK"
+    PosIntegrator_FINANSBANK_ASSECO PosIntegrator = "FINANSBANK_ASSECO"
+    PosIntegrator_FIBABANK          PosIntegrator = "FIBABANK"
+    PosIntegrator_FIBABANK_ASSECO   PosIntegrator = "FIBABANK_ASSECO"
+    PosIntegrator_ANADOLUBANK       PosIntegrator = "ANADOLUBANK"
+    PosIntegrator_PARAM_POS         PosIntegrator = "PARAM_POS"
+    PosIntegrator_IYZICO            PosIntegrator = "IYZICO"
+    PosIntegrator_SIPAY             PosIntegrator = "SIPAY"
+    PosIntegrator_PAYNET            PosIntegrator = "PAYNET"
+    PosIntegrator_PAYTR             PosIntegrator = "PAYTR"
+    PosIntegrator_BIRLESIK_ODEME    PosIntegrator = "BIRLESIK_ODEME"
+    PosIntegrator_MOKA              PosIntegrator = "MOKA"
+    PosIntegrator_STRIPE            PosIntegrator = "STRIPE"
+    PosIntegrator_TEB               PosIntegrator = "TEB"
+    PosIntegrator_IPARA             PosIntegrator = "IPARA"
+    PosIntegrator_OZAN              PosIntegrator = "OZAN"
+    PosIntegrator_BRAINTREE         PosIntegrator = "BRAINTREE"
+    PosIntegrator_NKOLAY            PosIntegrator = "NKOLAY"
+    PosIntegrator_FAKE              PosIntegrator = "FAKE"
+)
+
+const (
+    PosUserType_API PosUserType = "API"
+)
+
+const (
+    PosOperationType_STANDARD PosOperationType = "STANDARD"
+    PosOperationType_PROVAUT  PosOperationType = "PROVAUT"
+    PosOperationType_PROVRFN  PosOperationType = "PROVRFN"
+    PosOperationType_PAYMENT  PosOperationType = "PAYMENT"
+    PosOperationType_REFUND   PosOperationType = "REFUND"
+    PosOperationType_INQUIRY  PosOperationType = "INQUIRY"
 )
 
 const (
@@ -1016,38 +1084,186 @@ type MemberResponse struct {
 }
 
 type CreateMerchantRequest struct {
-	Name               string `schema:"name,omitempty"`
-	LegalCompanyTitle  string `schema:"legalCompanyTitle,omitempty"`
-	Email              string `schema:"email,omitempty"`
-	SecretWord         string `schema:"secretWord,omitempty"`
-	Website            string `schema:"website,omitempty"`
-	PhoneNumber        string `schema:"phoneNumber,omitempty"`
-	ContactName        string `schema:"contactName,omitempty"`
-	ContactSurname     string `schema:"contactSurname,omitempty"`
-	ContactPhoneNumber string `schema:"contactPhoneNumber,omitempty"`
+	Name               string `json:"name,omitempty"`
+	LegalCompanyTitle  string `json:"legalCompanyTitle,omitempty"`
+	Email              string `json:"email,omitempty"`
+	SecretWord         string `json:"secretWord,omitempty"`
+	Website            string `json:"website,omitempty"`
+	PhoneNumber        string `json:"phoneNumber,omitempty"`
+	ContactName        string `json:"contactName,omitempty"`
+	ContactSurname     string `json:"contactSurname,omitempty"`
+	ContactPhoneNumber string `json:"contactPhoneNumber,omitempty"`
+}
+
+type CreateMerchantResponse struct {
+	Id                     *int64                            `json:"id"`
+	Name                   string                            `json:"name"`
+	OnboardingStatus       OnboardingStatus                  `json:"onboardingStatus"`
+	MerchantApiCredentials *[]MerchantApiCredentialsResponse `json:"merchantApiCredentials"`
+}
+
+type MerchantApiCredentialsResponse struct {
+	Name      string `json:"name"`
+	ApiKey    string `json:"apiKey"`
+	SecretKey string `json:"secretKey"`
+}
+
+type CreateMerchantPosRequest struct {
+	Status                  PosStatus                `json:"status,omitempty"`
+	Name                    string                   `json:"name,omitempty"`
+	ClientId                string                   `json:"clientId,omitempty"`
+	Currency                Currency                 `json:"currency,omitempty"`
+	PosnetId                string                   `json:"posnetId,omitempty"`
+	TerminalId              string                   `json:"terminalId,omitempty"`
+	ThreedsPosnetId         string                   `json:"threedsPosnetId,omitempty"`
+	ThreedsTerminalId       string                   `json:"threedsTerminalId,omitempty"`
+	ThreedsKey              string                   `json:"threedsKey,omitempty"`
+	ForceThreeDs            bool                     `json:"forceThreeDs,omitempty"`
+	EnableForeignCard       bool                     `json:"enableForeignCard,omitempty"`
+	EnableInstallment       bool                     `json:"enableInstallment,omitempty"`
+	EnablePaymentWithoutCvc bool                     `json:"enablePaymentWithoutCvc,omitempty"`
+	NewIntegration          bool                     `json:"newIntegration,omitempty"`
+	OrderNumber             int                      `json:"orderNumber,omitempty"`
+	PosIntegrator           PosIntegrator            `json:"posIntegrator,omitempty"`
+	MerchantPosUsers        []MerchantPosUserRequest `json:"merchantPosUsers"`
+}
+
+type UpdateMerchantPosRequest struct {
+	Name                    string                   `json:"name,omitempty"`
+	ClientId                string                   `json:"clientId,omitempty"`
+	PosnetId                string                   `json:"posnetId,omitempty"`
+	TerminalId              string                   `json:"terminalId,omitempty"`
+	ThreedsPosnetId         string                   `json:"threedsPosnetId,omitempty"`
+	ThreedsTerminalId       string                   `json:"threedsTerminalId,omitempty"`
+	ThreedsKey              string                   `json:"threedsKey,omitempty"`
+	ForceThreeDs            bool                     `json:"forceThreeDs,omitempty"`
+	EnableForeignCard       bool                     `json:"enableForeignCard,omitempty"`
+	EnableInstallment       bool                     `json:"enableInstallment,omitempty"`
+	EnablePaymentWithoutCvc bool                     `json:"enablePaymentWithoutCvc,omitempty"`
+	NewIntegration          bool                     `json:"newIntegration,omitempty"`
+	OrderNumber             int                      `json:"orderNumber,omitempty"`
+	MerchantPosUsers        []MerchantPosUserRequest `json:"merchantPosUsers"`
+}
+
+type SearchMerchantPosRequest struct {
+	Page              int      `schema:"page,omitempty"`
+	Size              int      `schema:"size,omitempty"`
+	Name              string   `schema:"name,omitempty"`
+	Alias             string   `schema:"alias,omitempty"`
+	Currency          Currency `schema:"currency,omitempty"`
+	BankName          string   `schema:"bankName,omitempty"`
+	ForceThreeDs      bool     `json:"forceThreeDs,omitempty"`
+	EnableForeignCard bool     `json:"enableForeignCard,omitempty"`
+	EnableInstallment bool     `json:"enableInstallment,omitempty"`
+}
+
+type MerchantPosUserRequest struct {
+	PosUsername      string           `json:"posUsername,omitempty"`
+	PosPassword      string           `json:"posPassword,omitempty"`
+	PosUserType      PosUserType      `json:"posUserType,omitempty"`
+	PosOperationType PosOperationType `json:"posOperationType,omitempty"`
+}
+
+type MerchantPosUserResponse struct {
+	Id               *int64            `json:"id"`
+	PosUsername      *string           `json:"posUsername"`
+	PosPassword      *string           `json:"posPassword"`
+	PosUserType      *PosUserType      `json:"posUserType"`
+	PosOperationType *PosOperationType `json:"posOperationType"`
+}
+
+type MerchantPosResponse struct {
+	Id                        *int64                     `json:"id"`
+	Status                    *PosStatus                 `json:"status"`
+	Name                      *string                    `json:"name"`
+	Alias                     *string                    `json:"alias"`
+	PosIntegrator             *PosIntegrator             `json:"posIntegrator"`
+	Hostname                  *string                    `json:"hostname"`
+	ClientId                  *string                    `json:"clientId"`
+	PosCurrencyCode           *string                    `json:"posCurrencyCode"`
+	Mode                      *string                    `json:"mode"`
+	Path                      *string                    `json:"path"`
+	Port                      *int16                     `json:"port"`
+	PosnetId                  *string                    `json:"posnetId"`
+	TerminalId                *string                    `json:"terminalId"`
+	ThreedsPosnetId           *string                    `json:"threedsPosnetId"`
+	ThreedsTerminalId         *string                    `json:"threedsTerminalId"`
+	ThreedsKey                *string                    `json:"threedsKey"`
+	ThreedsPath               *string                    `json:"threedsPath"`
+	ForceThreeDs              *bool                      `json:"forceThreeDs"`
+	EnableForeignCard         *bool                      `json:"enableForeignCard"`
+	EnableInstallment         *bool                      `json:"enableInstallment"`
+	EnablePaymentWithoutCvc   *bool                      `json:"enablePaymentWithoutCvc"`
+	NewIntegration            *bool                      `json:"newIntegration"`
+	OrderNumber               *int                       `json:"orderNumber"`
+	AutopilotState            *AutopilotStateResponse    `json:"autopilotState"`
+	Currency                  *Currency                  `json:"currency"`
+	BankId                    *int64                     `json:"bankId"`
+	BankName                  *string                    `json:"bankName"`
+	IsPf                      *bool                      `json:"isPf"`
+	MerchantPosUsers          *[]MerchantPosUserResponse `json:"merchantPosUsers"`
+	SupportedCardAssociations *[]CardAssociation         `json:"supportedCardAssociations"`
+}
+
+type CreateMerchantPosCommissionsRequest struct {
+	Commissions []MerchantPosCommissionsRequest `json:"commissions"`
+}
+
+type MerchantPosCommissionsRequest struct {
+	CardBrandName                       string  `json:"cardBrandName,omitempty"`
+	Installment                         int     `json:"installment,omitempty"`
+	Status                              Status  `json:"status,omitempty"`
+	BlockageDay                         int     `json:"blockageDay,omitempty"`
+	InstallmentLabel                    string  `json:"installmentLabel,omitempty"`
+	BankOnUsCreditCardCommissionRate    float64 `json:"bankOnUsCreditCardCommissionRate,omitempty"`
+	BankOnUsDebitCardCommissionRate     float64 `json:"bankOnUsDebitCardCommissionRate,omitempty"`
+	BankNotOnUsCreditCardCommissionRate float64 `json:"bankNotOnUsCreditCardCommissionRate,omitempty"`
+	BankNotOnUsDebitCardCommissionRate  float64 `json:"bankNotOnUsDebitCardCommissionRate,omitempty"`
+	BankForeignCardCommissionRate       float64 `json:"bankForeignCardCommissionRate,omitempty"`
+	MerchantCommissionRate              float64 `json:"merchantCommissionRate,omitempty"`
+}
+
+type MerchantPosCommissionsResponse struct {
+	Id                                  *int64   `json:"id"`
+	Status                              *Status  `json:"status"`
+	CardBrandName                       *string  `json:"cardBrandName"`
+	Installment                         *int     `json:"installment"`
+	BlockageDay                         *int     `json:"blockageDay"`
+	InstallmentLabel                    *string  `json:"installmentLabel"`
+	BankOnUsCreditCardCommissionRate    *float64 `json:"bankOnUsCreditCardCommissionRate"`
+	BankOnUsDebitCardCommissionRate     *float64 `json:"bankOnUsDebitCardCommissionRate"`
+	BankNotOnUsCreditCardCommissionRate *float64 `json:"bankNotOnUsCreditCardCommissionRate"`
+	BankNotOnUsDebitCardCommissionRate  *float64 `json:"bankNotOnUsDebitCardCommissionRate"`
+	BankForeignCardCommissionRate       *float64 `json:"bankForeignCardCommissionRate"`
+	MerchantCommissionRate              *float64 `json:"merchantCommissionRate"`
+}
+
+type AutopilotStateResponse struct {
+	IsThreeDsUp    bool `json:"isThreeDsUp"`
+	IsNonThreeDsUp bool `json:"isNonThreeDsUp"`
 }
 
 type CreateProductRequest struct {
-	Name                string   `schema:"name"`
-	Channel             string   `schema:"channel,omitempty"`
-	OrderId             string   `schema:"orderId,omitempty"`
-	Stock               int      `schema:"stock,omitempty"`
-	Price               float64  `schema:"price"`
-	Currency            Currency `schema:"currency"`
-	Description         string   `schema:"description,omitempty"`
-	EnabledInstallments []int    `schema:"enabledInstallments"`
+	Name                string   `json:"name"`
+	Channel             string   `json:"channel,omitempty"`
+	OrderId             string   `json:"orderId,omitempty"`
+	Stock               int      `json:"stock,omitempty"`
+	Price               float64  `json:"price"`
+	Currency            Currency `json:"currency"`
+	Description         string   `json:"description,omitempty"`
+	EnabledInstallments []int    `json:"enabledInstallments"`
 }
 
 type UpdateProductRequest struct {
-	Name                string   `schema:"name"`
-	Channel             string   `schema:"channel,omitempty"`
-	OrderId             string   `schema:"orderId,omitempty"`
-	Stock               int      `schema:"stock,omitempty"`
-	Status              Status   `schema:"status"`
-	Price               float64  `schema:"price"`
-	Currency            Currency `schema:"currency"`
-	Description         string   `schema:"description,omitempty"`
-	EnabledInstallments []int    `schema:"enabledInstallments"`
+	Name                string   `json:"name"`
+	Channel             string   `json:"channel,omitempty"`
+	OrderId             string   `json:"orderId,omitempty"`
+	Stock               int      `json:"stock,omitempty"`
+	Status              Status   `json:"status"`
+	Price               float64  `json:"price"`
+	Currency            Currency `json:"currency"`
+	Description         string   `json:"description,omitempty"`
+	EnabledInstallments []int    `json:"enabledInstallments"`
 }
 
 type SearchProductsRequest struct {

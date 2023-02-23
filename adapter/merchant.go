@@ -15,7 +15,7 @@ func (api *Merchant) CreateMerchantPos(ctx context.Context, request CreateMercha
 		return nil, err
 	}
 
-	response := &Response[CreateInstantWalletSettlementResponse]{}
+	response := &Response[CreateMerchantPosResponse]{}
 	err = api.Client.Do(ctx, newRequest, response)
 	if err != nil {
 		return nil, err
