@@ -99,13 +99,13 @@ func (api *Wallet) RetrieveRefundableAmountOfWalletTransaction(ctx context.Conte
 	return response.Data, nil
 }
 
-func (api *Wallet) RefundWalletTransactionToCard(ctx context.Context, walletTransactionId int64, request RefundWalletTransactionToCardRequest) (*RefundWalletTransactionToCardResponse, error) {
+func (api *Wallet) RefundWalletTransaction(ctx context.Context, walletTransactionId int64, request RefundWalletTransactionRequest) (*RefundWalletTransactionResponse, error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, fmt.Sprintf("/payment/v1/wallet-transactions/%d/refunds", walletTransactionId), request)
 	if err != nil {
 		return nil, err
 	}
 
-	response := &Response[RefundWalletTransactionToCardResponse]{}
+	response := &Response[RefundWalletTransactionResponse]{}
 	err = api.Client.Do(ctx, newRequest, response)
 	if err != nil {
 		return nil, err
@@ -114,13 +114,13 @@ func (api *Wallet) RefundWalletTransactionToCard(ctx context.Context, walletTran
 	return response.Data, nil
 }
 
-func (api *Wallet) RetrieveRefundWalletTransactionsToCard(ctx context.Context, walletTransactionId int64) (*DataResponse[RefundWalletTransactionToCardResponse], error) {
+func (api *Wallet) RetrieveRefundWalletTransactions(ctx context.Context, walletTransactionId int64) (*DataResponse[RefundWalletTransactionResponse], error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment/v1/wallet-transactions/%d/refunds", walletTransactionId), nil)
 	if err != nil {
 		return nil, err
 	}
 
-	response := &Response[DataResponse[RefundWalletTransactionToCardResponse]]{}
+	response := &Response[DataResponse[RefundWalletTransactionResponse]]{}
 	err = api.Client.Do(ctx, newRequest, response)
 	if err != nil {
 		return nil, err

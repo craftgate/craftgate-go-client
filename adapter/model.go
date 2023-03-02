@@ -26,7 +26,7 @@ type SettlementEarningsDestination string
 type RefundDestinationType string
 type TransactionStatus string
 type TransactionPayoutStatus string
-type WalletTransactionRefundCardTransactionType string
+type WalletTransactionRefundTransactionType string
 type FraudAction string
 type FraudCheckStatus string
 type ApmAdditionalAction string
@@ -237,8 +237,9 @@ const (
 
 // wallet transaction refund type declaration
 const (
-	PAYMENT    WalletTransactionRefundCardTransactionType = "PAYMENT"
-	PAYMENT_TX WalletTransactionRefundCardTransactionType = "PAYMENT_TX"
+	PAYMENT    WalletTransactionRefundTransactionType = "PAYMENT"
+	PAYMENT_TX WalletTransactionRefundTransactionType = "PAYMENT_TX"
+	WALLET_TX  WalletTransactionRefundTransactionType = "WALLET_TX"
 )
 
 // fraud action type declaration
@@ -269,22 +270,23 @@ const (
 
 // wallet transaction type declaration
 const (
-	PAYMENT_REDEEM               WalletTransactionType = "PAYMENT_REDEEM"
-	REFUND_DEPOSIT               WalletTransactionType = "REFUND_DEPOSIT"
-	REFUND_TX_DEPOSIT            WalletTransactionType = "REFUND_TX_DEPOSIT"
-	WITHDRAW                     WalletTransactionType = "WITHDRAW"
-	CANCEL_REFUND_WALLET_TO_CARD WalletTransactionType = "CANCEL_REFUND_WALLET_TO_CARD"
-	REFUND_WALLET_TX_TO_CARD     WalletTransactionType = "REFUND_WALLET_TX_TO_CARD"
-	CANCEL_REFUND_TO_WALLET      WalletTransactionType = "CANCEL_REFUND_TO_WALLET"
-	REFUND_TX_TO_WALLET          WalletTransactionType = "REFUND_TX_TO_WALLET"
-	MANUAL_REFUND_TX_TO_WALLET   WalletTransactionType = "MANUAL_REFUND_TX_TO_WALLET"
-	SETTLEMENT_EARNINGS          WalletTransactionType = "SETTLEMENT_EARNINGS"
-	DEPOSIT_FROM_CARD            WalletTransactionType = "DEPOSIT_FROM_CARD"
-	REMITTANCE                   WalletTransactionType = "REMITTANCE"
-	LOYALTY                      WalletTransactionType = "LOYALTY"
-	WITHDRAW_CANCEL              WalletTransactionType = "WITHDRAW_CANCEL"
-	MERCHANT_BALANCE_RESET       WalletTransactionType = "MERCHANT_BALANCE_RESET"
-	DEPOSIT_FROM_FUND_TRANSFER   WalletTransactionType = "DEPOSIT_FROM_FUND_TRANSFER"
+	PAYMENT_REDEEM                 WalletTransactionType = "PAYMENT_REDEEM"
+	REFUND_DEPOSIT                 WalletTransactionType = "REFUND_DEPOSIT"
+	REFUND_TX_DEPOSIT              WalletTransactionType = "REFUND_TX_DEPOSIT"
+	WITHDRAW                       WalletTransactionType = "WITHDRAW"
+	CANCEL_REFUND_WALLET_TO_CARD   WalletTransactionType = "CANCEL_REFUND_WALLET_TO_CARD"
+	REFUND_WALLET_TX_TO_CARD       WalletTransactionType = "REFUND_WALLET_TX_TO_CARD"
+	REFUND_WALLET_TX_FUND_TRANSFER WalletTransactionType = "REFUND_WALLET_TX_FUND_TRANSFER"
+	CANCEL_REFUND_TO_WALLET        WalletTransactionType = "CANCEL_REFUND_TO_WALLET"
+	REFUND_TX_TO_WALLET            WalletTransactionType = "REFUND_TX_TO_WALLET"
+	MANUAL_REFUND_TX_TO_WALLET     WalletTransactionType = "MANUAL_REFUND_TX_TO_WALLET"
+	SETTLEMENT_EARNINGS            WalletTransactionType = "SETTLEMENT_EARNINGS"
+	DEPOSIT_FROM_CARD              WalletTransactionType = "DEPOSIT_FROM_CARD"
+	REMITTANCE                     WalletTransactionType = "REMITTANCE"
+	LOYALTY                        WalletTransactionType = "LOYALTY"
+	WITHDRAW_CANCEL                WalletTransactionType = "WITHDRAW_CANCEL"
+	MERCHANT_BALANCE_RESET         WalletTransactionType = "MERCHANT_BALANCE_RESET"
+	DEPOSIT_FROM_FUND_TRANSFER     WalletTransactionType = "DEPOSIT_FROM_FUND_TRANSFER"
 )
 
 const (
@@ -632,7 +634,7 @@ type DepositPaymentResponse struct {
 	FraudAction              *FraudAction       `json:"fraudAction"`
 }
 
-type RefundWalletTransactionToCardRequest struct {
+type RefundWalletTransactionRequest struct {
 	RefundPrice float64 `json:"refundPrice"`
 }
 
@@ -706,18 +708,18 @@ type WithdrawResponse struct {
 	PayoutStatus *TransactionPayoutStatus `json:"payoutStatus"`
 }
 
-type RefundWalletTransactionToCardResponse struct {
-	Id                  *int64                                      `json:"id"`
-	CreatedDate         *TimeResponse                               `json:"createdDate"`
-	RefundStatus        *string                                     `json:"refundStatus"`
-	RefundPrice         *float64                                    `json:"refundPrice"`
-	AuthCode            *string                                     `json:"authCode"`
-	HostReference       *string                                     `json:"hostReference"`
-	TransId             *string                                     `json:"transId"`
-	TransactionId       *int64                                      `json:"transactionId"`
-	WalletTransactionId *int64                                      `json:"walletTransactionId"`
-	PaymentError        *PaymentError                               `json:"paymentError"`
-	TransactionType     *WalletTransactionRefundCardTransactionType `json:"transactionType"`
+type RefundWalletTransactionResponse struct {
+	Id                  *int64                                  `json:"id"`
+	CreatedDate         *TimeResponse                           `json:"createdDate"`
+	RefundStatus        *string                                 `json:"refundStatus"`
+	RefundPrice         *float64                                `json:"refundPrice"`
+	AuthCode            *string                                 `json:"authCode"`
+	HostReference       *string                                 `json:"hostReference"`
+	TransId             *string                                 `json:"transId"`
+	TransactionId       *int64                                  `json:"transactionId"`
+	WalletTransactionId *int64                                  `json:"walletTransactionId"`
+	PaymentError        *PaymentError                           `json:"paymentError"`
+	TransactionType     *WalletTransactionRefundTransactionType `json:"transactionType"`
 }
 
 type SearchWalletTransactionsResponse struct {
