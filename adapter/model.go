@@ -102,6 +102,9 @@ const (
 	EUR Currency = "EUR"
 	GBP Currency = "GBP"
 	CNY Currency = "CNY"
+	ARS Currency = "ARS"
+	BRL Currency = "BRL"
+	AED Currency = "AED"
 )
 
 // payment group declaration
