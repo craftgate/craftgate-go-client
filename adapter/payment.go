@@ -368,7 +368,7 @@ func (api *Payment) UpdateStoredCard(ctx context.Context, request UpdateStoredCa
 }
 
 func (api *Payment) DeleteStoredCard(ctx context.Context, request DeleteStoredCardRequest) error {
-    newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/cards", request)
+    newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/cards/delete", request)
     if err != nil {
         return err
     }
