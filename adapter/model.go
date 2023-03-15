@@ -321,6 +321,7 @@ type CreatePaymentRequest struct {
 	BuyerMemberId    int64                  `json:"buyerMemberId,omitempty"`
 	BankOrderId      string                 `json:"bankOrderId,omitempty"`
 	Card             *Card                  `json:"card,omitempty"`
+	FraudParams      *FraudCheckParameters  `json:"fraudParams,omitempty"`
 	Items            []PaymentItem          `json:"items"`
 	AdditionalParams map[string]interface{} `json:"additionalParams,omitempty"`
 }
@@ -1390,6 +1391,12 @@ type Card struct {
 	CardHolderIdentityNumber     string   `json:"cardHolderIdentityNumber,omitempty"`
 	Loyalty                      *Loyalty `json:"loyalty,omitempty"`
 	StoreCardAfterSuccessPayment bool     `json:"storeCardAfterSuccessPayment,omitempty"`
+}
+
+type FraudCheckParameters struct {
+	BuyerExternalId  string `json:"buyerExternalId,omitempty"`
+	BuyerPhoneNumber string `json:"buyerPhoneNumber,omitempty"`
+	BuyerEmail       string `json:"buyerEmail,omitempty"`
 }
 
 type PaymentItem struct {
