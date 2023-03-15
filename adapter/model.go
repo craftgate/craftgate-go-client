@@ -105,6 +105,7 @@ const (
 	ARS Currency = "ARS"
 	BRL Currency = "BRL"
 	AED Currency = "AED"
+	IQD Currency = "IQD"
 )
 
 // payment group declaration
