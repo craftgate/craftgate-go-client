@@ -484,8 +484,8 @@ type UpdateStoredCardRequest struct {
 }
 
 type DeleteStoredCardRequest struct {
-	CardUserKey string `schema:"cardUserKey,omitempty"`
-	CardToken   string `schema:"cardToken,omitempty"`
+	CardUserKey string `json:"cardUserKey,omitempty"`
+	CardToken   string `json:"cardToken,omitempty"`
 }
 
 type SearchStoredCardsRequest struct {
