@@ -124,8 +124,17 @@ const (
 
 // payment method declaration
 const (
-	PaymentMethod_CARD       PaymentMethod = "CARD"
-	PaymentMethod_MASTERPASS PaymentMethod = "MASTERPASS"
+	PaymentMethod_CARD         PaymentMethod = "CARD"
+	PaymentMethod_MASTERPASS   PaymentMethod = "MASTERPASS"
+	PaymentMethod_PAPARA       PaymentMethod = "PAPARA"
+	PaymentMethod_PAYONEER     PaymentMethod = "PAYONEER"
+	PaymentMethod_SODEXO       PaymentMethod = "SODEXO"
+	PaymentMethod_EDENRED      PaymentMethod = "EDENRED"
+	PaymentMethod_EDENRED_GIFT PaymentMethod = "EDENRED_GIFT"
+	PaymentMethod_ALIPAY       PaymentMethod = "ALIPAY"
+	PaymentMethod_PAYPAL       PaymentMethod = "PAYPAL"
+	PaymentMethod_KLARNA       PaymentMethod = "KLARNA"
+	PaymentMethod_AFTERPAY     PaymentMethod = "AFTERPAY"
 )
 
 // card type declaration
