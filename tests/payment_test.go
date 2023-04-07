@@ -303,6 +303,24 @@ func TestPayment_CreateFundTransferDepositPayment(t *testing.T) {
 	}
 }
 
+func TestPayment_InitDepositApmPayment(t *testing.T) {
+	request := adapter.InitApmDepositPaymentRequest{
+		ApmType:        craftgate.ApmTypePAPARA,
+		Price:          1.25,
+		Currency:       craftgate.TRY,
+		BuyerMemberId:  1,
+		ConversationId: "foo-bar",
+		CallbackUrl:    "https://www.your-website.com/callback",
+		ClientIp:       "127.0.0.1",
+	}
+	res, err := paymentClient.Payment.InitApmDepositPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_InitGarantiPayPayment(t *testing.T) {
 	request := adapter.InitGarantiPayPaymentRequest{
 		Price:          100,
@@ -466,7 +484,7 @@ func TestPayment_RefundPaymentTransaction(t *testing.T) {
 		PaymentTransactionId:  1,
 		ConversationId:        "456d1297-908e-4bd6-a13b-4be31a6e47d5",
 		RefundPrice:           20,
-		RefundDestinationType: craftgate.RefundDestinationTypeCARD,
+		RefundDestinationType: craftgate.RefundDestinationTypePROVIDER,
 	}
 
 	res, err := paymentClient.Payment.RefundPaymentTransaction(context.Background(), request)
@@ -489,7 +507,7 @@ func TestPayment_RetrievePaymentTransactionRefund(t *testing.T) {
 func TestPayment_RefundPayment(t *testing.T) {
 	request := adapter.RefundPaymentRequest{
 		PaymentId:             1,
-		RefundDestinationType: craftgate.RefundDestinationTypeCARD,
+		RefundDestinationType: craftgate.RefundDestinationTypePROVIDER,
 	}
 	res, err := paymentClient.Payment.RefundPayment(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
