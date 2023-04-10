@@ -14,16 +14,15 @@ var onboardingClient, _ = craftgate.New("api-key", "secret-key", "https://sandbo
 
 func Test_CreateBuyerMember(t *testing.T) {
 	request := adapter.CreateMemberRequest{
-		MemberExternalId:          fmt.Sprintf("%d", time.Now().Nanosecond()),
-		Name:                      "Haluk Demir",
-		Email:                     "haluk.demir@example.com",
-		PhoneNumber:               "905551111111",
-		Address:                   "Suadiye Mah. Örnek Cd. No:23, 34740 Kadıköy/İstanbul",
-		ContactName:               "Haluk",
-		ContactSurname:            "Demir",
-		NegativeWalletAmountLimit: -50,
-		IsBuyer:                   true,
-		IsSubMerchant:             false,
+		MemberExternalId: fmt.Sprintf("%d", time.Now().Nanosecond()),
+		Name:             "Haluk Demir",
+		Email:            "haluk.demir@example.com",
+		PhoneNumber:      "905551111111",
+		Address:          "Suadiye Mah. Örnek Cd. No:23, 34740 Kadıköy/İstanbul",
+		ContactName:      "Haluk",
+		ContactSurname:   "Demir",
+		IsBuyer:          true,
+		IsSubMerchant:    false,
 	}
 
 	res, err := onboardingClient.Onboarding.CreateMember(context.Background(), request)

@@ -48,10 +48,9 @@ const (
 // payment type declaration
 const (
 	CARD_PAYMENT            PaymentType = "CARD_PAYMENT"
-	DEPOSIT_PAYMENT         PaymentType = "DEPOSIT_PAYMENT"
 	WALLET_PAYMENT          PaymentType = "WALLET_PAYMENT"
 	CARD_AND_WALLET_PAYMENT PaymentType = "CARD_AND_WALLET_PAYMENT"
-	BANK_TRANSFER           PaymentType = "BANK_TRANSFER"
+	DEPOSIT_PAYMENT         PaymentType = "DEPOSIT_PAYMENT"
 	APM                                 = "APM"
 )
 
@@ -221,7 +220,6 @@ const (
 
 // refundDestinationType type declaration
 const (
-	RefundDestinationTypeCARD     RefundDestinationType = "CARD"
 	RefundDestinationTypePROVIDER RefundDestinationType = "PROVIDER"
 	RefundDestinationTypeWALLET   RefundDestinationType = "WALLET"
 )
@@ -296,11 +294,12 @@ const (
 	MANUAL_REFUND_TX_TO_WALLET     WalletTransactionType = "MANUAL_REFUND_TX_TO_WALLET"
 	SETTLEMENT_EARNINGS            WalletTransactionType = "SETTLEMENT_EARNINGS"
 	DEPOSIT_FROM_CARD              WalletTransactionType = "DEPOSIT_FROM_CARD"
+	DEPOSIT_FROM_APM               WalletTransactionType = "DEPOSIT_FROM_APM"
+	DEPOSIT_FROM_FUND_TRANSFER     WalletTransactionType = "DEPOSIT_FROM_FUND_TRANSFER"
 	REMITTANCE                     WalletTransactionType = "REMITTANCE"
 	LOYALTY                        WalletTransactionType = "LOYALTY"
 	WITHDRAW_CANCEL                WalletTransactionType = "WITHDRAW_CANCEL"
 	MERCHANT_BALANCE_RESET         WalletTransactionType = "MERCHANT_BALANCE_RESET"
-	DEPOSIT_FROM_FUND_TRANSFER     WalletTransactionType = "DEPOSIT_FROM_FUND_TRANSFER"
 )
 
 const (
@@ -431,13 +430,14 @@ type PostAuthPaymentRequest struct {
 }
 
 type DepositPaymentRequest struct {
-	Price          float64 `json:"price,omitempty"`
-	BuyerMemberId  int64   `json:"buyerMemberId,omitempty"`
-	ConversationId string  `json:"conversationId,omitempty"`
-	CallbackUrl    string  `json:"callbackUrl,omitempty"`
-	PosAlias       string  `json:"posAlias,omitempty"`
-	ClientIp       string  `json:"clientIp,omitempty"`
-	Card           Card    `json:"card"`
+	BuyerMemberId  int64    `json:"buyerMemberId,omitempty"`
+	Price          float64  `json:"price,omitempty"`
+	Currency       Currency `json:"currency,omitempty"`
+	ConversationId string   `json:"conversationId,omitempty"`
+	CallbackUrl    string   `json:"callbackUrl,omitempty"`
+	PosAlias       string   `json:"posAlias,omitempty"`
+	ClientIp       string   `json:"clientIp,omitempty"`
+	Card           Card     `json:"card"`
 }
 
 type CreateFundTransferDepositPaymentRequest struct {
@@ -445,6 +445,22 @@ type CreateFundTransferDepositPaymentRequest struct {
 	BuyerMemberId  int64   `json:"buyerMemberId,omitempty"`
 	ConversationId string  `json:"conversationId,omitempty"`
 	ClientIp       string  `json:"clientIp,omitempty"`
+}
+
+type InitApmDepositPaymentRequest struct {
+	ApmType          ApmType           `json:"apmType,omitempty"`
+	MerchantApmId    int64             `json:"merchantApmId,omitempty"`
+	Price            float64           `json:"price,omitempty"`
+	Currency         Currency          `json:"currency,omitempty"`
+	BuyerMemberId    int64             `json:"buyerMemberId,omitempty"`
+	PaymentChannel   string            `json:"paymentChannel,omitempty"`
+	ConversationId   string            `json:"conversationId,omitempty"`
+	ExternalId       string            `json:"externalId,omitempty"`
+	CallbackUrl      string            `json:"callbackUrl,omitempty"`
+	ApmOrderId       string            `json:"apmOrderId,omitempty"`
+	ApmUserIdentity  string            `json:"apmUserIdentity,omitempty"`
+	ClientIp         string            `json:"clientIp,omitempty"`
+	AdditionalParams map[string]string `json:"additionalParams,omitempty"`
 }
 
 type RetrieveLoyaltiesRequest struct {
@@ -649,15 +665,25 @@ type DepositPaymentResponse struct {
 	FraudAction              *FraudAction       `json:"fraudAction"`
 }
 
+type ApmDepositPaymentResponse struct {
+	PaymentId           *int64               `json:"paymentId"`
+	RedirectUrl         *string              `json:"redirectUrl"`
+	PaymentStatus       *PaymentStatus       `json:"paymentStatus"`
+	ApmAdditionalAction *ApmAdditionalAction `json:"additionalAction"`
+	PaymentError        *PaymentError        `json:"paymentError"`
+	WalletTransaction   *WalletTransaction   `json:"walletTransaction"`
+}
+
 type RefundWalletTransactionRequest struct {
 	RefundPrice float64 `json:"refundPrice"`
 }
 
 type RemittanceRequest struct {
-	MemberId             int64   `json:"memberId"`
-	Price                float64 `json:"price"`
-	Description          string  `json:"description"`
-	RemittanceReasonType string  `json:"remittanceReasonType"`
+	MemberId             int64    `json:"memberId"`
+	Price                float64  `json:"price"`
+	Currency             Currency `json:"currency,omitempty"`
+	Description          string   `json:"description"`
+	RemittanceReasonType string   `json:"remittanceReasonType"`
 }
 
 type CreateMemberWalletRequest struct {
@@ -674,6 +700,10 @@ type CreateWithdrawRequest struct {
 
 type SearchWalletTransactionsRequest struct {
 	WalletTransactionType WalletTransactionType `schema:"walletTransactionType,omitempty"`
+	MinAmount             float64               `schema:"minWithdrawPrice,omitempty"`
+	MaxAmount             float64               `schema:"maxWithdrawPrice,omitempty"`
+	MinCreatedDate        time.Time             `schema:"minCreatedDate,omitempty"`
+	MaxCreatedDate        time.Time             `schema:"maxCreatedDate,omitempty"`
 	Page                  int                   `schema:"page,omitempty"`
 	Size                  int                   `schema:"size,omitempty"`
 }
@@ -705,6 +735,7 @@ type RemittanceResponse struct {
 	CreatedDate          *TimeResponse `json:"createdDate"`
 	Status               *Status       `json:"status"`
 	Price                *float64      `json:"price"`
+	Currency             Currency      `json:"currency,omitempty"`
 	MemberId             *int64        `json:"memberId"`
 	RemittanceType       *string       `json:"remittanceType"`
 	RemittanceReasonType *string       `json:"remittanceReasonType"`
@@ -912,7 +943,6 @@ type CreateMemberRequest struct {
 	TaxNumber                     string                        `json:"taxNumber,omitempty"`
 	Iban                          string                        `json:"iban,omitempty"`
 	SettlementEarningsDestination SettlementEarningsDestination `json:"settlementEarningsDestination,omitempty"`
-	NegativeWalletAmountLimit     float64                       `json:"negativeWalletAmountLimit,omitempty"`
 	IsBuyer                       bool                          `json:"isBuyer,omitempty"`
 	IsSubMerchant                 bool                          `json:"isSubMerchant,omitempty"`
 }
@@ -931,7 +961,6 @@ type UpdateMemberRequest struct {
 	TaxNumber                     string                        `json:"taxNumber,omitempty"`
 	Iban                          string                        `json:"iban,omitempty"`
 	SettlementEarningsDestination SettlementEarningsDestination `json:"settlementEarningsDestination,omitempty"`
-	NegativeWalletAmountLimit     float64                       `json:"negativeWalletAmountLimit,omitempty"`
 	IsBuyer                       bool                          `json:"isBuyer,omitempty"`
 	IsSubMerchant                 bool                          `json:"isSubMerchant,omitempty"`
 }
@@ -967,7 +996,6 @@ type MemberResponse struct {
 	TaxOffice                     *string                        `json:"taxOffice"`
 	TaxNumber                     *string                        `json:"taxNumber"`
 	SettlementEarningsDestination *SettlementEarningsDestination `json:"settlementEarningsDestination"`
-	NegativeWalletAmountLimit     *float64                       `json:"negativeWalletAmountLimit"`
 	Iban                          *string                        `json:"iban"`
 }
 
