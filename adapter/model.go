@@ -34,6 +34,7 @@ type ReportFileType string
 type WalletTransactionType string
 type WebhookEventType string
 type WebhookStatus string
+type FileStatus string
 
 const (
 	ApiKeyHeaderName        = "x-api-key"
@@ -312,6 +313,12 @@ const (
 const (
 	WebhookStatusSUCCESS WebhookStatus = "SUCCESS"
 	WebhookStatusFAILURE WebhookStatus = "FAILURE"
+)
+
+const (
+	FileStatusCREATED  FileStatus = "CREATED"
+	FileStatusUPLOADED FileStatus = "UPLOADED"
+	FileStatusAPPROVED FileStatus = "APPROVED"
 )
 
 // requests
@@ -1251,6 +1258,14 @@ type SearchPayoutBouncedTransactionsRequest struct {
 	EndDate   time.Time `schema:"endDate,omitempty"`
 }
 
+type SearchPayoutRowRequest struct {
+	Page       int        `schema:"page,omitempty"`
+	Size       int        `schema:"size,omitempty"`
+	FileStatus FileStatus `schema:"fileStatus,omitempty"`
+	StartDate  time.Time  `schema:"startDate,omitempty"`
+	EndDate    time.Time  `schema:"endDate,omitempty"`
+}
+
 type RetrievePayoutDetailsRequest struct {
 	PayoutDetailId int64
 }
@@ -1356,6 +1371,16 @@ type FraudValuesResponse struct {
 type FraudValue struct {
 	Value           *string `json:"value"`
 	ExpireInSeconds *int    `json:"expireInSeconds"`
+}
+
+type PayoutRowResponse struct {
+	Name         *string       `json:"name"`
+	Iban         *string       `json:"iban"`
+	PayoutId     *int64        `json:"payoutId"`
+	MerchantId   *int64        `json:"merchantId"`
+	MerchantType *string       `json:"merchantType"`
+	PayoutAmount *float64      `json:"payoutAmount"`
+	PayoutDate   *TimeResponse `json:"payoutDate"`
 }
 
 type WebhookData struct {
