@@ -55,6 +55,21 @@ func (api *Wallet) RetrieveMerchantMemberWallet(ctx context.Context) (*MemberWal
 	return response.Data, nil
 }
 
+func (api *Wallet) UpdateMemberWallet(ctx context.Context, memberId int64, walletId int64, request UpdateMemberWalletRequest) (*MemberWalletResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPut, fmt.Sprintf("/wallet/v1/members/%d/wallets/%d", memberId, walletId), request)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[MemberWalletResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
 func (api *Wallet) ResetMerchantMemberWalletBalance(ctx context.Context, request ResetMerchantMemberWalletBalanceRequest) (*MemberWalletResponse, error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/wallet/v1/merchants/me/wallet/reset-balance", request)
 	if err != nil {
