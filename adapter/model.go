@@ -401,6 +401,7 @@ type InitCheckoutPaymentRequest struct {
 	AllowOnlyStoredCards        bool            `json:"allowOnlyStoredCards,omitempty"`
 	AllowOnlyCreditCard         bool            `json:"allowOnlyCreditCard,omitempty"`
 	ForceThreeDS                bool            `json:"forceThreeDS,omitempty"`
+	ForceAuthForNonCreditCards  bool            `json:"forceAuthForNonCreditCards,omitempty"`
 	Items                       []PaymentItem   `json:"items"`
 }
 
