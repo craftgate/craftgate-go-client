@@ -691,6 +691,10 @@ type CreateMemberWalletRequest struct {
 	Currency            Currency `json:"currency"`
 }
 
+type UpdateMemberWalletRequest struct {
+	NegativeAmountLimit float64 `json:"negativeAmountLimit"`
+}
+
 type CreateWithdrawRequest struct {
 	MemberId    int64    `json:"memberId"`
 	Price       float64  `json:"price"`
@@ -699,13 +703,13 @@ type CreateWithdrawRequest struct {
 }
 
 type SearchWalletTransactionsRequest struct {
-	WalletTransactionType WalletTransactionType `schema:"walletTransactionType,omitempty"`
-	MinAmount             float64               `schema:"minWithdrawPrice,omitempty"`
-	MaxAmount             float64               `schema:"maxWithdrawPrice,omitempty"`
-	MinCreatedDate        time.Time             `schema:"minCreatedDate,omitempty"`
-	MaxCreatedDate        time.Time             `schema:"maxCreatedDate,omitempty"`
-	Page                  int                   `schema:"page,omitempty"`
-	Size                  int                   `schema:"size,omitempty"`
+	WalletTransactionTypes []WalletTransactionType `schema:"walletTransactionTypes,omitempty"`
+	MinAmount              float64                 `schema:"minWithdrawPrice,omitempty"`
+	MaxAmount              float64                 `schema:"maxWithdrawPrice,omitempty"`
+	MinCreatedDate         time.Time               `schema:"minCreatedDate,omitempty"`
+	MaxCreatedDate         time.Time               `schema:"maxCreatedDate,omitempty"`
+	Page                   int                     `schema:"page,omitempty"`
+	Size                   int                     `schema:"size,omitempty"`
 }
 
 type SearchWithdrawsRequest struct {
@@ -721,13 +725,14 @@ type SearchWithdrawsRequest struct {
 }
 
 type MemberWalletResponse struct {
-	Id               *int64        `json:"id"`
-	CreatedDate      *TimeResponse `json:"createdDate"`
-	UpdatedDate      *TimeResponse `json:"updatedDate"`
-	Amount           *float64      `json:"amount"`
-	WithdrawalAmount *float64      `json:"withdrawalAmount"`
-	Currency         *Currency     `json:"currency"`
-	MemberId         *int64        `json:"memberId"`
+	Id                  *int64        `json:"id"`
+	CreatedDate         *TimeResponse `json:"createdDate"`
+	UpdatedDate         *TimeResponse `json:"updatedDate"`
+	Amount              *float64      `json:"amount"`
+	WithdrawalAmount    *float64      `json:"withdrawalAmount"`
+	NegativeAmountLimit *float64      `json:"negativeAmountLimit"`
+	Currency            *Currency     `json:"currency"`
+	MemberId            *int64        `json:"memberId"`
 }
 
 type RemittanceResponse struct {
