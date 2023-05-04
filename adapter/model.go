@@ -942,22 +942,21 @@ type RetrieveBinNumberResponse struct {
 }
 
 type CreateMemberRequest struct {
-	MemberExternalId              string                        `json:"memberExternalId,omitempty"`
-	Name                          string                        `json:"name,omitempty"`
-	Address                       string                        `json:"address,omitempty"`
-	Email                         string                        `json:"email,omitempty"`
-	PhoneNumber                   string                        `json:"phoneNumber,omitempty"`
-	IdentityNumber                string                        `json:"identityNumber,omitempty"`
-	ContactName                   string                        `json:"contactName,omitempty"`
-	ContactSurname                string                        `json:"contactSurname,omitempty"`
-	MemberType                    MemberType                    `json:"memberType,omitempty"`
-	LegalCompanyTitle             string                        `json:"legalCompanyTitle,omitempty"`
-	TaxOffice                     string                        `json:"taxOffice,omitempty"`
-	TaxNumber                     string                        `json:"taxNumber,omitempty"`
-	Iban                          string                        `json:"iban,omitempty"`
-	SettlementEarningsDestination SettlementEarningsDestination `json:"settlementEarningsDestination,omitempty"`
-	IsBuyer                       bool                          `json:"isBuyer,omitempty"`
-	IsSubMerchant                 bool                          `json:"isSubMerchant,omitempty"`
+	MemberExternalId  string     `json:"memberExternalId,omitempty"`
+	Name              string     `json:"name,omitempty"`
+	Address           string     `json:"address,omitempty"`
+	Email             string     `json:"email,omitempty"`
+	PhoneNumber       string     `json:"phoneNumber,omitempty"`
+	IdentityNumber    string     `json:"identityNumber,omitempty"`
+	ContactName       string     `json:"contactName,omitempty"`
+	ContactSurname    string     `json:"contactSurname,omitempty"`
+	MemberType        MemberType `json:"memberType,omitempty"`
+	LegalCompanyTitle string     `json:"legalCompanyTitle,omitempty"`
+	TaxOffice         string     `json:"taxOffice,omitempty"`
+	TaxNumber         string     `json:"taxNumber,omitempty"`
+	Iban              string     `json:"iban,omitempty"`
+	IsBuyer           bool       `json:"isBuyer,omitempty"`
+	IsSubMerchant     bool       `json:"isSubMerchant,omitempty"`
 }
 
 type UpdateMemberRequest struct {

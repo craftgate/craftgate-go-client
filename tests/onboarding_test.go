@@ -98,7 +98,7 @@ func Test_UpdateSubMerchantMember(t *testing.T) {
 		LegalCompanyTitle:             "Dem Zeytinyağı Üretim Ltd. Şti.",
 		Name:                          "Dem Zeytinyağı Üretim Ltd. Şti.",
 		MemberType:                    craftgate.LIMITED_OR_JOINT_STOCK_COMPANY,
-		SettlementEarningsDestination: craftgate.SettlementEarningsDestinationIBAN,
+		SettlementEarningsDestination: craftgate.SettlementEarningsDestinationWALLET,
 		TaxNumber:                     "1111111114",
 		TaxOffice:                     "Erenköy",
 		Address:                       "Suadiye Mah. Örnek Cd. No:23, 34740 Kadıköy/İstanbul",
