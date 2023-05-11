@@ -341,6 +341,7 @@ type CreatePaymentRequest struct {
 	FraudParams      *FraudCheckParameters  `json:"fraudParams,omitempty"`
 	Items            []PaymentItem          `json:"items"`
 	AdditionalParams map[string]interface{} `json:"additionalParams,omitempty"`
+	Retry            bool                   `json:"retry"`
 }
 
 type CreateApmPaymentRequest struct {
@@ -377,6 +378,7 @@ type Init3DSPaymentRequest struct {
 	CallbackUrl      string                 `json:"callbackUrl,omitempty"`
 	Items            []PaymentItem          `json:"items"`
 	AdditionalParams map[string]interface{} `json:"additionalParams"`
+	Retry            bool                   `json:"retry"`
 }
 
 type InitCheckoutPaymentRequest struct {
