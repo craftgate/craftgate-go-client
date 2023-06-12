@@ -77,7 +77,6 @@ type Client struct {
 	PaymentReporting    *PaymentReporting
 	Wallet              *Wallet
 	Onboarding          *Onboarding
-	Merchant            *Merchant
 	PayByLink           *PayByLink
 	Settlement          *Settlement
 	SettlementReporting *SettlementReporting
@@ -111,7 +110,6 @@ func newClient(apiKey, secretKey string) *Client {
 	client.Payment = &Payment{Client: client}
 	client.PaymentReporting = &PaymentReporting{Client: client}
 	client.Onboarding = &Onboarding{Client: client}
-	client.Merchant = &Merchant{Client: client}
 	client.PayByLink = &PayByLink{Client: client}
 	client.Wallet = &Wallet{Client: client}
 	client.Settlement = &Settlement{Client: client}
