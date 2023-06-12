@@ -50,7 +50,7 @@ func TestSettlementReporting_RetrievePayoutDetails(t *testing.T) {
 
 func TestSettlementReporting_SearchPayoutRows(t *testing.T) {
 	request := adapter.SearchPayoutRowRequest{
-		FileStatus: craftgate.FileStatusCREATED,
+		FileStatus: craftgate.FileStatus_CREATED,
 		StartDate:  time.Now().AddDate(0, 0, -180),
 		EndDate:    time.Now(),
 	}
