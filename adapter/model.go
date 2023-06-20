@@ -382,29 +382,30 @@ type Init3DSPaymentRequest struct {
 }
 
 type InitCheckoutPaymentRequest struct {
-	Price                       float64         `json:"price,omitempty"`
-	PaidPrice                   float64         `json:"paidPrice,omitempty"`
-	Currency                    Currency        `json:"currency,omitempty"`
-	PaymentGroup                PaymentGroup    `json:"paymentGroup,omitempty"`
-	ConversationId              string          `json:"conversationId,omitempty"`
-	ExternalId                  string          `json:"externalId,omitempty"`
-	BankOrderId                 string          `json:"bankOrderId,omitempty"`
-	CallbackUrl                 string          `json:"callbackUrl,omitempty"`
-	ClientIp                    string          `json:"clientIp,omitempty"`
-	PaymentPhase                PaymentPhase    `json:"paymentPhase,omitempty"`
-	PaymentChannel              string          `json:"paymentChannel,omitempty"`
-	EnabledPaymentMethods       []PaymentMethod `json:"enabledPaymentMethods,omitempty"`
-	MasterpassGsmNumber         string          `json:"masterpassGsmNumber,omitempty"`
-	MasterpassUserId            string          `json:"masterpassUserId,omitempty"`
-	CardUserKey                 string          `json:"cardUserKey,omitempty"`
-	BuyerMemberId               int64           `json:"buyerMemberId,omitempty"`
-	EnabledInstallments         []int           `json:"enabledInstallments,omitempty"`
-	AlwaysStoreCardAfterPayment bool            `json:"alwaysStoreCardAfterPayment,omitempty"`
-	AllowOnlyStoredCards        bool            `json:"allowOnlyStoredCards,omitempty"`
-	AllowOnlyCreditCard         bool            `json:"allowOnlyCreditCard,omitempty"`
-	ForceThreeDS                bool            `json:"forceThreeDS,omitempty"`
-	ForceAuthForNonCreditCards  bool            `json:"forceAuthForNonCreditCards,omitempty"`
-	Items                       []PaymentItem   `json:"items"`
+	Price                       float64             `json:"price,omitempty"`
+	PaidPrice                   float64             `json:"paidPrice,omitempty"`
+	Currency                    Currency            `json:"currency,omitempty"`
+	PaymentGroup                PaymentGroup        `json:"paymentGroup,omitempty"`
+	ConversationId              string              `json:"conversationId,omitempty"`
+	ExternalId                  string              `json:"externalId,omitempty"`
+	BankOrderId                 string              `json:"bankOrderId,omitempty"`
+	CallbackUrl                 string              `json:"callbackUrl,omitempty"`
+	ClientIp                    string              `json:"clientIp,omitempty"`
+	PaymentPhase                PaymentPhase        `json:"paymentPhase,omitempty"`
+	PaymentChannel              string              `json:"paymentChannel,omitempty"`
+	EnabledPaymentMethods       []PaymentMethod     `json:"enabledPaymentMethods,omitempty"`
+	MasterpassGsmNumber         string              `json:"masterpassGsmNumber,omitempty"`
+	MasterpassUserId            string              `json:"masterpassUserId,omitempty"`
+	CardUserKey                 string              `json:"cardUserKey,omitempty"`
+	BuyerMemberId               int64               `json:"buyerMemberId,omitempty"`
+	EnabledInstallments         []int               `json:"enabledInstallments,omitempty"`
+	AlwaysStoreCardAfterPayment bool                `json:"alwaysStoreCardAfterPayment,omitempty"`
+	AllowOnlyStoredCards        bool                `json:"allowOnlyStoredCards,omitempty"`
+	AllowOnlyCreditCard         bool                `json:"allowOnlyCreditCard,omitempty"`
+	ForceThreeDS                bool                `json:"forceThreeDS,omitempty"`
+	ForceAuthForNonCreditCards  bool                `json:"forceAuthForNonCreditCards,omitempty"`
+	CustomInstallments          []CustomInstallment `json:"customInstallments,omitempty"`
+	Items                       []PaymentItem       `json:"items"`
 }
 
 type InitApmPaymentRequest struct {
@@ -813,6 +814,11 @@ type WalletTransaction struct {
 	WalletTransactionType *WalletTransactionType `json:"walletTransactionType"`
 	Amount                *float64               `json:"amount"`
 	WalletId              *int64                 `json:"walletId"`
+}
+
+type CustomInstallment struct {
+	Number     int     `json:"number,omitempty"`
+	TotalPrice float64 `json:"totalPrice,omitempty"`
 }
 
 type GarantiPayInstallment struct {
