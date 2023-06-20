@@ -464,6 +464,51 @@ func TestPayment_CompleteApmPayment(t *testing.T) {
 	}
 }
 
+func TestPayment_InitPosApmPayment(t *testing.T) {
+	request := adapter.InitPosApmPaymentRequest{
+		Price:           1.25,
+		PaidPrice:       1.25,
+		Currency:        craftgate.Currency_TRY,
+		PaymentGroup:    craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		ConversationId:  "foo-bar",
+		PaymentProvider: craftgate.PosApmPaymentProvider_YKB_WORLD_PAY,
+		CallbackUrl:     "https://www.your-website.com/callback",
+		Items: []craftgate.PaymentItem{
+			{
+				Name:       "Item 1",
+				Price:      1,
+				ExternalId: "1",
+			},
+			{
+				Name:       "Item 2",
+				Price:      0.25,
+				ExternalId: "2",
+			},
+		},
+		AdditionalParams: map[string]string{
+			"sourceCode": "WEB2QR",
+		},
+	}
+	res, err := paymentClient.Payment.InitPosApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_CompletePosApmPayment(t *testing.T) {
+	request := adapter.CompletePosApmPaymentRequest{
+		PaymentId: 123,
+	}
+	res, err := paymentClient.Payment.CompletePosApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_RetrieveLoyalties(t *testing.T) {
 	request := adapter.RetrieveLoyaltiesRequest{
 		CardNumber:  "4043080000000003",

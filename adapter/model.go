@@ -5,6 +5,7 @@ import "time"
 type PaymentType string
 type ApmType string
 type PaymentProvider string
+type PosApmPaymentProvider string
 type PaymentStatus string
 type PaymentSource string
 type PaymentGroup string
@@ -30,6 +31,7 @@ type TransactionPayoutStatus string
 type WalletTransactionRefundTransactionType string
 type FraudAction string
 type FraudCheckStatus string
+type AdditionalAction string
 type ApmAdditionalAction string
 type ReportFileType string
 type WalletTransactionType string
@@ -77,14 +79,24 @@ const (
 
 // payment provider declaration
 const (
-	PaymentProvider_BANK        PaymentProvider = "BANK"
-	PaymentProvider_CG_WALLET   PaymentProvider = "CG_WALLET"
-	PaymentProvider_MASTERPASS  PaymentProvider = "MASTERPASS"
-	PaymentProvider_GARANTI_PAY PaymentProvider = "GARANTI_PAY"
-	PaymentProvider_PAPARA      PaymentProvider = "PAPARA"
-	PaymentProvider_PAYONEER    PaymentProvider = "PAYONEER"
-	PaymentProvider_SODEXO      PaymentProvider = "SODEXO"
-	PaymentProvider_EDENRED     PaymentProvider = "EDENRED"
+	PaymentProvider_BANK          PaymentProvider = "BANK"
+	PaymentProvider_CG_WALLET     PaymentProvider = "CG_WALLET"
+	PaymentProvider_MASTERPASS    PaymentProvider = "MASTERPASS"
+	PaymentProvider_GARANTI_PAY   PaymentProvider = "GARANTI_PAY"
+	PaymentProvider_PAPARA        PaymentProvider = "PAPARA"
+	PaymentProvider_PAYONEER      PaymentProvider = "PAYONEER"
+	PaymentProvider_SODEXO        PaymentProvider = "SODEXO"
+	PaymentProvider_EDENRED       PaymentProvider = "EDENRED"
+	PaymentProvider_YKB_WORLD_PAY PaymentProvider = "YKB_WORLD_PAY"
+	PaymentProvider_APPLEPAY      PaymentProvider = "APPLEPAY"
+	PaymentProvider_GOOGLEPAY     PaymentProvider = "GOOGLEPAY"
+)
+
+// pos apm payment provider declaration
+const (
+	PosApmPaymentProvider_YKB_WORLD_PAY PosApmPaymentProvider = "YKB_WORLD_PAY"
+	PosApmPaymentProvider_APPLEPAY      PosApmPaymentProvider = "APPLEPAY"
+	PosApmPaymentProvider_GOOGLEPAY     PosApmPaymentProvider = "GOOGLEPAY"
 )
 
 // payment status declaration
@@ -391,6 +403,12 @@ const (
 	FileStatus_APPROVED FileStatus = "APPROVED"
 )
 
+const (
+	AdditionalAction_CONTINUE_IN_CLIENT AdditionalAction = "CONTINUE_IN_CLIENT"
+	AdditionalAction_SHOW_HTML_CONTENT  AdditionalAction = "SHOW_HTML_CONTENT"
+	AdditionalAction_NONE               AdditionalAction = "NONE"
+)
+
 // requests
 type CreatePaymentRequest struct {
 	Price            float64                `json:"price,omitempty"`
@@ -451,6 +469,10 @@ type Init3DSPaymentRequest struct {
 	Retry            bool                   `json:"retry"`
 }
 
+type Complete3DSPaymentRequest struct {
+	PaymentId int64 `json:"paymentId"`
+}
+
 type InitCheckoutPaymentRequest struct {
 	Price                       float64         `json:"price,omitempty"`
 	PaidPrice                   float64         `json:"paidPrice,omitempty"`
@@ -501,8 +523,31 @@ type CompleteApmPaymentRequest struct {
 	AdditionalParams map[string]string `json:"additionalParams,omitempty"`
 }
 
-type Complete3DSPaymentRequest struct {
-	PaymentId int64 `json:"paymentId"`
+type InitPosApmPaymentRequest struct {
+	Price             float64               `json:"price,omitempty"`
+	PaidPrice         float64               `json:"paidPrice,omitempty"`
+	PosAlias          string                `json:"posAlias,omitempty"`
+	Currency          Currency              `json:"currency,omitempty"`
+	ConversationId    string                `json:"conversationId,omitempty"`
+	ExternalId        string                `json:"externalId,omitempty"`
+	CallbackUrl       string                `json:"callbackUrl,omitempty"`
+	PaymentPhase      PaymentPhase          `json:"paymentPhase,omitempty"`
+	PaymentGroup      PaymentGroup          `json:"paymentGroup,omitempty"`
+	PaymentChannel    string                `json:"paymentChannel,omitempty"`
+	BuyerMemberId     int64                 `json:"buyerMemberId,omitempty"`
+	BankOrderId       string                `json:"bankOrderId,omitempty"`
+	ClientIp          string                `json:"clientIp,omitempty"`
+	Items             []PaymentItem         `json:"items"`
+	AdditionalParams  map[string]string     `json:"additionalParams"`
+	Installments      []PosApmInstallment   `json:"installments"`
+	PaymentProvider   PosApmPaymentProvider `json:"paymentProvider,omitempty"`
+	FraudParams       *FraudCheckParameters `json:"fraudParams,omitempty"`
+	CheckoutFormToken string                `json:"checkoutFormToken,omitempty"`
+}
+
+type CompletePosApmPaymentRequest struct {
+	PaymentId        int64                  `json:"paymentId"`
+	AdditionalParams map[string]interface{} `json:"additionalParams"`
 }
 
 type PostAuthPaymentRequest struct {
@@ -721,6 +766,21 @@ type CompleteApmPaymentResponse struct {
 	PaymentId     *int64         `json:"paymentId"`
 	PaymentStatus *PaymentStatus `json:"paymentStatus"`
 	PaymentError  *PaymentError  `json:"paymentError"`
+}
+
+type InitPosApmPaymentResponse struct {
+	PaymentId        *int64            `json:"paymentId"`
+	HtmlContent      *string           `json:"htmlContent"`
+	PaymentStatus    *PaymentStatus    `json:"paymentStatus"`
+	AdditionalAction *AdditionalAction `json:"additionalAction"`
+	PaymentError     *PaymentError     `json:"paymentError"`
+}
+
+type CompletePosApmPaymentResponse struct {
+	PaymentId      *int64         `json:"paymentId"`
+	ConversationId *string        `json:"conversationId"`
+	PaymentStatus  *PaymentStatus `json:"paymentStatus"`
+	PaymentError   *PaymentError  `json:"paymentError"`
 }
 
 type DepositPaymentResponse struct {
@@ -1538,6 +1598,11 @@ type FraudCheckParameters struct {
 	BuyerExternalId  string `json:"buyerExternalId,omitempty"`
 	BuyerPhoneNumber string `json:"buyerPhoneNumber,omitempty"`
 	BuyerEmail       string `json:"buyerEmail,omitempty"`
+}
+
+type PosApmInstallment struct {
+	Number     *int     `json:"number,omitempty"`
+	TotalPrice *float64 `json:"totalPrice,omitempty"`
 }
 
 type PaymentItem struct {
