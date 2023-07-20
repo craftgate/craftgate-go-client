@@ -217,8 +217,9 @@ const (
 
 // settlementEarningsDestination type declaration
 const (
-	SettlementEarningsDestinationIBAN   SettlementEarningsDestination = "IBAN"
-	SettlementEarningsDestinationWALLET SettlementEarningsDestination = "WALLET"
+	SettlementEarningsDestinationIBAN         SettlementEarningsDestination = "IBAN"
+	SettlementEarningsDestinationWALLET       SettlementEarningsDestination = "WALLET"
+	SettlementEarningsDestinationCROSS_BORDER SettlementEarningsDestination = "CROSS_BORDER"
 )
 
 // refundDestinationType type declaration
