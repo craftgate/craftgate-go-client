@@ -718,12 +718,12 @@ type ApmDepositPaymentResponse struct {
 }
 
 type PayoutAccountResponse struct {
-	Id                  *int64             `json:"id"`
-	AccountType         *PayoutAccountType `json:"type"`
-	ExternalAccountId   *string            `json:"externalAccountId"`
-	Currency            *Currency          `json:"currency"`
-	AccountOwner        *AccountOwner      `json:"accountOwner"`
-	SubMerchantMemberId *int64             `json:"subMerchantMemberId"`
+	Id                  int64             `json:"id"`
+	AccountType         PayoutAccountType `json:"type"`
+	ExternalAccountId   string            `json:"externalAccountId"`
+	Currency            Currency          `json:"currency"`
+	AccountOwner        AccountOwner      `json:"accountOwner"`
+	SubMerchantMemberId *int64            `json:"subMerchantMemberId"`
 }
 
 type RefundWalletTransactionRequest struct {
