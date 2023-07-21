@@ -35,6 +35,8 @@ type WalletTransactionType string
 type WebhookEventType string
 type WebhookStatus string
 type FileStatus string
+type AccountOwner string
+type PayoutAccountType string
 
 const (
 	ApiKeyHeaderName        = "x-api-key"
@@ -215,8 +217,9 @@ const (
 
 // settlementEarningsDestination type declaration
 const (
-	SettlementEarningsDestinationIBAN   SettlementEarningsDestination = "IBAN"
-	SettlementEarningsDestinationWALLET SettlementEarningsDestination = "WALLET"
+	SettlementEarningsDestinationIBAN         SettlementEarningsDestination = "IBAN"
+	SettlementEarningsDestinationWALLET       SettlementEarningsDestination = "WALLET"
+	SettlementEarningsDestinationCROSS_BORDER SettlementEarningsDestination = "CROSS_BORDER"
 )
 
 // refundDestinationType type declaration
@@ -319,6 +322,15 @@ const (
 	FileStatusCREATED  FileStatus = "CREATED"
 	FileStatusUPLOADED FileStatus = "UPLOADED"
 	FileStatusAPPROVED FileStatus = "APPROVED"
+)
+
+const (
+	AccountOwnerMERCHANT            AccountOwner = "MERCHANT"
+	AccountOwnerSUB_MERCHANT_MEMBER AccountOwner = "SUB_MERCHANT_MEMBER"
+)
+
+const (
+	PayoutAccountTypeWISE PayoutAccountType = "WISE"
 )
 
 // requests
@@ -564,6 +576,27 @@ type CheckMasterpassUserRequest struct {
 	MasterpassGsmNumber string `json:"masterpassGsmNumber"`
 }
 
+type CreatePayoutAccountRequest struct {
+	AccountType         PayoutAccountType `json:"type,omitempty"`
+	ExternalAccountId   string            `json:"externalAccountId,omitempty"`
+	Currency            Currency          `json:"currency,omitempty"`
+	AccountOwner        AccountOwner      `json:"accountOwner,omitempty"`
+	SubMerchantMemberId int64             `json:"subMerchantMemberId,omitempty"`
+}
+
+type UpdatePayoutAccountRequest struct {
+	AccountType       PayoutAccountType `json:"type,omitempty"`
+	ExternalAccountId string            `json:"externalAccountId,omitempty"`
+}
+
+type SearchPayoutAccountRequest struct {
+	Currency            Currency     `json:"currency,omitempty"`
+	AccountOwner        AccountOwner `json:"accountOwner,omitempty"`
+	SubMerchantMemberId int64        `json:"subMerchantMemberId,omitempty"`
+	Page                int          `schema:"page,omitempty"`
+	Size                int          `schema:"size,omitempty"`
+}
+
 // responses
 type PaymentResponse struct {
 	Id                           *int64                       `json:"id"`
@@ -683,6 +716,15 @@ type ApmDepositPaymentResponse struct {
 	ApmAdditionalAction *ApmAdditionalAction `json:"additionalAction"`
 	PaymentError        *PaymentError        `json:"paymentError"`
 	WalletTransaction   *WalletTransaction   `json:"walletTransaction"`
+}
+
+type PayoutAccountResponse struct {
+	Id                  int64             `json:"id"`
+	AccountType         PayoutAccountType `json:"type"`
+	ExternalAccountId   string            `json:"externalAccountId"`
+	Currency            Currency          `json:"currency"`
+	AccountOwner        AccountOwner      `json:"accountOwner"`
+	SubMerchantMemberId *int64            `json:"subMerchantMemberId"`
 }
 
 type RefundWalletTransactionRequest struct {
