@@ -37,6 +37,8 @@ type WebhookStatus string
 type FileStatus string
 type AccountOwner string
 type PayoutAccountType string
+type RecordType string
+type BankAccountTrackingSource string
 
 const (
 	ApiKeyHeaderName        = "x-api-key"
@@ -331,6 +333,17 @@ const (
 
 const (
 	PayoutAccountTypeWISE PayoutAccountType = "WISE"
+)
+
+// RecordType declaration
+const (
+	SEND    RecordType = "SEND"
+	RECEIVE Currency   = "RECEIVE"
+)
+
+// BankAccountTrackingSource declaration
+const (
+	YKB BankAccountTrackingSource = "YKB"
 )
 
 // requests
@@ -1444,6 +1457,30 @@ type WebhookData struct {
 	EventTimestamp int64
 	Status         WebhookStatus
 	PayloadId      string
+}
+
+type SearchBankAccountTrackingRecordRequest struct {
+	SenderName    string    `schema:"senderName,omitempty"`
+	SenderIban    string    `schema:"senderIban,omitempty"`
+	Description   string    `schema:"description,omitempty"`
+	Currency      Currency  `schema:"currency,omitempty"`
+	MinRecordDate time.Time `schema:"minRecordDate,omitempty"`
+	MaxRecordDate time.Time `schema:"maxRecordDate,omitempty"`
+	Page          int       `schema:"page,omitempty"`
+	Size          int       `schema:"size,omitempty"`
+}
+
+type BankAccountTrackingRecordResponse struct {
+	Id                        int64                     `json:"id"`
+	Key                       string                    `json:"key"`
+	SenderName                string                    `json:"senderName"`
+	SenderIban                string                    `json:"senderIban"`
+	Description               string                    `json:"description"`
+	Currency                  Currency                  `json:"currency"`
+	Amount                    float64                   `json:"amount"`
+	RecordDate                TimeResponse              `json:"recordDate"`
+	RecordType                RecordType                `json:"recordType"`
+	BankAccountTrackingSource BankAccountTrackingSource `json:"bankAccountTrackingSource"`
 }
 
 type RequestOptions struct {
