@@ -66,20 +66,31 @@ const (
 	ApmTypePAYPAL           ApmType = "PAYPAL"
 	ApmTypeKLARNA           ApmType = "KLARNA"
 	ApmTypeAFTERPAY         ApmType = "AFTERPAY"
+	ApmTypeSTRIPE           ApmType = "STRIPE"
 	ApmTypeFUND_TRANSFER    ApmType = "FUND_TRANSFER"
 	ApmTypeCASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
 )
 
 // payment provider declaration
 const (
-	BANK        PaymentProvider = "BANK"
-	CG_WALLET   PaymentProvider = "CG_WALLET"
-	MASTERPASS  PaymentProvider = "MASTERPASS"
-	GARANTI_PAY PaymentProvider = "GARANTI_PAY"
-	PAPARA      PaymentProvider = "PAPARA"
-	PAYONEER    PaymentProvider = "PAYONEER"
-	SODEXO      PaymentProvider = "SODEXO"
-	EDENRED     PaymentProvider = "EDENRED"
+	BANK          PaymentProvider = "BANK"
+	CG_WALLET     PaymentProvider = "CG_WALLET"
+	MASTERPASS    PaymentProvider = "MASTERPASS"
+	GARANTI_PAY   PaymentProvider = "GARANTI_PAY"
+	YKB_WORLD_PAY PaymentProvider = "YKB_WORLD_PAY"
+	PAPARA        PaymentProvider = "PAPARA"
+	PAYONEER      PaymentProvider = "PAYONEER"
+	SODEXO        PaymentProvider = "SODEXO"
+	EDENRED       PaymentProvider = "EDENRED"
+	ALIPAY        PaymentProvider = "ALIPAY"
+	PAYPAL        PaymentProvider = "PAYPAL"
+	KLARNA        PaymentProvider = "KLARNA"
+	AFTERPAY      PaymentProvider = "AFTERPAY"
+	APPLEPAY      PaymentProvider = "APPLEPAY"
+	GOOGLEPAY     PaymentProvider = "GOOGLEPAY"
+	HEPSIPAY      PaymentProvider = "HEPSIPAY"
+	STRIPE        PaymentProvider = "STRIPE"
+	OFFLINE       PaymentProvider = "OFFLINE"
 )
 
 // payment status declaration
@@ -138,6 +149,7 @@ const (
 	PaymentMethod_PAYPAL       PaymentMethod = "PAYPAL"
 	PaymentMethod_KLARNA       PaymentMethod = "KLARNA"
 	PaymentMethod_AFTERPAY     PaymentMethod = "AFTERPAY"
+	PaymentMethod_STRIPE       PaymentMethod = "STRIPE"
 )
 
 // card type declaration
