@@ -429,6 +429,7 @@ type InitCheckoutPaymentRequest struct {
 	AllowOnlyCreditCard         bool                `json:"allowOnlyCreditCard,omitempty"`
 	ForceThreeDS                bool                `json:"forceThreeDS,omitempty"`
 	ForceAuthForNonCreditCards  bool                `json:"forceAuthForNonCreditCards,omitempty"`
+	Ttl                         int64               `json:"ttl,omitempty"`
 	CustomInstallments          []CustomInstallment `json:"customInstallments,omitempty"`
 	Items                       []PaymentItem       `json:"items"`
 }
@@ -682,8 +683,9 @@ type Init3DSPaymentResponse struct {
 }
 
 type InitCheckoutPaymentResponse struct {
-	Token   *string `json:"token"`
-	PageUrl *string `json:"pageUrl"`
+	Token           *string       `json:"token"`
+	PageUrl         *string       `json:"pageUrl"`
+	TokenExpireDate *TimeResponse `json:"tokenExpireDate"`
 }
 
 type InitApmPaymentResponse struct {
