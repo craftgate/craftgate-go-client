@@ -233,6 +233,14 @@ func TestPayment_RetrieveCheckoutPayment(t *testing.T) {
 	}
 }
 
+func TestPayment_ExpireCheckoutPayment(t *testing.T) {
+	err := paymentClient.Payment.ExpireCheckoutPayment(context.Background(), "foo-bar")
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_CreateDepositPayment(t *testing.T) {
 	request := adapter.DepositPaymentRequest{
 		Price:          100,
