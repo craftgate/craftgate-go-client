@@ -474,21 +474,6 @@ func (api *Payment) DisapprovePaymentTransactions(ctx context.Context, request P
 	return response.Data, nil
 }
 
-func (api *Payment) CheckMasterpassUser(ctx context.Context, request CheckMasterpassUserRequest) (*CheckMasterpassUserResponse, error) {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "payment/v1/masterpass-payments/check-user", request)
-	if err != nil {
-		return nil, err
-	}
-
-	response := &Response[CheckMasterpassUserResponse]{}
-	err = api.Client.Do(ctx, newRequest, response)
-	if err != nil {
-		return nil, err
-	}
-
-	return response.Data, nil
-}
-
 func (c *Payment) Is3DSecureCallbackVerified(threeDSecureCallbackKey string, params map[string]string) bool {
 	hash := params["hash"]
 	hashString := strings.Join([]string{threeDSecureCallbackKey,
