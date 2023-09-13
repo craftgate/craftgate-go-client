@@ -633,18 +633,6 @@ func TestPayment_DisapprovePaymentTransactions(t *testing.T) {
 	}
 }
 
-func TestPayment_CheckMasterpassUser(t *testing.T) {
-	request := adapter.CheckMasterpassUserRequest{
-		MasterpassGsmNumber: "903000000000",
-	}
-	res, err := paymentClient.Payment.CheckMasterpassUser(context.Background(), request)
-	_, _ = spew.Printf("%#v\n", res)
-
-	if err != nil {
-		t.Errorf("Error %s", err)
-	}
-}
-
 func TestPayment_Verify3DSCallback(t *testing.T) {
 	merchantThreeDsCallbackKey := "merchantThreeDsCallbackKeySndbox"
 

@@ -611,6 +611,28 @@ type SearchPayoutAccountRequest struct {
 	Size                int          `schema:"size,omitempty"`
 }
 
+type MasterpassPaymentTokenGenerateRequest struct {
+	Msisdn        string                  `json:"msisdn,omitempty"`
+	UserId        string                  `json:"userId,omitempty"`
+	BinNumber     string                  `json:"binNumber,omitempty"`
+	ForceThreeDS  bool                    `json:"forceThreeDS,omitempty"`
+	CreatePayment MasterpassCreatePayment `json:"createPayment,omitempty"`
+}
+
+type MasterpassPaymentCompleteRequest struct {
+	ReferenceId string `json:"referenceId,omitempty"`
+	Token       string `json:"token,omitempty"`
+}
+
+type MasterpassPaymentThreeDSInitRequest struct {
+	ReferenceId string `json:"referenceId,omitempty"`
+	CallbackUrl string `json:"callbackUrl,omitempty"`
+}
+
+type MasterpassPaymentThreeDSCompleteRequest struct {
+	PaymentId int64 `json:"paymentId,omitempty"`
+}
+
 // responses
 type PaymentResponse struct {
 	Id                           *int64                       `json:"id"`
@@ -740,6 +762,16 @@ type PayoutAccountResponse struct {
 	Currency            Currency          `json:"currency"`
 	AccountOwner        AccountOwner      `json:"accountOwner"`
 	SubMerchantMemberId *int64            `json:"subMerchantMemberId"`
+}
+
+type MasterpassPaymentThreeDSInitResponse struct {
+	ReturnUrl *string `json:"returnUrl"`
+}
+
+type MasterpassPaymentTokenGenerateResponse struct {
+	Token       *string `json:"token"`
+	ReferenceId *string `json:"referenceId"`
+	OrderNo     *string `json:"orderNo"`
 }
 
 type RefundWalletTransactionRequest struct {
@@ -1542,6 +1574,24 @@ type PaymentItem struct {
 	ExternalId             string  `json:"externalId,omitempty"`
 	SubMerchantMemberId    int64   `json:"subMerchantMemberId,omitempty"`
 	SubMerchantMemberPrice float64 `json:"subMerchantMemberPrice,omitempty"`
+}
+
+type MasterpassCreatePayment struct {
+	Price            float64                `json:"price,omitempty"`
+	PaidPrice        float64                `json:"paidPrice,omitempty"`
+	PosAlias         string                 `json:"posAlias,omitempty"`
+	Installment      int                    `json:"installment,omitempty"`
+	Currency         Currency               `json:"currency,omitempty"`
+	PaymentGroup     PaymentGroup           `json:"paymentGroup,omitempty"`
+	ConversationId   string                 `json:"conversationId,omitempty"`
+	ExternalId       string                 `json:"externalId,omitempty"`
+	ClientIp         string                 `json:"clientIp,omitempty"`
+	PaymentPhase     PaymentPhase           `json:"paymentPhase,omitempty"`
+	PaymentChannel   string                 `json:"paymentChannel,omitempty"`
+	BuyerMemberId    int64                  `json:"buyerMemberId,omitempty"`
+	BankOrderId      string                 `json:"bankOrderId,omitempty"`
+	Items            []PaymentItem          `json:"items"`
+	AdditionalParams map[string]interface{} `json:"additionalParams,omitempty"`
 }
 
 type PaymentError ErrorResponse
