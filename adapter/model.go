@@ -66,6 +66,7 @@ const (
 	ApmTypePAYPAL           ApmType = "PAYPAL"
 	ApmTypeKLARNA           ApmType = "KLARNA"
 	ApmTypeAFTERPAY         ApmType = "AFTERPAY"
+	ApmTypeKASPI            ApmType = "KASPI"
 	ApmTypeSTRIPE           ApmType = "STRIPE"
 	ApmTypeFUND_TRANSFER    ApmType = "FUND_TRANSFER"
 	ApmTypeCASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
@@ -86,6 +87,7 @@ const (
 	PAYPAL        PaymentProvider = "PAYPAL"
 	KLARNA        PaymentProvider = "KLARNA"
 	AFTERPAY      PaymentProvider = "AFTERPAY"
+	KASPI         PaymentProvider = "KASPI"
 	APPLEPAY      PaymentProvider = "APPLEPAY"
 	GOOGLEPAY     PaymentProvider = "GOOGLEPAY"
 	HEPSIPAY      PaymentProvider = "HEPSIPAY"
@@ -121,6 +123,7 @@ const (
 	AED Currency = "AED"
 	IQD Currency = "IQD"
 	AZN Currency = "AZN"
+	KZT Currency = "KZT"
 )
 
 // payment group declaration
@@ -149,6 +152,7 @@ const (
 	PaymentMethod_PAYPAL       PaymentMethod = "PAYPAL"
 	PaymentMethod_KLARNA       PaymentMethod = "KLARNA"
 	PaymentMethod_AFTERPAY     PaymentMethod = "AFTERPAY"
+	PaymentMethod_KASPI        PaymentMethod = "KASPI"
 	PaymentMethod_STRIPE       PaymentMethod = "STRIPE"
 )
 
