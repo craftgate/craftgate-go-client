@@ -6,6 +6,7 @@ type PaymentType string
 type ApmType string
 type PaymentProvider string
 type PaymentStatus string
+type TokenizedCardType string
 type PaymentSource string
 type PaymentGroup string
 type PaymentPhase string
@@ -350,6 +351,11 @@ const (
 	PayoutAccountTypeWISE PayoutAccountType = "WISE"
 )
 
+// tokenized card type declaration
+const (
+	TokenizedCardTypeAPPLE_PAY TokenizedCardType = "APPLE_PAY"
+)
+
 // requests
 type CreatePaymentRequest struct {
 	Price            float64                `json:"price,omitempty"`
@@ -588,6 +594,14 @@ type StoreCardRequest struct {
 	ExpireMonth    string `json:"expireMonth,omitempty"`
 	CardAlias      string `json:"cardAlias,omitempty"`
 	CardUserKey    string `json:"cardUserKey,omitempty"`
+}
+
+type ApplePayMerchantSessionCreateRequest struct {
+	MerchantIdentifier string `json:"merchantIdentifier,omitempty"`
+	DisplayName        string `json:"displayName,omitempty"`
+	Initiative         string `json:"initiative,omitempty"`
+	InitiativeContext  string `json:"initiativeContext,omitempty"`
+	ValidationUrl      string `json:"validationUrl,omitempty"`
 }
 
 type CheckMasterpassUserRequest struct {
@@ -1550,20 +1564,26 @@ type Loyalty struct {
 	Message     *string      `json:"message,omitempty"`
 }
 
+type TokenizedCard struct {
+	TokenizedCardType TokenizedCardType      `json:"type,omitempty"`
+	Data              map[string]interface{} `json:"data,omitempty"`
+}
+
 type Card struct {
-	CardHolderName               string   `json:"cardHolderName,omitempty"`
-	CardNumber                   string   `json:"cardNumber,omitempty"`
-	ExpireYear                   string   `json:"expireYear,omitempty"`
-	ExpireMonth                  string   `json:"expireMonth,omitempty"`
-	Cvc                          string   `json:"cvc,omitempty"`
-	CardAlias                    string   `json:"cardAlias,omitempty"`
-	CardUserKey                  string   `json:"cardUserKey,omitempty"`
-	CardToken                    string   `json:"cardToken,omitempty"`
-	BinNumber                    string   `json:"binNumber,omitempty"`
-	LastFourDigits               string   `json:"lastFourDigits,omitempty"`
-	CardHolderIdentityNumber     string   `json:"cardHolderIdentityNumber,omitempty"`
-	Loyalty                      *Loyalty `json:"loyalty,omitempty"`
-	StoreCardAfterSuccessPayment bool     `json:"storeCardAfterSuccessPayment,omitempty"`
+	CardHolderName               string         `json:"cardHolderName,omitempty"`
+	CardNumber                   string         `json:"cardNumber,omitempty"`
+	ExpireYear                   string         `json:"expireYear,omitempty"`
+	ExpireMonth                  string         `json:"expireMonth,omitempty"`
+	Cvc                          string         `json:"cvc,omitempty"`
+	CardAlias                    string         `json:"cardAlias,omitempty"`
+	CardUserKey                  string         `json:"cardUserKey,omitempty"`
+	CardToken                    string         `json:"cardToken,omitempty"`
+	BinNumber                    string         `json:"binNumber,omitempty"`
+	LastFourDigits               string         `json:"lastFourDigits,omitempty"`
+	CardHolderIdentityNumber     string         `json:"cardHolderIdentityNumber,omitempty"`
+	Loyalty                      *Loyalty       `json:"loyalty,omitempty"`
+	StoreCardAfterSuccessPayment bool           `json:"storeCardAfterSuccessPayment,omitempty"`
+	TokenizedCard                *TokenizedCard `json:"tokenizedCard,omitempty"`
 }
 
 type FraudCheckParameters struct {

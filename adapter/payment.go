@@ -474,6 +474,21 @@ func (api *Payment) DisapprovePaymentTransactions(ctx context.Context, request P
 	return response.Data, nil
 }
 
+func (api *Payment) CreateApplePayMerchantSession(ctx context.Context, request ApplePayMerchantSessionCreateRequest) (*interface{}, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/apple-pay/merchant-sessions", request)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[interface{}]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
 func (c *Payment) Is3DSecureCallbackVerified(threeDSecureCallbackKey string, params map[string]string) bool {
 	hash := params["hash"]
 	hashString := strings.Join([]string{threeDSecureCallbackKey,
