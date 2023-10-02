@@ -1380,15 +1380,16 @@ type RetrievePayoutDetailsRequest struct {
 }
 
 type SearchPayoutCompletedTransactionsResponse struct {
-	PayoutId                      *int64    `json:"payoutId"`
-	TransactionId                 *int64    `json:"transactionId"`
-	TransactionType               *string   `json:"transactionType"`
-	PayoutAmount                  *float64  `json:"payoutAmount"`
-	Currency                      *Currency `json:"currency"`
-	MerchantId                    *int64    `json:"merchantId"`
-	MerchantType                  *string   `json:"merchantType"`
-	SettlementEarningsDestination *string   `json:"settlementEarningsDestination"`
-	SettlementSource              *string   `json:"settlementSource"`
+	PayoutId                      *int64        `json:"payoutId"`
+	TransactionId                 *int64        `json:"transactionId"`
+	TransactionType               *string       `json:"transactionType"`
+	PayoutAmount                  *float64      `json:"payoutAmount"`
+	PayoutDate                    *TimeResponse `json:"payoutDate"`
+	Currency                      *Currency     `json:"currency"`
+	MerchantId                    *int64        `json:"merchantId"`
+	MerchantType                  *string       `json:"merchantType"`
+	SettlementEarningsDestination *string       `json:"settlementEarningsDestination"`
+	SettlementSource              *string       `json:"settlementSource"`
 }
 
 type SearchPayoutBouncedTransactionsResponse struct {
