@@ -233,6 +233,14 @@ func TestPayment_RetrieveCheckoutPayment(t *testing.T) {
 	}
 }
 
+func TestPayment_ExpireCheckoutPayment(t *testing.T) {
+	err := paymentClient.Payment.ExpireCheckoutPayment(context.Background(), "foo-bar")
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_CreateDepositPayment(t *testing.T) {
 	request := adapter.DepositPaymentRequest{
 		Price:          100,
@@ -430,6 +438,34 @@ func TestPayment_InitAfterpayApmPayment(t *testing.T) {
 		PaidPrice:      1,
 		Currency:       craftgate.Currency_USD,
 		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		ConversationId: "foo-bar",
+		CallbackUrl:    "https://www.your-website.com/callback",
+		Items: []craftgate.PaymentItem{
+			{
+				Name:  "Item 1",
+				Price: 0.6,
+			},
+			{
+				Name:  "Item 2",
+				Price: 0.4,
+			},
+		},
+	}
+	res, err := paymentClient.Payment.InitApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_InitKaspiApmPayment(t *testing.T) {
+	request := adapter.InitApmPaymentRequest{
+		ApmType:        craftgate.ApmTypeKASPI,
+		Price:          1,
+		PaidPrice:      1,
+		Currency:       craftgate.KZT,
+		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
 		ConversationId: "foo-bar",
 		CallbackUrl:    "https://www.your-website.com/callback",
 		Items: []craftgate.PaymentItem{
@@ -663,18 +699,6 @@ func TestPayment_DisapprovePaymentTransactions(t *testing.T) {
 		IsTransactional:       true,
 	}
 	res, err := paymentClient.Payment.DisapprovePaymentTransactions(context.Background(), request)
-	_, _ = spew.Printf("%#v\n", res)
-
-	if err != nil {
-		t.Errorf("Error %s", err)
-	}
-}
-
-func TestPayment_CheckMasterpassUser(t *testing.T) {
-	request := adapter.CheckMasterpassUserRequest{
-		MasterpassGsmNumber: "903000000000",
-	}
-	res, err := paymentClient.Payment.CheckMasterpassUser(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {

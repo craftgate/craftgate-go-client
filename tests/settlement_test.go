@@ -20,3 +20,71 @@ func TestSettlement_CreateInstantWalletSettlement(t *testing.T) {
 		t.Errorf("Error %s", err)
 	}
 }
+
+func TestSettlement_CreateMerchantPayoutAccount(t *testing.T) {
+	request := adapter.CreatePayoutAccountRequest{
+		AccountType:       craftgate.PayoutAccountType_WISE,
+		ExternalAccountId: "wiseRecipientId",
+		Currency:          craftgate.Currency_USD,
+		AccountOwner:      craftgate.AccountOwner_MERCHANT,
+	}
+
+	res, err := settlementClient.Settlement.CreatePayoutAccount(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestSettlement_CreateSubMerchantPayoutAccount(t *testing.T) {
+	request := adapter.CreatePayoutAccountRequest{
+		AccountType:         craftgate.PayoutAccountType_WISE,
+		ExternalAccountId:   "wiseRecipientId",
+		Currency:            craftgate.Currency_EUR,
+		AccountOwner:        craftgate.AccountOwner_SUB_MERCHANT_MEMBER,
+		SubMerchantMemberId: 1,
+	}
+
+	res, err := settlementClient.Settlement.CreatePayoutAccount(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestSettlement_UpdatePayoutAccount(t *testing.T) {
+	request := adapter.UpdatePayoutAccountRequest{
+		AccountType:       craftgate.PayoutAccountType_WISE,
+		ExternalAccountId: "wiseRecipientId2",
+	}
+
+	err := settlementClient.Settlement.UpdatePayoutAccount(context.Background(), 18, request)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestSettlement_DeletePayoutAccount(t *testing.T) {
+	err := settlementClient.Settlement.DeletePayoutAccount(context.Background(), 18)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestSettlement_SearchPayoutAccounts(t *testing.T) {
+	request := adapter.SearchPayoutAccountRequest{
+		Currency:     craftgate.Currency_USD,
+		AccountOwner: craftgate.AccountOwner_MERCHANT,
+	}
+
+	res, err := settlementClient.Settlement.SearchPayoutAccounts(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}

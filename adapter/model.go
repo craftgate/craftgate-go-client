@@ -42,6 +42,8 @@ type PosIntegrator string
 type PosUserType string
 type PosOperationType string
 type FileStatus string
+type AccountOwner string
+type PayoutAccountType string
 
 const (
 	ApiKeyHeaderName        = "x-api-key"
@@ -73,23 +75,33 @@ const (
 	ApmType_PAYPAL           ApmType = "PAYPAL"
 	ApmType_KLARNA           ApmType = "KLARNA"
 	ApmType_AFTERPAY         ApmType = "AFTERPAY"
+    ApmType_KASPI            ApmType = "KASPI"
+    ApmType_STRIPE           ApmType = "STRIPE"
 	ApmType_FUND_TRANSFER    ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
 )
 
 // payment provider declaration
 const (
-	PaymentProvider_BANK          PaymentProvider = "BANK"
-	PaymentProvider_CG_WALLET     PaymentProvider = "CG_WALLET"
-	PaymentProvider_MASTERPASS    PaymentProvider = "MASTERPASS"
-	PaymentProvider_GARANTI_PAY   PaymentProvider = "GARANTI_PAY"
-	PaymentProvider_PAPARA        PaymentProvider = "PAPARA"
-	PaymentProvider_PAYONEER      PaymentProvider = "PAYONEER"
-	PaymentProvider_SODEXO        PaymentProvider = "SODEXO"
-	PaymentProvider_EDENRED       PaymentProvider = "EDENRED"
-	PaymentProvider_YKB_WORLD_PAY PaymentProvider = "YKB_WORLD_PAY"
-	PaymentProvider_APPLEPAY      PaymentProvider = "APPLEPAY"
-	PaymentProvider_GOOGLEPAY     PaymentProvider = "GOOGLEPAY"
+    PaymentProvider_BANK          PaymentProvider = "BANK"
+    PaymentProvider_CG_WALLET     PaymentProvider = "CG_WALLET"
+    PaymentProvider_MASTERPASS    PaymentProvider = "MASTERPASS"
+    PaymentProvider_GARANTI_PAY   PaymentProvider = "GARANTI_PAY"
+    PaymentProvider_YKB_WORLD_PAY PaymentProvider = "YKB_WORLD_PAY"
+    PaymentProvider_PAPARA        PaymentProvider = "PAPARA"
+    PaymentProvider_PAYONEER      PaymentProvider = "PAYONEER"
+    PaymentProvider_SODEXO        PaymentProvider = "SODEXO"
+    PaymentProvider_EDENRED       PaymentProvider = "EDENRED"
+    PaymentProvider_ALIPAY        PaymentProvider = "ALIPAY"
+    PaymentProvider_PAYPAL        PaymentProvider = "PAYPAL"
+    PaymentProvider_KLARNA        PaymentProvider = "KLARNA"
+    PaymentProvider_AFTERPAY      PaymentProvider = "AFTERPAY"
+    PaymentProvider_KASPI         PaymentProvider = "KASPI"
+    PaymentProvider_APPLEPAY      PaymentProvider = "APPLEPAY"
+    PaymentProvider_GOOGLEPAY     PaymentProvider = "GOOGLEPAY"
+    PaymentProvider_HEPSIPAY      PaymentProvider = "HEPSIPAY"
+    PaymentProvider_STRIPE        PaymentProvider = "STRIPE"
+    PaymentProvider_OFFLINE       PaymentProvider = "OFFLINE"
 )
 
 // pos apm payment provider declaration
@@ -126,6 +138,8 @@ const (
 	Currency_BRL Currency = "BRL"
 	Currency_AED Currency = "AED"
 	Currency_IQD Currency = "IQD"
+    Currency_AZN Currency = "AZN"
+    Currency_KZT Currency = "KZT"
 )
 
 // payment group declaration
@@ -154,6 +168,8 @@ const (
 	PaymentMethod_PAYPAL       PaymentMethod = "PAYPAL"
 	PaymentMethod_KLARNA       PaymentMethod = "KLARNA"
 	PaymentMethod_AFTERPAY     PaymentMethod = "AFTERPAY"
+	PaymentMethod_KASPI        PaymentMethod = "KASPI"
+	PaymentMethod_STRIPE       PaymentMethod = "STRIPE"
 )
 
 // card type declaration
@@ -244,8 +260,9 @@ const (
 
 // settlementEarningsDestination type declaration
 const (
-	SettlementEarningsDestination_IBAN   SettlementEarningsDestination = "IBAN"
-	SettlementEarningsDestination_WALLET SettlementEarningsDestination = "WALLET"
+    SettlementEarningsDestination_IBAN         SettlementEarningsDestination = "IBAN"
+    SettlementEarningsDestination_WALLET       SettlementEarningsDestination = "WALLET"
+    SettlementEarningsDestination_CROSS_BORDER SettlementEarningsDestination = "CROSS_BORDER"
 )
 
 // refundDestinationType type declaration
@@ -409,6 +426,15 @@ const (
 	AdditionalAction_NONE               AdditionalAction = "NONE"
 )
 
+const (
+	AccountOwner_MERCHANT            AccountOwner = "MERCHANT"
+	AccountOwner_SUB_MERCHANT_MEMBER AccountOwner = "SUB_MERCHANT_MEMBER"
+)
+
+const (
+	PayoutAccountType_WISE PayoutAccountType = "WISE"
+)
+
 // requests
 type CreatePaymentRequest struct {
 	Price            float64                `json:"price,omitempty"`
@@ -496,6 +522,7 @@ type InitCheckoutPaymentRequest struct {
 	AllowOnlyCreditCard         bool                `json:"allowOnlyCreditCard,omitempty"`
 	ForceThreeDS                bool                `json:"forceThreeDS,omitempty"`
 	ForceAuthForNonCreditCards  bool                `json:"forceAuthForNonCreditCards,omitempty"`
+	Ttl                         int64               `json:"ttl,omitempty"`
 	CustomInstallments          []CustomInstallment `json:"customInstallments,omitempty"`
 	Items                       []PaymentItem       `json:"items"`
 }
@@ -679,6 +706,49 @@ type CheckMasterpassUserRequest struct {
 	MasterpassGsmNumber string `json:"masterpassGsmNumber"`
 }
 
+type CreatePayoutAccountRequest struct {
+	AccountType         PayoutAccountType `json:"type,omitempty"`
+	ExternalAccountId   string            `json:"externalAccountId,omitempty"`
+	Currency            Currency          `json:"currency,omitempty"`
+	AccountOwner        AccountOwner      `json:"accountOwner,omitempty"`
+	SubMerchantMemberId int64             `json:"subMerchantMemberId,omitempty"`
+}
+
+type UpdatePayoutAccountRequest struct {
+	AccountType       PayoutAccountType `json:"type,omitempty"`
+	ExternalAccountId string            `json:"externalAccountId,omitempty"`
+}
+
+type SearchPayoutAccountRequest struct {
+	Currency            Currency     `json:"currency,omitempty"`
+	AccountOwner        AccountOwner `json:"accountOwner,omitempty"`
+	SubMerchantMemberId int64        `json:"subMerchantMemberId,omitempty"`
+	Page                int          `schema:"page,omitempty"`
+	Size                int          `schema:"size,omitempty"`
+}
+
+type MasterpassPaymentTokenGenerateRequest struct {
+	Msisdn        string                  `json:"msisdn,omitempty"`
+	UserId        string                  `json:"userId,omitempty"`
+	BinNumber     string                  `json:"binNumber,omitempty"`
+	ForceThreeDS  bool                    `json:"forceThreeDS,omitempty"`
+	CreatePayment MasterpassCreatePayment `json:"createPayment,omitempty"`
+}
+
+type MasterpassPaymentCompleteRequest struct {
+	ReferenceId string `json:"referenceId,omitempty"`
+	Token       string `json:"token,omitempty"`
+}
+
+type MasterpassPaymentThreeDSInitRequest struct {
+	ReferenceId string `json:"referenceId,omitempty"`
+	CallbackUrl string `json:"callbackUrl,omitempty"`
+}
+
+type MasterpassPaymentThreeDSCompleteRequest struct {
+	PaymentId int64 `json:"paymentId,omitempty"`
+}
+
 // responses
 type PaymentResponse struct {
 	Id                           *int64                       `json:"id"`
@@ -751,8 +821,9 @@ type Init3DSPaymentResponse struct {
 }
 
 type InitCheckoutPaymentResponse struct {
-	Token   *string `json:"token"`
-	PageUrl *string `json:"pageUrl"`
+	Token           *string       `json:"token"`
+	PageUrl         *string       `json:"pageUrl"`
+	TokenExpireDate *TimeResponse `json:"tokenExpireDate"`
 }
 
 type InitApmPaymentResponse struct {
@@ -813,6 +884,25 @@ type ApmDepositPaymentResponse struct {
 	ApmAdditionalAction *ApmAdditionalAction `json:"additionalAction"`
 	PaymentError        *PaymentError        `json:"paymentError"`
 	WalletTransaction   *WalletTransaction   `json:"walletTransaction"`
+}
+
+type PayoutAccountResponse struct {
+	Id                  int64             `json:"id"`
+	AccountType         PayoutAccountType `json:"type"`
+	ExternalAccountId   string            `json:"externalAccountId"`
+	Currency            Currency          `json:"currency"`
+	AccountOwner        AccountOwner      `json:"accountOwner"`
+	SubMerchantMemberId *int64            `json:"subMerchantMemberId"`
+}
+
+type MasterpassPaymentThreeDSInitResponse struct {
+	ReturnUrl *string `json:"returnUrl"`
+}
+
+type MasterpassPaymentTokenGenerateResponse struct {
+	Token       *string `json:"token"`
+	ReferenceId *string `json:"referenceId"`
+	OrderNo     *string `json:"orderNo"`
 }
 
 type RefundWalletTransactionRequest struct {
@@ -1080,39 +1170,42 @@ type RetrieveBinNumberResponse struct {
 }
 
 type CreateMemberRequest struct {
-	MemberExternalId  string     `json:"memberExternalId,omitempty"`
-	Name              string     `json:"name,omitempty"`
-	Address           string     `json:"address,omitempty"`
-	Email             string     `json:"email,omitempty"`
-	PhoneNumber       string     `json:"phoneNumber,omitempty"`
-	IdentityNumber    string     `json:"identityNumber,omitempty"`
-	ContactName       string     `json:"contactName,omitempty"`
-	ContactSurname    string     `json:"contactSurname,omitempty"`
-	MemberType        MemberType `json:"memberType,omitempty"`
-	LegalCompanyTitle string     `json:"legalCompanyTitle,omitempty"`
-	TaxOffice         string     `json:"taxOffice,omitempty"`
-	TaxNumber         string     `json:"taxNumber,omitempty"`
-	Iban              string     `json:"iban,omitempty"`
-	IsBuyer           bool       `json:"isBuyer,omitempty"`
-	IsSubMerchant     bool       `json:"isSubMerchant,omitempty"`
+	MemberExternalId                         string                        `json:"memberExternalId,omitempty"`
+	Name                                     string                        `json:"name,omitempty"`
+	Address                                  string                        `json:"address,omitempty"`
+	Email                                    string                        `json:"email,omitempty"`
+	PhoneNumber                              string                        `json:"phoneNumber,omitempty"`
+	IdentityNumber                           string                        `json:"identityNumber,omitempty"`
+	ContactName                              string                        `json:"contactName,omitempty"`
+	ContactSurname                           string                        `json:"contactSurname,omitempty"`
+	MemberType                               MemberType                    `json:"memberType,omitempty"`
+	LegalCompanyTitle                        string                        `json:"legalCompanyTitle,omitempty"`
+	TaxOffice                                string                        `json:"taxOffice,omitempty"`
+	TaxNumber                                string                        `json:"taxNumber,omitempty"`
+	Iban                                     string                        `json:"iban,omitempty"`
+	SettlementEarningsDestination            SettlementEarningsDestination `json:"settlementEarningsDestination,omitempty"`
+	IsBuyer                                  bool                          `json:"isBuyer,omitempty"`
+	IsSubMerchant                            bool                          `json:"isSubMerchant,omitempty"`
+	SubMerchantMaximumAllowedNegativeBalance float64                       `json:"subMerchantMaximumAllowedNegativeBalance,omitempty"`
 }
 
 type UpdateMemberRequest struct {
-	Name                          string                        `json:"name,omitempty"`
-	Address                       string                        `json:"address,omitempty"`
-	Email                         string                        `json:"email,omitempty"`
-	PhoneNumber                   string                        `json:"phoneNumber,omitempty"`
-	IdentityNumber                string                        `json:"identityNumber,omitempty"`
-	ContactName                   string                        `json:"contactName,omitempty"`
-	ContactSurname                string                        `json:"contactSurname,omitempty"`
-	MemberType                    MemberType                    `json:"memberType,omitempty"`
-	LegalCompanyTitle             string                        `json:"legalCompanyTitle,omitempty"`
-	TaxOffice                     string                        `json:"taxOffice,omitempty"`
-	TaxNumber                     string                        `json:"taxNumber,omitempty"`
-	Iban                          string                        `json:"iban,omitempty"`
-	SettlementEarningsDestination SettlementEarningsDestination `json:"settlementEarningsDestination,omitempty"`
-	IsBuyer                       bool                          `json:"isBuyer,omitempty"`
-	IsSubMerchant                 bool                          `json:"isSubMerchant,omitempty"`
+	Name                                     string                        `json:"name,omitempty"`
+	Address                                  string                        `json:"address,omitempty"`
+	Email                                    string                        `json:"email,omitempty"`
+	PhoneNumber                              string                        `json:"phoneNumber,omitempty"`
+	IdentityNumber                           string                        `json:"identityNumber,omitempty"`
+	ContactName                              string                        `json:"contactName,omitempty"`
+	ContactSurname                           string                        `json:"contactSurname,omitempty"`
+	MemberType                               MemberType                    `json:"memberType,omitempty"`
+	LegalCompanyTitle                        string                        `json:"legalCompanyTitle,omitempty"`
+	TaxOffice                                string                        `json:"taxOffice,omitempty"`
+	TaxNumber                                string                        `json:"taxNumber,omitempty"`
+	Iban                                     string                        `json:"iban,omitempty"`
+	SettlementEarningsDestination            SettlementEarningsDestination `json:"settlementEarningsDestination,omitempty"`
+	IsBuyer                                  bool                          `json:"isBuyer,omitempty"`
+	IsSubMerchant                            bool                          `json:"isSubMerchant,omitempty"`
+	SubMerchantMaximumAllowedNegativeBalance float64                       `json:"subMerchantMaximumAllowedNegativeBalance,omitempty"`
 }
 
 type SearchMembersRequest struct {
@@ -1617,6 +1710,24 @@ type PaymentItem struct {
 	ExternalId             string  `json:"externalId,omitempty"`
 	SubMerchantMemberId    int64   `json:"subMerchantMemberId,omitempty"`
 	SubMerchantMemberPrice float64 `json:"subMerchantMemberPrice,omitempty"`
+}
+
+type MasterpassCreatePayment struct {
+	Price            float64                `json:"price,omitempty"`
+	PaidPrice        float64                `json:"paidPrice,omitempty"`
+	PosAlias         string                 `json:"posAlias,omitempty"`
+	Installment      int                    `json:"installment,omitempty"`
+	Currency         Currency               `json:"currency,omitempty"`
+	PaymentGroup     PaymentGroup           `json:"paymentGroup,omitempty"`
+	ConversationId   string                 `json:"conversationId,omitempty"`
+	ExternalId       string                 `json:"externalId,omitempty"`
+	ClientIp         string                 `json:"clientIp,omitempty"`
+	PaymentPhase     PaymentPhase           `json:"paymentPhase,omitempty"`
+	PaymentChannel   string                 `json:"paymentChannel,omitempty"`
+	BuyerMemberId    int64                  `json:"buyerMemberId,omitempty"`
+	BankOrderId      string                 `json:"bankOrderId,omitempty"`
+	Items            []PaymentItem          `json:"items"`
+	AdditionalParams map[string]interface{} `json:"additionalParams,omitempty"`
 }
 
 type PaymentError ErrorResponse

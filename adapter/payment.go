@@ -144,6 +144,21 @@ func (api *Payment) RetrieveCheckoutPayment(ctx context.Context, token string) (
 	return response.Data, nil
 }
 
+func (api *Payment) ExpireCheckoutPayment(ctx context.Context, token string) error {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodDelete, fmt.Sprintf("/payment/v1/checkout-payments/%s", token), nil)
+	if err != nil {
+		return err
+	}
+
+	response := &Void{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (api *Payment) CreateDepositPayment(ctx context.Context, request DepositPaymentRequest) (*DepositPaymentResponse, error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/deposits", request)
 
@@ -485,21 +500,6 @@ func (api *Payment) DisapprovePaymentTransactions(ctx context.Context, request P
 	}
 
 	response := &Response[DataResponse[PaymentTransactionsApprovalResponse]]{}
-	err = api.Client.Do(ctx, newRequest, response)
-	if err != nil {
-		return nil, err
-	}
-
-	return response.Data, nil
-}
-
-func (api *Payment) CheckMasterpassUser(ctx context.Context, request CheckMasterpassUserRequest) (*CheckMasterpassUserResponse, error) {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "payment/v1/masterpass-payments/check-user", request)
-	if err != nil {
-		return nil, err
-	}
-
-	response := &Response[CheckMasterpassUserResponse]{}
 	err = api.Client.Do(ctx, newRequest, response)
 	if err != nil {
 		return nil, err
