@@ -461,11 +461,11 @@ func TestPayment_InitAfterpayApmPayment(t *testing.T) {
 
 func TestPayment_InitKaspiApmPayment(t *testing.T) {
 	request := adapter.InitApmPaymentRequest{
-		ApmType:        craftgate.ApmTypeKASPI,
+		ApmType:        craftgate.ApmType_KASPI,
 		Price:          1,
 		PaidPrice:      1,
-		Currency:       craftgate.KZT,
-		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
+		Currency:       craftgate.Currency_KZT,
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
 		ConversationId: "foo-bar",
 		CallbackUrl:    "https://www.your-website.com/callback",
 		Items: []craftgate.PaymentItem{
