@@ -75,33 +75,33 @@ const (
 	ApmType_PAYPAL           ApmType = "PAYPAL"
 	ApmType_KLARNA           ApmType = "KLARNA"
 	ApmType_AFTERPAY         ApmType = "AFTERPAY"
-    ApmType_KASPI            ApmType = "KASPI"
-    ApmType_STRIPE           ApmType = "STRIPE"
+	ApmType_KASPI            ApmType = "KASPI"
+	ApmType_STRIPE           ApmType = "STRIPE"
 	ApmType_FUND_TRANSFER    ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
 )
 
 // payment provider declaration
 const (
-    PaymentProvider_BANK          PaymentProvider = "BANK"
-    PaymentProvider_CG_WALLET     PaymentProvider = "CG_WALLET"
-    PaymentProvider_MASTERPASS    PaymentProvider = "MASTERPASS"
-    PaymentProvider_GARANTI_PAY   PaymentProvider = "GARANTI_PAY"
-    PaymentProvider_YKB_WORLD_PAY PaymentProvider = "YKB_WORLD_PAY"
-    PaymentProvider_PAPARA        PaymentProvider = "PAPARA"
-    PaymentProvider_PAYONEER      PaymentProvider = "PAYONEER"
-    PaymentProvider_SODEXO        PaymentProvider = "SODEXO"
-    PaymentProvider_EDENRED       PaymentProvider = "EDENRED"
-    PaymentProvider_ALIPAY        PaymentProvider = "ALIPAY"
-    PaymentProvider_PAYPAL        PaymentProvider = "PAYPAL"
-    PaymentProvider_KLARNA        PaymentProvider = "KLARNA"
-    PaymentProvider_AFTERPAY      PaymentProvider = "AFTERPAY"
-    PaymentProvider_KASPI         PaymentProvider = "KASPI"
-    PaymentProvider_APPLEPAY      PaymentProvider = "APPLEPAY"
-    PaymentProvider_GOOGLEPAY     PaymentProvider = "GOOGLEPAY"
-    PaymentProvider_HEPSIPAY      PaymentProvider = "HEPSIPAY"
-    PaymentProvider_STRIPE        PaymentProvider = "STRIPE"
-    PaymentProvider_OFFLINE       PaymentProvider = "OFFLINE"
+	PaymentProvider_BANK          PaymentProvider = "BANK"
+	PaymentProvider_CG_WALLET     PaymentProvider = "CG_WALLET"
+	PaymentProvider_MASTERPASS    PaymentProvider = "MASTERPASS"
+	PaymentProvider_GARANTI_PAY   PaymentProvider = "GARANTI_PAY"
+	PaymentProvider_YKB_WORLD_PAY PaymentProvider = "YKB_WORLD_PAY"
+	PaymentProvider_PAPARA        PaymentProvider = "PAPARA"
+	PaymentProvider_PAYONEER      PaymentProvider = "PAYONEER"
+	PaymentProvider_SODEXO        PaymentProvider = "SODEXO"
+	PaymentProvider_EDENRED       PaymentProvider = "EDENRED"
+	PaymentProvider_ALIPAY        PaymentProvider = "ALIPAY"
+	PaymentProvider_PAYPAL        PaymentProvider = "PAYPAL"
+	PaymentProvider_KLARNA        PaymentProvider = "KLARNA"
+	PaymentProvider_AFTERPAY      PaymentProvider = "AFTERPAY"
+	PaymentProvider_KASPI         PaymentProvider = "KASPI"
+	PaymentProvider_APPLEPAY      PaymentProvider = "APPLEPAY"
+	PaymentProvider_GOOGLEPAY     PaymentProvider = "GOOGLEPAY"
+	PaymentProvider_HEPSIPAY      PaymentProvider = "HEPSIPAY"
+	PaymentProvider_STRIPE        PaymentProvider = "STRIPE"
+	PaymentProvider_OFFLINE       PaymentProvider = "OFFLINE"
 )
 
 // pos apm payment provider declaration
@@ -138,8 +138,8 @@ const (
 	Currency_BRL Currency = "BRL"
 	Currency_AED Currency = "AED"
 	Currency_IQD Currency = "IQD"
-    Currency_AZN Currency = "AZN"
-    Currency_KZT Currency = "KZT"
+	Currency_AZN Currency = "AZN"
+	Currency_KZT Currency = "KZT"
 )
 
 // payment group declaration
@@ -260,9 +260,9 @@ const (
 
 // settlementEarningsDestination type declaration
 const (
-    SettlementEarningsDestination_IBAN         SettlementEarningsDestination = "IBAN"
-    SettlementEarningsDestination_WALLET       SettlementEarningsDestination = "WALLET"
-    SettlementEarningsDestination_CROSS_BORDER SettlementEarningsDestination = "CROSS_BORDER"
+	SettlementEarningsDestination_IBAN         SettlementEarningsDestination = "IBAN"
+	SettlementEarningsDestination_WALLET       SettlementEarningsDestination = "WALLET"
+	SettlementEarningsDestination_CROSS_BORDER SettlementEarningsDestination = "CROSS_BORDER"
 )
 
 // refundDestinationType type declaration
@@ -423,6 +423,7 @@ const (
 const (
 	AdditionalAction_CONTINUE_IN_CLIENT AdditionalAction = "CONTINUE_IN_CLIENT"
 	AdditionalAction_SHOW_HTML_CONTENT  AdditionalAction = "SHOW_HTML_CONTENT"
+	AdditionalAction_REDIRECT_TO_URL    AdditionalAction = "REDIRECT_TO_URL"
 	AdditionalAction_NONE               AdditionalAction = "NONE"
 )
 
@@ -845,6 +846,7 @@ type InitPosApmPaymentResponse struct {
 	HtmlContent      *string           `json:"htmlContent"`
 	PaymentStatus    *PaymentStatus    `json:"paymentStatus"`
 	AdditionalAction *AdditionalAction `json:"additionalAction"`
+	AdditionalData   map[string]any    `json:"additionalData"`
 	PaymentError     *PaymentError     `json:"paymentError"`
 }
 
