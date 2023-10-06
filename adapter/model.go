@@ -706,6 +706,7 @@ type PaymentTransactionResponse struct {
 
 type Init3DSPaymentResponse struct {
 	HtmlContent *string `json:"htmlContent"`
+	PaymentId   *int64  `json:"paymentId"`
 }
 
 type InitCheckoutPaymentResponse struct {
@@ -921,6 +922,7 @@ type GarantiPayInstallment struct {
 
 type InitGarantiPayPaymentResponse struct {
 	HtmlContent *string `json:"htmlContent"`
+	PaymentId   *int64  `json:"paymentId"`
 }
 
 type RetrieveLoyaltiesResponse struct {
