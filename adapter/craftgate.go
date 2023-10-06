@@ -109,8 +109,8 @@ func newClient(apiKey, secretKey string) *Client {
 
 	client.Installment = &Installment{Client: client}
 	client.Payment = &Payment{Client: client}
-	client.Onboarding = &Onboarding{Client: client}
 	client.PaymentReporting = &PaymentReporting{Client: client}
+	client.Onboarding = &Onboarding{Client: client}
 	client.PayByLink = &PayByLink{Client: client}
 	client.Wallet = &Wallet{Client: client}
 	client.Settlement = &Settlement{Client: client}

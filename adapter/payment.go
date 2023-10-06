@@ -210,6 +210,40 @@ func (api *Payment) CompleteApmPayment(ctx context.Context, request CompleteApmP
 	return response.Data, nil
 }
 
+func (api *Payment) InitPosApmPayment(ctx context.Context, request InitPosApmPaymentRequest) (*InitPosApmPaymentResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/pos-apm-payments/init", request)
+
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[InitPosApmPaymentResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
+func (api *Payment) CompletePosApmPayment(ctx context.Context, request CompletePosApmPaymentRequest) (*CompletePosApmPaymentResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/pos-apm-payments/complete", request)
+
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[CompletePosApmPaymentResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
 func (api *Payment) Init3DSDepositPayment(ctx context.Context, request DepositPaymentRequest) (*Init3DSPaymentResponse, error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/deposits/3ds-init", request)
 

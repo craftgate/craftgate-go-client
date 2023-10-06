@@ -23,7 +23,7 @@ func Test_SearchInstallments(t *testing.T) {
 	request := adapter.SearchInstallmentsRequest{
 		BinNumber: "487074",
 		Price:     100,
-		Currency:  craftgate.TRY,
+		Currency:  craftgate.Currency_TRY,
 	}
 	res, err := installmentClient.Installment.SearchInstallments(context.Background(), request)
 
