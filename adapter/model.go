@@ -76,6 +76,7 @@ const (
 	ApmType_KLARNA           ApmType = "KLARNA"
 	ApmType_AFTERPAY         ApmType = "AFTERPAY"
 	ApmType_KASPI            ApmType = "KASPI"
+	ApmType_TOMPAY           ApmType = "TOMPAY"
 	ApmType_STRIPE           ApmType = "STRIPE"
 	ApmType_FUND_TRANSFER    ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
@@ -97,6 +98,7 @@ const (
 	PaymentProvider_KLARNA        PaymentProvider = "KLARNA"
 	PaymentProvider_AFTERPAY      PaymentProvider = "AFTERPAY"
 	PaymentProvider_KASPI         PaymentProvider = "KASPI"
+	PaymentProvider_TOMPAY        PaymentProvider = "TOMPAY"
 	PaymentProvider_APPLEPAY      PaymentProvider = "APPLEPAY"
 	PaymentProvider_GOOGLEPAY     PaymentProvider = "GOOGLEPAY"
 	PaymentProvider_HEPSIPAY      PaymentProvider = "HEPSIPAY"
@@ -169,6 +171,7 @@ const (
 	PaymentMethod_KLARNA       PaymentMethod = "KLARNA"
 	PaymentMethod_AFTERPAY     PaymentMethod = "AFTERPAY"
 	PaymentMethod_KASPI        PaymentMethod = "KASPI"
+	PaymentMethod_TOMPAY       PaymentMethod = "TOMPAY"
 	PaymentMethod_STRIPE       PaymentMethod = "STRIPE"
 )
 
@@ -316,9 +319,11 @@ const (
 
 // apm additional action type declaration
 const (
-	ApmAdditionalAction_REDIRECT_TO_URL ApmAdditionalAction = "REDIRECT_TO_URL"
-	ApmAdditionalAction_OTP_REQUIRED    ApmAdditionalAction = "OTP_REQUIRED"
-	ApmAdditionalAction_NONE            ApmAdditionalAction = "NONE"
+	ApmAdditionalAction_REDIRECT_TO_URL   ApmAdditionalAction = "REDIRECT_TO_URL"
+	ApmAdditionalAction_OTP_REQUIRED      ApmAdditionalAction = "OTP_REQUIRED"
+	ApmAdditionalAction_WAIT_FOR_WEBHOOK  ApmAdditionalAction = "WAIT_FOR_WEBHOOK"
+	ApmAdditionalAction_APPROVAL_REQUIRED ApmAdditionalAction = "APPROVAL_REQUIRED"
+	ApmAdditionalAction_NONE              ApmAdditionalAction = "NONE"
 )
 
 // report file type declaration
