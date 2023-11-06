@@ -46,6 +46,7 @@ type AccountOwner string
 type PayoutAccountType string
 type RecordType string
 type BankAccountTrackingSource string
+type BnplCartItemType string
 
 const (
 	ApiKeyHeaderName        = "x-api-key"
@@ -79,6 +80,8 @@ const (
 	ApmType_AFTERPAY         ApmType = "AFTERPAY"
 	ApmType_KASPI            ApmType = "KASPI"
 	ApmType_TOMPAY           ApmType = "TOMPAY"
+	ApmType_MASLAK           ApmType = "MASLAK"
+	ApmType_ALFABANK         ApmType = "ALFABANK"
 	ApmType_STRIPE           ApmType = "STRIPE"
 	ApmType_FUND_TRANSFER    ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
@@ -441,6 +444,34 @@ const (
 
 const (
 	PayoutAccountType_WISE PayoutAccountType = "WISE"
+)
+
+// BnplCartItemType type declaration
+const (
+	BnplCartItemType_MOBILE_PHONE_OVER_5000_TRY  BnplCartItemType = "MOBILE_PHONE_OVER_5000_TRY"
+	BnplCartItemType_MOBILE_PHONE_BELOW_5000_TRY BnplCartItemType = "MOBILE_PHONE_BELOW_5000_TRY"
+	BnplCartItemType_TABLET                      BnplCartItemType = "TABLET"
+	BnplCartItemType_COMPUTER                    BnplCartItemType = "COMPUTER"
+	BnplCartItemType_CONSTRUCTION_MARKET         BnplCartItemType = "CONSTRUCTION_MARKET"
+	BnplCartItemType_GOLD                        BnplCartItemType = "GOLD"
+	BnplCartItemType_DIGITAL_PRODUCTS            BnplCartItemType = "DIGITAL_PRODUCTS"
+	BnplCartItemType_SUPERMARKET                 BnplCartItemType = "SUPERMARKET"
+	BnplCartItemType_WHITE_GOODS                 BnplCartItemType = "WHITE_GOODS"
+	BnplCartItemType_WEARABLE_TECHNOLOGY         BnplCartItemType = "WEARABLE_TECHNOLOGY"
+	BnplCartItemType_SMALL_HOME_APPLIANCES       BnplCartItemType = "SMALL_HOME_APPLIANCES"
+	BnplCartItemType_TV                          BnplCartItemType = "TV"
+	BnplCartItemType_GAMES_CONSOLES              BnplCartItemType = "GAMES_CONSOLES"
+	BnplCartItemType_AIR_CONDITIONER_AND_HEATER  BnplCartItemType = "AIR_CONDITIONER_AND_HEATER"
+	BnplCartItemType_ELECTRONICS                 BnplCartItemType = "ELECTRONICS"
+	BnplCartItemType_ACCESSORIES                 BnplCartItemType = "ACCESSORIES"
+	BnplCartItemType_MOM_AND_BABY_AND_KIDS       BnplCartItemType = "MOM_AND_BABY_AND_KIDS"
+	BnplCartItemType_SHOES                       BnplCartItemType = "SHOES"
+	BnplCartItemType_CLOTHING                    BnplCartItemType = "CLOTHING"
+	BnplCartItemType_COSMETICS_AND_PERSONAL_CARE BnplCartItemType = "COSMETICS_AND_PERSONAL_CARE"
+	BnplCartItemType_FURNITURE                   BnplCartItemType = "FURNITURE"
+	BnplCartItemType_HOME_LIVING                 BnplCartItemType = "HOME_LIVING"
+	BnplCartItemType_AUTOMOBILE_MOTORCYCLE       BnplCartItemType = "AUTOMOBILE_MOTORCYCLE"
+	BnplCartItemType_OTHER                       BnplCartItemType = "OTHER"
 )
 
 // RecordType declaration
