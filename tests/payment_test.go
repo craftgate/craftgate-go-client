@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-var paymentClient, _ = craftgate.New("sandbox-BMSPbGKBaMOcmOiVpyjDZOIfSzLAuXsb", "sandbox-LpvzxnyrFkOCRRiUpQHUUZUpeQuXNntd", "https://sandbox-api.craftgate.io")
+var paymentClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func TestPayment_CreatePayment(t *testing.T) {
 	request := adapter.CreatePaymentRequest{
@@ -778,7 +778,7 @@ func TestPayment_InitBnplPayment(t *testing.T) {
 		PaidPrice:      10000,
 		PaymentType:    craftgate.PaymentType_APM,
 		Currency:       craftgate.Currency_TRY,
-		ApmOrderId:     "order_id",
+		ApmOrderId:     "order_iddfgdfg",
 		PaymentGroup:   craftgate.PaymentGroup_PRODUCT,
 		ConversationId: "29393-mXld92ko3",
 		ExternalId:     "external_id-345",
