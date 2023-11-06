@@ -799,6 +799,47 @@ type MasterpassPaymentThreeDSCompleteRequest struct {
 	PaymentId int64 `json:"paymentId,omitempty"`
 }
 
+type BnplPaymentInitRequest struct {
+	ApmType          ApmType                `json:"apmType"`
+	MerchantApmId    int64                  `json:"merchantApmId,omitempty"`
+	Price            float64                `json:"price"`
+	PaidPrice        float64                `json:"paidPrice"`
+	CommissionRate   float64                `json:"commissionRate,omitempty"`
+	Currency         Currency               `json:"currency"`
+	PaymentType      PaymentType            `json:"paymentType"`
+	PaymentGroup     PaymentGroup           `json:"paymentGroup"`
+	PaymentSource    PaymentSource          `json:"paymentSource,omitempty"`
+	PaymentChannel   string                 `json:"paymentChannel,omitempty"`
+	ConversationId   string                 `json:"conversationId,omitempty"`
+	ExternalId       string                 `json:"externalId,omitempty"`
+	CallbackUrl      string                 `json:"callbackUrl"`
+	BuyerMemberId    int64                  `json:"buyerMemberId,omitempty"`
+	ApmOrderId       string                 `json:"apmOrderId,omitempty"`
+	ClientIp         string                 `json:"clientIp,omitempty"`
+	ApmUserIdentity  string                 `json:"apmUserIdentity,omitempty"`
+	AdditionalParams map[string]interface{} `json:"additionalParams"`
+	Items            []PaymentItem          `json:"items"`
+	BankCode         string                 `json:"bankCode"`
+	CartItems        []BnplPaymentCartItem  `json:"cartItems"`
+}
+
+type BnplPaymentCartItem struct {
+	Id        string           `json:"id"`
+	Name      string           `json:"name"`
+	BrandName string           `json:"brandName"`
+	Type      BnplCartItemType `json:"type"`
+	UnitPrice float64          `json:"unitPrice"`
+	Quantity  int64            `json:"quantity"`
+}
+
+type BnplPaymentOfferRequest struct {
+	ApmType       ApmType               `json:"apmType,omitempty"`
+	MerchantApmId int64                 `json:"merchantApmId,omitempty"`
+	Price         float64               `json:"price,omitempty"`
+	Currency      Currency              `json:"currency,omitempty"`
+	Items         []BnplPaymentCartItem `json:"items"`
+}
+
 // responses
 type PaymentResponse struct {
 	Id                           *int64                       `json:"id"`
@@ -1512,12 +1553,68 @@ type ReportingPaymentTransactionResponse struct {
 	PayoutStatus                  *PayoutStatus        `json:"payoutStatus"`
 }
 
+type BnplPaymentInitResponse struct {
+	PaymentId        int64               `json:"paymentId"`
+	RedirectUrl      string              `json:"redirectUrl"`
+	PaymentStatus    PaymentStatus       `json:"paymentStatus"`
+	AdditionalAction ApmAdditionalAction `json:"additionalAction"`
+	PaymentError     PaymentError        `json:"paymentError"`
+}
+
+type BnplPaymentOfferResponse struct {
+	OfferId        string           `json:"offerId"`
+	Price          *float64         `json:"price"`
+	BnplBankOffers *[]BnplBankOffer `json:"nnplBankOffers"`
+}
+
+type BnplBankOffer struct {
+	BankCode               string               `json:"bankCode"`
+	BankName               string               `json:"bankName"`
+	BankIconUrl            string               `json:"bankIconUrl"`
+	BankTableBannerMessage string               `json:"bankTableBannerMessage"`
+	BankSmallBannerMessage string               `json:"bankSmallBannerMessage"`
+	IsSupportNonCustomer   bool                 `json:"isSupportNonCustomer"`
+	BnplBankOfferTerm      *[]BnplBankOfferTerm `json:"bankOfferTerms"`
+}
+
+type BnplBankOfferTerm struct {
+	Term               int64    `json:"term"`
+	Amount             *float64 `json:"amount"`
+	TotalAmount        *float64 `json:"totalAmount"`
+	InterestRate       *float64 `json:"interestRate"`
+	AnnualInterestRate *float64 `json:"annualInterestRate"`
+}
+
 type Payout struct {
 	PaidPrice                     *float64  `json:"paidPrice"`
 	Parity                        *float64  `json:"parity"`
 	Currency                      *Currency `json:"currency"`
 	MerchantPayoutAmount          *float64  `json:"merchantPayoutAmount"`
 	SubMerchantMemberPayoutAmount *float64  `json:"subMerchantMemberPayoutAmount"`
+}
+
+type ApmPaymentResponse struct {
+	Id                  *int64                        `json:"id"`
+	CreatedDate         *TimeResponse                 `json:"createdDate"`
+	Price               *float64                      `json:"price"`
+	PaidPrice           *float64                      `json:"paidPrice"`
+	WalletPrice         *float64                      `json:"walletPrice"`
+	Currency            *Currency                     `json:"currency"`
+	BuyerMemberId       *int64                        `json:"buyerMemberId"`
+	ConversationId      *string                       `json:"conversationId"`
+	ExternalId          *string                       `json:"externalId"`
+	PaymentType         *PaymentType                  `json:"paymentType"`
+	PaymentProvider     *PaymentProvider              `json:"paymentProvider"`
+	PaymentSource       *PaymentSource                `json:"paymentSource"`
+	PaymentGroup        *PaymentGroup                 `json:"paymentGroup"`
+	PaymentStatus       *PaymentStatus                `json:"paymentStatus"`
+	PaymentChannel      *string                       `json:"paymentChannel"`
+	OrderId             *string                       `json:"orderId"`
+	PaymentError        *PaymentError                 `json:"paymentError"`
+	ApmType             ApmType                       `json:"apmType,apmType"`
+	TransactionId       string                        `json:"transactionId"`
+	RedirectUrl         *Currency                     `json:"redirectUrl"`
+	PaymentTransactions *[]PaymentTransactionResponse `json:"paymentTransactions"`
 }
 
 type PayoutStatus struct {
