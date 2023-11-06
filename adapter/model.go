@@ -1611,7 +1611,7 @@ type ApmPaymentResponse struct {
 	PaymentChannel      *string                       `json:"paymentChannel"`
 	OrderId             *string                       `json:"orderId"`
 	PaymentError        *PaymentError                 `json:"paymentError"`
-	ApmType             ApmType                       `json:"apmType,apmType"`
+	ApmType             ApmType                       `json:"apmType"`
 	TransactionId       string                        `json:"transactionId"`
 	RedirectUrl         *Currency                     `json:"redirectUrl"`
 	PaymentTransactions *[]PaymentTransactionResponse `json:"paymentTransactions"`
