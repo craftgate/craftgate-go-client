@@ -537,20 +537,20 @@ func (api *Payment) OfferBnplPayment(ctx context.Context, request BnplPaymentOff
 	return response.Data, nil
 }
 
-func (api *Payment) ApproveBnplPayment(ctx context.Context, paymentId int64) (*ApmPaymentResponse, error) {
+func (api *Payment) ApproveBnplPayment(ctx context.Context, paymentId int64) error {
 
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, fmt.Sprintf("/payment/v1/bnpl-payments/%d/approve", paymentId), nil)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	response := &Response[ApmPaymentResponse]{}
+	response := &Void{}
 	err = api.Client.Do(ctx, newRequest, response)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return response.Data, nil
+	return nil
 }
 
 func (c *Payment) Is3DSecureCallbackVerified(threeDSecureCallbackKey string, params map[string]string) bool {

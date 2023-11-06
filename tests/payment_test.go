@@ -856,9 +856,7 @@ func TestPayment_OfferBnplPayment(t *testing.T) {
 }
 
 func TestPayment_ApproveBnplPayment(t *testing.T) {
-	res, err := paymentClient.Payment.ApproveBnplPayment(context.Background(), 407016)
-	_, _ = spew.Printf("%#v\n", res)
-
+	err := paymentClient.Payment.ApproveBnplPayment(context.Background(), 407016)
 	if err != nil {
 		t.Errorf("Error %s", err)
 	}
