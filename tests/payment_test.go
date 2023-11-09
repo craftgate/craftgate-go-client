@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-var paymentClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var paymentClient, _ = craftgate.New("sandbox-BMSPbGKBaMOcmOiVpyjDZOIfSzLAuXsb", "sandbox-LpvzxnyrFkOCRRiUpQHUUZUpeQuXNntd", "https://sandbox-api.craftgate.io")
 
 func TestPayment_CreatePayment(t *testing.T) {
 	request := adapter.CreatePaymentRequest{
@@ -810,7 +810,7 @@ func TestPayment_InitBnplPayment(t *testing.T) {
 		PaidPrice:      10000,
 		PaymentType:    craftgate.PaymentType_APM,
 		Currency:       craftgate.Currency_TRY,
-		ApmOrderId:     "order_idfgfgfgfjj",
+		ApmOrderId:     "order_id",
 		PaymentGroup:   craftgate.PaymentGroup_PRODUCT,
 		ConversationId: "29393-mXld92ko3",
 		ExternalId:     "external_id-345",
@@ -819,12 +819,12 @@ func TestPayment_InitBnplPayment(t *testing.T) {
 		Items: []craftgate.PaymentItem{
 			{
 				Name:       "Item 1",
-				Price:      3000,
+				Price:      6000,
 				ExternalId: "38983903",
 			},
 			{
 				Name:       "Item 2",
-				Price:      7000,
+				Price:      4000,
 				ExternalId: "92983294",
 			},
 		},
@@ -834,7 +834,7 @@ func TestPayment_InitBnplPayment(t *testing.T) {
 				Name:      "Test Elektronik 2",
 				BrandName: "iphone",
 				Type:      craftgate.BnplCartItemType_OTHER,
-				UnitPrice: 4000,
+				UnitPrice: 3000,
 				Quantity:  2,
 			},
 			{
@@ -842,7 +842,7 @@ func TestPayment_InitBnplPayment(t *testing.T) {
 				Name:      "Test Elektronik 1",
 				BrandName: "Samsung",
 				Type:      craftgate.BnplCartItemType_MOBILE_PHONE_OVER_5000_TRY,
-				UnitPrice: 3000,
+				UnitPrice: 4000,
 				Quantity:  1,
 			},
 		},
