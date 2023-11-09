@@ -83,6 +83,7 @@ type Client struct {
 	FileReporting       *FileReporting
 	Fraud               *Fraud
 	Hook                *Hook
+	Masterpass          *Masterpass
 	BankAccountTracking *BankAccountTracking
 }
 
@@ -109,8 +110,8 @@ func newClient(apiKey, secretKey string) *Client {
 
 	client.Installment = &Installment{Client: client}
 	client.Payment = &Payment{Client: client}
-	client.Onboarding = &Onboarding{Client: client}
 	client.PaymentReporting = &PaymentReporting{Client: client}
+	client.Onboarding = &Onboarding{Client: client}
 	client.PayByLink = &PayByLink{Client: client}
 	client.Wallet = &Wallet{Client: client}
 	client.Settlement = &Settlement{Client: client}
@@ -118,6 +119,7 @@ func newClient(apiKey, secretKey string) *Client {
 	client.FileReporting = &FileReporting{Client: client}
 	client.Fraud = &Fraud{Client: client}
 	client.Hook = &Hook{Client: client}
+	client.Masterpass = &Masterpass{Client: client}
 	client.BankAccountTracking = &BankAccountTracking{Client: client}
 
 	return client
