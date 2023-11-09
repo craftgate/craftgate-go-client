@@ -14,7 +14,7 @@ func TestBankAccountTracking_SearchBankAccountTrackingRecords(t *testing.T) {
 	request := adapter.SearchBankAccountTrackingRecordRequest{
 		Page:     0,
 		Size:     10,
-		Currency: craftgate.Currency("TRY"),
+		Currency: craftgate.Currency_TRY,
 	}
 
 	res, err := bankAccountTrackingClient.BankAccountTracking.SearchRecords(context.Background(), request)
