@@ -445,13 +445,13 @@ const (
 
 // RecordType declaration
 const (
-	SEND    RecordType = "SEND"
-	RECEIVE Currency   = "RECEIVE"
+	RecordType_SEND    RecordType = "SEND"
+	RecordType_RECEIVE RecordType = "RECEIVE"
 )
 
 // BankAccountTrackingSource declaration
 const (
-	YKB BankAccountTrackingSource = "YKB"
+	BankAccountTrackingSource_YKB BankAccountTrackingSource = "YKB"
 )
 
 // requests
