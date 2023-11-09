@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-var bankAccountTrackingClient, _ = craftgate.New("api-key", "secret-key", "http://localhost:8000")
+var bankAccountTrackingClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func TestBankAccountTracking_SearchBankAccountTrackingRecords(t *testing.T) {
 	request := adapter.SearchBankAccountTrackingRecordRequest{
