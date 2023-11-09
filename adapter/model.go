@@ -799,7 +799,7 @@ type MasterpassPaymentThreeDSCompleteRequest struct {
 	PaymentId int64 `json:"paymentId,omitempty"`
 }
 
-type BnplPaymentInitRequest struct {
+type InitBnplPaymentRequest struct {
 	ApmType          ApmType                `json:"apmType"`
 	MerchantApmId    int64                  `json:"merchantApmId,omitempty"`
 	Price            float64                `json:"price"`
@@ -832,11 +832,11 @@ type BnplPaymentCartItem struct {
 	Quantity  int64            `json:"quantity"`
 }
 
-type BnplPaymentOfferRequest struct {
-	ApmType       ApmType               `json:"apmType,omitempty"`
+type OfferBnplPaymentRequest struct {
+	ApmType       ApmType               `json:"apmType"`
 	MerchantApmId int64                 `json:"merchantApmId,omitempty"`
-	Price         float64               `json:"price,omitempty"`
-	Currency      Currency              `json:"currency,omitempty"`
+	Price         float64               `json:"price"`
+	Currency      Currency              `json:"currency"`
 	Items         []BnplPaymentCartItem `json:"items"`
 }
 
@@ -1553,7 +1553,7 @@ type ReportingPaymentTransactionResponse struct {
 	PayoutStatus                  *PayoutStatus        `json:"payoutStatus"`
 }
 
-type BnplPaymentInitResponse struct {
+type InitBnplPaymentResponse struct {
 	PaymentId        int64               `json:"paymentId"`
 	RedirectUrl      string              `json:"redirectUrl"`
 	PaymentStatus    PaymentStatus       `json:"paymentStatus"`
@@ -1561,7 +1561,7 @@ type BnplPaymentInitResponse struct {
 	PaymentError     PaymentError        `json:"paymentError"`
 }
 
-type BnplPaymentOfferResponse struct {
+type OfferBnplPaymentResponse struct {
 	OfferId        string           `json:"offerId"`
 	Price          *float64         `json:"price"`
 	BnplBankOffers *[]BnplBankOffer `json:"nnplBankOffers"`

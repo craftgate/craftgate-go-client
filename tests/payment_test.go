@@ -771,14 +771,46 @@ func TestPayment_NotVerify3DSCallback(t *testing.T) {
 	require.False(t, is3DSecureCallbackVerified)
 }
 
+func TestPayment_OfferBnplPayment(t *testing.T) {
+	request := adapter.OfferBnplPaymentRequest{
+		ApmType:  craftgate.ApmType_MASLAK,
+		Price:    10000,
+		Currency: craftgate.Currency_TRY,
+		Items: []craftgate.BnplPaymentCartItem{
+			{
+				Id:        "200",
+				Name:      "Test Elektronik 2",
+				BrandName: "iphone",
+				Type:      craftgate.BnplCartItemType_MOBILE_PHONE_BELOW_5000_TRY,
+				UnitPrice: 3000,
+				Quantity:  2,
+			},
+			{
+				Id:        "100",
+				Name:      "Test Elektronik 1",
+				BrandName: "Samsung",
+				Type:      craftgate.BnplCartItemType_OTHER,
+				UnitPrice: 4000,
+				Quantity:  1,
+			},
+		},
+	}
+	res, err := paymentClient.Payment.RetrieveBnplOffers(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_InitBnplPayment(t *testing.T) {
-	request := adapter.BnplPaymentInitRequest{
+	request := adapter.InitBnplPaymentRequest{
 		ApmType:        craftgate.ApmType_MASLAK,
 		Price:          10000,
 		PaidPrice:      10000,
 		PaymentType:    craftgate.PaymentType_APM,
 		Currency:       craftgate.Currency_TRY,
-		ApmOrderId:     "order_iddfgdfg",
+		ApmOrderId:     "order_idfgfgfgfjj",
 		PaymentGroup:   craftgate.PaymentGroup_PRODUCT,
 		ConversationId: "29393-mXld92ko3",
 		ExternalId:     "external_id-345",
@@ -823,40 +855,8 @@ func TestPayment_InitBnplPayment(t *testing.T) {
 	}
 }
 
-func TestPayment_OfferBnplPayment(t *testing.T) {
-	request := adapter.BnplPaymentOfferRequest{
-		ApmType:  craftgate.ApmType_MASLAK,
-		Price:    10000,
-		Currency: craftgate.Currency_TRY,
-		Items: []craftgate.BnplPaymentCartItem{
-			{
-				Id:        "200",
-				Name:      "Test Elektronik 2",
-				BrandName: "iphone",
-				Type:      craftgate.BnplCartItemType_MOBILE_PHONE_BELOW_5000_TRY,
-				UnitPrice: 3000,
-				Quantity:  2,
-			},
-			{
-				Id:        "100",
-				Name:      "Test Elektronik 1",
-				BrandName: "Samsung",
-				Type:      craftgate.BnplCartItemType_OTHER,
-				UnitPrice: 4000,
-				Quantity:  1,
-			},
-		},
-	}
-	res, err := paymentClient.Payment.OfferBnplPayment(context.Background(), request)
-	_, _ = spew.Printf("%#v\n", res)
-
-	if err != nil {
-		t.Errorf("Error %s", err)
-	}
-}
-
 func TestPayment_ApproveBnplPayment(t *testing.T) {
-	err := paymentClient.Payment.ApproveBnplPayment(context.Background(), 407016)
+	err := paymentClient.Payment.ApproveBnplPayment(context.Background(), 1)
 	if err != nil {
 		t.Errorf("Error %s", err)
 	}

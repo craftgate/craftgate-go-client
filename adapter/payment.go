@@ -508,12 +508,13 @@ func (api *Payment) DisapprovePaymentTransactions(ctx context.Context, request P
 	return response.Data, nil
 }
 
-func (api *Payment) InitBnplPayment(ctx context.Context, request BnplPaymentInitRequest) (*BnplPaymentInitResponse, error) {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/bnpl-payments/init", request)
+func (api *Payment) RetrieveBnplOffers(ctx context.Context, request OfferBnplPaymentRequest) (*DataResponse[OfferBnplPaymentResponse], error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/bnpl-payments/offers", request)
 	if err != nil {
 		return nil, err
 	}
-	response := &Response[BnplPaymentInitResponse]{}
+
+	response := &Response[DataResponse[OfferBnplPaymentResponse]]{}
 	err = api.Client.Do(ctx, newRequest, response)
 	if err != nil {
 		return nil, err
@@ -522,13 +523,12 @@ func (api *Payment) InitBnplPayment(ctx context.Context, request BnplPaymentInit
 	return response.Data, nil
 }
 
-func (api *Payment) OfferBnplPayment(ctx context.Context, request BnplPaymentOfferRequest) (*DataResponse[BnplPaymentOfferResponse], error) {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/bnpl-payments/offers", request)
+func (api *Payment) InitBnplPayment(ctx context.Context, request InitBnplPaymentRequest) (*InitBnplPaymentResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/bnpl-payments/init", request)
 	if err != nil {
 		return nil, err
 	}
-
-	response := &Response[DataResponse[BnplPaymentOfferResponse]]{}
+	response := &Response[InitBnplPaymentResponse]{}
 	err = api.Client.Do(ctx, newRequest, response)
 	if err != nil {
 		return nil, err
