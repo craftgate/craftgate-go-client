@@ -832,7 +832,7 @@ type BnplPaymentCartItem struct {
 	Quantity  int64            `json:"quantity"`
 }
 
-type OfferBnplPaymentRequest struct {
+type BnplPaymentOfferRequest struct {
 	ApmType       ApmType               `json:"apmType"`
 	MerchantApmId int64                 `json:"merchantApmId,omitempty"`
 	Price         float64               `json:"price"`
@@ -1561,7 +1561,7 @@ type InitBnplPaymentResponse struct {
 	PaymentError     PaymentError        `json:"paymentError"`
 }
 
-type OfferBnplPaymentResponse struct {
+type BnplPaymentOfferResponse struct {
 	OfferId        string           `json:"offerId"`
 	Price          *float64         `json:"price"`
 	BnplBankOffers *[]BnplBankOffer `json:"nnplBankOffers"`

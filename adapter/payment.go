@@ -508,13 +508,13 @@ func (api *Payment) DisapprovePaymentTransactions(ctx context.Context, request P
 	return response.Data, nil
 }
 
-func (api *Payment) RetrieveBnplOffers(ctx context.Context, request OfferBnplPaymentRequest) (*DataResponse[OfferBnplPaymentResponse], error) {
+func (api *Payment) RetrieveBnplOffers(ctx context.Context, request BnplPaymentOfferRequest) (*DataResponse[BnplPaymentOfferResponse], error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/bnpl-payments/offers", request)
 	if err != nil {
 		return nil, err
 	}
 
-	response := &Response[DataResponse[OfferBnplPaymentResponse]]{}
+	response := &Response[DataResponse[BnplPaymentOfferResponse]]{}
 	err = api.Client.Do(ctx, newRequest, response)
 	if err != nil {
 		return nil, err

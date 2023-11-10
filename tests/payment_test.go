@@ -771,8 +771,8 @@ func TestPayment_NotVerify3DSCallback(t *testing.T) {
 	require.False(t, is3DSecureCallbackVerified)
 }
 
-func TestPayment_OfferBnplPayment(t *testing.T) {
-	request := adapter.OfferBnplPaymentRequest{
+func TestPayment_BnplPaymentOffer(t *testing.T) {
+	request := adapter.BnplPaymentOfferRequest{
 		ApmType:  craftgate.ApmType_MASLAK,
 		Price:    10000,
 		Currency: craftgate.Currency_TRY,
