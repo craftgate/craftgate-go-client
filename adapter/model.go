@@ -1593,30 +1593,6 @@ type Payout struct {
 	SubMerchantMemberPayoutAmount *float64  `json:"subMerchantMemberPayoutAmount"`
 }
 
-type ApmPaymentResponse struct {
-	Id                  *int64                        `json:"id"`
-	CreatedDate         *TimeResponse                 `json:"createdDate"`
-	Price               *float64                      `json:"price"`
-	PaidPrice           *float64                      `json:"paidPrice"`
-	WalletPrice         *float64                      `json:"walletPrice"`
-	Currency            *Currency                     `json:"currency"`
-	BuyerMemberId       *int64                        `json:"buyerMemberId"`
-	ConversationId      *string                       `json:"conversationId"`
-	ExternalId          *string                       `json:"externalId"`
-	PaymentType         *PaymentType                  `json:"paymentType"`
-	PaymentProvider     *PaymentProvider              `json:"paymentProvider"`
-	PaymentSource       *PaymentSource                `json:"paymentSource"`
-	PaymentGroup        *PaymentGroup                 `json:"paymentGroup"`
-	PaymentStatus       *PaymentStatus                `json:"paymentStatus"`
-	PaymentChannel      *string                       `json:"paymentChannel"`
-	OrderId             *string                       `json:"orderId"`
-	PaymentError        *PaymentError                 `json:"paymentError"`
-	ApmType             ApmType                       `json:"apmType"`
-	TransactionId       string                        `json:"transactionId"`
-	RedirectUrl         *Currency                     `json:"redirectUrl"`
-	PaymentTransactions *[]PaymentTransactionResponse `json:"paymentTransactions"`
-}
-
 type PayoutStatus struct {
 	MerchantStatus              *TransactionPayoutStatus `json:"merchantStatus"`
 	MerchantStatusDate          *TimeResponse            `json:"merchantStatusDate"`
