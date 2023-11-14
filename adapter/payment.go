@@ -508,6 +508,51 @@ func (api *Payment) DisapprovePaymentTransactions(ctx context.Context, request P
 	return response.Data, nil
 }
 
+func (api *Payment) RetrieveBnplOffers(ctx context.Context, request BnplPaymentOfferRequest) (*DataResponse[BnplPaymentOfferResponse], error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/bnpl-payments/offers", request)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[DataResponse[BnplPaymentOfferResponse]]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
+func (api *Payment) InitBnplPayment(ctx context.Context, request InitBnplPaymentRequest) (*InitBnplPaymentResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/bnpl-payments/init", request)
+	if err != nil {
+		return nil, err
+	}
+	response := &Response[InitBnplPaymentResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
+func (api *Payment) ApproveBnplPayment(ctx context.Context, paymentId int64) error {
+
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, fmt.Sprintf("/payment/v1/bnpl-payments/%d/approve", paymentId), nil)
+	if err != nil {
+		return err
+	}
+
+	response := &Void{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (c *Payment) Is3DSecureCallbackVerified(threeDSecureCallbackKey string, params map[string]string) bool {
 	hash := params["hash"]
 	hashString := strings.Join([]string{threeDSecureCallbackKey,

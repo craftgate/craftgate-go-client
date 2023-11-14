@@ -44,6 +44,9 @@ type PosOperationType string
 type FileStatus string
 type AccountOwner string
 type PayoutAccountType string
+type RecordType string
+type BankAccountTrackingSource string
+type BnplCartItemType string
 
 const (
 	ApiKeyHeaderName        = "x-api-key"
@@ -77,6 +80,8 @@ const (
 	ApmType_AFTERPAY         ApmType = "AFTERPAY"
 	ApmType_KASPI            ApmType = "KASPI"
 	ApmType_TOMPAY           ApmType = "TOMPAY"
+	ApmType_MASLAK           ApmType = "MASLAK"
+	ApmType_ALFABANK         ApmType = "ALFABANK"
 	ApmType_STRIPE           ApmType = "STRIPE"
 	ApmType_FUND_TRANSFER    ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
@@ -441,6 +446,45 @@ const (
 	PayoutAccountType_WISE PayoutAccountType = "WISE"
 )
 
+// BnplCartItemType type declaration
+const (
+	BnplCartItemType_MOBILE_PHONE_OVER_5000_TRY  BnplCartItemType = "MOBILE_PHONE_OVER_5000_TRY"
+	BnplCartItemType_MOBILE_PHONE_BELOW_5000_TRY BnplCartItemType = "MOBILE_PHONE_BELOW_5000_TRY"
+	BnplCartItemType_TABLET                      BnplCartItemType = "TABLET"
+	BnplCartItemType_COMPUTER                    BnplCartItemType = "COMPUTER"
+	BnplCartItemType_CONSTRUCTION_MARKET         BnplCartItemType = "CONSTRUCTION_MARKET"
+	BnplCartItemType_GOLD                        BnplCartItemType = "GOLD"
+	BnplCartItemType_DIGITAL_PRODUCTS            BnplCartItemType = "DIGITAL_PRODUCTS"
+	BnplCartItemType_SUPERMARKET                 BnplCartItemType = "SUPERMARKET"
+	BnplCartItemType_WHITE_GOODS                 BnplCartItemType = "WHITE_GOODS"
+	BnplCartItemType_WEARABLE_TECHNOLOGY         BnplCartItemType = "WEARABLE_TECHNOLOGY"
+	BnplCartItemType_SMALL_HOME_APPLIANCES       BnplCartItemType = "SMALL_HOME_APPLIANCES"
+	BnplCartItemType_TV                          BnplCartItemType = "TV"
+	BnplCartItemType_GAMES_CONSOLES              BnplCartItemType = "GAMES_CONSOLES"
+	BnplCartItemType_AIR_CONDITIONER_AND_HEATER  BnplCartItemType = "AIR_CONDITIONER_AND_HEATER"
+	BnplCartItemType_ELECTRONICS                 BnplCartItemType = "ELECTRONICS"
+	BnplCartItemType_ACCESSORIES                 BnplCartItemType = "ACCESSORIES"
+	BnplCartItemType_MOM_AND_BABY_AND_KIDS       BnplCartItemType = "MOM_AND_BABY_AND_KIDS"
+	BnplCartItemType_SHOES                       BnplCartItemType = "SHOES"
+	BnplCartItemType_CLOTHING                    BnplCartItemType = "CLOTHING"
+	BnplCartItemType_COSMETICS_AND_PERSONAL_CARE BnplCartItemType = "COSMETICS_AND_PERSONAL_CARE"
+	BnplCartItemType_FURNITURE                   BnplCartItemType = "FURNITURE"
+	BnplCartItemType_HOME_LIVING                 BnplCartItemType = "HOME_LIVING"
+	BnplCartItemType_AUTOMOBILE_MOTORCYCLE       BnplCartItemType = "AUTOMOBILE_MOTORCYCLE"
+	BnplCartItemType_OTHER                       BnplCartItemType = "OTHER"
+)
+
+// RecordType declaration
+const (
+	RecordType_SEND    RecordType = "SEND"
+	RecordType_RECEIVE RecordType = "RECEIVE"
+)
+
+// BankAccountTrackingSource declaration
+const (
+	BankAccountTrackingSource_YKB BankAccountTrackingSource = "YKB"
+)
+
 // requests
 type CreatePaymentRequest struct {
 	Price            float64                `json:"price,omitempty"`
@@ -753,6 +797,47 @@ type MasterpassPaymentThreeDSInitRequest struct {
 
 type MasterpassPaymentThreeDSCompleteRequest struct {
 	PaymentId int64 `json:"paymentId,omitempty"`
+}
+
+type InitBnplPaymentRequest struct {
+	ApmType          ApmType                `json:"apmType"`
+	MerchantApmId    int64                  `json:"merchantApmId,omitempty"`
+	Price            float64                `json:"price"`
+	PaidPrice        float64                `json:"paidPrice"`
+	CommissionRate   float64                `json:"commissionRate,omitempty"`
+	Currency         Currency               `json:"currency"`
+	PaymentType      PaymentType            `json:"paymentType"`
+	PaymentGroup     PaymentGroup           `json:"paymentGroup"`
+	PaymentSource    PaymentSource          `json:"paymentSource,omitempty"`
+	PaymentChannel   string                 `json:"paymentChannel,omitempty"`
+	ConversationId   string                 `json:"conversationId,omitempty"`
+	ExternalId       string                 `json:"externalId,omitempty"`
+	CallbackUrl      string                 `json:"callbackUrl"`
+	BuyerMemberId    int64                  `json:"buyerMemberId,omitempty"`
+	ApmOrderId       string                 `json:"apmOrderId,omitempty"`
+	ClientIp         string                 `json:"clientIp,omitempty"`
+	ApmUserIdentity  string                 `json:"apmUserIdentity,omitempty"`
+	AdditionalParams map[string]interface{} `json:"additionalParams"`
+	Items            []PaymentItem          `json:"items"`
+	BankCode         string                 `json:"bankCode"`
+	CartItems        []BnplPaymentCartItem  `json:"cartItems"`
+}
+
+type BnplPaymentCartItem struct {
+	Id        string           `json:"id"`
+	Name      string           `json:"name"`
+	BrandName string           `json:"brandName"`
+	Type      BnplCartItemType `json:"type"`
+	UnitPrice float64          `json:"unitPrice"`
+	Quantity  int64            `json:"quantity"`
+}
+
+type BnplPaymentOfferRequest struct {
+	ApmType       ApmType               `json:"apmType"`
+	MerchantApmId int64                 `json:"merchantApmId,omitempty"`
+	Price         float64               `json:"price"`
+	Currency      Currency              `json:"currency"`
+	Items         []BnplPaymentCartItem `json:"items"`
 }
 
 // responses
@@ -1468,6 +1553,38 @@ type ReportingPaymentTransactionResponse struct {
 	PayoutStatus                  *PayoutStatus        `json:"payoutStatus"`
 }
 
+type InitBnplPaymentResponse struct {
+	PaymentId        int64               `json:"paymentId"`
+	RedirectUrl      string              `json:"redirectUrl"`
+	PaymentStatus    PaymentStatus       `json:"paymentStatus"`
+	AdditionalAction ApmAdditionalAction `json:"additionalAction"`
+	PaymentError     PaymentError        `json:"paymentError"`
+}
+
+type BnplPaymentOfferResponse struct {
+	OfferId        string           `json:"offerId"`
+	Price          *float64         `json:"price"`
+	BnplBankOffers *[]BnplBankOffer `json:"nnplBankOffers"`
+}
+
+type BnplBankOffer struct {
+	BankCode               string               `json:"bankCode"`
+	BankName               string               `json:"bankName"`
+	BankIconUrl            string               `json:"bankIconUrl"`
+	BankTableBannerMessage string               `json:"bankTableBannerMessage"`
+	BankSmallBannerMessage string               `json:"bankSmallBannerMessage"`
+	IsSupportNonCustomer   bool                 `json:"isSupportNonCustomer"`
+	BnplBankOfferTerm      *[]BnplBankOfferTerm `json:"bankOfferTerms"`
+}
+
+type BnplBankOfferTerm struct {
+	Term               int64    `json:"term"`
+	Amount             *float64 `json:"amount"`
+	TotalAmount        *float64 `json:"totalAmount"`
+	InterestRate       *float64 `json:"interestRate"`
+	AnnualInterestRate *float64 `json:"annualInterestRate"`
+}
+
 type Payout struct {
 	PaidPrice                     *float64  `json:"paidPrice"`
 	Parity                        *float64  `json:"parity"`
@@ -1635,6 +1752,30 @@ type WebhookData struct {
 	EventTimestamp int64
 	Status         WebhookStatus
 	PayloadId      string
+}
+
+type SearchBankAccountTrackingRecordRequest struct {
+	SenderName    string    `schema:"senderName,omitempty"`
+	SenderIban    string    `schema:"senderIban,omitempty"`
+	Description   string    `schema:"description,omitempty"`
+	Currency      Currency  `schema:"currency,omitempty"`
+	MinRecordDate time.Time `schema:"minRecordDate,omitempty"`
+	MaxRecordDate time.Time `schema:"maxRecordDate,omitempty"`
+	Page          int       `schema:"page,omitempty"`
+	Size          int       `schema:"size,omitempty"`
+}
+
+type BankAccountTrackingRecordResponse struct {
+	Id                        int64                     `json:"id"`
+	Key                       string                    `json:"key"`
+	SenderName                string                    `json:"senderName"`
+	SenderIban                string                    `json:"senderIban"`
+	Description               string                    `json:"description"`
+	Currency                  Currency                  `json:"currency"`
+	Amount                    float64                   `json:"amount"`
+	RecordDate                TimeResponse              `json:"recordDate"`
+	RecordType                RecordType                `json:"recordType"`
+	BankAccountTrackingSource BankAccountTrackingSource `json:"bankAccountTrackingSource"`
 }
 
 type RequestOptions struct {

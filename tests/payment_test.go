@@ -770,3 +770,94 @@ func TestPayment_NotVerify3DSCallback(t *testing.T) {
 
 	require.False(t, is3DSecureCallbackVerified)
 }
+
+func TestPayment_BnplPaymentOffer(t *testing.T) {
+	request := adapter.BnplPaymentOfferRequest{
+		ApmType:  craftgate.ApmType_MASLAK,
+		Price:    10000,
+		Currency: craftgate.Currency_TRY,
+		Items: []craftgate.BnplPaymentCartItem{
+			{
+				Id:        "200",
+				Name:      "Test Elektronik 2",
+				BrandName: "iphone",
+				Type:      craftgate.BnplCartItemType_MOBILE_PHONE_BELOW_5000_TRY,
+				UnitPrice: 3000,
+				Quantity:  2,
+			},
+			{
+				Id:        "100",
+				Name:      "Test Elektronik 1",
+				BrandName: "Samsung",
+				Type:      craftgate.BnplCartItemType_OTHER,
+				UnitPrice: 4000,
+				Quantity:  1,
+			},
+		},
+	}
+	res, err := paymentClient.Payment.RetrieveBnplOffers(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_InitBnplPayment(t *testing.T) {
+	request := adapter.InitBnplPaymentRequest{
+		ApmType:        craftgate.ApmType_MASLAK,
+		Price:          10000,
+		PaidPrice:      10000,
+		PaymentType:    craftgate.PaymentType_APM,
+		Currency:       craftgate.Currency_TRY,
+		ApmOrderId:     "order_id",
+		PaymentGroup:   craftgate.PaymentGroup_PRODUCT,
+		ConversationId: "29393-mXld92ko3",
+		ExternalId:     "external_id-345",
+		CallbackUrl:    "callback",
+		BankCode:       "103",
+		Items: []craftgate.PaymentItem{
+			{
+				Name:       "Item 1",
+				Price:      6000,
+				ExternalId: "38983903",
+			},
+			{
+				Name:       "Item 2",
+				Price:      4000,
+				ExternalId: "92983294",
+			},
+		},
+		CartItems: []craftgate.BnplPaymentCartItem{
+			{
+				Id:        "200",
+				Name:      "Test Elektronik 2",
+				BrandName: "iphone",
+				Type:      craftgate.BnplCartItemType_OTHER,
+				UnitPrice: 3000,
+				Quantity:  2,
+			},
+			{
+				Id:        "100",
+				Name:      "Test Elektronik 1",
+				BrandName: "Samsung",
+				Type:      craftgate.BnplCartItemType_MOBILE_PHONE_OVER_5000_TRY,
+				UnitPrice: 4000,
+				Quantity:  1,
+			},
+		},
+	}
+	res, err := paymentClient.Payment.InitBnplPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_ApproveBnplPayment(t *testing.T) {
+	err := paymentClient.Payment.ApproveBnplPayment(context.Background(), 1)
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
