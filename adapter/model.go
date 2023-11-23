@@ -364,6 +364,13 @@ const (
 	WebhookEventType_API_VERIFY_AND_AUTH WebhookEventType = "API_VERIFY_AND_AUTH"
 	WebhookEventType_CHECKOUTFORM_AUTH   WebhookEventType = "CHECKOUTFORM_AUTH"
 	WebhookEventType_THREEDS_VERIFY      WebhookEventType = "THREEDS_VERIFY"
+	WebhookEventType_REFUND              WebhookEventType = "REFUND"
+	WebhookEventType_REFUND_TX           WebhookEventType = "REFUND_TX"
+	WebhookEventType_PAYOUT_COMPLETED    WebhookEventType = "PAYOUT_COMPLETED"
+	WebhookEventType_AUTOPILOT           WebhookEventType = "AUTOPILOT"
+	WebhookEventType_WALLET_CREATED      WebhookEventType = "WALLET_CREATED"
+	WebhookEventType_WALLET_TX_CREATED   WebhookEventType = "WALLET_TX_CREATED"
+	WebhookEventType_BNPL_NOTIFICATION   WebhookEventType = "BNPL_NOTIFICATION"
 )
 
 const (
