@@ -855,6 +855,48 @@ func TestPayment_InitBnplPayment(t *testing.T) {
 	}
 }
 
+func TestPayment_InitTomFinanceBnplPayment(t *testing.T) {
+	request := adapter.InitBnplPaymentRequest{
+		ApmType:        craftgate.ApmType_TOM_FINANCE,
+		Price:          100,
+		PaidPrice:      100,
+		PaymentType:    craftgate.PaymentType_APM,
+		Currency:       craftgate.Currency_TRY,
+		ApmOrderId:     "myUniqueApmOrderId",
+		PaymentGroup:   craftgate.PaymentGroup_PRODUCT,
+		ConversationId: "conversationId",
+		ExternalId:     "externalId",
+		CallbackUrl:    "https://www.your-website.com/callback",
+		Items: []craftgate.PaymentItem{
+			{
+				Name:       "Item 1",
+				Price:      100,
+				ExternalId: "externalId",
+			},
+		},
+		AdditionalParams: map[string]string{
+			"buyerName":        "John Doe",
+			"buyerPhoneNumber": "5554443322",
+		},
+		CartItems: []craftgate.BnplPaymentCartItem{
+			{
+				Id:        "26020874",
+				Name:      "Test Item 1",
+				BrandName: "26010303",
+				Type:      craftgate.BnplCartItemType_OTHER,
+				UnitPrice: 100,
+				Quantity:  1,
+			},
+		},
+	}
+	res, err := paymentClient.Payment.InitBnplPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_ApproveBnplPayment(t *testing.T) {
 	err := paymentClient.Payment.ApproveBnplPayment(context.Background(), 1)
 	if err != nil {

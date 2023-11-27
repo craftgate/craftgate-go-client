@@ -82,6 +82,7 @@ const (
 	ApmType_TOMPAY           ApmType = "TOMPAY"
 	ApmType_MASLAK           ApmType = "MASLAK"
 	ApmType_ALFABANK         ApmType = "ALFABANK"
+	ApmType_TOM_FINANCE      ApmType = "TOM_FINANCE"
 	ApmType_STRIPE           ApmType = "STRIPE"
 	ApmType_FUND_TRANSFER    ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
@@ -807,27 +808,27 @@ type MasterpassPaymentThreeDSCompleteRequest struct {
 }
 
 type InitBnplPaymentRequest struct {
-	ApmType          ApmType                `json:"apmType"`
-	MerchantApmId    int64                  `json:"merchantApmId,omitempty"`
-	Price            float64                `json:"price"`
-	PaidPrice        float64                `json:"paidPrice"`
-	CommissionRate   float64                `json:"commissionRate,omitempty"`
-	Currency         Currency               `json:"currency"`
-	PaymentType      PaymentType            `json:"paymentType"`
-	PaymentGroup     PaymentGroup           `json:"paymentGroup"`
-	PaymentSource    PaymentSource          `json:"paymentSource,omitempty"`
-	PaymentChannel   string                 `json:"paymentChannel,omitempty"`
-	ConversationId   string                 `json:"conversationId,omitempty"`
-	ExternalId       string                 `json:"externalId,omitempty"`
-	CallbackUrl      string                 `json:"callbackUrl"`
-	BuyerMemberId    int64                  `json:"buyerMemberId,omitempty"`
-	ApmOrderId       string                 `json:"apmOrderId,omitempty"`
-	ClientIp         string                 `json:"clientIp,omitempty"`
-	ApmUserIdentity  string                 `json:"apmUserIdentity,omitempty"`
-	AdditionalParams map[string]interface{} `json:"additionalParams"`
-	Items            []PaymentItem          `json:"items"`
-	BankCode         string                 `json:"bankCode"`
-	CartItems        []BnplPaymentCartItem  `json:"cartItems"`
+	ApmType          ApmType               `json:"apmType"`
+	MerchantApmId    int64                 `json:"merchantApmId,omitempty"`
+	Price            float64               `json:"price"`
+	PaidPrice        float64               `json:"paidPrice"`
+	CommissionRate   float64               `json:"commissionRate,omitempty"`
+	Currency         Currency              `json:"currency"`
+	PaymentType      PaymentType           `json:"paymentType"`
+	PaymentGroup     PaymentGroup          `json:"paymentGroup"`
+	PaymentSource    PaymentSource         `json:"paymentSource,omitempty"`
+	PaymentChannel   string                `json:"paymentChannel,omitempty"`
+	ConversationId   string                `json:"conversationId,omitempty"`
+	ExternalId       string                `json:"externalId,omitempty"`
+	CallbackUrl      string                `json:"callbackUrl"`
+	BuyerMemberId    int64                 `json:"buyerMemberId,omitempty"`
+	ApmOrderId       string                `json:"apmOrderId,omitempty"`
+	ClientIp         string                `json:"clientIp,omitempty"`
+	ApmUserIdentity  string                `json:"apmUserIdentity,omitempty"`
+	AdditionalParams map[string]string     `json:"additionalParams"`
+	Items            []PaymentItem         `json:"items"`
+	BankCode         string                `json:"bankCode,omitempty"`
+	CartItems        []BnplPaymentCartItem `json:"cartItems"`
 }
 
 type BnplPaymentCartItem struct {
