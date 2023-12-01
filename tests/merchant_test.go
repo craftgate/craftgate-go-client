@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-var merchantClient, _ = craftgate.New("api-key", "secret-key", "http://localhost:8000")
+var merchantClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func Test_CreateMerchantPos(t *testing.T) {
 	request := adapter.CreateMerchantPosRequest{
