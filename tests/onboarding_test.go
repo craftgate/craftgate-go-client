@@ -163,3 +163,22 @@ func Test_SearchMembers(t *testing.T) {
 		t.Errorf("Error %s", err)
 	}
 }
+
+func Test_CreateMerchant(t *testing.T) {
+	request := adapter.CreateMerchantRequest{
+		Name:               "newMerchant",
+		LegalCompanyTitle:  "legalCompanyTitle",
+		Email:              "new_merchant@merchant.com",
+		Website:            "www.merchant.com",
+		ContactName:        "newName",
+		ContactSurname:     "newSurname",
+		ContactPhoneNumber: "905555555566",
+	}
+
+	res, err := onboardingClient.Onboarding.CreateMerchant(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}

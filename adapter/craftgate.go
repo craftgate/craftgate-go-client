@@ -85,6 +85,7 @@ type Client struct {
 	Hook                *Hook
 	Masterpass          *Masterpass
 	BankAccountTracking *BankAccountTracking
+	Merchant            *Merchant
 }
 
 func New(apiKey, apiSecret, baseURL string, opts ...ClientOption) (*Client, error) {
@@ -121,6 +122,7 @@ func newClient(apiKey, secretKey string) *Client {
 	client.Hook = &Hook{Client: client}
 	client.Masterpass = &Masterpass{Client: client}
 	client.BankAccountTracking = &BankAccountTracking{Client: client}
+	client.Merchant = &Merchant{Client: client}
 
 	return client
 }
