@@ -940,8 +940,10 @@ type PaymentTransactionResponse struct {
 }
 
 type Init3DSPaymentResponse struct {
-	HtmlContent *string `json:"htmlContent"`
-	PaymentId   *int64  `json:"paymentId"`
+	HtmlContent      *string           `json:"htmlContent"`
+	PaymentId        *int64            `json:"paymentId"`
+	PaymentStatus    *PaymentStatus    `json:"paymentStatus"`
+	AdditionalAction *AdditionalAction `json:"additionalAction"`
 }
 
 type InitCheckoutPaymentResponse struct {
