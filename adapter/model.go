@@ -86,6 +86,7 @@ const (
 	ApmType_ALFABANK         ApmType = "ALFABANK"
 	ApmType_TOM_FINANCE      ApmType = "TOM_FINANCE"
 	ApmType_STRIPE           ApmType = "STRIPE"
+	ApmType_PAYCELL          ApmType = "PAYCELL"
 	ApmType_FUND_TRANSFER    ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
 )
@@ -105,12 +106,16 @@ const (
 	PaymentProvider_PAYPAL        PaymentProvider = "PAYPAL"
 	PaymentProvider_KLARNA        PaymentProvider = "KLARNA"
 	PaymentProvider_AFTERPAY      PaymentProvider = "AFTERPAY"
-	PaymentProvider_KASPI         PaymentProvider = "KASPI"
-	PaymentProvider_TOMPAY        PaymentProvider = "TOMPAY"
 	PaymentProvider_APPLEPAY      PaymentProvider = "APPLEPAY"
 	PaymentProvider_GOOGLEPAY     PaymentProvider = "GOOGLEPAY"
 	PaymentProvider_HEPSIPAY      PaymentProvider = "HEPSIPAY"
 	PaymentProvider_STRIPE        PaymentProvider = "STRIPE"
+	PaymentProvider_KASPI         PaymentProvider = "KASPI"
+	PaymentProvider_MASLAK        PaymentProvider = "MASLAK"
+	PaymentProvider_TOMPAY        PaymentProvider = "TOMPAY"
+	PaymentProvider_TOM_FINANCE   PaymentProvider = "TOM_FINANCE"
+	PaymentProvider_ALFABANK      PaymentProvider = "ALFABANK"
+	PaymentProvider_PAYCELL       PaymentProvider = "PAYCELL"
 	PaymentProvider_OFFLINE       PaymentProvider = "OFFLINE"
 )
 
