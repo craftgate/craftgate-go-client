@@ -424,6 +424,8 @@ const (
 	PosIntegrator_ELEKSE            PosIntegrator = "ELEKSE"
 	PosIntegrator_ALGORITMA         PosIntegrator = "ALGORITMA"
 	PosIntegrator_PAYCELL           PosIntegrator = "PAYCELL"
+	PosIntegrator_TAMI              PosIntegrator = "TAMI"
+	PosIntegrator_QNB_PAY           PosIntegrator = "QNB_PAY"
 )
 
 const (
