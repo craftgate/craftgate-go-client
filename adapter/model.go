@@ -815,6 +815,7 @@ type MasterpassPaymentTokenGenerateRequest struct {
 	BinNumber     string                  `json:"binNumber,omitempty"`
 	ForceThreeDS  bool                    `json:"forceThreeDS,omitempty"`
 	CreatePayment MasterpassCreatePayment `json:"createPayment,omitempty"`
+	Loyalty       Loyalty                 `json:"loyalty,omitempty"`
 }
 
 type MasterpassPaymentCompleteRequest struct {
