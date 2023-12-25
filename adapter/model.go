@@ -426,6 +426,7 @@ const (
 	PosIntegrator_PAYCELL           PosIntegrator = "PAYCELL"
 	PosIntegrator_TAMI              PosIntegrator = "TAMI"
 	PosIntegrator_QNB_PAY           PosIntegrator = "QNB_PAY"
+	PosIntegrator_AKBANK_VPOS       PosIntegrator = "AKBANK_VPOS"
 )
 
 const (
