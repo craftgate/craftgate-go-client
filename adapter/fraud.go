@@ -54,9 +54,10 @@ func (api *Fraud) RetrieveFraudValueList(ctx context.Context, listName string) (
 	return response.Data, nil
 }
 
-func (api *Fraud) CreateFraudValueList(ctx context.Context, listName string) error {
+func (api *Fraud) CreateFraudValueList(ctx context.Context, listName string, fraudValueType FraudValueType) error {
 	request := FraudValueListRequest{
 		ListName: listName,
+		Type:     fraudValueType,
 	}
 
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/fraud/v1/value-lists", request)
@@ -103,8 +104,8 @@ func (api *Fraud) AddValueToFraudValueList(ctx context.Context, request FraudVal
 	return nil
 }
 
-func (api *Fraud) RemoveValueFromFraudValueList(ctx context.Context, listName, value string) error {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodDelete, "/fraud/v1/value-lists/"+listName+"/values/"+value, nil)
+func (api *Fraud) RemoveValueFromFraudValueList(ctx context.Context, listName, valueId string) error {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodDelete, "/fraud/v1/value-lists/"+listName+"/values/"+valueId, nil)
 	if err != nil {
 		return err
 	}

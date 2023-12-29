@@ -42,7 +42,7 @@ func Test_RetrieveFraudValueList(t *testing.T) {
 }
 
 func Test_CreateFraudValueList(t *testing.T) {
-	err := fraudClient.Fraud.CreateFraudValueList(context.Background(), "myTestList")
+	err := fraudClient.Fraud.CreateFraudValueList(context.Background(), "ipList", craftgate.FraudValueType_IP)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -60,7 +60,39 @@ func Test_DeleteFraudValueList(t *testing.T) {
 func Test_AddValueToFraudValueList(t *testing.T) {
 	request := adapter.FraudValueListRequest{
 		ListName: "ipList",
-		Value:    "999.999.999.999",
+		Type:     craftgate.FraudValueType_IP,
+		Label:    "local ip 1",
+		Value:    "127.0.0.1",
+	}
+	err := fraudClient.Fraud.AddValueToFraudValueList(context.Background(), request)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func Test_AddTemporaryValueToFraudValueList(t *testing.T) {
+	request := adapter.FraudValueListRequest{
+		ListName:          "ipList",
+		Type:              craftgate.FraudValueType_IP,
+		Label:             "local ip 2",
+		Value:             "127.0.0.2",
+		DurationInSeconds: 60,
+	}
+
+	err := fraudClient.Fraud.AddValueToFraudValueList(context.Background(), request)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func Test_AddCardFingerprintToFraudValueList(t *testing.T) {
+	request := adapter.FraudValueListRequest{
+		ListName:  "cardList",
+		Type:      craftgate.FraudValueType_CARD,
+		Label:     "John Doe's Card",
+		PaymentId: 11675,
 	}
 	err := fraudClient.Fraud.AddValueToFraudValueList(context.Background(), request)
 
@@ -70,7 +102,7 @@ func Test_AddValueToFraudValueList(t *testing.T) {
 }
 
 func Test_RemoveValueFromFraudValueList(t *testing.T) {
-	err := fraudClient.Fraud.RemoveValueFromFraudValueList(context.Background(), "ipList", "999.999.999.999")
+	err := fraudClient.Fraud.RemoveValueFromFraudValueList(context.Background(), "ipList", "7aac0ad8-d170-4c2b-89d3-440fcf145b35")
 
 	if err != nil {
 		t.Errorf("Error %s", err)
