@@ -12,6 +12,6 @@ import (
 )
 
 func main() {
-	client, _ := craftgate.New("api-key", "secret-key", "https://api.craftgate.io", make(map[string]string))
+	client, _ := craftgate.New("api-key", "secret-key", "https://api.craftgate.io")
 	fmt.Println(client.Info())
 }

@@ -27,7 +27,7 @@ To access the Craftgate API you'll first need to obtain API credentials (e.g. an
 Once you've obtained your API credentials, you can start using Craftgate by instantiating a `Craftgate` with your credentials.
 
 ```go
-client, _ := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://api.craftgate.io", make(map[string]string))
+client, _ := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://api.craftgate.io")
 
 request := craftgate.SearchInstallmentsRequest{
     BinNumber: "487074",
