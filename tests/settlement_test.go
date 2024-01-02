@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-var settlementClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var settlementClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io", make(map[string]string))
 
 func TestSettlement_CreateInstantWalletSettlement(t *testing.T) {
 	request := adapter.CreateInstantWalletSettlementRequest{ExcludedSubMerchantMemberIds: []int64{1, 2}}

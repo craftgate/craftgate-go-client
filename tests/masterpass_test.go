@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-var masterpassClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var masterpassClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io", make(map[string]string))
 
 func TestMasterpass_CheckMasterpassUser(t *testing.T) {
 	request := adapter.CheckMasterpassUserRequest{

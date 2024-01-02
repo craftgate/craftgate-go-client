@@ -88,8 +88,10 @@ type Client struct {
 	Merchant            *Merchant
 }
 
-func New(apiKey, apiSecret, baseURL string, opts ...ClientOption) (*Client, error) {
+func New(apiKey, apiSecret, baseURL string, headers map[string]string, opts ...ClientOption) (*Client, error) {
 	client := newClient(apiKey, apiSecret)
+	client.headers = make(map[string]string)
+
 	for _, option := range opts {
 		if err := option(client); err != nil {
 			return nil, err
@@ -102,7 +104,10 @@ func New(apiKey, apiSecret, baseURL string, opts ...ClientOption) (*Client, erro
 	if client.baseURL == nil {
 		client.baseURL, _ = url.Parse(baseURL)
 	}
-	client.headers = make(map[string]string)
+
+	for k, v := range headers {
+		client.headers[k] = v
+	}
 	return client, nil
 }
 

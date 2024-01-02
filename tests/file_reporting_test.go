@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-var fileReportingClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var fileReportingClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io", make(map[string]string))
 
 func TestFileReporting_RetrieveDailyTransactionReport(t *testing.T) {
 	request := adapter.RetrieveDailyTransactionReportRequest{

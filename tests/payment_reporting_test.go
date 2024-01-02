@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-var paymentReportingClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var paymentReportingClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io", make(map[string]string))
 
 func Test_SearchPayment(t *testing.T) {
 	request := adapter.SearchPaymentsRequest{

@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-var walletClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var walletClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io", make(map[string]string))
 
 func TestWallet_RetrieveMemberWallet(t *testing.T) {
 	res, err := walletClient.Wallet.RetrieveMemberWallet(context.Background(), 1)

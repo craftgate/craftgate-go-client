@@ -27,7 +27,27 @@ To access the Craftgate API you'll first need to obtain API credentials (e.g. an
 Once you've obtained your API credentials, you can start using Craftgate by instantiating a `Craftgate` with your credentials.
 
 ```go
-client, _ := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://api.craftgate.io")
+client, _ := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://api.craftgate.io", make(map[string]string))
+
+request := craftgate.SearchInstallmentsRequest{
+    BinNumber: "487074",
+    Price:     100,
+    Currency:  craftgate.Currency_TRY,
+}
+
+res, err := client.Installment.SearchInstallments(context.Background(), request)
+
+if err != nil {
+    t.Errorf("Error %s", err)
+}
+```
+
+Also, you can create a Craftgate client with predefined headers;
+```go
+var headers = map[string]string{
+    "lang": "en",
+}
+client, _ := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://api.craftgate.io", headers)
 
 request := craftgate.SearchInstallmentsRequest{
     BinNumber: "487074",
@@ -56,7 +76,7 @@ Let's quickly review an example where we implement a credit card payment scenari
 > For more examples covering almost all use-cases, check out the [examples in the `tests/` folder](./tests)
 
 ```go
-client, _ := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://sandbox-api.craftgate.io");
+client, _ := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://sandbox-api.craftgate.io", make(map[string]string));
 
 request := craftgate.CreatePaymentRequest{
     Price:     100,

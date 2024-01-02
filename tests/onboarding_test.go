@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-var onboardingClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var onboardingClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io", make(map[string]string))
 
 func Test_CreateBuyerMember(t *testing.T) {
 	request := adapter.CreateMemberRequest{

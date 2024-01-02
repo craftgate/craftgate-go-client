@@ -19,7 +19,7 @@ import (
 func Test_main(t *testing.T) {
 	t.Run("Create a new APIClient", func(t *testing.T) {
 
-		client, _ := craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+		client, _ := craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io", make(map[string]string))
 
 		t.Run("Create a API request that should fail", func(t *testing.T) {
 			binNumber, err := client.Installment.RetrieveBinNumber(context.Background(), "487074")

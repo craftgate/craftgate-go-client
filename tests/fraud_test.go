@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-var fraudClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var fraudClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io", make(map[string]string))
 
 func Test_SearchFraudChecks(t *testing.T) {
 	request := adapter.SearchFraudChecksRequest{
