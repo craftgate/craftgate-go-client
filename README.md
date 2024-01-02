@@ -42,12 +42,9 @@ if err != nil {
 }
 ```
 
-Also, you can create a Craftgate client with predefined headers;
+Also, you can pass the options to make localization for API responses. You can use `tr` or `en` right now.
 ```go
-var headers = map[string]string{
-    "lang": "en",
-}
-client, _ := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://api.craftgate.io", headers)
+client, _ := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://api.craftgate.io", craftgate.WithLocalization("en"))
 
 request := craftgate.SearchInstallmentsRequest{
     BinNumber: "487074",
@@ -76,7 +73,7 @@ Let's quickly review an example where we implement a credit card payment scenari
 > For more examples covering almost all use-cases, check out the [examples in the `tests/` folder](./tests)
 
 ```go
-client, _ := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://sandbox-api.craftgate.io", make(map[string]string));
+client, _ := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://sandbox-api.craftgate.io");
 
 request := craftgate.CreatePaymentRequest{
     Price:     100,

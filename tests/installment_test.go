@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-var installmentClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io", make(map[string]string))
+var installmentClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func Test_RetrieveBinNumber(t *testing.T) {
 	res, err := installmentClient.Installment.RetrieveBinNumber(context.Background(), "487074")

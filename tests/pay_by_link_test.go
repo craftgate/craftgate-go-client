@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-var payByLinkClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io", make(map[string]string))
+var payByLinkClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func Test_CreateProduct(t *testing.T) {
 	request := adapter.CreateProductRequest{

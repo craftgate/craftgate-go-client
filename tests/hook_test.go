@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-var cg, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io", make(map[string]string))
+var cg, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func TestHook_VerifyWebhook(t *testing.T) {
 	merchantHookKey := "Aoh7tReTybO6wOjBmOJFFsOR53SBojEp"

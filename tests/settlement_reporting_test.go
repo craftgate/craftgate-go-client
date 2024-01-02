@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-var settlementReportingClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io", make(map[string]string))
+var settlementReportingClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func TestSettlementReporting_SearchPayoutCompletedTransactions(t *testing.T) {
 	request := adapter.SearchPayoutCompletedTransactionsRequest{
