@@ -65,6 +65,17 @@ func init() {
 
 type ClientOption func(*Client) error
 
+func WithLocalization(lang string) ClientOption {
+	return func(client *Client) error {
+		if len(lang) > 0 {
+			client.headers["lang"] = strings.ToLower(lang)
+		} else {
+			client.headers["lang"] = "tr"
+		}
+		return nil
+	}
+}
+
 type Client struct {
 	httpClient *http.Client
 	baseURL    *url.URL
@@ -90,6 +101,8 @@ type Client struct {
 
 func New(apiKey, apiSecret, baseURL string, opts ...ClientOption) (*Client, error) {
 	client := newClient(apiKey, apiSecret)
+	client.headers = make(map[string]string)
+
 	for _, option := range opts {
 		if err := option(client); err != nil {
 			return nil, err
@@ -102,7 +115,7 @@ func New(apiKey, apiSecret, baseURL string, opts ...ClientOption) (*Client, erro
 	if client.baseURL == nil {
 		client.baseURL, _ = url.Parse(baseURL)
 	}
-	client.headers = make(map[string]string)
+
 	return client, nil
 }
 
