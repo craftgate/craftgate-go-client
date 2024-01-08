@@ -76,6 +76,17 @@ func WithLocalization(lang string) ClientOption {
 	}
 }
 
+func WithCustomHTTPClient(httpClient *http.Client) ClientOption {
+	return func(client *Client) error {
+		if httpClient != nil {
+			client.httpClient = httpClient
+		} else {
+			client.httpClient = http.DefaultClient
+		}
+		return nil
+	}
+}
+
 type Client struct {
 	httpClient *http.Client
 	baseURL    *url.URL
