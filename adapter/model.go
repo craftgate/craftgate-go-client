@@ -151,6 +151,11 @@ const (
 	Currency_IQD Currency = "IQD"
 	Currency_AZN Currency = "AZN"
 	Currency_KZT Currency = "KZT"
+	Currency_KWD Currency = "KWD"
+	Currency_SAR Currency = "SAR"
+	Currency_BHD Currency = "BHD"
+	Currency_RUB Currency = "RUB"
+	Currency_JPY Currency = "JPY"
 )
 
 // payment group declaration
@@ -436,6 +441,8 @@ const (
 	PosIntegrator_PAYCELL           PosIntegrator = "PAYCELL"
 	PosIntegrator_TAMI              PosIntegrator = "TAMI"
 	PosIntegrator_QNB_PAY           PosIntegrator = "QNB_PAY"
+	PosIntegrator_AKBANK_VPOS       PosIntegrator = "AKBANK_VPOS"
+	PosIntegrator_TAP               PosIntegrator = "TAP"
 )
 
 const (
