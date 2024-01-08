@@ -31,6 +31,7 @@ type TransactionPayoutStatus string
 type WalletTransactionRefundTransactionType string
 type FraudAction string
 type FraudCheckStatus string
+type FraudValueType string
 type AdditionalAction string
 type ApmAdditionalAction string
 type ReportFileType string
@@ -323,6 +324,15 @@ const (
 	FraudCheckStatus_WAITING   FraudCheckStatus = "WAITING"
 	FraudCheckStatus_NOT_FRAUD FraudCheckStatus = "NOT_FRAUD"
 	FraudCheckStatus_FRAUD     FraudCheckStatus = "FRAUD"
+)
+
+// fraud value type type declaration
+const (
+	FraudValueType_CARD         FraudValueType = "CARD"
+	FraudValueType_IP           FraudValueType = "IP"
+	FraudValueType_PHONE_NUMBER FraudValueType = "PHONE_NUMBER"
+	FraudValueType_EMAIL        FraudValueType = "EMAIL"
+	FraudValueType_OTHER        FraudValueType = "OTHER"
 )
 
 // apm additional action type declaration
@@ -1747,20 +1757,21 @@ type FraudCheckResponse struct {
 }
 
 type FraudPaymentData struct {
-	PaymentDate                   *time.Time `json:"paymentDate"`
-	ConversationId                *string    `json:"conversationId"`
-	PaidPrice                     *float64   `json:"paidPrice"`
-	Currency                      *Currency  `json:"currency"`
-	CardFingerprintId             *string    `json:"cardFingerprintId"`
-	CardFingerprintExpirationDate *time.Time `json:"cardFingerprintExpirationDate"`
-	BuyerId                       *int64     `json:"buyerId"`
-	ClientIp                      *string    `json:"clientIp"`
+	PaymentDate    *time.Time `json:"paymentDate"`
+	ConversationId *string    `json:"conversationId"`
+	PaidPrice      *float64   `json:"paidPrice"`
+	Currency       *Currency  `json:"currency"`
+	BuyerId        *int64     `json:"buyerId"`
+	ClientIp       *string    `json:"clientIp"`
 }
 
 type FraudValueListRequest struct {
-	ListName          string `json:"listName,omitempty"`
-	Value             string `json:"value,omitempty"`
-	DurationInSeconds int    `json:"durationInSeconds,omitempty"`
+	ListName          string         `json:"listName,omitempty"`
+	Type              FraudValueType `json:"type,omitempty"`
+	Label             string         `json:"label,omitempty"`
+	Value             string         `json:"value,omitempty"`
+	PaymentId         int64          `json:"paymentId"`
+	DurationInSeconds int            `json:"durationInSeconds,omitempty"`
 }
 
 type FraudValuesResponse struct {
@@ -1769,6 +1780,8 @@ type FraudValuesResponse struct {
 }
 
 type FraudValue struct {
+	Id              *string `json:"id"`
+	Label           *string `json:"label"`
 	Value           *string `json:"value"`
 	ExpireInSeconds *int    `json:"expireInSeconds"`
 }
