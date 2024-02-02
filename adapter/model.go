@@ -31,6 +31,7 @@ type TransactionPayoutStatus string
 type WalletTransactionRefundTransactionType string
 type FraudAction string
 type FraudCheckStatus string
+type FraudValueType string
 type AdditionalAction string
 type ApmAdditionalAction string
 type ReportFileType string
@@ -155,6 +156,11 @@ const (
 	Currency_IQD Currency = "IQD"
 	Currency_AZN Currency = "AZN"
 	Currency_KZT Currency = "KZT"
+	Currency_KWD Currency = "KWD"
+	Currency_SAR Currency = "SAR"
+	Currency_BHD Currency = "BHD"
+	Currency_RUB Currency = "RUB"
+	Currency_JPY Currency = "JPY"
 )
 
 // payment group declaration
@@ -330,6 +336,15 @@ const (
 	FraudCheckStatus_FRAUD     FraudCheckStatus = "FRAUD"
 )
 
+// fraud value type type declaration
+const (
+	FraudValueType_CARD         FraudValueType = "CARD"
+	FraudValueType_IP           FraudValueType = "IP"
+	FraudValueType_PHONE_NUMBER FraudValueType = "PHONE_NUMBER"
+	FraudValueType_EMAIL        FraudValueType = "EMAIL"
+	FraudValueType_OTHER        FraudValueType = "OTHER"
+)
+
 // apm additional action type declaration
 const (
 	ApmAdditionalAction_REDIRECT_TO_URL   ApmAdditionalAction = "REDIRECT_TO_URL"
@@ -429,6 +444,11 @@ const (
 	PosIntegrator_ELEKSE            PosIntegrator = "ELEKSE"
 	PosIntegrator_ALGORITMA         PosIntegrator = "ALGORITMA"
 	PosIntegrator_PAYCELL           PosIntegrator = "PAYCELL"
+	PosIntegrator_TAMI              PosIntegrator = "TAMI"
+	PosIntegrator_QNB_PAY           PosIntegrator = "QNB_PAY"
+	PosIntegrator_AKBANK_VPOS       PosIntegrator = "AKBANK_VPOS"
+	PosIntegrator_TAP               PosIntegrator = "TAP"
+	PosIntegrator_RUBIK             PosIntegrator = "RUBIK"
 )
 
 const (
@@ -468,30 +488,32 @@ const (
 
 // BnplCartItemType type declaration
 const (
-	BnplCartItemType_MOBILE_PHONE_OVER_5000_TRY  BnplCartItemType = "MOBILE_PHONE_OVER_5000_TRY"
-	BnplCartItemType_MOBILE_PHONE_BELOW_5000_TRY BnplCartItemType = "MOBILE_PHONE_BELOW_5000_TRY"
-	BnplCartItemType_TABLET                      BnplCartItemType = "TABLET"
-	BnplCartItemType_COMPUTER                    BnplCartItemType = "COMPUTER"
-	BnplCartItemType_CONSTRUCTION_MARKET         BnplCartItemType = "CONSTRUCTION_MARKET"
-	BnplCartItemType_GOLD                        BnplCartItemType = "GOLD"
-	BnplCartItemType_DIGITAL_PRODUCTS            BnplCartItemType = "DIGITAL_PRODUCTS"
-	BnplCartItemType_SUPERMARKET                 BnplCartItemType = "SUPERMARKET"
-	BnplCartItemType_WHITE_GOODS                 BnplCartItemType = "WHITE_GOODS"
-	BnplCartItemType_WEARABLE_TECHNOLOGY         BnplCartItemType = "WEARABLE_TECHNOLOGY"
-	BnplCartItemType_SMALL_HOME_APPLIANCES       BnplCartItemType = "SMALL_HOME_APPLIANCES"
-	BnplCartItemType_TV                          BnplCartItemType = "TV"
-	BnplCartItemType_GAMES_CONSOLES              BnplCartItemType = "GAMES_CONSOLES"
-	BnplCartItemType_AIR_CONDITIONER_AND_HEATER  BnplCartItemType = "AIR_CONDITIONER_AND_HEATER"
-	BnplCartItemType_ELECTRONICS                 BnplCartItemType = "ELECTRONICS"
-	BnplCartItemType_ACCESSORIES                 BnplCartItemType = "ACCESSORIES"
-	BnplCartItemType_MOM_AND_BABY_AND_KIDS       BnplCartItemType = "MOM_AND_BABY_AND_KIDS"
-	BnplCartItemType_SHOES                       BnplCartItemType = "SHOES"
-	BnplCartItemType_CLOTHING                    BnplCartItemType = "CLOTHING"
-	BnplCartItemType_COSMETICS_AND_PERSONAL_CARE BnplCartItemType = "COSMETICS_AND_PERSONAL_CARE"
-	BnplCartItemType_FURNITURE                   BnplCartItemType = "FURNITURE"
-	BnplCartItemType_HOME_LIVING                 BnplCartItemType = "HOME_LIVING"
-	BnplCartItemType_AUTOMOBILE_MOTORCYCLE       BnplCartItemType = "AUTOMOBILE_MOTORCYCLE"
-	BnplCartItemType_OTHER                       BnplCartItemType = "OTHER"
+	BnplCartItemType_MOBILE_PHONE_OVER_5000_TRY                BnplCartItemType = "MOBILE_PHONE_OVER_5000_TRY"
+	BnplCartItemType_MOBILE_PHONE_BELOW_5000_TRY               BnplCartItemType = "MOBILE_PHONE_BELOW_5000_TRY"
+	BnplCartItemType_MOBILE_PHONE_PRICE_ABOVE_REGULATION_LIMIT BnplCartItemType = "MOBILE_PHONE_PRICE_ABOVE_REGULATION_LIMIT"
+	BnplCartItemType_MOBILE_PHONE_PRICE_BELOW_REGULATION_LIMIT BnplCartItemType = "MOBILE_PHONE_PRICE_BELOW_REGULATION_LIMIT"
+	BnplCartItemType_TABLET                                    BnplCartItemType = "TABLET"
+	BnplCartItemType_COMPUTER                                  BnplCartItemType = "COMPUTER"
+	BnplCartItemType_CONSTRUCTION_MARKET                       BnplCartItemType = "CONSTRUCTION_MARKET"
+	BnplCartItemType_GOLD                                      BnplCartItemType = "GOLD"
+	BnplCartItemType_DIGITAL_PRODUCTS                          BnplCartItemType = "DIGITAL_PRODUCTS"
+	BnplCartItemType_SUPERMARKET                               BnplCartItemType = "SUPERMARKET"
+	BnplCartItemType_WHITE_GOODS                               BnplCartItemType = "WHITE_GOODS"
+	BnplCartItemType_WEARABLE_TECHNOLOGY                       BnplCartItemType = "WEARABLE_TECHNOLOGY"
+	BnplCartItemType_SMALL_HOME_APPLIANCES                     BnplCartItemType = "SMALL_HOME_APPLIANCES"
+	BnplCartItemType_TV                                        BnplCartItemType = "TV"
+	BnplCartItemType_GAMES_CONSOLES                            BnplCartItemType = "GAMES_CONSOLES"
+	BnplCartItemType_AIR_CONDITIONER_AND_HEATER                BnplCartItemType = "AIR_CONDITIONER_AND_HEATER"
+	BnplCartItemType_ELECTRONICS                               BnplCartItemType = "ELECTRONICS"
+	BnplCartItemType_ACCESSORIES                               BnplCartItemType = "ACCESSORIES"
+	BnplCartItemType_MOM_AND_BABY_AND_KIDS                     BnplCartItemType = "MOM_AND_BABY_AND_KIDS"
+	BnplCartItemType_SHOES                                     BnplCartItemType = "SHOES"
+	BnplCartItemType_CLOTHING                                  BnplCartItemType = "CLOTHING"
+	BnplCartItemType_COSMETICS_AND_PERSONAL_CARE               BnplCartItemType = "COSMETICS_AND_PERSONAL_CARE"
+	BnplCartItemType_FURNITURE                                 BnplCartItemType = "FURNITURE"
+	BnplCartItemType_HOME_LIVING                               BnplCartItemType = "HOME_LIVING"
+	BnplCartItemType_AUTOMOBILE_MOTORCYCLE                     BnplCartItemType = "AUTOMOBILE_MOTORCYCLE"
+	BnplCartItemType_OTHER                                     BnplCartItemType = "OTHER"
 )
 
 // RecordType declaration
@@ -820,6 +842,7 @@ type MasterpassPaymentTokenGenerateRequest struct {
 	BinNumber     string                  `json:"binNumber,omitempty"`
 	ForceThreeDS  bool                    `json:"forceThreeDS,omitempty"`
 	CreatePayment MasterpassCreatePayment `json:"createPayment,omitempty"`
+	Loyalty       Loyalty                 `json:"loyalty,omitempty"`
 }
 
 type MasterpassPaymentCompleteRequest struct {
@@ -1749,20 +1772,21 @@ type FraudCheckResponse struct {
 }
 
 type FraudPaymentData struct {
-	PaymentDate                   *time.Time `json:"paymentDate"`
-	ConversationId                *string    `json:"conversationId"`
-	PaidPrice                     *float64   `json:"paidPrice"`
-	Currency                      *Currency  `json:"currency"`
-	CardFingerprintId             *string    `json:"cardFingerprintId"`
-	CardFingerprintExpirationDate *time.Time `json:"cardFingerprintExpirationDate"`
-	BuyerId                       *int64     `json:"buyerId"`
-	ClientIp                      *string    `json:"clientIp"`
+	PaymentDate    *time.Time `json:"paymentDate"`
+	ConversationId *string    `json:"conversationId"`
+	PaidPrice      *float64   `json:"paidPrice"`
+	Currency       *Currency  `json:"currency"`
+	BuyerId        *int64     `json:"buyerId"`
+	ClientIp       *string    `json:"clientIp"`
 }
 
 type FraudValueListRequest struct {
-	ListName          string `json:"listName,omitempty"`
-	Value             string `json:"value,omitempty"`
-	DurationInSeconds int    `json:"durationInSeconds,omitempty"`
+	ListName          string         `json:"listName,omitempty"`
+	Type              FraudValueType `json:"type,omitempty"`
+	Label             string         `json:"label,omitempty"`
+	Value             string         `json:"value,omitempty"`
+	PaymentId         int64          `json:"paymentId"`
+	DurationInSeconds int            `json:"durationInSeconds,omitempty"`
 }
 
 type FraudValuesResponse struct {
@@ -1771,6 +1795,8 @@ type FraudValuesResponse struct {
 }
 
 type FraudValue struct {
+	Id              *string `json:"id"`
+	Label           *string `json:"label"`
 	Value           *string `json:"value"`
 	ExpireInSeconds *int    `json:"expireInSeconds"`
 }

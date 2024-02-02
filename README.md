@@ -42,6 +42,23 @@ if err != nil {
 }
 ```
 
+Also, you can pass the options to make localization for API responses. You can use `tr` or `en` right now.
+```go
+client, _ := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://api.craftgate.io", craftgate.WithLocalization("en"))
+
+request := craftgate.SearchInstallmentsRequest{
+    BinNumber: "487074",
+    Price:     100,
+    Currency:  craftgate.Currency_TRY,
+}
+
+res, err := client.Installment.SearchInstallments(context.Background(), request)
+
+if err != nil {
+    t.Errorf("Error %s", err)
+}
+```
+
 You should use production API servers at `https://api.craftgate.io` for real world. For testing purposes, please use the sandbox URL `https://sandbox-api.craftgate.io`.
 
 ## Examples
