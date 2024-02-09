@@ -87,6 +87,7 @@ const (
 	ApmType_ALFABANK         ApmType = "ALFABANK"
 	ApmType_TOM_FINANCE      ApmType = "TOM_FINANCE"
 	ApmType_STRIPE           ApmType = "STRIPE"
+	ApmType_HASO             ApmType = "HASO"
 	ApmType_FUND_TRANSFER    ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
 )
@@ -112,6 +113,7 @@ const (
 	PaymentProvider_GOOGLEPAY     PaymentProvider = "GOOGLEPAY"
 	PaymentProvider_HEPSIPAY      PaymentProvider = "HEPSIPAY"
 	PaymentProvider_STRIPE        PaymentProvider = "STRIPE"
+	PaymentProvider_HASO          PaymentProvider = "HASO"
 	PaymentProvider_OFFLINE       PaymentProvider = "OFFLINE"
 )
 
