@@ -12,17 +12,17 @@ var juzdanClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-ap
 
 func Test_InitJuzdanPayment(t *testing.T) {
 	request := adapter.InitJuzdanPaymentRequest{
-		price:          1.25,
-		paidPrice:      1.25,
-		currency:       craftgate.Currency_TRY,
-		paymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
-		conversationId: "foo-bar",
-		externalId:     "115",
-		callbackUrl:    "www.test.com",
-		paymentPhase:   craftgate.PaymentPhase_AUTH,
-		paymentChannel: "test",
-		buyerMemberId:  1,
-		bankOrderId:    "test",
+		Price:          1.25,
+		PaidPrice:      1.25,
+		Currency:       craftgate.Currency_TRY,
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		ConversationId: "foo-bar",
+		ExternalId:     "115",
+		CallbackUrl:    "www.test.com",
+		PaymentPhase:   craftgate.PaymentPhase_AUTH,
+		PaymentChannel: "test",
+		BuyerMemberId:  1,
+		BankOrderId:    "test",
 		Items: []craftgate.PaymentItem{
 			{
 				Name:       "Item 1",
@@ -35,8 +35,8 @@ func Test_InitJuzdanPayment(t *testing.T) {
 				ExternalId: "2",
 			},
 		},
-		clientType:     craftgate.ClientType.W,
-		loanCampaignId: 1,
+		ClientType:     craftgate.ClientType.W,
+		LoanCampaignId: 1,
 	}
 
 	res, err := juzdanClient.Juzdan.InitJuzdanPayment(context.Background(), request)
