@@ -35,7 +35,7 @@ func Test_InitJuzdanPayment(t *testing.T) {
 				ExternalId: "2",
 			},
 		},
-		ClientType:     craftgate.ClientType.W,
+		ClientType:     craftgate.ClientType_W,
 		LoanCampaignId: 1,
 	}
 

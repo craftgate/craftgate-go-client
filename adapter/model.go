@@ -543,8 +543,8 @@ const (
 )
 
 const (
-	ClientType_M ClientType = "M"
 	ClientType_W ClientType = "W"
+	ClientType_M ClientType = "M"
 )
 
 // requests
