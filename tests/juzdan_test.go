@@ -22,7 +22,6 @@ func Test_InitJuzdanPayment(t *testing.T) {
 		CallbackUrl:    "www.test.com",
 		PaymentPhase:   craftgate.PaymentPhase_AUTH,
 		PaymentChannel: "test",
-		BuyerMemberId:  1,
 		BankOrderId:    "test",
 		Items: []craftgate.PaymentItem{
 			{
