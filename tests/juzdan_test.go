@@ -5,7 +5,8 @@ import (
 	"github.com/craftgate/craftgate-go-client/adapter"
 	craftgate "github.com/craftgate/craftgate-go-client/adapter"
 	"github.com/stretchr/testify/require"
-	"testing"
+    "github.com/davecgh/go-spew/spew"
+    "testing"
 )
 
 var juzdanClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
