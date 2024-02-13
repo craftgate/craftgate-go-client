@@ -108,6 +108,7 @@ type Client struct {
 	Masterpass          *Masterpass
 	BankAccountTracking *BankAccountTracking
 	Merchant            *Merchant
+	Juzdan              *Juzdan
 }
 
 func New(apiKey, apiSecret, baseURL string, opts ...ClientOption) (*Client, error) {
