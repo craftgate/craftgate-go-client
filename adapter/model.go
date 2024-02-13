@@ -2108,7 +2108,7 @@ type InitJuzdanPaymentRequest struct {
 
 type InitJuzdanPaymentResponse struct {
 	ReferenceId string `json:"referenceId"`
-	JuzdanQrUrl string `json:"JuzdanQrUrl"`
+	JuzdanQrUrl string `json:"juzdanQrUrl"`
 }
 
 type PaymentError ErrorResponse

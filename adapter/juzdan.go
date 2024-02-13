@@ -26,7 +26,7 @@ func (api *Juzdan) InitJuzdanPayment(ctx context.Context, request InitJuzdanPaym
 }
 
 func (api *Juzdan) RetrieveJuzdanPayment(ctx context.Context, referenceId string) (*PaymentResponse, error) {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/installment/v1/bins/%s", referenceId), nil)
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment/v1/juzdan-payments/%s", referenceId), nil)
 
 	if err != nil {
 		return nil, err
