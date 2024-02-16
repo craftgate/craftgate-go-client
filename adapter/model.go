@@ -50,6 +50,7 @@ type BankAccountTrackingSource string
 type BnplCartItemType string
 type PaymentAuthenticationType string
 type CardBrand string
+type ClientType string
 
 const (
 	ApiKeyHeaderName        = "x-api-key"
@@ -88,6 +89,7 @@ const (
 	ApmType_TOM_FINANCE      ApmType = "TOM_FINANCE"
 	ApmType_STRIPE           ApmType = "STRIPE"
 	ApmType_PAYCELL          ApmType = "PAYCELL"
+	ApmType_HASO             ApmType = "HASO"
 	ApmType_FUND_TRANSFER    ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
 )
@@ -117,6 +119,7 @@ const (
 	PaymentProvider_TOM_FINANCE   PaymentProvider = "TOM_FINANCE"
 	PaymentProvider_ALFABANK      PaymentProvider = "ALFABANK"
 	PaymentProvider_PAYCELL       PaymentProvider = "PAYCELL"
+	PaymentProvider_HASO          PaymentProvider = "HASO"
 	PaymentProvider_OFFLINE       PaymentProvider = "OFFLINE"
 )
 
@@ -542,6 +545,11 @@ const (
 	CardBrand_BANKKART_COMBO CardBrand = "Bankkart Combo"
 	CardBrand_ADVANTAGE      CardBrand = "Advantage"
 	CardBrand_SAGLAM_KART    CardBrand = "Sağlam Kart"
+)
+
+const (
+	ClientType_W ClientType = "W"
+	ClientType_M ClientType = "M"
 )
 
 // requests
@@ -2084,6 +2092,28 @@ type SearchMerchantPosRequest struct {
 
 type CreateMerchantPosCommissionRequest struct {
 	Commissions []CreateMerchantPosCommission `json:"commissions"`
+}
+
+type InitJuzdanPaymentRequest struct {
+	Price          float64       `json:"price,omitempty"`
+	PaidPrice      float64       `json:"paidPrice,omitempty"`
+	Currency       Currency      `json:"currency,omitempty"`
+	PaymentGroup   PaymentGroup  `json:"paymentGroup,omitempty"`
+	ConversationId string        `json:"conversationId,omitempty"`
+	ExternalId     string        `json:"externalId,omitempty"`
+	CallbackUrl    string        `json:"callbackUrl,omitempty"`
+	PaymentPhase   PaymentPhase  `json:"paymentPhase,omitempty"`
+	PaymentChannel string        `json:"paymentChannel,omitempty"`
+	BuyerMemberId  int64         `json:"buyerMemberId,omitempty"`
+	BankOrderId    string        `json:"bankOrderId,omitempty"`
+	Items          []PaymentItem `json:"items"`
+	ClientType     ClientType    `json:"clientType,omitempty"`
+	LoanCampaignId int64         `json:"loanCampaignId,omitempty"`
+}
+
+type InitJuzdanPaymentResponse struct {
+	ReferenceId string `json:"referenceId"`
+	JuzdanQrUrl string `json:"juzdanQrUrl"`
 }
 
 type PaymentError ErrorResponse
