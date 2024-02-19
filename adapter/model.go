@@ -522,7 +522,8 @@ const (
 
 // BankAccountTrackingSource declaration
 const (
-	BankAccountTrackingSource_YKB BankAccountTrackingSource = "YKB"
+	BankAccountTrackingSource_YKB     BankAccountTrackingSource = "YKB"
+	BankAccountTrackingSource_GARANTI BankAccountTrackingSource = "GARANTI"
 )
 
 const (
