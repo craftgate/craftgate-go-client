@@ -22,10 +22,10 @@ func Test_main(t *testing.T) {
 		client, _ := craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 		t.Run("Create a API request that should fail", func(t *testing.T) {
-			binNumber, err := client.Installment.RetrieveBinNumber(context.Background(), "487074")
+			binNumber, err := client.Installment.RetrieveBinNumber(context.Background(), "48707421")
 			require.NotNil(t, err)
 			require.Nil(t, binNumber)
-			assert.Equal(t, true, strings.Contains(err.Error(), "API credential not found!"))
+			assert.Equal(t, true, strings.Contains(err.Error(), "API credential not found"))
 		})
 	})
 }
