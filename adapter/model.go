@@ -120,9 +120,10 @@ const (
 
 // pos apm payment provider declaration
 const (
-	PosApmPaymentProvider_YKB_WORLD_PAY PosApmPaymentProvider = "YKB_WORLD_PAY"
-	PosApmPaymentProvider_APPLEPAY      PosApmPaymentProvider = "APPLEPAY"
-	PosApmPaymentProvider_GOOGLEPAY     PosApmPaymentProvider = "GOOGLEPAY"
+	PosApmPaymentProvider_YKB_WORLD_PAY               PosApmPaymentProvider = "YKB_WORLD_PAY"
+	PosApmPaymentProvider_YKB_WORLD_PAY_SHOPPING_LOAN PosApmPaymentProvider = "YKB_WORLD_PAY_SHOPPING_LOAN"
+	PosApmPaymentProvider_GOOGLEPAY                   PosApmPaymentProvider = "GOOGLEPAY"
+	PosApmPaymentProvider_GARANTI_PAY                 PosApmPaymentProvider = "GARANTI_PAY"
 )
 
 // payment status declaration
