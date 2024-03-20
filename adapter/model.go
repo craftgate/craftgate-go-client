@@ -1695,6 +1695,8 @@ type SearchPayoutCompletedTransactionsRequest struct {
 	SettlementType   SettlementType `schema:"settlementType,omitempty"`
 	StartDate        time.Time      `schema:"startDate,omitempty"`
 	EndDate          time.Time      `schema:"endDate,omitempty"`
+    Page             int            `schema:"page"`
+    Size             int            `schema:"size"`
 }
 
 type SearchPayoutBouncedTransactionsRequest struct {
