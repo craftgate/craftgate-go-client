@@ -1710,9 +1710,6 @@ type SearchPayoutCompletedTransactionsResponse struct {
 	MerchantType                  *string       `json:"merchantType"`
 	SettlementEarningsDestination *string       `json:"settlementEarningsDestination"`
 	SettlementSource              *string       `json:"settlementSource"`
-    Page                          int           `json:"page"`
-    Size                          int           `json:"size"`
-    TotalSize                     int64         `json:"totalSize"`
 }
 
 type SearchPayoutBouncedTransactionsResponse struct {
