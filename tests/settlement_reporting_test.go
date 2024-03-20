@@ -15,6 +15,8 @@ func TestSettlementReporting_SearchPayoutCompletedTransactions(t *testing.T) {
 	request := adapter.SearchPayoutCompletedTransactionsRequest{
 		StartDate: time.Now().AddDate(0, 0, -180),
 		EndDate:   time.Now(),
+        Page:      0,
+        Size:      10,
 	}
 
 	res, err := settlementReportingClient.SettlementReporting.SearchPayoutCompletedTransactions(context.Background(), request)
