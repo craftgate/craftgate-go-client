@@ -83,6 +83,7 @@ const (
 	ApmType_KLARNA           ApmType = "KLARNA"
 	ApmType_AFTERPAY         ApmType = "AFTERPAY"
 	ApmType_KASPI            ApmType = "KASPI"
+	ApmType_COMPAY           ApmType = "COMPAY"
 	ApmType_TOMPAY           ApmType = "TOMPAY"
 	ApmType_MASLAK           ApmType = "MASLAK"
 	ApmType_ALFABANK         ApmType = "ALFABANK"
@@ -109,6 +110,7 @@ const (
 	PaymentProvider_KLARNA        PaymentProvider = "KLARNA"
 	PaymentProvider_AFTERPAY      PaymentProvider = "AFTERPAY"
 	PaymentProvider_KASPI         PaymentProvider = "KASPI"
+	PaymentProvider_COMPAY        PaymentProvider = "COMPAY"
 	PaymentProvider_TOMPAY        PaymentProvider = "TOMPAY"
 	PaymentProvider_APPLEPAY      PaymentProvider = "APPLEPAY"
 	PaymentProvider_GOOGLEPAY     PaymentProvider = "GOOGLEPAY"
@@ -188,6 +190,7 @@ const (
 	PaymentMethod_KLARNA       PaymentMethod = "KLARNA"
 	PaymentMethod_AFTERPAY     PaymentMethod = "AFTERPAY"
 	PaymentMethod_KASPI        PaymentMethod = "KASPI"
+	PaymentMethod_COMPAY       PaymentMethod = "COMPAY"
 	PaymentMethod_TOMPAY       PaymentMethod = "TOMPAY"
 	PaymentMethod_STRIPE       PaymentMethod = "STRIPE"
 )
@@ -347,6 +350,7 @@ const (
 const (
 	ApmAdditionalAction_REDIRECT_TO_URL   ApmAdditionalAction = "REDIRECT_TO_URL"
 	ApmAdditionalAction_OTP_REQUIRED      ApmAdditionalAction = "OTP_REQUIRED"
+	ApmAdditionalAction_SHOW_HTML_CONTENT ApmAdditionalAction = "SHOW_HTML_CONTENT"
 	ApmAdditionalAction_WAIT_FOR_WEBHOOK  ApmAdditionalAction = "WAIT_FOR_WEBHOOK"
 	ApmAdditionalAction_APPROVAL_REQUIRED ApmAdditionalAction = "APPROVAL_REQUIRED"
 	ApmAdditionalAction_NONE              ApmAdditionalAction = "NONE"
@@ -987,6 +991,7 @@ type InitCheckoutPaymentResponse struct {
 type InitApmPaymentResponse struct {
 	PaymentId           *int64               `json:"paymentId"`
 	RedirectUrl         *string              `json:"redirectUrl"`
+	HtmlContent         *string              `json:"htmlContent"`
 	PaymentStatus       *PaymentStatus       `json:"paymentStatus"`
 	ApmAdditionalAction *ApmAdditionalAction `json:"additionalAction"`
 	PaymentError        *PaymentError        `json:"paymentError"`
@@ -1317,6 +1322,16 @@ type InstallmentResponse struct {
 	Commercial        *bool              `json:"commercial"`
 	PosAlias          *string            `json:"posAlias"`
 	InstallmentPrices []InstallmentPrice `json:"installmentPrices"`
+}
+
+type InstantTransferBanksResponse struct {
+	Items []InstantTransferBank `json:"items"`
+}
+
+type InstantTransferBank struct {
+	BankCode    *string `json:"bankCode"`
+	BankName    *string `json:"bankName"`
+	BankLogoUrl *string `json:"bankLogoUrl"`
 }
 
 type RetrieveBinNumberResponse struct {
