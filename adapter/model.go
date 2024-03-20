@@ -1298,6 +1298,7 @@ type SearchInstallmentsRequest struct {
 	Price                                   float64  `schema:"price"`
 	Currency                                Currency `schema:"currency"`
 	DistinctCardBrandsWithLowestCommissions bool     `schema:"distinctCardBrandsWithLowestCommissions"`
+	LoyaltyExists                           bool     `schema:"loyaltyExists"`
 }
 
 type InstallmentListResponse struct {
