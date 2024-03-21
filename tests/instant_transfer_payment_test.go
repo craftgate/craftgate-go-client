@@ -20,12 +20,12 @@ func TestRetrieveActiveBanks(t *testing.T) {
 	}
 }
 
-func TestInitCompayAPMPayment(t *testing.T) {
+func TestInitInstantTransferAPMPayment(t *testing.T) {
 	additionalParams := make(map[string]string)
 	additionalParams["bankCode"] = "0"
 
 	request := adapter.InitApmPaymentRequest{
-		ApmType:        craftgate.ApmType_COMPAY,
+		ApmType:        craftgate.ApmType_INSTANT_TRANSFER,
 		Price:          1,
 		PaidPrice:      1,
 		Currency:       craftgate.Currency_TRY,
