@@ -83,7 +83,7 @@ const (
 	ApmType_KLARNA           ApmType = "KLARNA"
 	ApmType_AFTERPAY         ApmType = "AFTERPAY"
 	ApmType_KASPI            ApmType = "KASPI"
-	ApmType_COMPAY           ApmType = "COMPAY"
+	ApmType_INSTANT_TRANSFER ApmType = "INSTANT_TRANSFER"
 	ApmType_TOMPAY           ApmType = "TOMPAY"
 	ApmType_MASLAK           ApmType = "MASLAK"
 	ApmType_ALFABANK         ApmType = "ALFABANK"
@@ -97,32 +97,32 @@ const (
 
 // payment provider declaration
 const (
-	PaymentProvider_BANK          PaymentProvider = "BANK"
-	PaymentProvider_CG_WALLET     PaymentProvider = "CG_WALLET"
-	PaymentProvider_MASTERPASS    PaymentProvider = "MASTERPASS"
-	PaymentProvider_GARANTI_PAY   PaymentProvider = "GARANTI_PAY"
-	PaymentProvider_YKB_WORLD_PAY PaymentProvider = "YKB_WORLD_PAY"
-	PaymentProvider_PAPARA        PaymentProvider = "PAPARA"
-	PaymentProvider_PAYONEER      PaymentProvider = "PAYONEER"
-	PaymentProvider_SODEXO        PaymentProvider = "SODEXO"
-	PaymentProvider_EDENRED       PaymentProvider = "EDENRED"
-	PaymentProvider_ALIPAY        PaymentProvider = "ALIPAY"
-	PaymentProvider_PAYPAL        PaymentProvider = "PAYPAL"
-	PaymentProvider_KLARNA        PaymentProvider = "KLARNA"
-	PaymentProvider_AFTERPAY      PaymentProvider = "AFTERPAY"
-	PaymentProvider_APPLEPAY      PaymentProvider = "APPLEPAY"
-	PaymentProvider_GOOGLEPAY     PaymentProvider = "GOOGLEPAY"
-	PaymentProvider_HEPSIPAY      PaymentProvider = "HEPSIPAY"
-	PaymentProvider_STRIPE        PaymentProvider = "STRIPE"
-	PaymentProvider_KASPI         PaymentProvider = "KASPI"
-  PaymentProvider_COMPAY        PaymentProvider = "COMPAY"
-	PaymentProvider_MASLAK        PaymentProvider = "MASLAK"
-	PaymentProvider_TOMPAY        PaymentProvider = "TOMPAY"
-	PaymentProvider_TOM_FINANCE   PaymentProvider = "TOM_FINANCE"
-	PaymentProvider_ALFABANK      PaymentProvider = "ALFABANK"
-	PaymentProvider_PAYCELL       PaymentProvider = "PAYCELL"
-	PaymentProvider_HASO          PaymentProvider = "HASO"
-	PaymentProvider_OFFLINE       PaymentProvider = "OFFLINE"
+	PaymentProvider_BANK             PaymentProvider = "BANK"
+	PaymentProvider_CG_WALLET        PaymentProvider = "CG_WALLET"
+	PaymentProvider_MASTERPASS       PaymentProvider = "MASTERPASS"
+	PaymentProvider_GARANTI_PAY      PaymentProvider = "GARANTI_PAY"
+	PaymentProvider_YKB_WORLD_PAY    PaymentProvider = "YKB_WORLD_PAY"
+	PaymentProvider_PAPARA           PaymentProvider = "PAPARA"
+	PaymentProvider_PAYONEER         PaymentProvider = "PAYONEER"
+	PaymentProvider_SODEXO           PaymentProvider = "SODEXO"
+	PaymentProvider_EDENRED          PaymentProvider = "EDENRED"
+	PaymentProvider_ALIPAY           PaymentProvider = "ALIPAY"
+	PaymentProvider_PAYPAL           PaymentProvider = "PAYPAL"
+	PaymentProvider_KLARNA           PaymentProvider = "KLARNA"
+	PaymentProvider_AFTERPAY         PaymentProvider = "AFTERPAY"
+	PaymentProvider_APPLEPAY         PaymentProvider = "APPLEPAY"
+	PaymentProvider_GOOGLEPAY        PaymentProvider = "GOOGLEPAY"
+	PaymentProvider_HEPSIPAY         PaymentProvider = "HEPSIPAY"
+	PaymentProvider_STRIPE           PaymentProvider = "STRIPE"
+	PaymentProvider_KASPI            PaymentProvider = "KASPI"
+	PaymentProvider_INSTANT_TRANSFER PaymentProvider = "INSTANT_TRANSFER"
+	PaymentProvider_MASLAK           PaymentProvider = "MASLAK"
+	PaymentProvider_TOMPAY           PaymentProvider = "TOMPAY"
+	PaymentProvider_TOM_FINANCE      PaymentProvider = "TOM_FINANCE"
+	PaymentProvider_ALFABANK         PaymentProvider = "ALFABANK"
+	PaymentProvider_PAYCELL          PaymentProvider = "PAYCELL"
+	PaymentProvider_HASO             PaymentProvider = "HASO"
+	PaymentProvider_OFFLINE          PaymentProvider = "OFFLINE"
 )
 
 // pos apm payment provider declaration
@@ -183,21 +183,21 @@ const (
 
 // payment method declaration
 const (
-	PaymentMethod_CARD         PaymentMethod = "CARD"
-	PaymentMethod_MASTERPASS   PaymentMethod = "MASTERPASS"
-	PaymentMethod_PAPARA       PaymentMethod = "PAPARA"
-	PaymentMethod_PAYONEER     PaymentMethod = "PAYONEER"
-	PaymentMethod_SODEXO       PaymentMethod = "SODEXO"
-	PaymentMethod_EDENRED      PaymentMethod = "EDENRED"
-	PaymentMethod_EDENRED_GIFT PaymentMethod = "EDENRED_GIFT"
-	PaymentMethod_ALIPAY       PaymentMethod = "ALIPAY"
-	PaymentMethod_PAYPAL       PaymentMethod = "PAYPAL"
-	PaymentMethod_KLARNA       PaymentMethod = "KLARNA"
-	PaymentMethod_AFTERPAY     PaymentMethod = "AFTERPAY"
-	PaymentMethod_KASPI        PaymentMethod = "KASPI"
-	PaymentMethod_COMPAY       PaymentMethod = "COMPAY"
-	PaymentMethod_TOMPAY       PaymentMethod = "TOMPAY"
-	PaymentMethod_STRIPE       PaymentMethod = "STRIPE"
+	PaymentMethod_CARD             PaymentMethod = "CARD"
+	PaymentMethod_MASTERPASS       PaymentMethod = "MASTERPASS"
+	PaymentMethod_PAPARA           PaymentMethod = "PAPARA"
+	PaymentMethod_PAYONEER         PaymentMethod = "PAYONEER"
+	PaymentMethod_SODEXO           PaymentMethod = "SODEXO"
+	PaymentMethod_EDENRED          PaymentMethod = "EDENRED"
+	PaymentMethod_EDENRED_GIFT     PaymentMethod = "EDENRED_GIFT"
+	PaymentMethod_ALIPAY           PaymentMethod = "ALIPAY"
+	PaymentMethod_PAYPAL           PaymentMethod = "PAYPAL"
+	PaymentMethod_KLARNA           PaymentMethod = "KLARNA"
+	PaymentMethod_AFTERPAY         PaymentMethod = "AFTERPAY"
+	PaymentMethod_KASPI            PaymentMethod = "KASPI"
+	PaymentMethod_INSTANT_TRANSFER PaymentMethod = "INSTANT_TRANSFER"
+	PaymentMethod_TOMPAY           PaymentMethod = "TOMPAY"
+	PaymentMethod_STRIPE           PaymentMethod = "STRIPE"
 )
 
 // card type declaration
@@ -1700,8 +1700,8 @@ type SearchPayoutCompletedTransactionsRequest struct {
 	SettlementType   SettlementType `schema:"settlementType,omitempty"`
 	StartDate        time.Time      `schema:"startDate,omitempty"`
 	EndDate          time.Time      `schema:"endDate,omitempty"`
-    Page             int            `schema:"page"`
-    Size             int            `schema:"size"`
+	Page             int            `schema:"page"`
+	Size             int            `schema:"size"`
 }
 
 type SearchPayoutBouncedTransactionsRequest struct {
