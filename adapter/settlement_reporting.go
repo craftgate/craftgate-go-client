@@ -11,7 +11,7 @@ type SettlementReporting struct {
 }
 
 func (api *SettlementReporting) SearchPayoutCompletedTransactions(ctx context.Context, request SearchPayoutCompletedTransactionsRequest) (*DataResponse[SearchPayoutCompletedTransactionsResponse], error) {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/settlement-reporting/v1/settlement-file/payout-completed-transactions", request)
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/settlement-reporting/v2/settlement-file/payout-completed-transactions", request)
 	if err != nil {
 		return nil, err
 	}
