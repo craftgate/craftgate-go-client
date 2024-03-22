@@ -44,7 +44,7 @@ func Test_CreateSubMerchantMember(t *testing.T) {
 		IdentityNumber:    "11111111110",
 		LegalCompanyTitle: "Dem Zeytinyağı Üretim Ltd. Şti.",
 		Name:              "Dem Zeytinyağı Üretim Ltd. Şti.",
-		MemberType:        craftgate.LIMITED_OR_JOINT_STOCK_COMPANY,
+		MemberType:        craftgate.MemberType_LIMITED_OR_JOINT_STOCK_COMPANY,
 		TaxNumber:         "1111111114",
 		TaxOffice:         "Erenköy",
 		Address:           "Suadiye Mah. Örnek Cd. No:23, 34740 Kadıköy/İstanbul",
@@ -71,7 +71,7 @@ func Test_CreateBuyerAndSubMerchantMember(t *testing.T) {
 		IdentityNumber:    "11111111110",
 		LegalCompanyTitle: "Dem Zeytinyağı Üretim Ltd. Şti.",
 		Name:              "Dem Zeytinyağı Üretim Ltd. Şti.",
-		MemberType:        craftgate.LIMITED_OR_JOINT_STOCK_COMPANY,
+		MemberType:        craftgate.MemberType_LIMITED_OR_JOINT_STOCK_COMPANY,
 		TaxNumber:         "1111111114",
 		TaxOffice:         "Erenköy",
 		Address:           "Suadiye Mah. Örnek Cd. No:23, 34740 Kadıköy/İstanbul",
@@ -97,8 +97,8 @@ func Test_UpdateSubMerchantMember(t *testing.T) {
 		IdentityNumber:                "11111111110",
 		LegalCompanyTitle:             "Dem Zeytinyağı Üretim Ltd. Şti.",
 		Name:                          "Dem Zeytinyağı Üretim Ltd. Şti.",
-		MemberType:                    craftgate.LIMITED_OR_JOINT_STOCK_COMPANY,
-		SettlementEarningsDestination: craftgate.SettlementEarningsDestinationWALLET,
+		MemberType:                    craftgate.MemberType_LIMITED_OR_JOINT_STOCK_COMPANY,
+		SettlementEarningsDestination: craftgate.SettlementEarningsDestination_WALLET,
 		TaxNumber:                     "1111111114",
 		TaxOffice:                     "Erenköy",
 		Address:                       "Suadiye Mah. Örnek Cd. No:23, 34740 Kadıköy/İstanbul",
@@ -124,7 +124,7 @@ func Test_UpdateBuyerMember(t *testing.T) {
 		IdentityNumber:    "11111111110",
 		LegalCompanyTitle: "Dem Zeytinyağı Üretim Ltd. Şti.",
 		Name:              "Dem Zeytinyağı Üretim Ltd. Şti.",
-		MemberType:        craftgate.PERSONAL,
+		MemberType:        craftgate.MemberType_PERSONAL,
 		TaxNumber:         "1111111114",
 		TaxOffice:         "Erenköy",
 		Address:           "Suadiye Mah. Örnek Cd. No:23, 34740 Kadıköy/İstanbul",
@@ -157,6 +157,25 @@ func Test_SearchMembers(t *testing.T) {
 	}
 
 	res, err := onboardingClient.Onboarding.SearchMembers(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func Test_CreateMerchant(t *testing.T) {
+	request := adapter.CreateMerchantRequest{
+		Name:               "newMerchant",
+		LegalCompanyTitle:  "legalCompanyTitle",
+		Email:              "new_merchant@merchant.com",
+		Website:            "www.merchant.com",
+		ContactName:        "newName",
+		ContactSurname:     "newSurname",
+		ContactPhoneNumber: "905555555566",
+	}
+
+	res, err := onboardingClient.Onboarding.CreateMerchant(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {

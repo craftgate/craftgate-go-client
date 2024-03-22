@@ -23,10 +23,10 @@ func TestSettlement_CreateInstantWalletSettlement(t *testing.T) {
 
 func TestSettlement_CreateMerchantPayoutAccount(t *testing.T) {
 	request := adapter.CreatePayoutAccountRequest{
-		AccountType:       craftgate.PayoutAccountTypeWISE,
+		AccountType:       craftgate.PayoutAccountType_WISE,
 		ExternalAccountId: "wiseRecipientId",
-		Currency:          craftgate.USD,
-		AccountOwner:      craftgate.AccountOwnerMERCHANT,
+		Currency:          craftgate.Currency_USD,
+		AccountOwner:      craftgate.AccountOwner_MERCHANT,
 	}
 
 	res, err := settlementClient.Settlement.CreatePayoutAccount(context.Background(), request)
@@ -39,10 +39,10 @@ func TestSettlement_CreateMerchantPayoutAccount(t *testing.T) {
 
 func TestSettlement_CreateSubMerchantPayoutAccount(t *testing.T) {
 	request := adapter.CreatePayoutAccountRequest{
-		AccountType:         craftgate.PayoutAccountTypeWISE,
+		AccountType:         craftgate.PayoutAccountType_WISE,
 		ExternalAccountId:   "wiseRecipientId",
-		Currency:            craftgate.EUR,
-		AccountOwner:        craftgate.AccountOwnerSUB_MERCHANT_MEMBER,
+		Currency:            craftgate.Currency_EUR,
+		AccountOwner:        craftgate.AccountOwner_SUB_MERCHANT_MEMBER,
 		SubMerchantMemberId: 1,
 	}
 
@@ -56,7 +56,7 @@ func TestSettlement_CreateSubMerchantPayoutAccount(t *testing.T) {
 
 func TestSettlement_UpdatePayoutAccount(t *testing.T) {
 	request := adapter.UpdatePayoutAccountRequest{
-		AccountType:       craftgate.PayoutAccountTypeWISE,
+		AccountType:       craftgate.PayoutAccountType_WISE,
 		ExternalAccountId: "wiseRecipientId2",
 	}
 
@@ -77,8 +77,8 @@ func TestSettlement_DeletePayoutAccount(t *testing.T) {
 
 func TestSettlement_SearchPayoutAccounts(t *testing.T) {
 	request := adapter.SearchPayoutAccountRequest{
-		Currency:     craftgate.USD,
-		AccountOwner: craftgate.AccountOwnerMERCHANT,
+		Currency:     craftgate.Currency_USD,
+		AccountOwner: craftgate.AccountOwner_MERCHANT,
 	}
 
 	res, err := settlementClient.Settlement.SearchPayoutAccounts(context.Background(), request)

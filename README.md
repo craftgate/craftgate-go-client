@@ -32,7 +32,24 @@ client, _ := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://api.c
 request := craftgate.SearchInstallmentsRequest{
     BinNumber: "487074",
     Price:     100,
-    Currency:  craftgate.TRY,
+    Currency:  craftgate.Currency_TRY,
+}
+
+res, err := client.Installment.SearchInstallments(context.Background(), request)
+
+if err != nil {
+    t.Errorf("Error %s", err)
+}
+```
+
+Also, you can pass the options to make localization for API responses. You can use `tr` or `en` right now.
+```go
+client, _ := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://api.craftgate.io", craftgate.WithLocalization("en"))
+
+request := craftgate.SearchInstallmentsRequest{
+    BinNumber: "487074",
+    Price:     100,
+    Currency:  craftgate.Currency_TRY,
 }
 
 res, err := client.Installment.SearchInstallments(context.Background(), request)
@@ -61,7 +78,7 @@ client, _ := craftgate.New("<YOUR API KEY>", "<YOUR SECRET KEY>", "https://sandb
 request := craftgate.CreatePaymentRequest{
     Price:     100,
     PaidPrice: 100,
-    Currency:  craftgate.TRY,
+    Currency:  craftgate.Currency_TRY,
     ...
 }
 

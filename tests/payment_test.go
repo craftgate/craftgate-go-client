@@ -16,8 +16,8 @@ func TestPayment_CreatePayment(t *testing.T) {
 		Price:          1.25,
 		PaidPrice:      1.25,
 		Installment:    1,
-		Currency:       craftgate.TRY,
-		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
+		Currency:       craftgate.Currency_TRY,
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
 		ConversationId: "foo-bar",
 		ExternalId:     "115",
 		Card: &craftgate.Card{
@@ -51,11 +51,11 @@ func TestPayment_CreatePayment(t *testing.T) {
 
 func TestPayment_CreateApmPayment(t *testing.T) {
 	request := adapter.CreateApmPaymentRequest{
-		ApmType:        craftgate.ApmTypeCASH_ON_DELIVERY,
+		ApmType:        craftgate.ApmType_CASH_ON_DELIVERY,
 		Price:          1.25,
 		PaidPrice:      1.25,
-		Currency:       craftgate.TRY,
-		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
+		Currency:       craftgate.Currency_TRY,
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
 		ConversationId: "foo-bar",
 		ExternalId:     "115",
 		Items: []craftgate.PaymentItem{
@@ -95,8 +95,8 @@ func TestPayment_Init3DSPayment(t *testing.T) {
 		Price:          1.25,
 		PaidPrice:      1.25,
 		Installment:    1,
-		Currency:       craftgate.TRY,
-		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
+		Currency:       craftgate.Currency_TRY,
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
 		ConversationId: "foo-bar",
 		ExternalId:     "115",
 		Card: &craftgate.Card{
@@ -147,9 +147,9 @@ func TestPayment_CreatePreAuthPayment(t *testing.T) {
 		Price:          1.25,
 		PaidPrice:      1.25,
 		Installment:    1,
-		Currency:       craftgate.TRY,
-		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
-		PaymentPhase:   craftgate.PRE_AUTH,
+		Currency:       craftgate.Currency_TRY,
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		PaymentPhase:   craftgate.PaymentPhase_PRE_AUTH,
 		ConversationId: "foo-bar",
 		ExternalId:     "115",
 		Card: &craftgate.Card{
@@ -197,9 +197,9 @@ func TestPayment_InitCheckoutPayment(t *testing.T) {
 	request := adapter.InitCheckoutPaymentRequest{
 		Price:          1.25,
 		PaidPrice:      1.25,
-		Currency:       craftgate.TRY,
-		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
-		PaymentPhase:   craftgate.AUTH,
+		Currency:       craftgate.Currency_TRY,
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		PaymentPhase:   craftgate.PaymentPhase_AUTH,
 		ConversationId: "foo-bar",
 		ExternalId:     "115",
 		Items: []craftgate.PaymentItem{
@@ -313,9 +313,9 @@ func TestPayment_CreateFundTransferDepositPayment(t *testing.T) {
 
 func TestPayment_InitDepositApmPayment(t *testing.T) {
 	request := adapter.InitApmDepositPaymentRequest{
-		ApmType:        craftgate.ApmTypePAPARA,
+		ApmType:        craftgate.ApmType_PAPARA,
 		Price:          1.25,
-		Currency:       craftgate.TRY,
+		Currency:       craftgate.Currency_TRY,
 		BuyerMemberId:  1,
 		ConversationId: "foo-bar",
 		CallbackUrl:    "https://www.your-website.com/callback",
@@ -333,8 +333,8 @@ func TestPayment_InitGarantiPayPayment(t *testing.T) {
 	request := adapter.InitGarantiPayPaymentRequest{
 		Price:          100,
 		PaidPrice:      100,
-		Currency:       craftgate.TRY,
-		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
+		Currency:       craftgate.Currency_TRY,
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
 		ConversationId: "456d1297-908e-4bd6-a13b-4be31a6e47d5",
 		CallbackUrl:    "https://www.your-website.com/craftgate-garantipay-callback",
 		Items: []craftgate.PaymentItem{
@@ -370,11 +370,11 @@ func TestPayment_InitGarantiPayPayment(t *testing.T) {
 
 func TestPayment_InitApmPayment(t *testing.T) {
 	request := adapter.InitApmPaymentRequest{
-		ApmType:         craftgate.ApmTypeEDENRED,
+		ApmType:         craftgate.ApmType_EDENRED,
 		Price:           1.25,
 		PaidPrice:       1.25,
-		Currency:        craftgate.TRY,
-		PaymentGroup:    craftgate.LISTING_OR_SUBSCRIPTION,
+		Currency:        craftgate.Currency_TRY,
+		PaymentGroup:    craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
 		ConversationId:  "foo-bar",
 		ApmUserIdentity: "4242424242424242",
 		CallbackUrl:     "https://www.your-website.com/callback",
@@ -401,11 +401,11 @@ func TestPayment_InitApmPayment(t *testing.T) {
 
 func TestPayment_InitKlarnaApmPayment(t *testing.T) {
 	request := adapter.InitApmPaymentRequest{
-		ApmType:        craftgate.ApmTypeKLARNA,
+		ApmType:        craftgate.ApmType_KLARNA,
 		Price:          1,
 		PaidPrice:      1,
-		Currency:       craftgate.USD,
-		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
+		Currency:       craftgate.Currency_USD,
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
 		ConversationId: "foo-bar",
 		CallbackUrl:    "https://www.your-website.com/callback",
 		Items: []craftgate.PaymentItem{
@@ -433,11 +433,11 @@ func TestPayment_InitKlarnaApmPayment(t *testing.T) {
 
 func TestPayment_InitAfterpayApmPayment(t *testing.T) {
 	request := adapter.InitApmPaymentRequest{
-		ApmType:        craftgate.ApmTypeAFTERPAY,
+		ApmType:        craftgate.ApmType_AFTERPAY,
 		Price:          1,
 		PaidPrice:      1,
-		Currency:       craftgate.USD,
-		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
+		Currency:       craftgate.Currency_USD,
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
 		ConversationId: "foo-bar",
 		CallbackUrl:    "https://www.your-website.com/callback",
 		Items: []craftgate.PaymentItem{
@@ -461,11 +461,11 @@ func TestPayment_InitAfterpayApmPayment(t *testing.T) {
 
 func TestPayment_InitKaspiApmPayment(t *testing.T) {
 	request := adapter.InitApmPaymentRequest{
-		ApmType:        craftgate.ApmTypeKASPI,
+		ApmType:        craftgate.ApmType_KASPI,
 		Price:          1,
 		PaidPrice:      1,
-		Currency:       craftgate.KZT,
-		PaymentGroup:   craftgate.LISTING_OR_SUBSCRIPTION,
+		Currency:       craftgate.Currency_KZT,
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
 		ConversationId: "foo-bar",
 		CallbackUrl:    "https://www.your-website.com/callback",
 		Items: []craftgate.PaymentItem{
@@ -487,12 +487,123 @@ func TestPayment_InitKaspiApmPayment(t *testing.T) {
 	}
 }
 
+func TestPayment_InitTompayApmPayment(t *testing.T) {
+	additionalParams := make(map[string]string)
+	additionalParams["phone"] = "phone"
+	additionalParams["channel"] = "channel"
+
+	request := adapter.InitApmPaymentRequest{
+		ApmType:        craftgate.ApmType_TOMPAY,
+		Price:          1,
+		PaidPrice:      1,
+		Currency:       craftgate.Currency_TRY,
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		ConversationId: "foo-bar",
+		CallbackUrl:    "https://www.your-website.com/callback",
+		Items: []craftgate.PaymentItem{
+			{
+				Name:  "Item 1",
+				Price: 0.6,
+			},
+			{
+				Name:  "Item 2",
+				Price: 0.4,
+			},
+		},
+		AdditionalParams: additionalParams,
+	}
+	res, err := paymentClient.Payment.InitApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_CompleteApmPayment(t *testing.T) {
 	request := adapter.CompleteApmPaymentRequest{
 		PaymentId:        123,
 		AdditionalParams: map[string]string{"otpCode": "123456"},
 	}
 	res, err := paymentClient.Payment.CompleteApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_InitYkbWorldPayPosApmPayment(t *testing.T) {
+	request := adapter.InitPosApmPaymentRequest{
+		Price:           1.25,
+		PaidPrice:       1.25,
+		Currency:        craftgate.Currency_TRY,
+		PaymentGroup:    craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		ConversationId:  "foo-bar",
+		PaymentProvider: craftgate.PosApmPaymentProvider_YKB_WORLD_PAY,
+		CallbackUrl:     "https://www.your-website.com/callback",
+		Items: []craftgate.PaymentItem{
+			{
+				Name:       "Item 1",
+				Price:      1,
+				ExternalId: "1",
+			},
+			{
+				Name:       "Item 2",
+				Price:      0.25,
+				ExternalId: "2",
+			},
+		},
+		AdditionalParams: map[string]string{
+			"sourceCode": "WEB2QR",
+		},
+	}
+	res, err := paymentClient.Payment.InitPosApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_InitGarantiPayPosApmPayment(t *testing.T) {
+	request := adapter.InitPosApmPaymentRequest{
+		Price:           1.25,
+		PaidPrice:       1.25,
+		Currency:        craftgate.Currency_TRY,
+		PaymentGroup:    craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		ConversationId:  "foo-bar",
+		PaymentProvider: craftgate.PosApmPaymentProvider_GARANTI_PAY,
+		CallbackUrl:     "https://www.your-website.com/callback",
+		Items: []craftgate.PaymentItem{
+			{
+				Name:       "Item 1",
+				Price:      1,
+				ExternalId: "1",
+			},
+			{
+				Name:       "Item 2",
+				Price:      0.25,
+				ExternalId: "2",
+			},
+		},
+		AdditionalParams: map[string]string{
+			"integrationType": "WEB2APP",
+		},
+	}
+	res, err := paymentClient.Payment.InitPosApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_CompletePosApmPayment(t *testing.T) {
+	request := adapter.CompletePosApmPaymentRequest{
+		PaymentId: 123,
+	}
+	res, err := paymentClient.Payment.CompletePosApmPayment(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -520,7 +631,7 @@ func TestPayment_RefundPaymentTransaction(t *testing.T) {
 		PaymentTransactionId:  1,
 		ConversationId:        "456d1297-908e-4bd6-a13b-4be31a6e47d5",
 		RefundPrice:           20,
-		RefundDestinationType: craftgate.RefundDestinationTypePROVIDER,
+		RefundDestinationType: craftgate.RefundDestinationType_PROVIDER,
 	}
 
 	res, err := paymentClient.Payment.RefundPaymentTransaction(context.Background(), request)
@@ -543,7 +654,7 @@ func TestPayment_RetrievePaymentTransactionRefund(t *testing.T) {
 func TestPayment_RefundPayment(t *testing.T) {
 	request := adapter.RefundPaymentRequest{
 		PaymentId:             1,
-		RefundDestinationType: craftgate.RefundDestinationTypePROVIDER,
+		RefundDestinationType: craftgate.RefundDestinationType_PROVIDER,
 	}
 	res, err := paymentClient.Payment.RefundPayment(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
@@ -610,8 +721,8 @@ func TestPayment_SearchStoredCards(t *testing.T) {
 		CardAlias:       "My YKB Card",
 		CardBankName:    "YAPI VE KREDI BANKASI A.S.",
 		CardBrand:       "World",
-		CardType:        craftgate.CREDIT_CARD,
-		CardAssociation: craftgate.MASTER_CARD,
+		CardType:        craftgate.CardType_CREDIT_CARD,
+		CardAssociation: craftgate.CardAssociation_MASTER_CARD,
 	}
 
 	res, err := paymentClient.Payment.SearchStoredCards(context.Background(), request)
@@ -691,4 +802,137 @@ func TestPayment_NotVerify3DSCallback(t *testing.T) {
 	is3DSecureCallbackVerified := paymentClient.Payment.Is3DSecureCallbackVerified(merchantThreeDsCallbackKey, params)
 
 	require.False(t, is3DSecureCallbackVerified)
+}
+
+func TestPayment_BnplPaymentOffer(t *testing.T) {
+	request := adapter.BnplPaymentOfferRequest{
+		ApmType:  craftgate.ApmType_MASLAK,
+		Price:    10000,
+		Currency: craftgate.Currency_TRY,
+		Items: []craftgate.BnplPaymentCartItem{
+			{
+				Id:        "200",
+				Name:      "Test Elektronik 2",
+				BrandName: "iphone",
+				Type:      craftgate.BnplCartItemType_MOBILE_PHONE_PRICE_BELOW_REGULATION_LIMIT,
+				UnitPrice: 3000,
+				Quantity:  2,
+			},
+			{
+				Id:        "100",
+				Name:      "Test Elektronik 1",
+				BrandName: "Samsung",
+				Type:      craftgate.BnplCartItemType_OTHER,
+				UnitPrice: 4000,
+				Quantity:  1,
+			},
+		},
+	}
+	res, err := paymentClient.Payment.RetrieveBnplOffers(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_InitBnplPayment(t *testing.T) {
+	request := adapter.InitBnplPaymentRequest{
+		ApmType:        craftgate.ApmType_MASLAK,
+		Price:          10000,
+		PaidPrice:      10000,
+		PaymentType:    craftgate.PaymentType_APM,
+		Currency:       craftgate.Currency_TRY,
+		ApmOrderId:     "order_id",
+		PaymentGroup:   craftgate.PaymentGroup_PRODUCT,
+		ConversationId: "29393-mXld92ko3",
+		ExternalId:     "external_id-345",
+		CallbackUrl:    "callback",
+		BankCode:       "103",
+		Items: []craftgate.PaymentItem{
+			{
+				Name:       "Item 1",
+				Price:      6000,
+				ExternalId: "38983903",
+			},
+			{
+				Name:       "Item 2",
+				Price:      4000,
+				ExternalId: "92983294",
+			},
+		},
+		CartItems: []craftgate.BnplPaymentCartItem{
+			{
+				Id:        "200",
+				Name:      "Test Elektronik 2",
+				BrandName: "iphone",
+				Type:      craftgate.BnplCartItemType_OTHER,
+				UnitPrice: 3000,
+				Quantity:  2,
+			},
+			{
+				Id:        "100",
+				Name:      "Test Elektronik 1",
+				BrandName: "Samsung",
+				Type:      craftgate.BnplCartItemType_MOBILE_PHONE_PRICE_ABOVE_REGULATION_LIMIT,
+				UnitPrice: 4000,
+				Quantity:  1,
+			},
+		},
+	}
+	res, err := paymentClient.Payment.InitBnplPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_InitTomFinanceBnplPayment(t *testing.T) {
+	request := adapter.InitBnplPaymentRequest{
+		ApmType:        craftgate.ApmType_TOM_FINANCE,
+		Price:          100,
+		PaidPrice:      100,
+		PaymentType:    craftgate.PaymentType_APM,
+		Currency:       craftgate.Currency_TRY,
+		ApmOrderId:     "myUniqueApmOrderId",
+		PaymentGroup:   craftgate.PaymentGroup_PRODUCT,
+		ConversationId: "conversationId",
+		ExternalId:     "externalId",
+		CallbackUrl:    "https://www.your-website.com/callback",
+		Items: []craftgate.PaymentItem{
+			{
+				Name:       "Item 1",
+				Price:      100,
+				ExternalId: "externalId",
+			},
+		},
+		AdditionalParams: map[string]string{
+			"buyerName":        "John Doe",
+			"buyerPhoneNumber": "5554443322",
+		},
+		CartItems: []craftgate.BnplPaymentCartItem{
+			{
+				Id:        "26020874",
+				Name:      "Test Item 1",
+				BrandName: "26010303",
+				Type:      craftgate.BnplCartItemType_OTHER,
+				UnitPrice: 100,
+				Quantity:  1,
+			},
+		},
+	}
+	res, err := paymentClient.Payment.InitBnplPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_ApproveBnplPayment(t *testing.T) {
+	err := paymentClient.Payment.ApproveBnplPayment(context.Background(), 1)
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
 }

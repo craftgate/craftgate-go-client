@@ -69,3 +69,18 @@ func (api *Onboarding) SearchMembers(ctx context.Context, request SearchMembersR
 
 	return response.Data, nil
 }
+
+func (api *Onboarding) CreateMerchant(ctx context.Context, request CreateMerchantRequest) (*CreateMerchantResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/onboarding/v1/merchants", request)
+
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[CreateMerchantResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
+}

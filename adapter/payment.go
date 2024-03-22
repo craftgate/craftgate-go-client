@@ -210,6 +210,40 @@ func (api *Payment) CompleteApmPayment(ctx context.Context, request CompleteApmP
 	return response.Data, nil
 }
 
+func (api *Payment) InitPosApmPayment(ctx context.Context, request InitPosApmPaymentRequest) (*InitPosApmPaymentResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/pos-apm-payments/init", request)
+
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[InitPosApmPaymentResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
+func (api *Payment) CompletePosApmPayment(ctx context.Context, request CompletePosApmPaymentRequest) (*CompletePosApmPaymentResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/pos-apm-payments/complete", request)
+
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[CompletePosApmPaymentResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
 func (api *Payment) Init3DSDepositPayment(ctx context.Context, request DepositPaymentRequest) (*Init3DSPaymentResponse, error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/deposits/3ds-init", request)
 
@@ -466,6 +500,65 @@ func (api *Payment) DisapprovePaymentTransactions(ctx context.Context, request P
 	}
 
 	response := &Response[DataResponse[PaymentTransactionsApprovalResponse]]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
+func (api *Payment) RetrieveBnplOffers(ctx context.Context, request BnplPaymentOfferRequest) (*DataResponse[BnplPaymentOfferResponse], error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/bnpl-payments/offers", request)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[DataResponse[BnplPaymentOfferResponse]]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
+func (api *Payment) InitBnplPayment(ctx context.Context, request InitBnplPaymentRequest) (*InitBnplPaymentResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/bnpl-payments/init", request)
+	if err != nil {
+		return nil, err
+	}
+	response := &Response[InitBnplPaymentResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
+func (api *Payment) ApproveBnplPayment(ctx context.Context, paymentId int64) error {
+
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, fmt.Sprintf("/payment/v1/bnpl-payments/%d/approve", paymentId), nil)
+	if err != nil {
+		return err
+	}
+
+	response := &Void{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (api *Payment) RetrieveActiveBanks(ctx context.Context) (*InstantTransferBanksResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/payment/v1/instant-transfer-banks", nil)
+	if err != nil {
+		return nil, err
+	}
+	response := &Response[InstantTransferBanksResponse]{}
 	err = api.Client.Do(ctx, newRequest, response)
 	if err != nil {
 		return nil, err

@@ -1,11 +1,11 @@
 module github.com/craftgate/craftgate-go-client
 
-go 1.19
+go 1.21
 
 require (
 	github.com/davecgh/go-spew v1.1.1
-	github.com/gorilla/schema v1.2.0
-	github.com/stretchr/testify v1.8.4
+	github.com/gorilla/schema v1.2.1
+	github.com/stretchr/testify v1.9.0
 )
 
 require (
