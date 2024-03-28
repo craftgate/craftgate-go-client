@@ -791,6 +791,13 @@ type UpdateStoredCardRequest struct {
 	ExpireMonth string `json:"expireMonth,omitempty"`
 }
 
+type CloneStoredCardRequest struct {
+	SourceCardUserKey string `json:"sourceCardUserKey"`
+	SourceCardToken   string `json:"sourceCardToken"`
+	TargetCardUserKey string `json:"targetCardUserKey,omitempty"`
+	TargetMerchantId  int64  `json:"targetMerchantId"`
+}
+
 type DeleteStoredCardRequest struct {
 	CardUserKey string `json:"cardUserKey,omitempty"`
 	CardToken   string `json:"cardToken,omitempty"`

@@ -704,6 +704,20 @@ func TestPayment_UpdateStoredCard(t *testing.T) {
 	}
 }
 
+func TestPayment_CloneStoredCard(t *testing.T) {
+	request := adapter.CloneStoredCardRequest{
+		SourceCardUserKey: "6bcbac4b-6460-418d-b060-2d9896c08156",
+		SourceCardToken:   "aa57f470-7423-449e-87b7-afb1fba151fb",
+		TargetMerchantId:  1,
+	}
+	res, err := paymentClient.Payment.CloneStoredCard(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_DeleteStoredCard(t *testing.T) {
 	request := adapter.DeleteStoredCardRequest{
 		CardUserKey: "d94018bb-baa9-4418-84f8-760942f669af",
