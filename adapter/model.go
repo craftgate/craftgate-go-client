@@ -791,6 +791,13 @@ type UpdateStoredCardRequest struct {
 	ExpireMonth string `json:"expireMonth,omitempty"`
 }
 
+type CloneStoredCardRequest struct {
+	SourceCardUserKey string `json:"sourceCardUserKey"`
+	SourceCardToken   string `json:"sourceCardToken"`
+	TargetCardUserKey string `json:"targetCardUserKey,omitempty"`
+	TargetMerchantId  int64  `json:"targetMerchantId"`
+}
+
 type DeleteStoredCardRequest struct {
 	CardUserKey string `json:"cardUserKey,omitempty"`
 	CardToken   string `json:"cardToken,omitempty"`
@@ -1371,7 +1378,6 @@ type CreateMemberRequest struct {
 	Address                                  string                        `json:"address,omitempty"`
 	Email                                    string                        `json:"email,omitempty"`
 	PhoneNumber                              string                        `json:"phoneNumber,omitempty"`
-	IdentityNumber                           string                        `json:"identityNumber,omitempty"`
 	ContactName                              string                        `json:"contactName,omitempty"`
 	ContactSurname                           string                        `json:"contactSurname,omitempty"`
 	MemberType                               MemberType                    `json:"memberType,omitempty"`
@@ -1390,7 +1396,6 @@ type UpdateMemberRequest struct {
 	Address                                  string                        `json:"address,omitempty"`
 	Email                                    string                        `json:"email,omitempty"`
 	PhoneNumber                              string                        `json:"phoneNumber,omitempty"`
-	IdentityNumber                           string                        `json:"identityNumber,omitempty"`
 	ContactName                              string                        `json:"contactName,omitempty"`
 	ContactSurname                           string                        `json:"contactSurname,omitempty"`
 	MemberType                               MemberType                    `json:"memberType,omitempty"`
@@ -1428,7 +1433,6 @@ type MemberResponse struct {
 	Email                         *string                        `json:"email"`
 	Address                       *string                        `json:"address"`
 	PhoneNumber                   *string                        `json:"phoneNumber"`
-	IdentityNumber                *string                        `json:"identityNumber"`
 	ContactName                   *string                        `json:"contactName"`
 	ContactSurname                *string                        `json:"contactSurname"`
 	LegalCompanyTitle             *string                        `json:"legalCompanyTitle"`
