@@ -1378,7 +1378,6 @@ type CreateMemberRequest struct {
 	Address                                  string                        `json:"address,omitempty"`
 	Email                                    string                        `json:"email,omitempty"`
 	PhoneNumber                              string                        `json:"phoneNumber,omitempty"`
-	IdentityNumber                           string                        `json:"identityNumber,omitempty"`
 	ContactName                              string                        `json:"contactName,omitempty"`
 	ContactSurname                           string                        `json:"contactSurname,omitempty"`
 	MemberType                               MemberType                    `json:"memberType,omitempty"`
@@ -1397,7 +1396,6 @@ type UpdateMemberRequest struct {
 	Address                                  string                        `json:"address,omitempty"`
 	Email                                    string                        `json:"email,omitempty"`
 	PhoneNumber                              string                        `json:"phoneNumber,omitempty"`
-	IdentityNumber                           string                        `json:"identityNumber,omitempty"`
 	ContactName                              string                        `json:"contactName,omitempty"`
 	ContactSurname                           string                        `json:"contactSurname,omitempty"`
 	MemberType                               MemberType                    `json:"memberType,omitempty"`
@@ -1435,7 +1433,6 @@ type MemberResponse struct {
 	Email                         *string                        `json:"email"`
 	Address                       *string                        `json:"address"`
 	PhoneNumber                   *string                        `json:"phoneNumber"`
-	IdentityNumber                *string                        `json:"identityNumber"`
 	ContactName                   *string                        `json:"contactName"`
 	ContactSurname                *string                        `json:"contactSurname"`
 	LegalCompanyTitle             *string                        `json:"legalCompanyTitle"`
