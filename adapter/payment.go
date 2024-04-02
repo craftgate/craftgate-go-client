@@ -433,6 +433,22 @@ func (api *Payment) UpdateStoredCard(ctx context.Context, request UpdateStoredCa
 	return response.Data, nil
 }
 
+func (api *Payment) CloneStoredCard(ctx context.Context, request CloneStoredCardRequest) (*StoredCardResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/cards/clone", request)
+
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[StoredCardResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
 func (api *Payment) DeleteStoredCard(ctx context.Context, request DeleteStoredCardRequest) error {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/cards/delete", request)
 	if err != nil {

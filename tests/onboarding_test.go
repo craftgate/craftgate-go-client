@@ -3,11 +3,12 @@ package tests
 import (
 	"context"
 	"fmt"
+	"testing"
+	"time"
+
 	"github.com/craftgate/craftgate-go-client/adapter"
 	craftgate "github.com/craftgate/craftgate-go-client/adapter"
 	"github.com/davecgh/go-spew/spew"
-	"testing"
-	"time"
 )
 
 var onboardingClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
@@ -41,7 +42,6 @@ func Test_CreateSubMerchantMember(t *testing.T) {
 		Email:             "haluk.demir@example.com",
 		PhoneNumber:       "905551111111",
 		Iban:              "TR930006701000000001111111",
-		IdentityNumber:    "11111111110",
 		LegalCompanyTitle: "Dem Zeytinyağı Üretim Ltd. Şti.",
 		Name:              "Dem Zeytinyağı Üretim Ltd. Şti.",
 		MemberType:        craftgate.MemberType_LIMITED_OR_JOINT_STOCK_COMPANY,
@@ -68,7 +68,6 @@ func Test_CreateBuyerAndSubMerchantMember(t *testing.T) {
 		Email:             "haluk.demir@example.com",
 		PhoneNumber:       "905551111111",
 		Iban:              "TR930006701000000001111111",
-		IdentityNumber:    "11111111110",
 		LegalCompanyTitle: "Dem Zeytinyağı Üretim Ltd. Şti.",
 		Name:              "Dem Zeytinyağı Üretim Ltd. Şti.",
 		MemberType:        craftgate.MemberType_LIMITED_OR_JOINT_STOCK_COMPANY,
@@ -94,7 +93,6 @@ func Test_UpdateSubMerchantMember(t *testing.T) {
 		Email:                         "haluk.demir@example.com",
 		PhoneNumber:                   "905551111111",
 		Iban:                          "TR930006701000000001111111",
-		IdentityNumber:                "11111111110",
 		LegalCompanyTitle:             "Dem Zeytinyağı Üretim Ltd. Şti.",
 		Name:                          "Dem Zeytinyağı Üretim Ltd. Şti.",
 		MemberType:                    craftgate.MemberType_LIMITED_OR_JOINT_STOCK_COMPANY,
@@ -121,7 +119,6 @@ func Test_UpdateBuyerMember(t *testing.T) {
 		Email:             "haluk.demir@example.com",
 		PhoneNumber:       "905551111111",
 		Iban:              "TR930006701000000001111111",
-		IdentityNumber:    "11111111110",
 		LegalCompanyTitle: "Dem Zeytinyağı Üretim Ltd. Şti.",
 		Name:              "Dem Zeytinyağı Üretim Ltd. Şti.",
 		MemberType:        craftgate.MemberType_PERSONAL,
