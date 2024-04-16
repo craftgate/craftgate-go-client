@@ -598,6 +598,21 @@ func (api *Payment) CreateApplePayMerchantSession(ctx context.Context, request A
 	return response.Data, nil
 }
 
+func (api *Payment) RetrieveMultiPayment(ctx context.Context, token string) (*MultiPaymentResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment/v1/multi-payments/%s", token), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[MultiPaymentResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
 func (c *Payment) Is3DSecureCallbackVerified(threeDSecureCallbackKey string, params map[string]string) bool {
 	hash := params["hash"]
 	hashString := strings.Join([]string{threeDSecureCallbackKey,

@@ -17,6 +17,7 @@ type CardAssociation string
 type CardExpiryStatus string
 type Currency string
 type LoyaltyType string
+type MultiPaymentStatus string
 type PaymentRefundStatus string
 type RefundStatus string
 type RefundType string
@@ -237,6 +238,12 @@ const (
 	LoyaltyType_EXTRA_POINTS           LoyaltyType = "EXTRA_POINTS"
 	LoyaltyType_GAINING_MINUTES        LoyaltyType = "GAINING_MINUTES"
 	LoyaltyType_POSTPONING_STATEMENT   LoyaltyType = "POSTPONING_STATEMENT"
+)
+
+// multi payment status declaration
+const (
+	MultiPaymentStatus_CREATED   MultiPaymentStatus = "CREATED"
+	MultiPaymentStatus_COMPLETED MultiPaymentStatus = "COMPLETED"
 )
 
 // payment refund status declaration
@@ -1450,6 +1457,7 @@ type CreateProductRequest struct {
 	Price               float64  `json:"price"`
 	Currency            Currency `json:"currency"`
 	Description         string   `json:"description,omitempty"`
+	MultiPayment        bool     `json:"multiPayment,omitempty"`
 	EnabledInstallments []int    `json:"enabledInstallments"`
 }
 
@@ -2108,6 +2116,18 @@ type MerchantPosCommissionResponse struct {
 	BankNotOnUsDebitCardCommissionRate  float64   `json:"bankNotOnUsDebitCardCommissionRate"`
 	BankForeignCardCommissionRate       float64   `json:"bankForeignCardCommissionRate"`
 	MerchantCommissionRate              float64   `json:"merchantCommissionRate"`
+}
+
+type MultiPaymentResponse struct {
+	Id                 *int64              `json:"id"`
+	MultiPaymentStatus *MultiPaymentStatus `json:"multiPaymentStatus"`
+	Token              *string             `json:"token"`
+	ConversationId     *string             `json:"conversationId"`
+	ExternalId         *string             `json:"externalId"`
+	PaidPrice          *float64            `json:"paidPrice"`
+	RemainingAmount    *float64            `json:"remainingAmount"`
+	TokenExpireDate    *TimeResponse       `json:"tokenExpireDate"`
+	PaymentIds         []int64             `json:"paymentIds"`
 }
 
 type CreateMerchantPosCommission struct {
