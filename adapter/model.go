@@ -974,6 +974,7 @@ type PaymentResponse struct {
 	AuthCode                     *string                      `json:"authCode"`
 	HostReference                *string                      `json:"hostReference"`
 	TransId                      *string                      `json:"transId"`
+	MdStatus                     *int                         `json:"mdStatus"`
 	OrderId                      *string                      `json:"orderId"`
 	CardHolderName               *string                      `json:"cardHolderName"`
 	BankCardHolderName           *string                      `json:"bankCardHolderName"`
