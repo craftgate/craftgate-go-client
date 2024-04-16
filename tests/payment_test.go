@@ -950,3 +950,12 @@ func TestPayment_ApproveBnplPayment(t *testing.T) {
 		t.Errorf("Error %s", err)
 	}
 }
+
+func TestPayment_RetrieveMultiPayment(t *testing.T) {
+	res, err := paymentClient.Payment.RetrieveMultiPayment(context.Background(), "6d7e66b5-9b1c-4c1d-879a-2557b651096e")
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
