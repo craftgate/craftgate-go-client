@@ -1682,13 +1682,14 @@ type BnplPaymentOfferResponse struct {
 }
 
 type BnplBankOffer struct {
-	BankCode               string               `json:"bankCode"`
-	BankName               string               `json:"bankName"`
-	BankIconUrl            string               `json:"bankIconUrl"`
-	BankTableBannerMessage string               `json:"bankTableBannerMessage"`
-	BankSmallBannerMessage string               `json:"bankSmallBannerMessage"`
-	IsSupportNonCustomer   bool                 `json:"isSupportNonCustomer"`
-	BnplBankOfferTerm      *[]BnplBankOfferTerm `json:"bankOfferTerms"`
+	BankCode                      string               `json:"bankCode"`
+	BankName                      string               `json:"bankName"`
+	BankIconUrl                   string               `json:"bankIconUrl"`
+	BankTableBannerMessage        string               `json:"bankTableBannerMessage"`
+	BankSmallBannerMessage        string               `json:"bankSmallBannerMessage"`
+	IsSupportNonCustomer          bool                 `json:"isSupportNonCustomer"`
+	IsPaymentPlanCalculatedByBank bool                 `json:"isPaymentPlanCalculatedByBank"`
+	BnplBankOfferTerm             *[]BnplBankOfferTerm `json:"bankOfferTerms"`
 }
 
 type BnplBankOfferTerm struct {
