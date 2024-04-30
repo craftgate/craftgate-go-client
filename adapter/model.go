@@ -1454,6 +1454,8 @@ type CreateProductRequest struct {
 	Name                string   `json:"name"`
 	Channel             string   `json:"channel,omitempty"`
 	OrderId             string   `json:"orderId,omitempty"`
+	ConversationId      string   `json:"conversationId,omitempty"`
+	ExternalId          string   `json:"externalId,omitempty"`
 	Stock               int      `json:"stock,omitempty"`
 	Price               float64  `json:"price"`
 	Currency            Currency `json:"currency"`
@@ -1466,6 +1468,8 @@ type UpdateProductRequest struct {
 	Name                string   `json:"name"`
 	Channel             string   `json:"channel,omitempty"`
 	OrderId             string   `json:"orderId,omitempty"`
+	ConversationId      string   `json:"conversationId,omitempty"`
+	ExternalId          string   `json:"externalId,omitempty"`
 	Stock               int      `json:"stock,omitempty"`
 	Status              Status   `json:"status"`
 	Price               float64  `json:"price"`
@@ -1489,6 +1493,8 @@ type ProductResponse struct {
 	Name                *string   `json:"name"`
 	Description         *string   `json:"description"`
 	OrderId             *string   `json:"orderId,omitempty"`
+	ConversationId      *string   `json:"conversationId,omitempty"`
+	ExternalId          *string   `json:"externalId,omitempty"`
 	Status              *Status   `json:"status"`
 	Price               *float64  `json:"price"`
 	Currency            *Currency `json:"currency"`
