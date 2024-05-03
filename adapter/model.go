@@ -761,6 +761,12 @@ type RetrieveLoyaltiesRequest struct {
 	CardToken   string `json:"cardToken,omitempty"`
 }
 
+type MasterpassRetrieveLoyaltiesRequest struct {
+	Msisdn    string `json:"msisdn,omitempty"`
+	BinNumber string `json:"binNumber,omitempty"`
+	CardName  string `json:"cardName,omitempty"`
+}
+
 type InitGarantiPayPaymentRequest struct {
 	Price          float64                 `json:"price,omitempty"`
 	PaidPrice      float64                 `json:"paidPrice,omitempty"`

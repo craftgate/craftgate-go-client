@@ -101,3 +101,18 @@ func TestMasterpass_Complete3DSMasterpassPayment(t *testing.T) {
 		t.Errorf("Error %s", err)
 	}
 }
+
+func TestMasterpass_RetrieveLoyalties(t *testing.T) {
+	request := adapter.MasterpassRetrieveLoyaltiesRequest{
+		Msisdn:    "900000000000",
+		BinNumber: "404809",
+		CardName:  "YKB Test Kart",
+	}
+
+	res, err := masterpassClient.Masterpass.RetrieveLoyalties(context.Background(), request)
+
+	require.NotNil(t, res)
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
