@@ -399,6 +399,55 @@ func TestPayment_InitApmPayment(t *testing.T) {
 	}
 }
 
+func TestPayment_InitMetropolApmPayment(t *testing.T) {
+	request := adapter.InitApmPaymentRequest{
+		ApmType:        craftgate.ApmType_METROPOL,
+		Price:          1.25,
+		PaidPrice:      1.25,
+		Currency:       craftgate.Currency_TRY,
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		ConversationId: "foo-bar",
+		Items: []craftgate.PaymentItem{
+			{
+				Name:       "Item 1",
+				Price:      1,
+				ExternalId: "1",
+			},
+			{
+				Name:       "Item 2",
+				Price:      0.25,
+				ExternalId: "2",
+			},
+		},
+		AdditionalParams: map[string]string{
+			"apmUserIdentity": "6375780115068760",
+		},
+	}
+	res, err := paymentClient.Payment.InitApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_CompleteMetropolApmPayment(t *testing.T) {
+	request := adapter.CompleteApmPaymentRequest{
+		PaymentId: 126,
+		AdditionalParams: map[string]string{
+			"otpCode":   "00000",
+			"productId": "1",
+			"walletId":  "1",
+		},
+	}
+	res, err := paymentClient.Payment.CompleteApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_InitKlarnaApmPayment(t *testing.T) {
 	request := adapter.InitApmPaymentRequest{
 		ApmType:        craftgate.ApmType_KLARNA,
