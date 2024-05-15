@@ -193,16 +193,13 @@ const (
 	PaymentMethod_PAPARA           PaymentMethod = "PAPARA"
 	PaymentMethod_PAYONEER         PaymentMethod = "PAYONEER"
 	PaymentMethod_SODEXO           PaymentMethod = "SODEXO"
-	PaymentMethod_METROPOL         PaymentMethod = "METROPOL"
 	PaymentMethod_EDENRED          PaymentMethod = "EDENRED"
 	PaymentMethod_EDENRED_GIFT     PaymentMethod = "EDENRED_GIFT"
 	PaymentMethod_ALIPAY           PaymentMethod = "ALIPAY"
 	PaymentMethod_PAYPAL           PaymentMethod = "PAYPAL"
 	PaymentMethod_KLARNA           PaymentMethod = "KLARNA"
 	PaymentMethod_AFTERPAY         PaymentMethod = "AFTERPAY"
-	PaymentMethod_KASPI            PaymentMethod = "KASPI"
 	PaymentMethod_INSTANT_TRANSFER PaymentMethod = "INSTANT_TRANSFER"
-	PaymentMethod_TOMPAY           PaymentMethod = "TOMPAY"
 	PaymentMethod_STRIPE           PaymentMethod = "STRIPE"
 )
 
