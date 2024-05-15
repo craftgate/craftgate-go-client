@@ -79,6 +79,7 @@ const (
 	ApmType_PAPARA           ApmType = "PAPARA"
 	ApmType_PAYONEER         ApmType = "PAYONEER"
 	ApmType_SODEXO           ApmType = "SODEXO"
+	ApmType_METROPOL         ApmType = "METROPOL"
 	ApmType_EDENRED          ApmType = "EDENRED"
 	ApmType_EDENRED_GIFT     ApmType = "EDENRED_GIFT"
 	ApmType_PAYPAL           ApmType = "PAYPAL"
@@ -107,6 +108,7 @@ const (
 	PaymentProvider_PAPARA           PaymentProvider = "PAPARA"
 	PaymentProvider_PAYONEER         PaymentProvider = "PAYONEER"
 	PaymentProvider_SODEXO           PaymentProvider = "SODEXO"
+	PaymentProvider_METROPOL         PaymentProvider = "METROPOL"
 	PaymentProvider_EDENRED          PaymentProvider = "EDENRED"
 	PaymentProvider_ALIPAY           PaymentProvider = "ALIPAY"
 	PaymentProvider_PAYPAL           PaymentProvider = "PAYPAL"
@@ -197,9 +199,7 @@ const (
 	PaymentMethod_PAYPAL           PaymentMethod = "PAYPAL"
 	PaymentMethod_KLARNA           PaymentMethod = "KLARNA"
 	PaymentMethod_AFTERPAY         PaymentMethod = "AFTERPAY"
-	PaymentMethod_KASPI            PaymentMethod = "KASPI"
 	PaymentMethod_INSTANT_TRANSFER PaymentMethod = "INSTANT_TRANSFER"
-	PaymentMethod_TOMPAY           PaymentMethod = "TOMPAY"
 	PaymentMethod_STRIPE           PaymentMethod = "STRIPE"
 )
 
@@ -1030,6 +1030,7 @@ type InitApmPaymentResponse struct {
 	PaymentStatus       *PaymentStatus       `json:"paymentStatus"`
 	ApmAdditionalAction *ApmAdditionalAction `json:"additionalAction"`
 	PaymentError        *PaymentError        `json:"paymentError"`
+	AdditionalData      map[string]any       `json:"additionalData"`
 }
 
 type CompleteApmPaymentResponse struct {
