@@ -420,7 +420,7 @@ func TestPayment_InitMetropolApmPayment(t *testing.T) {
 			},
 		},
 		AdditionalParams: map[string]string{
-			"apmUserIdentity": "6375780115068760",
+			"cardNumber": "6375780115068760",
 		},
 	}
 	res, err := paymentClient.Payment.InitApmPayment(context.Background(), request)
