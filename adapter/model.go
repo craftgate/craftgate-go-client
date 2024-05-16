@@ -1398,6 +1398,7 @@ type CreateMemberRequest struct {
 	IsBuyer                                  bool                          `json:"isBuyer,omitempty"`
 	IsSubMerchant                            bool                          `json:"isSubMerchant,omitempty"`
 	SubMerchantMaximumAllowedNegativeBalance float64                       `json:"subMerchantMaximumAllowedNegativeBalance,omitempty"`
+	SettlementDelayCount                     int64                         `json:"settlementDelayCount,omitempty"`
 }
 
 type UpdateMemberRequest struct {
@@ -1416,6 +1417,7 @@ type UpdateMemberRequest struct {
 	IsBuyer                                  bool                          `json:"isBuyer,omitempty"`
 	IsSubMerchant                            bool                          `json:"isSubMerchant,omitempty"`
 	SubMerchantMaximumAllowedNegativeBalance float64                       `json:"subMerchantMaximumAllowedNegativeBalance,omitempty"`
+	SettlementDelayCount                     int64                         `json:"settlementDelayCount,omitempty"`
 }
 
 type SearchMembersRequest struct {
@@ -1449,6 +1451,7 @@ type MemberResponse struct {
 	TaxNumber                     *string                        `json:"taxNumber"`
 	SettlementEarningsDestination *SettlementEarningsDestination `json:"settlementEarningsDestination"`
 	Iban                          *string                        `json:"iban"`
+	SettlementDelayCount          *int64                         `json:"settlementDelayCount"`
 }
 
 type CreateProductRequest struct {
