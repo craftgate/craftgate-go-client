@@ -94,6 +94,8 @@ const (
 	ApmType_STRIPE           ApmType = "STRIPE"
 	ApmType_PAYCELL          ApmType = "PAYCELL"
 	ApmType_HASO             ApmType = "HASO"
+	ApmType_MULTINET         ApmType = "MULTINET"
+	ApmType_MULTINET_GIFT    ApmType = "MULTINET_GIFT"
 	ApmType_FUND_TRANSFER    ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
 )
@@ -126,6 +128,7 @@ const (
 	PaymentProvider_ALFABANK         PaymentProvider = "ALFABANK"
 	PaymentProvider_PAYCELL          PaymentProvider = "PAYCELL"
 	PaymentProvider_HASO             PaymentProvider = "HASO"
+	PaymentProvider_MULTINET         PaymentProvider = "MULTINET"
 	PaymentProvider_OFFLINE          PaymentProvider = "OFFLINE"
 )
 
@@ -201,6 +204,8 @@ const (
 	PaymentMethod_AFTERPAY         PaymentMethod = "AFTERPAY"
 	PaymentMethod_INSTANT_TRANSFER PaymentMethod = "INSTANT_TRANSFER"
 	PaymentMethod_STRIPE           PaymentMethod = "STRIPE"
+	PaymentMethod_MULTINET         PaymentMethod = "MULTINET"
+	PaymentMethod_MULTINET_GIFT    PaymentMethod = "MULTINET_GIFT"
 )
 
 // card type declaration
