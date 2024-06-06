@@ -1096,6 +1096,7 @@ type PayoutAccountResponse struct {
 }
 
 type MasterpassPaymentThreeDSInitResponse struct {
+	PaymentId *int64  `json:"paymentId"`
 	ReturnUrl *string `json:"returnUrl"`
 }
 
