@@ -884,12 +884,13 @@ type SearchPayoutAccountRequest struct {
 }
 
 type MasterpassPaymentTokenGenerateRequest struct {
-	Msisdn        string                  `json:"msisdn,omitempty"`
-	UserId        string                  `json:"userId,omitempty"`
-	BinNumber     string                  `json:"binNumber,omitempty"`
-	ForceThreeDS  bool                    `json:"forceThreeDS,omitempty"`
-	CreatePayment MasterpassCreatePayment `json:"createPayment,omitempty"`
-	Loyalty       Loyalty                 `json:"loyalty,omitempty"`
+	Msisdn                       string                  `json:"msisdn,omitempty"`
+	UserId                       string                  `json:"userId,omitempty"`
+	BinNumber                    string                  `json:"binNumber,omitempty"`
+	ForceThreeDS                 bool                    `json:"forceThreeDS,omitempty"`
+	CreatePayment                MasterpassCreatePayment `json:"createPayment,omitempty"`
+	Loyalty                      *Loyalty                `json:"loyalty,omitempty"`
+	MasterpassIntegrationVersion int                     `json:"masterpassIntegrationVersion,omitempty"`
 }
 
 type MasterpassPaymentCompleteRequest struct {
@@ -1101,6 +1102,7 @@ type PayoutAccountResponse struct {
 }
 
 type MasterpassPaymentThreeDSInitResponse struct {
+	PaymentId *int64  `json:"paymentId"`
 	ReturnUrl *string `json:"returnUrl"`
 }
 
