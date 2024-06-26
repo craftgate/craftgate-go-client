@@ -528,6 +528,7 @@ const (
 const (
 	PaymentAuthenticationType_THREE_DS     PaymentAuthenticationType = "THREE_DS"
 	PaymentAuthenticationType_NON_THREE_DS PaymentAuthenticationType = "NON_THREE_DS"
+	PaymentAuthenticationType_BKM_EXPRESS  PaymentAuthenticationType = "BKM_EXPRESS"
 )
 
 const (
