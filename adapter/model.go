@@ -1284,6 +1284,12 @@ type CheckMasterpassUserResponse struct {
 	AccountStatus                         *string `json:"accountStatus"`
 }
 
+type InitBkmExpressResponse struct {
+	Id    *string `json:"id"`
+	Path  *string `json:"path"`
+	Token *string `json:"token"`
+}
+
 type InstallmentPrice struct {
 	InstallmentPrice       *float64 `json:"installmentPrice"`
 	BankCommissionRate     *float64 `json:"bankCommissionRate"`
@@ -1950,6 +1956,19 @@ type MasterpassCreatePayment struct {
 	AdditionalParams map[string]interface{} `json:"additionalParams,omitempty"`
 }
 
+type InitBkmExpressRequest struct {
+	Price              float64       `json:"price,omitempty"`
+	PaidPrice          float64       `json:"paidPrice,omitempty"`
+	Currency           Currency      `json:"currency,omitempty"`
+	PaymentGroup       PaymentGroup  `json:"paymentGroup,omitempty"`
+	ConversationId     string        `json:"conversationId,omitempty"`
+	PaymentPhase       PaymentPhase  `json:"paymentPhase,omitempty"`
+	BuyerMemberId      int64         `json:"buyerMemberId,omitempty"`
+	BankOrderId        string        `json:"bankOrderId,omitempty"`
+	Items              []PaymentItem `json:"items"`
+	EnabledInstallment bool          `json:"enabledInstallments"`
+}
+
 type CreateMerchantRequest struct {
 	Name               string `json:"name"`
 	LegalCompanyTitle  string `json:"legalCompanyTitle"`
@@ -1960,6 +1979,12 @@ type CreateMerchantRequest struct {
 	ContactName        string `json:"contactName"`
 	ContactSurname     string `json:"contactSurname"`
 	ContactPhoneNumber string `json:"contactPhoneNumber"`
+}
+
+type CompleteBkmExpressRequest struct {
+	Status   bool   `json:"status"`
+	Message  string `json:"message"`
+	TicketId string `json:"ticketId"`
 }
 
 type MerchantApiCredential struct {
