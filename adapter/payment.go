@@ -433,6 +433,22 @@ func (api *Payment) UpdateStoredCard(ctx context.Context, request UpdateStoredCa
 	return response.Data, nil
 }
 
+func (api *Payment) CloneStoredCard(ctx context.Context, request CloneStoredCardRequest) (*StoredCardResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/cards/clone", request)
+
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[StoredCardResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
 func (api *Payment) DeleteStoredCard(ctx context.Context, request DeleteStoredCardRequest) error {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/cards/delete", request)
 	if err != nil {
@@ -551,6 +567,50 @@ func (api *Payment) ApproveBnplPayment(ctx context.Context, paymentId int64) err
 	}
 
 	return nil
+}
+
+func (api *Payment) RetrieveActiveBanks(ctx context.Context) (*InstantTransferBanksResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/payment/v1/instant-transfer-banks", nil)
+	if err != nil {
+		return nil, err
+	}
+	response := &Response[InstantTransferBanksResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
+func (api *Payment) CreateApplePayMerchantSession(ctx context.Context, request ApplePayMerchantSessionCreateRequest) (*interface{}, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/apple-pay/merchant-sessions", request)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[interface{}]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
+func (api *Payment) RetrieveMultiPayment(ctx context.Context, token string) (*MultiPaymentResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment/v1/multi-payments/%s", token), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[MultiPaymentResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
 }
 
 func (c *Payment) Is3DSecureCallbackVerified(threeDSecureCallbackKey string, params map[string]string) bool {

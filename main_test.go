@@ -25,7 +25,7 @@ func Test_main(t *testing.T) {
 			binNumber, err := client.Installment.RetrieveBinNumber(context.Background(), "487074")
 			require.NotNil(t, err)
 			require.Nil(t, binNumber)
-			assert.Equal(t, true, strings.Contains(err.Error(), "API credential not found!"))
+			assert.Equal(t, true, strings.Contains(err.Error(), "API credential not found"))
 		})
 	})
 }
