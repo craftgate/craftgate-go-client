@@ -109,6 +109,7 @@ type Client struct {
 	BankAccountTracking *BankAccountTracking
 	Merchant            *Merchant
 	Juzdan              *Juzdan
+	BkmExpress          *BkmExpress
 }
 
 func New(apiKey, apiSecret, baseURL string, opts ...ClientOption) (*Client, error) {
