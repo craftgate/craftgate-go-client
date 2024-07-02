@@ -7,6 +7,7 @@ type ApmType string
 type PaymentProvider string
 type PosApmPaymentProvider string
 type PaymentStatus string
+type TokenizedCardType string
 type PaymentSource string
 type PaymentGroup string
 type PaymentPhase string
@@ -16,6 +17,7 @@ type CardAssociation string
 type CardExpiryStatus string
 type Currency string
 type LoyaltyType string
+type MultiPaymentStatus string
 type PaymentRefundStatus string
 type RefundStatus string
 type RefundType string
@@ -74,55 +76,80 @@ const (
 
 // apm type declaration
 const (
-	ApmType_PAPARA           ApmType = "PAPARA"
-	ApmType_PAYONEER         ApmType = "PAYONEER"
-	ApmType_SODEXO           ApmType = "SODEXO"
-	ApmType_EDENRED          ApmType = "EDENRED"
-	ApmType_EDENRED_GIFT     ApmType = "EDENRED_GIFT"
-	ApmType_PAYPAL           ApmType = "PAYPAL"
-	ApmType_KLARNA           ApmType = "KLARNA"
-	ApmType_AFTERPAY         ApmType = "AFTERPAY"
-	ApmType_KASPI            ApmType = "KASPI"
-	ApmType_TOMPAY           ApmType = "TOMPAY"
-	ApmType_MASLAK           ApmType = "MASLAK"
-	ApmType_ALFABANK         ApmType = "ALFABANK"
-	ApmType_TOM_FINANCE      ApmType = "TOM_FINANCE"
-	ApmType_STRIPE           ApmType = "STRIPE"
-	ApmType_HASO             ApmType = "HASO"
-	ApmType_FUND_TRANSFER    ApmType = "FUND_TRANSFER"
-	ApmType_CASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
+	ApmType_PAPARA                 ApmType = "PAPARA"
+	ApmType_PAYONEER               ApmType = "PAYONEER"
+	ApmType_SODEXO                 ApmType = "SODEXO"
+	ApmType_METROPOL               ApmType = "METROPOL"
+	ApmType_EDENRED                ApmType = "EDENRED"
+	ApmType_EDENRED_GIFT           ApmType = "EDENRED_GIFT"
+	ApmType_PAYPAL                 ApmType = "PAYPAL"
+	ApmType_KLARNA                 ApmType = "KLARNA"
+	ApmType_AFTERPAY               ApmType = "AFTERPAY"
+	ApmType_KASPI                  ApmType = "KASPI"
+	ApmType_INSTANT_TRANSFER       ApmType = "INSTANT_TRANSFER"
+	ApmType_TOMPAY                 ApmType = "TOMPAY"
+	ApmType_MASLAK                 ApmType = "MASLAK"
+	ApmType_ALFABANK               ApmType = "ALFABANK"
+	ApmType_TOM_FINANCE            ApmType = "TOM_FINANCE"
+	ApmType_STRIPE                 ApmType = "STRIPE"
+	ApmType_PAYCELL                ApmType = "PAYCELL"
+	ApmType_HASO                   ApmType = "HASO"
+	ApmType_MULTINET               ApmType = "MULTINET"
+	ApmType_MULTINET_GIFT          ApmType = "MULTINET_GIFT"
+	ApmType_ALIPAY                 ApmType = "ALIPAY"
+	ApmType_APPLEPAY               ApmType = "APPLEPAY"
+	ApmType_GOOGLEPAY              ApmType = "GOOGLEPAY"
+	ApmType_HEPSIPAY_WALLET        ApmType = "HEPSIPAY_WALLET"
+	ApmType_HEPSIPAY_SHOPPING_LOAN ApmType = "HEPSIPAY_SHOPPING_LOAN"
+	ApmType_ZIP                    ApmType = "ZIP"
+	ApmType_CHIPPIN                ApmType = "CHIPPIN"
+	ApmType_ISPAY                  ApmType = "ISPAY"
+	ApmType_FUND_TRANSFER          ApmType = "FUND_TRANSFER"
+	ApmType_CASH_ON_DELIVERY       ApmType = "CASH_ON_DELIVERY"
 )
 
 // payment provider declaration
 const (
-	PaymentProvider_BANK          PaymentProvider = "BANK"
-	PaymentProvider_CG_WALLET     PaymentProvider = "CG_WALLET"
-	PaymentProvider_MASTERPASS    PaymentProvider = "MASTERPASS"
-	PaymentProvider_GARANTI_PAY   PaymentProvider = "GARANTI_PAY"
-	PaymentProvider_YKB_WORLD_PAY PaymentProvider = "YKB_WORLD_PAY"
-	PaymentProvider_PAPARA        PaymentProvider = "PAPARA"
-	PaymentProvider_PAYONEER      PaymentProvider = "PAYONEER"
-	PaymentProvider_SODEXO        PaymentProvider = "SODEXO"
-	PaymentProvider_EDENRED       PaymentProvider = "EDENRED"
-	PaymentProvider_ALIPAY        PaymentProvider = "ALIPAY"
-	PaymentProvider_PAYPAL        PaymentProvider = "PAYPAL"
-	PaymentProvider_KLARNA        PaymentProvider = "KLARNA"
-	PaymentProvider_AFTERPAY      PaymentProvider = "AFTERPAY"
-	PaymentProvider_KASPI         PaymentProvider = "KASPI"
-	PaymentProvider_TOMPAY        PaymentProvider = "TOMPAY"
-	PaymentProvider_APPLEPAY      PaymentProvider = "APPLEPAY"
-	PaymentProvider_GOOGLEPAY     PaymentProvider = "GOOGLEPAY"
-	PaymentProvider_HEPSIPAY      PaymentProvider = "HEPSIPAY"
-	PaymentProvider_STRIPE        PaymentProvider = "STRIPE"
-	PaymentProvider_HASO          PaymentProvider = "HASO"
-	PaymentProvider_OFFLINE       PaymentProvider = "OFFLINE"
+	PaymentProvider_BANK                        PaymentProvider = "BANK"
+	PaymentProvider_CG_WALLET                   PaymentProvider = "CG_WALLET"
+	PaymentProvider_MASTERPASS                  PaymentProvider = "MASTERPASS"
+	PaymentProvider_GARANTI_PAY                 PaymentProvider = "GARANTI_PAY"
+	PaymentProvider_YKB_WORLD_PAY               PaymentProvider = "YKB_WORLD_PAY"
+	PaymentProvider_PAPARA                      PaymentProvider = "PAPARA"
+	PaymentProvider_PAYONEER                    PaymentProvider = "PAYONEER"
+	PaymentProvider_SODEXO                      PaymentProvider = "SODEXO"
+	PaymentProvider_METROPOL                    PaymentProvider = "METROPOL"
+	PaymentProvider_EDENRED                     PaymentProvider = "EDENRED"
+	PaymentProvider_ALIPAY                      PaymentProvider = "ALIPAY"
+	PaymentProvider_PAYPAL                      PaymentProvider = "PAYPAL"
+	PaymentProvider_KLARNA                      PaymentProvider = "KLARNA"
+	PaymentProvider_AFTERPAY                    PaymentProvider = "AFTERPAY"
+	PaymentProvider_APPLEPAY                    PaymentProvider = "APPLEPAY"
+	PaymentProvider_GOOGLEPAY                   PaymentProvider = "GOOGLEPAY"
+	PaymentProvider_HEPSIPAY                    PaymentProvider = "HEPSIPAY"
+	PaymentProvider_STRIPE                      PaymentProvider = "STRIPE"
+	PaymentProvider_KASPI                       PaymentProvider = "KASPI"
+	PaymentProvider_INSTANT_TRANSFER            PaymentProvider = "INSTANT_TRANSFER"
+	PaymentProvider_MASLAK                      PaymentProvider = "MASLAK"
+	PaymentProvider_TOMPAY                      PaymentProvider = "TOMPAY"
+	PaymentProvider_TOM_FINANCE                 PaymentProvider = "TOM_FINANCE"
+	PaymentProvider_ALFABANK                    PaymentProvider = "ALFABANK"
+	PaymentProvider_PAYCELL                     PaymentProvider = "PAYCELL"
+	PaymentProvider_HASO                        PaymentProvider = "HASO"
+	PaymentProvider_MULTINET                    PaymentProvider = "MULTINET"
+	PaymentProvider_YKB_WORLD_PAY_SHOPPING_LOAN PaymentProvider = "YKB_WORLD_PAY_SHOPPING_LOAN"
+	PaymentProvider_ZIP                         PaymentProvider = "ZIP"
+	PaymentProvider_CHIPPIN                     PaymentProvider = "CHIPPIN"
+	PaymentProvider_ISPAY                       PaymentProvider = "ISPAY"
+	PaymentProvider_OFFLINE                     PaymentProvider = "OFFLINE"
 )
 
 // pos apm payment provider declaration
 const (
-	PosApmPaymentProvider_YKB_WORLD_PAY PosApmPaymentProvider = "YKB_WORLD_PAY"
-	PosApmPaymentProvider_APPLEPAY      PosApmPaymentProvider = "APPLEPAY"
-	PosApmPaymentProvider_GOOGLEPAY     PosApmPaymentProvider = "GOOGLEPAY"
+	PosApmPaymentProvider_YKB_WORLD_PAY               PosApmPaymentProvider = "YKB_WORLD_PAY"
+	PosApmPaymentProvider_YKB_WORLD_PAY_SHOPPING_LOAN PosApmPaymentProvider = "YKB_WORLD_PAY_SHOPPING_LOAN"
+	PosApmPaymentProvider_GOOGLEPAY                   PosApmPaymentProvider = "GOOGLEPAY"
+	PosApmPaymentProvider_GARANTI_PAY                 PosApmPaymentProvider = "GARANTI_PAY"
 )
 
 // payment status declaration
@@ -176,20 +203,21 @@ const (
 
 // payment method declaration
 const (
-	PaymentMethod_CARD         PaymentMethod = "CARD"
-	PaymentMethod_MASTERPASS   PaymentMethod = "MASTERPASS"
-	PaymentMethod_PAPARA       PaymentMethod = "PAPARA"
-	PaymentMethod_PAYONEER     PaymentMethod = "PAYONEER"
-	PaymentMethod_SODEXO       PaymentMethod = "SODEXO"
-	PaymentMethod_EDENRED      PaymentMethod = "EDENRED"
-	PaymentMethod_EDENRED_GIFT PaymentMethod = "EDENRED_GIFT"
-	PaymentMethod_ALIPAY       PaymentMethod = "ALIPAY"
-	PaymentMethod_PAYPAL       PaymentMethod = "PAYPAL"
-	PaymentMethod_KLARNA       PaymentMethod = "KLARNA"
-	PaymentMethod_AFTERPAY     PaymentMethod = "AFTERPAY"
-	PaymentMethod_KASPI        PaymentMethod = "KASPI"
-	PaymentMethod_TOMPAY       PaymentMethod = "TOMPAY"
-	PaymentMethod_STRIPE       PaymentMethod = "STRIPE"
+	PaymentMethod_CARD             PaymentMethod = "CARD"
+	PaymentMethod_MASTERPASS       PaymentMethod = "MASTERPASS"
+	PaymentMethod_PAPARA           PaymentMethod = "PAPARA"
+	PaymentMethod_PAYONEER         PaymentMethod = "PAYONEER"
+	PaymentMethod_SODEXO           PaymentMethod = "SODEXO"
+	PaymentMethod_EDENRED          PaymentMethod = "EDENRED"
+	PaymentMethod_EDENRED_GIFT     PaymentMethod = "EDENRED_GIFT"
+	PaymentMethod_ALIPAY           PaymentMethod = "ALIPAY"
+	PaymentMethod_PAYPAL           PaymentMethod = "PAYPAL"
+	PaymentMethod_KLARNA           PaymentMethod = "KLARNA"
+	PaymentMethod_AFTERPAY         PaymentMethod = "AFTERPAY"
+	PaymentMethod_INSTANT_TRANSFER PaymentMethod = "INSTANT_TRANSFER"
+	PaymentMethod_STRIPE           PaymentMethod = "STRIPE"
+	PaymentMethod_MULTINET         PaymentMethod = "MULTINET"
+	PaymentMethod_MULTINET_GIFT    PaymentMethod = "MULTINET_GIFT"
 )
 
 // card type declaration
@@ -227,6 +255,12 @@ const (
 	LoyaltyType_EXTRA_POINTS           LoyaltyType = "EXTRA_POINTS"
 	LoyaltyType_GAINING_MINUTES        LoyaltyType = "GAINING_MINUTES"
 	LoyaltyType_POSTPONING_STATEMENT   LoyaltyType = "POSTPONING_STATEMENT"
+)
+
+// multi payment status declaration
+const (
+	MultiPaymentStatus_CREATED   MultiPaymentStatus = "CREATED"
+	MultiPaymentStatus_COMPLETED MultiPaymentStatus = "COMPLETED"
 )
 
 // payment refund status declaration
@@ -347,6 +381,7 @@ const (
 const (
 	ApmAdditionalAction_REDIRECT_TO_URL   ApmAdditionalAction = "REDIRECT_TO_URL"
 	ApmAdditionalAction_OTP_REQUIRED      ApmAdditionalAction = "OTP_REQUIRED"
+	ApmAdditionalAction_SHOW_HTML_CONTENT ApmAdditionalAction = "SHOW_HTML_CONTENT"
 	ApmAdditionalAction_WAIT_FOR_WEBHOOK  ApmAdditionalAction = "WAIT_FOR_WEBHOOK"
 	ApmAdditionalAction_APPROVAL_REQUIRED ApmAdditionalAction = "APPROVAL_REQUIRED"
 	ApmAdditionalAction_NONE              ApmAdditionalAction = "NONE"
@@ -522,7 +557,8 @@ const (
 
 // BankAccountTrackingSource declaration
 const (
-	BankAccountTrackingSource_YKB BankAccountTrackingSource = "YKB"
+	BankAccountTrackingSource_YKB     BankAccountTrackingSource = "YKB"
+	BankAccountTrackingSource_GARANTI BankAccountTrackingSource = "GARANTI"
 )
 
 const (
@@ -546,6 +582,11 @@ const (
 const (
 	ClientType_W ClientType = "W"
 	ClientType_M ClientType = "M"
+)
+
+// tokenized card type declaration
+const (
+	TokenizedCardType_APPLE_PAY TokenizedCardType = "APPLE_PAY"
 )
 
 // requests
@@ -775,6 +816,13 @@ type UpdateStoredCardRequest struct {
 	ExpireMonth string `json:"expireMonth,omitempty"`
 }
 
+type CloneStoredCardRequest struct {
+	SourceCardUserKey string `json:"sourceCardUserKey"`
+	SourceCardToken   string `json:"sourceCardToken"`
+	TargetCardUserKey string `json:"targetCardUserKey,omitempty"`
+	TargetMerchantId  int64  `json:"targetMerchantId"`
+}
+
 type DeleteStoredCardRequest struct {
 	CardUserKey string `json:"cardUserKey,omitempty"`
 	CardToken   string `json:"cardToken,omitempty"`
@@ -815,6 +863,14 @@ type StoreCardRequest struct {
 	CardUserKey    string `json:"cardUserKey,omitempty"`
 }
 
+type ApplePayMerchantSessionCreateRequest struct {
+	MerchantIdentifier string `json:"merchantIdentifier,omitempty"`
+	DisplayName        string `json:"displayName,omitempty"`
+	Initiative         string `json:"initiative,omitempty"`
+	InitiativeContext  string `json:"initiativeContext,omitempty"`
+	ValidationUrl      string `json:"validationUrl,omitempty"`
+}
+
 type CheckMasterpassUserRequest struct {
 	MasterpassGsmNumber string `json:"masterpassGsmNumber"`
 }
@@ -841,12 +897,13 @@ type SearchPayoutAccountRequest struct {
 }
 
 type MasterpassPaymentTokenGenerateRequest struct {
-	Msisdn        string                  `json:"msisdn,omitempty"`
-	UserId        string                  `json:"userId,omitempty"`
-	BinNumber     string                  `json:"binNumber,omitempty"`
-	ForceThreeDS  bool                    `json:"forceThreeDS,omitempty"`
-	CreatePayment MasterpassCreatePayment `json:"createPayment,omitempty"`
-	Loyalty       Loyalty                 `json:"loyalty,omitempty"`
+	Msisdn                       string                  `json:"msisdn,omitempty"`
+	UserId                       string                  `json:"userId,omitempty"`
+	BinNumber                    string                  `json:"binNumber,omitempty"`
+	ForceThreeDS                 bool                    `json:"forceThreeDS,omitempty"`
+	CreatePayment                MasterpassCreatePayment `json:"createPayment,omitempty"`
+	Loyalty                      *Loyalty                `json:"loyalty,omitempty"`
+	MasterpassIntegrationVersion int                     `json:"masterpassIntegrationVersion,omitempty"`
 }
 
 type MasterpassPaymentCompleteRequest struct {
@@ -936,6 +993,7 @@ type PaymentResponse struct {
 	AuthCode                     *string                      `json:"authCode"`
 	HostReference                *string                      `json:"hostReference"`
 	TransId                      *string                      `json:"transId"`
+	MdStatus                     *int                         `json:"mdStatus"`
 	OrderId                      *string                      `json:"orderId"`
 	CardHolderName               *string                      `json:"cardHolderName"`
 	BankCardHolderName           *string                      `json:"bankCardHolderName"`
@@ -987,9 +1045,11 @@ type InitCheckoutPaymentResponse struct {
 type InitApmPaymentResponse struct {
 	PaymentId           *int64               `json:"paymentId"`
 	RedirectUrl         *string              `json:"redirectUrl"`
+	HtmlContent         *string              `json:"htmlContent"`
 	PaymentStatus       *PaymentStatus       `json:"paymentStatus"`
 	ApmAdditionalAction *ApmAdditionalAction `json:"additionalAction"`
 	PaymentError        *PaymentError        `json:"paymentError"`
+	AdditionalData      map[string]any       `json:"additionalData"`
 }
 
 type CompleteApmPaymentResponse struct {
@@ -1055,6 +1115,7 @@ type PayoutAccountResponse struct {
 }
 
 type MasterpassPaymentThreeDSInitResponse struct {
+	PaymentId *int64  `json:"paymentId"`
 	ReturnUrl *string `json:"returnUrl"`
 }
 
@@ -1304,6 +1365,7 @@ type SearchInstallmentsRequest struct {
 	Price                                   float64  `schema:"price"`
 	Currency                                Currency `schema:"currency"`
 	DistinctCardBrandsWithLowestCommissions bool     `schema:"distinctCardBrandsWithLowestCommissions"`
+	LoyaltyExists                           bool     `schema:"loyaltyExists"`
 }
 
 type InstallmentListResponse struct {
@@ -1325,6 +1387,16 @@ type InstallmentResponse struct {
 	InstallmentPrices []InstallmentPrice `json:"installmentPrices"`
 }
 
+type InstantTransferBanksResponse struct {
+	Items []InstantTransferBank `json:"items"`
+}
+
+type InstantTransferBank struct {
+	BankCode    *string `json:"bankCode"`
+	BankName    *string `json:"bankName"`
+	BankLogoUrl *string `json:"bankLogoUrl"`
+}
+
 type RetrieveBinNumberResponse struct {
 	BinNumber       *string `json:"binNumber"`
 	CardType        *string `json:"cardType"`
@@ -1341,7 +1413,6 @@ type CreateMemberRequest struct {
 	Address                                  string                        `json:"address,omitempty"`
 	Email                                    string                        `json:"email,omitempty"`
 	PhoneNumber                              string                        `json:"phoneNumber,omitempty"`
-	IdentityNumber                           string                        `json:"identityNumber,omitempty"`
 	ContactName                              string                        `json:"contactName,omitempty"`
 	ContactSurname                           string                        `json:"contactSurname,omitempty"`
 	MemberType                               MemberType                    `json:"memberType,omitempty"`
@@ -1353,6 +1424,7 @@ type CreateMemberRequest struct {
 	IsBuyer                                  bool                          `json:"isBuyer,omitempty"`
 	IsSubMerchant                            bool                          `json:"isSubMerchant,omitempty"`
 	SubMerchantMaximumAllowedNegativeBalance float64                       `json:"subMerchantMaximumAllowedNegativeBalance,omitempty"`
+	SettlementDelayCount                     int64                         `json:"settlementDelayCount,omitempty"`
 }
 
 type UpdateMemberRequest struct {
@@ -1360,7 +1432,6 @@ type UpdateMemberRequest struct {
 	Address                                  string                        `json:"address,omitempty"`
 	Email                                    string                        `json:"email,omitempty"`
 	PhoneNumber                              string                        `json:"phoneNumber,omitempty"`
-	IdentityNumber                           string                        `json:"identityNumber,omitempty"`
 	ContactName                              string                        `json:"contactName,omitempty"`
 	ContactSurname                           string                        `json:"contactSurname,omitempty"`
 	MemberType                               MemberType                    `json:"memberType,omitempty"`
@@ -1372,6 +1443,7 @@ type UpdateMemberRequest struct {
 	IsBuyer                                  bool                          `json:"isBuyer,omitempty"`
 	IsSubMerchant                            bool                          `json:"isSubMerchant,omitempty"`
 	SubMerchantMaximumAllowedNegativeBalance float64                       `json:"subMerchantMaximumAllowedNegativeBalance,omitempty"`
+	SettlementDelayCount                     int64                         `json:"settlementDelayCount,omitempty"`
 }
 
 type SearchMembersRequest struct {
@@ -1398,7 +1470,6 @@ type MemberResponse struct {
 	Email                         *string                        `json:"email"`
 	Address                       *string                        `json:"address"`
 	PhoneNumber                   *string                        `json:"phoneNumber"`
-	IdentityNumber                *string                        `json:"identityNumber"`
 	ContactName                   *string                        `json:"contactName"`
 	ContactSurname                *string                        `json:"contactSurname"`
 	LegalCompanyTitle             *string                        `json:"legalCompanyTitle"`
@@ -1406,16 +1477,20 @@ type MemberResponse struct {
 	TaxNumber                     *string                        `json:"taxNumber"`
 	SettlementEarningsDestination *SettlementEarningsDestination `json:"settlementEarningsDestination"`
 	Iban                          *string                        `json:"iban"`
+	SettlementDelayCount          *int64                         `json:"settlementDelayCount"`
 }
 
 type CreateProductRequest struct {
 	Name                string   `json:"name"`
 	Channel             string   `json:"channel,omitempty"`
 	OrderId             string   `json:"orderId,omitempty"`
+	ConversationId      string   `json:"conversationId,omitempty"`
+	ExternalId          string   `json:"externalId,omitempty"`
 	Stock               int      `json:"stock,omitempty"`
 	Price               float64  `json:"price"`
 	Currency            Currency `json:"currency"`
 	Description         string   `json:"description,omitempty"`
+	MultiPayment        bool     `json:"multiPayment,omitempty"`
 	EnabledInstallments []int    `json:"enabledInstallments"`
 }
 
@@ -1423,6 +1498,8 @@ type UpdateProductRequest struct {
 	Name                string   `json:"name"`
 	Channel             string   `json:"channel,omitempty"`
 	OrderId             string   `json:"orderId,omitempty"`
+	ConversationId      string   `json:"conversationId,omitempty"`
+	ExternalId          string   `json:"externalId,omitempty"`
 	Stock               int      `json:"stock,omitempty"`
 	Status              Status   `json:"status"`
 	Price               float64  `json:"price"`
@@ -1446,6 +1523,8 @@ type ProductResponse struct {
 	Name                *string   `json:"name"`
 	Description         *string   `json:"description"`
 	OrderId             *string   `json:"orderId,omitempty"`
+	ConversationId      *string   `json:"conversationId,omitempty"`
+	ExternalId          *string   `json:"externalId,omitempty"`
 	Status              *Status   `json:"status"`
 	Price               *float64  `json:"price"`
 	Currency            *Currency `json:"currency"`
@@ -1640,13 +1719,14 @@ type BnplPaymentOfferResponse struct {
 }
 
 type BnplBankOffer struct {
-	BankCode               string               `json:"bankCode"`
-	BankName               string               `json:"bankName"`
-	BankIconUrl            string               `json:"bankIconUrl"`
-	BankTableBannerMessage string               `json:"bankTableBannerMessage"`
-	BankSmallBannerMessage string               `json:"bankSmallBannerMessage"`
-	IsSupportNonCustomer   bool                 `json:"isSupportNonCustomer"`
-	BnplBankOfferTerm      *[]BnplBankOfferTerm `json:"bankOfferTerms"`
+	BankCode                      string               `json:"bankCode"`
+	BankName                      string               `json:"bankName"`
+	BankIconUrl                   string               `json:"bankIconUrl"`
+	BankTableBannerMessage        string               `json:"bankTableBannerMessage"`
+	BankSmallBannerMessage        string               `json:"bankSmallBannerMessage"`
+	IsSupportNonCustomer          bool                 `json:"isSupportNonCustomer"`
+	IsPaymentPlanCalculatedByBank bool                 `json:"isPaymentPlanCalculatedByBank"`
+	BnplBankOfferTerm             *[]BnplBankOfferTerm `json:"bankOfferTerms"`
 }
 
 type BnplBankOfferTerm struct {
@@ -1685,6 +1765,8 @@ type SearchPayoutCompletedTransactionsRequest struct {
 	SettlementType   SettlementType `schema:"settlementType,omitempty"`
 	StartDate        time.Time      `schema:"startDate,omitempty"`
 	EndDate          time.Time      `schema:"endDate,omitempty"`
+	Page             int            `schema:"page"`
+	Size             int            `schema:"size"`
 }
 
 type SearchPayoutBouncedTransactionsRequest struct {
@@ -1903,20 +1985,26 @@ type Loyalty struct {
 	Message     *string      `json:"message,omitempty"`
 }
 
+type TokenizedCard struct {
+	TokenizedCardType TokenizedCardType      `json:"type,omitempty"`
+	Data              map[string]interface{} `json:"data,omitempty"`
+}
+
 type Card struct {
-	CardHolderName               string   `json:"cardHolderName,omitempty"`
-	CardNumber                   string   `json:"cardNumber,omitempty"`
-	ExpireYear                   string   `json:"expireYear,omitempty"`
-	ExpireMonth                  string   `json:"expireMonth,omitempty"`
-	Cvc                          string   `json:"cvc,omitempty"`
-	CardAlias                    string   `json:"cardAlias,omitempty"`
-	CardUserKey                  string   `json:"cardUserKey,omitempty"`
-	CardToken                    string   `json:"cardToken,omitempty"`
-	BinNumber                    string   `json:"binNumber,omitempty"`
-	LastFourDigits               string   `json:"lastFourDigits,omitempty"`
-	CardHolderIdentityNumber     string   `json:"cardHolderIdentityNumber,omitempty"`
-	Loyalty                      *Loyalty `json:"loyalty,omitempty"`
-	StoreCardAfterSuccessPayment bool     `json:"storeCardAfterSuccessPayment,omitempty"`
+	CardHolderName               string         `json:"cardHolderName,omitempty"`
+	CardNumber                   string         `json:"cardNumber,omitempty"`
+	ExpireYear                   string         `json:"expireYear,omitempty"`
+	ExpireMonth                  string         `json:"expireMonth,omitempty"`
+	Cvc                          string         `json:"cvc,omitempty"`
+	CardAlias                    string         `json:"cardAlias,omitempty"`
+	CardUserKey                  string         `json:"cardUserKey,omitempty"`
+	CardToken                    string         `json:"cardToken,omitempty"`
+	BinNumber                    string         `json:"binNumber,omitempty"`
+	LastFourDigits               string         `json:"lastFourDigits,omitempty"`
+	CardHolderIdentityNumber     string         `json:"cardHolderIdentityNumber,omitempty"`
+	Loyalty                      *Loyalty       `json:"loyalty,omitempty"`
+	StoreCardAfterSuccessPayment bool           `json:"storeCardAfterSuccessPayment,omitempty"`
+	TokenizedCard                *TokenizedCard `json:"tokenizedCard,omitempty"`
 }
 
 type FraudCheckParameters struct {
@@ -2084,6 +2172,18 @@ type MerchantPosCommissionResponse struct {
 	BankNotOnUsDebitCardCommissionRate  float64   `json:"bankNotOnUsDebitCardCommissionRate"`
 	BankForeignCardCommissionRate       float64   `json:"bankForeignCardCommissionRate"`
 	MerchantCommissionRate              float64   `json:"merchantCommissionRate"`
+}
+
+type MultiPaymentResponse struct {
+	Id                 *int64              `json:"id"`
+	MultiPaymentStatus *MultiPaymentStatus `json:"multiPaymentStatus"`
+	Token              *string             `json:"token"`
+	ConversationId     *string             `json:"conversationId"`
+	ExternalId         *string             `json:"externalId"`
+	PaidPrice          *float64            `json:"paidPrice"`
+	RemainingAmount    *float64            `json:"remainingAmount"`
+	TokenExpireDate    *TimeResponse       `json:"tokenExpireDate"`
+	PaymentIds         []int64             `json:"paymentIds"`
 }
 
 type CreateMerchantPosCommission struct {
