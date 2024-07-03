@@ -56,8 +56,11 @@ func TestBkm_Express_Complete(t *testing.T) {
 }
 
 func TestBkm_Express_RetrievePayment(t *testing.T) {
-	err := bkmExpressClient.BkmExpress.RetrievePayment(context.Background(), "dcfdc163-0545-46d7-8f86-5a11718e56ec")
+	ticketId := "dcfdc163-0545-46d7-8f86-5a11718e56ec"
+	res, err := bkmExpressClient.BkmExpress.RetrievePayment(context.Background(), ticketId)
+
+	require.NotNil(t, res.AuthCode)
 	if err != nil {
-		t.Fatalf("RetrievePayment failed: %v", err)
+		t.Errorf("Error %s", err)
 	}
 }
