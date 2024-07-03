@@ -40,20 +40,16 @@ func (api *BkmExpress) Complete(ctx context.Context, request CompleteBkmExpressR
 	return response.Data, nil
 }
 
-func (api *BkmExpress) RetrievePayment(ctx context.Context, ticketId string) error {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment/v1/bkm-express/payments/%s", ticketId), nil)
+func (api *BkmExpress) RetrievePayment(ctx context.Context, ticketId string) (*PaymentResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment/v1/card-payments/%s", ticketId), nil)
 	if err != nil {
-		return fmt.Errorf("failed to create new request: %w", err)
+		return nil, err
 	}
-	response := &Void{}
-
+	response := &Response[PaymentResponse]{}
 	err = api.Client.Do(ctx, newRequest, response)
 	if err != nil {
-		return fmt.Errorf("request failed: %w", err)
-	}
-	if response == nil {
-		return fmt.Errorf("empty response")
+		return nil, err
 	}
 
-	return nil
+	return response.Data, nil
 }
