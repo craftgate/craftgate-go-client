@@ -676,6 +676,7 @@ type InitCheckoutPaymentRequest struct {
 	AllowOnlyCreditCard         bool                `json:"allowOnlyCreditCard,omitempty"`
 	ForceThreeDS                bool                `json:"forceThreeDS,omitempty"`
 	ForceAuthForNonCreditCards  bool                `json:"forceAuthForNonCreditCards,omitempty"`
+	DepositPayment              bool                `json:"depositPayment,omitempty"`
 	Ttl                         int64               `json:"ttl,omitempty"`
 	CustomInstallments          []CustomInstallment `json:"customInstallments,omitempty"`
 	Items                       []PaymentItem       `json:"items"`
