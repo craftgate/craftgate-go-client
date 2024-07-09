@@ -780,6 +780,12 @@ type RetrieveLoyaltiesRequest struct {
 	CardToken   string `json:"cardToken,omitempty"`
 }
 
+type RetrieveProviderCardRequest struct {
+	ProviderCardToken  string `json:"providerCardToken,omitempty"`
+	ExternalId         string `json:"externalId,omitempty"`
+	ProviderCardUserId string `json:"providerCardUserId,omitempty"`
+}
+
 type InitGarantiPayPaymentRequest struct {
 	Price          float64                 `json:"price,omitempty"`
 	PaidPrice      float64                 `json:"paidPrice,omitempty"`
