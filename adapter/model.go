@@ -76,60 +76,72 @@ const (
 
 // apm type declaration
 const (
-	ApmType_PAPARA           ApmType = "PAPARA"
-	ApmType_PAYONEER         ApmType = "PAYONEER"
-	ApmType_SODEXO           ApmType = "SODEXO"
-	ApmType_METROPOL         ApmType = "METROPOL"
-	ApmType_EDENRED          ApmType = "EDENRED"
-	ApmType_EDENRED_GIFT     ApmType = "EDENRED_GIFT"
-	ApmType_PAYPAL           ApmType = "PAYPAL"
-	ApmType_KLARNA           ApmType = "KLARNA"
-	ApmType_AFTERPAY         ApmType = "AFTERPAY"
-	ApmType_KASPI            ApmType = "KASPI"
-	ApmType_INSTANT_TRANSFER ApmType = "INSTANT_TRANSFER"
-	ApmType_TOMPAY           ApmType = "TOMPAY"
-	ApmType_MASLAK           ApmType = "MASLAK"
-	ApmType_ALFABANK         ApmType = "ALFABANK"
-	ApmType_TOM_FINANCE      ApmType = "TOM_FINANCE"
-	ApmType_STRIPE           ApmType = "STRIPE"
-	ApmType_PAYCELL          ApmType = "PAYCELL"
-	ApmType_HASO             ApmType = "HASO"
-	ApmType_MULTINET         ApmType = "MULTINET"
-	ApmType_MULTINET_GIFT    ApmType = "MULTINET_GIFT"
-	ApmType_FUND_TRANSFER    ApmType = "FUND_TRANSFER"
-	ApmType_CASH_ON_DELIVERY ApmType = "CASH_ON_DELIVERY"
+	ApmType_PAPARA                 ApmType = "PAPARA"
+	ApmType_PAYONEER               ApmType = "PAYONEER"
+	ApmType_SODEXO                 ApmType = "SODEXO"
+	ApmType_METROPOL               ApmType = "METROPOL"
+	ApmType_EDENRED                ApmType = "EDENRED"
+	ApmType_EDENRED_GIFT           ApmType = "EDENRED_GIFT"
+	ApmType_PAYPAL                 ApmType = "PAYPAL"
+	ApmType_KLARNA                 ApmType = "KLARNA"
+	ApmType_AFTERPAY               ApmType = "AFTERPAY"
+	ApmType_KASPI                  ApmType = "KASPI"
+	ApmType_INSTANT_TRANSFER       ApmType = "INSTANT_TRANSFER"
+	ApmType_TOMPAY                 ApmType = "TOMPAY"
+	ApmType_MASLAK                 ApmType = "MASLAK"
+	ApmType_ALFABANK               ApmType = "ALFABANK"
+	ApmType_TOM_FINANCE            ApmType = "TOM_FINANCE"
+	ApmType_STRIPE                 ApmType = "STRIPE"
+	ApmType_PAYCELL                ApmType = "PAYCELL"
+	ApmType_HASO                   ApmType = "HASO"
+	ApmType_MULTINET               ApmType = "MULTINET"
+	ApmType_MULTINET_GIFT          ApmType = "MULTINET_GIFT"
+	ApmType_ALIPAY                 ApmType = "ALIPAY"
+	ApmType_APPLEPAY               ApmType = "APPLEPAY"
+	ApmType_GOOGLEPAY              ApmType = "GOOGLEPAY"
+	ApmType_HEPSIPAY_WALLET        ApmType = "HEPSIPAY_WALLET"
+	ApmType_HEPSIPAY_SHOPPING_LOAN ApmType = "HEPSIPAY_SHOPPING_LOAN"
+	ApmType_ZIP                    ApmType = "ZIP"
+	ApmType_CHIPPIN                ApmType = "CHIPPIN"
+	ApmType_ISPAY                  ApmType = "ISPAY"
+	ApmType_FUND_TRANSFER          ApmType = "FUND_TRANSFER"
+	ApmType_CASH_ON_DELIVERY       ApmType = "CASH_ON_DELIVERY"
 )
 
 // payment provider declaration
 const (
-	PaymentProvider_BANK             PaymentProvider = "BANK"
-	PaymentProvider_CG_WALLET        PaymentProvider = "CG_WALLET"
-	PaymentProvider_MASTERPASS       PaymentProvider = "MASTERPASS"
-	PaymentProvider_GARANTI_PAY      PaymentProvider = "GARANTI_PAY"
-	PaymentProvider_YKB_WORLD_PAY    PaymentProvider = "YKB_WORLD_PAY"
-	PaymentProvider_PAPARA           PaymentProvider = "PAPARA"
-	PaymentProvider_PAYONEER         PaymentProvider = "PAYONEER"
-	PaymentProvider_SODEXO           PaymentProvider = "SODEXO"
-	PaymentProvider_METROPOL         PaymentProvider = "METROPOL"
-	PaymentProvider_EDENRED          PaymentProvider = "EDENRED"
-	PaymentProvider_ALIPAY           PaymentProvider = "ALIPAY"
-	PaymentProvider_PAYPAL           PaymentProvider = "PAYPAL"
-	PaymentProvider_KLARNA           PaymentProvider = "KLARNA"
-	PaymentProvider_AFTERPAY         PaymentProvider = "AFTERPAY"
-	PaymentProvider_APPLEPAY         PaymentProvider = "APPLEPAY"
-	PaymentProvider_GOOGLEPAY        PaymentProvider = "GOOGLEPAY"
-	PaymentProvider_HEPSIPAY         PaymentProvider = "HEPSIPAY"
-	PaymentProvider_STRIPE           PaymentProvider = "STRIPE"
-	PaymentProvider_KASPI            PaymentProvider = "KASPI"
-	PaymentProvider_INSTANT_TRANSFER PaymentProvider = "INSTANT_TRANSFER"
-	PaymentProvider_MASLAK           PaymentProvider = "MASLAK"
-	PaymentProvider_TOMPAY           PaymentProvider = "TOMPAY"
-	PaymentProvider_TOM_FINANCE      PaymentProvider = "TOM_FINANCE"
-	PaymentProvider_ALFABANK         PaymentProvider = "ALFABANK"
-	PaymentProvider_PAYCELL          PaymentProvider = "PAYCELL"
-	PaymentProvider_HASO             PaymentProvider = "HASO"
-	PaymentProvider_MULTINET         PaymentProvider = "MULTINET"
-	PaymentProvider_OFFLINE          PaymentProvider = "OFFLINE"
+	PaymentProvider_BANK                        PaymentProvider = "BANK"
+	PaymentProvider_CG_WALLET                   PaymentProvider = "CG_WALLET"
+	PaymentProvider_MASTERPASS                  PaymentProvider = "MASTERPASS"
+	PaymentProvider_GARANTI_PAY                 PaymentProvider = "GARANTI_PAY"
+	PaymentProvider_YKB_WORLD_PAY               PaymentProvider = "YKB_WORLD_PAY"
+	PaymentProvider_PAPARA                      PaymentProvider = "PAPARA"
+	PaymentProvider_PAYONEER                    PaymentProvider = "PAYONEER"
+	PaymentProvider_SODEXO                      PaymentProvider = "SODEXO"
+	PaymentProvider_METROPOL                    PaymentProvider = "METROPOL"
+	PaymentProvider_EDENRED                     PaymentProvider = "EDENRED"
+	PaymentProvider_ALIPAY                      PaymentProvider = "ALIPAY"
+	PaymentProvider_PAYPAL                      PaymentProvider = "PAYPAL"
+	PaymentProvider_KLARNA                      PaymentProvider = "KLARNA"
+	PaymentProvider_AFTERPAY                    PaymentProvider = "AFTERPAY"
+	PaymentProvider_APPLEPAY                    PaymentProvider = "APPLEPAY"
+	PaymentProvider_GOOGLEPAY                   PaymentProvider = "GOOGLEPAY"
+	PaymentProvider_HEPSIPAY                    PaymentProvider = "HEPSIPAY"
+	PaymentProvider_STRIPE                      PaymentProvider = "STRIPE"
+	PaymentProvider_KASPI                       PaymentProvider = "KASPI"
+	PaymentProvider_INSTANT_TRANSFER            PaymentProvider = "INSTANT_TRANSFER"
+	PaymentProvider_MASLAK                      PaymentProvider = "MASLAK"
+	PaymentProvider_TOMPAY                      PaymentProvider = "TOMPAY"
+	PaymentProvider_TOM_FINANCE                 PaymentProvider = "TOM_FINANCE"
+	PaymentProvider_ALFABANK                    PaymentProvider = "ALFABANK"
+	PaymentProvider_PAYCELL                     PaymentProvider = "PAYCELL"
+	PaymentProvider_HASO                        PaymentProvider = "HASO"
+	PaymentProvider_MULTINET                    PaymentProvider = "MULTINET"
+	PaymentProvider_YKB_WORLD_PAY_SHOPPING_LOAN PaymentProvider = "YKB_WORLD_PAY_SHOPPING_LOAN"
+	PaymentProvider_ZIP                         PaymentProvider = "ZIP"
+	PaymentProvider_CHIPPIN                     PaymentProvider = "CHIPPIN"
+	PaymentProvider_ISPAY                       PaymentProvider = "ISPAY"
+	PaymentProvider_OFFLINE                     PaymentProvider = "OFFLINE"
 )
 
 // pos apm payment provider declaration
@@ -552,6 +564,7 @@ const (
 const (
 	PaymentAuthenticationType_THREE_DS     PaymentAuthenticationType = "THREE_DS"
 	PaymentAuthenticationType_NON_THREE_DS PaymentAuthenticationType = "NON_THREE_DS"
+	PaymentAuthenticationType_BKM_EXPRESS  PaymentAuthenticationType = "BKM_EXPRESS"
 )
 
 const (
@@ -1338,6 +1351,12 @@ type CheckMasterpassUserResponse struct {
 	AccountStatus                         *string `json:"accountStatus"`
 }
 
+type InitBkmExpressResponse struct {
+	Id    *string `json:"id"`
+	Path  *string `json:"path"`
+	Token *string `json:"token"`
+}
+
 type InstallmentPrice struct {
 	InstallmentPrice       *float64 `json:"installmentPrice"`
 	BankCommissionRate     *float64 `json:"bankCommissionRate"`
@@ -2031,6 +2050,19 @@ type MasterpassCreatePayment struct {
 	AdditionalParams map[string]interface{} `json:"additionalParams,omitempty"`
 }
 
+type InitBkmExpressRequest struct {
+	Price              float64       `json:"price,omitempty"`
+	PaidPrice          float64       `json:"paidPrice,omitempty"`
+	Currency           Currency      `json:"currency,omitempty"`
+	PaymentGroup       PaymentGroup  `json:"paymentGroup,omitempty"`
+	ConversationId     string        `json:"conversationId,omitempty"`
+	PaymentPhase       PaymentPhase  `json:"paymentPhase,omitempty"`
+	BuyerMemberId      int64         `json:"buyerMemberId,omitempty"`
+	BankOrderId        string        `json:"bankOrderId,omitempty"`
+	Items              []PaymentItem `json:"items"`
+	EnabledInstallment bool          `json:"enabledInstallments"`
+}
+
 type CreateMerchantRequest struct {
 	Name               string `json:"name"`
 	LegalCompanyTitle  string `json:"legalCompanyTitle"`
@@ -2041,6 +2073,12 @@ type CreateMerchantRequest struct {
 	ContactName        string `json:"contactName"`
 	ContactSurname     string `json:"contactSurname"`
 	ContactPhoneNumber string `json:"contactPhoneNumber"`
+}
+
+type CompleteBkmExpressRequest struct {
+	Status   bool   `json:"status"`
+	Message  string `json:"message"`
+	TicketId string `json:"ticketId"`
 }
 
 type MerchantApiCredential struct {
