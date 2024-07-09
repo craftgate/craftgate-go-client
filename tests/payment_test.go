@@ -2,11 +2,12 @@ package tests
 
 import (
 	"context"
+	"testing"
+
 	"github.com/craftgate/craftgate-go-client/adapter"
 	craftgate "github.com/craftgate/craftgate-go-client/adapter"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/stretchr/testify/require"
-	"testing"
 )
 
 var paymentClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
@@ -1002,6 +1003,20 @@ func TestPayment_ApproveBnplPayment(t *testing.T) {
 
 func TestPayment_RetrieveMultiPayment(t *testing.T) {
 	res, err := paymentClient.Payment.RetrieveMultiPayment(context.Background(), "6d7e66b5-9b1c-4c1d-879a-2557b651096e")
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func Test_RetrieveProviderCards(t *testing.T) {
+	request := adapter.RetrieveProviderCardRequest{
+		ProviderCardToken:  "45f12c74-3000-465c-96dc-876850e7dd7a",
+		ProviderCardUserId: "0309ac2d-c5a5-4b4f-a91f-5c444ba07b24",
+		ExternalId:         "1001",
+	}
+	res, err := paymentClient.Payment.RetrieveProviderCard(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
