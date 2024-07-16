@@ -254,7 +254,7 @@ func (c *Client) NewRequestForByteResponse(ctx context.Context, method, urlStr s
 	req.Header.Set(ClientVersionHeaderName, ClientVersion)
 	req.Header.Set(SignatureHeaderName, hashStr)
 	req.Header.Set("Content-Type", "application/octet-stream; charset=utf-8")
-	req.Header.Set("Accept", "application/octet-stream; charset=utf-8")
+	req.Header.Set("Accept", "application/octet-stream,application/json; charset=utf-8")
 
 	return req, nil
 }
