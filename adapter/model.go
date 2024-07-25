@@ -1326,6 +1326,7 @@ type StoredCardResponse struct {
 	LastFourDigits   *string           `json:"lastFourDigits"`
 	CardUserKey      *string           `json:"cardUserKey"`
 	CardToken        *string           `json:"cardToken"`
+	CardHolderName   *string           `json:"cardHolderName"`
 	CardAlias        *string           `json:"cardAlias"`
 	CardType         *CardType         `json:"cardType"`
 	CardAssociation  *CardAssociation  `json:"cardAssociation"`
@@ -1333,6 +1334,7 @@ type StoredCardResponse struct {
 	CardBrand        *string           `json:"cardBrand"`
 	CardBankName     *string           `json:"cardBankName"`
 	CardBankId       *int64            `json:"cardBankId"`
+	CreatedAt        *TimeResponse     `json:"createdAt"`
 }
 
 type PaymentTransactionsApprovalResponse struct {
