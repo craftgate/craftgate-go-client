@@ -2017,9 +2017,10 @@ type Card struct {
 }
 
 type FraudCheckParameters struct {
-	BuyerExternalId  string `json:"buyerExternalId,omitempty"`
-	BuyerPhoneNumber string `json:"buyerPhoneNumber,omitempty"`
-	BuyerEmail       string `json:"buyerEmail,omitempty"`
+	BuyerExternalId     string `json:"buyerExternalId,omitempty"`
+	BuyerPhoneNumber    string `json:"buyerPhoneNumber,omitempty"`
+	BuyerEmail          string `json:"buyerEmail,omitempty"`
+	CustomFraudVariable string `json:"customFraudVariable,omitempty"`
 }
 
 type PosApmInstallment struct {
