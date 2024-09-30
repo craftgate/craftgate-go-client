@@ -104,6 +104,7 @@ const (
 	ApmType_ZIP                    ApmType = "ZIP"
 	ApmType_CHIPPIN                ApmType = "CHIPPIN"
 	ApmType_ISPAY                  ApmType = "ISPAY"
+	ApmType_VODAFONE_DCB           ApmType = "VODAFONE_DCB"
 	ApmType_FUND_TRANSFER          ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY       ApmType = "CASH_ON_DELIVERY"
 )
@@ -141,6 +142,7 @@ const (
 	PaymentProvider_ZIP                         PaymentProvider = "ZIP"
 	PaymentProvider_CHIPPIN                     PaymentProvider = "CHIPPIN"
 	PaymentProvider_ISPAY                       PaymentProvider = "ISPAY"
+	PaymentProvider_VODAFONE                    PaymentProvider = "VODAFONE"
 	PaymentProvider_OFFLINE                     PaymentProvider = "OFFLINE"
 )
 
