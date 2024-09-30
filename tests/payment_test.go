@@ -573,7 +573,7 @@ func TestPayment_InitTompayApmPayment(t *testing.T) {
 func TestPayment_InitChippinApmPayment(t *testing.T) {
 	request := adapter.InitApmPaymentRequest{
 		ApmType:         craftgate.ApmType_CHIPPIN,
-		ApmUserIdentity: 1000000, // Chippin Numarası
+		ApmUserIdentity: "1000000", // Chippin Numarası
 		Price:           1,
 		PaidPrice:       1,
 		Currency:        craftgate.Currency_TRY,
