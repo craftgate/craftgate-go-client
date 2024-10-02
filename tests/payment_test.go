@@ -601,7 +601,7 @@ func TestPayment_InitChippinApmPayment(t *testing.T) {
 
 func TestPayment_InitPaymobApmPayment(t *testing.T) {
 	request := adapter.InitApmPaymentRequest{
-		ApmType:        craftgate.ApmType_CHIPPIN,
+		ApmType:        craftgate.ApmType_PAYMOB,
 		Price:          1,
 		PaidPrice:      1,
 		Currency:       craftgate.Currency_EGP,
