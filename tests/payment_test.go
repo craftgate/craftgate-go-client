@@ -599,6 +599,37 @@ func TestPayment_InitChippinApmPayment(t *testing.T) {
 	}
 }
 
+func TestPayment_InitPaymobApmPayment(t *testing.T) {
+	request := adapter.InitApmPaymentRequest{
+		ApmType:        craftgate.ApmType_PAYMOB,
+		Price:          1,
+		PaidPrice:      1,
+		Currency:       craftgate.Currency_EGP,
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		ConversationId: "foo-bar",
+		CallbackUrl:    "https://www.your-website.com/callback",
+		Items: []craftgate.PaymentItem{
+			{
+				Name:  "Item 1",
+				Price: 0.6,
+			},
+			{
+				Name:  "Item 2",
+				Price: 0.4,
+			},
+		},
+		AdditionalParams: map[string]string{
+			"integrationId": "11223344",
+		},
+	}
+	res, err := paymentClient.Payment.InitApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_CompleteApmPayment(t *testing.T) {
 	request := adapter.CompleteApmPaymentRequest{
 		PaymentId:        123,
