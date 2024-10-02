@@ -142,7 +142,7 @@ const (
 	PaymentProvider_ZIP                         PaymentProvider = "ZIP"
 	PaymentProvider_CHIPPIN                     PaymentProvider = "CHIPPIN"
 	PaymentProvider_ISPAY                       PaymentProvider = "ISPAY"
-	PaymentProvider_PAYMOB                      PaymentProvider = "CHIPPIN"
+	PaymentProvider_PAYMOB                      PaymentProvider = "PAYMOB"
 	PaymentProvider_OFFLINE                     PaymentProvider = "OFFLINE"
 )
 
