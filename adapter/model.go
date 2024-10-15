@@ -792,20 +792,21 @@ type RetrieveProviderCardRequest struct {
 }
 
 type InitGarantiPayPaymentRequest struct {
-	Price          float64                 `json:"price,omitempty"`
-	PaidPrice      float64                 `json:"paidPrice,omitempty"`
-	Currency       Currency                `json:"currency,omitempty"`
-	PosAlias       string                  `json:"posAlias,omitempty"`
-	PaymentGroup   PaymentGroup            `json:"paymentGroup,omitempty"`
-	ConversationId string                  `json:"conversationId,omitempty"`
-	ExternalId     string                  `json:"externalId,omitempty"`
-	CallbackUrl    string                  `json:"callbackUrl,omitempty"`
-	ClientIp       string                  `json:"clientIp,omitempty"`
-	PaymentChannel string                  `json:"paymentChannel,omitempty"`
-	BuyerMemberId  int64                   `json:"buyerMemberId,omitempty"`
-	BankOrderId    string                  `json:"bankOrderId,omitempty"`
-	Items          []PaymentItem           `json:"items"`
-	Installments   []GarantiPayInstallment `json:"installments,omitempty"`
+	Price               float64                 `json:"price,omitempty"`
+	PaidPrice           float64                 `json:"paidPrice,omitempty"`
+	Currency            Currency                `json:"currency,omitempty"`
+	PosAlias            string                  `json:"posAlias,omitempty"`
+	PaymentGroup        PaymentGroup            `json:"paymentGroup,omitempty"`
+	ConversationId      string                  `json:"conversationId,omitempty"`
+	ExternalId          string                  `json:"externalId,omitempty"`
+	CallbackUrl         string                  `json:"callbackUrl,omitempty"`
+	ClientIp            string                  `json:"clientIp,omitempty"`
+	PaymentChannel      string                  `json:"paymentChannel,omitempty"`
+	BuyerMemberId       int64                   `json:"buyerMemberId,omitempty"`
+	BankOrderId         string                  `json:"bankOrderId,omitempty"`
+	Items               []PaymentItem           `json:"items"`
+	Installments        []GarantiPayInstallment `json:"installments,omitempty"`
+	EnabledInstallments []int                   `json:"enabledInstallments"`
 }
 
 type RefundPaymentTransactionRequest struct {

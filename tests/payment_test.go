@@ -332,12 +332,13 @@ func TestPayment_InitDepositApmPayment(t *testing.T) {
 
 func TestPayment_InitGarantiPayPayment(t *testing.T) {
 	request := adapter.InitGarantiPayPaymentRequest{
-		Price:          100,
-		PaidPrice:      100,
-		Currency:       craftgate.Currency_TRY,
-		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
-		ConversationId: "456d1297-908e-4bd6-a13b-4be31a6e47d5",
-		CallbackUrl:    "https://www.your-website.com/craftgate-garantipay-callback",
+		Price:               100,
+		PaidPrice:           100,
+		Currency:            craftgate.Currency_TRY,
+		PaymentGroup:        craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		ConversationId:      "456d1297-908e-4bd6-a13b-4be31a6e47d5",
+		CallbackUrl:         "https://www.your-website.com/craftgate-garantipay-callback",
+		EnabledInstallments: []int{1, 2},
 		Items: []craftgate.PaymentItem{
 			{
 				Name:       "Item 1",
