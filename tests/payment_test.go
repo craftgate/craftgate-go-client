@@ -608,7 +608,6 @@ func TestPayment_InitBizumApmPayment(t *testing.T) {
 		Currency:       craftgate.Currency_EUR,
 		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
 		ConversationId: "foo-bar",
-		CallbackUrl:    "https://www.your-website.com/callback",
 		Items: []craftgate.PaymentItem{
 			{
 				Name:  "Item 1",
