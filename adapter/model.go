@@ -105,6 +105,7 @@ const (
 	ApmType_CHIPPIN                ApmType = "CHIPPIN"
 	ApmType_ISPAY                  ApmType = "ISPAY"
 	ApmType_PAYMOB                 ApmType = "PAYMOB"
+	ApmType_BIZUM                  ApmType = "BIZUM"
 	ApmType_FUND_TRANSFER          ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY       ApmType = "CASH_ON_DELIVERY"
 )
@@ -143,6 +144,7 @@ const (
 	PaymentProvider_CHIPPIN                     PaymentProvider = "CHIPPIN"
 	PaymentProvider_ISPAY                       PaymentProvider = "ISPAY"
 	PaymentProvider_PAYMOB                      PaymentProvider = "PAYMOB"
+	PaymentProvider_BIZUM                       PaymentProvider = "BIZUM"
 	PaymentProvider_OFFLINE                     PaymentProvider = "OFFLINE"
 )
 
