@@ -1375,6 +1375,8 @@ type InstallmentPrice struct {
 	TotalPrice             *float64 `json:"totalPrice"`
 	InstallmentNumber      *int     `json:"installmentNumber"`
 	InstallmentLabel       *string  `json:"installmentLabel"`
+	Force3Ds               *bool    `json:"force3ds"`
+	CvcRequired            *bool    `json:"cvcRequired"`
 }
 
 type SearchInstallmentsRequest struct {
