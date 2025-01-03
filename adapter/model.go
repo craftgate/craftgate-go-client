@@ -2065,16 +2065,17 @@ type MasterpassCreatePayment struct {
 }
 
 type InitBkmExpressRequest struct {
-	Price              float64       `json:"price,omitempty"`
-	PaidPrice          float64       `json:"paidPrice,omitempty"`
-	Currency           Currency      `json:"currency,omitempty"`
-	PaymentGroup       PaymentGroup  `json:"paymentGroup,omitempty"`
-	ConversationId     string        `json:"conversationId,omitempty"`
-	PaymentPhase       PaymentPhase  `json:"paymentPhase,omitempty"`
-	BuyerMemberId      int64         `json:"buyerMemberId,omitempty"`
-	BankOrderId        string        `json:"bankOrderId,omitempty"`
-	Items              []PaymentItem `json:"items"`
-	EnabledInstallment bool          `json:"enabledInstallments"`
+	Price               float64       `json:"price,omitempty"`
+	PaidPrice           float64       `json:"paidPrice,omitempty"`
+	Currency            Currency      `json:"currency,omitempty"`
+	PaymentGroup        PaymentGroup  `json:"paymentGroup,omitempty"`
+	ConversationId      string        `json:"conversationId,omitempty"`
+	ExternalId          string        `json:"externalId,omitempty"`
+	PaymentPhase        PaymentPhase  `json:"paymentPhase,omitempty"`
+	BuyerMemberId       int64         `json:"buyerMemberId,omitempty"`
+	BankOrderId         string        `json:"bankOrderId,omitempty"`
+	Items               []PaymentItem `json:"items"`
+	EnabledInstallments []int         `json:"enabledInstallments,omitempty"`
 }
 
 type CreateMerchantRequest struct {
@@ -2090,9 +2091,10 @@ type CreateMerchantRequest struct {
 }
 
 type CompleteBkmExpressRequest struct {
-	Status   bool   `json:"status"`
-	Message  string `json:"message"`
-	TicketId string `json:"ticketId"`
+	Status                 bool   `json:"status"`
+	Message                string `json:"message"`
+	TicketId               string `json:"ticketId"`
+	BkmExpressPaymentToken string `json:"bkmExpressPaymentToken,omitempty"`
 }
 
 type MerchantApiCredential struct {
