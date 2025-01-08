@@ -106,6 +106,7 @@ const (
 	ApmType_ISPAY                  ApmType = "ISPAY"
 	ApmType_PAYMOB                 ApmType = "PAYMOB"
 	ApmType_BIZUM                  ApmType = "BIZUM"
+	ApmType_PAYCELL_DCB            ApmType = "PAYCELL_DCB"
 	ApmType_FUND_TRANSFER          ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY       ApmType = "CASH_ON_DELIVERY"
 )
