@@ -106,6 +106,7 @@ const (
 	ApmType_ISPAY                  ApmType = "ISPAY"
 	ApmType_PAYMOB                 ApmType = "PAYMOB"
 	ApmType_BIZUM                  ApmType = "BIZUM"
+	ApmType_IWALLET                ApmType = "IWALLET"
 	ApmType_FUND_TRANSFER          ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY       ApmType = "CASH_ON_DELIVERY"
 )
@@ -145,6 +146,7 @@ const (
 	PaymentProvider_ISPAY                       PaymentProvider = "ISPAY"
 	PaymentProvider_PAYMOB                      PaymentProvider = "PAYMOB"
 	PaymentProvider_BIZUM                       PaymentProvider = "BIZUM"
+	PaymentProvider_IWALLET                     PaymentProvider = "IWALLET"
 	PaymentProvider_OFFLINE                     PaymentProvider = "OFFLINE"
 )
 
