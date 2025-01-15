@@ -224,6 +224,8 @@ const (
 	PaymentMethod_STRIPE           PaymentMethod = "STRIPE"
 	PaymentMethod_MULTINET         PaymentMethod = "MULTINET"
 	PaymentMethod_MULTINET_GIFT    PaymentMethod = "MULTINET_GIFT"
+	PaymentMethod_BIZUM            PaymentMethod = "BIZUM"
+	PaymentMethod_PAYCELL_DCB      PaymentMethod = "PAYCELL_DCB"
 )
 
 // card type declaration
