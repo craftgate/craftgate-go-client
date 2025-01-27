@@ -630,6 +630,37 @@ func TestPayment_InitBizumApmPayment(t *testing.T) {
 	}
 }
 
+func TestPayment_InitPaycellDCBApmPayment(t *testing.T) {
+	request := adapter.InitApmPaymentRequest{
+		ApmType:        craftgate.ApmType_PAYCELL_DCB,
+		Price:          1,
+		PaidPrice:      1,
+		Currency:       craftgate.Currency_TRY,
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		ConversationId: "foo-bar",
+		CallbackUrl:    "callbackurl",
+		Items: []craftgate.PaymentItem{
+			{
+				Name:  "Item 1",
+				Price: 0.6,
+			},
+			{
+				Name:  "Item 2",
+				Price: 0.4,
+			},
+		},
+		AdditionalParams: map[string]string{
+			"paycellGsmNumber": "5305289290",
+		},
+	}
+	res, err := paymentClient.Payment.InitApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_InitPaymobApmPayment(t *testing.T) {
 	request := adapter.InitApmPaymentRequest{
 		ApmType:        craftgate.ApmType_PAYMOB,

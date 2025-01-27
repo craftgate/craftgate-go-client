@@ -106,6 +106,7 @@ const (
 	ApmType_ISPAY                  ApmType = "ISPAY"
 	ApmType_PAYMOB                 ApmType = "PAYMOB"
 	ApmType_BIZUM                  ApmType = "BIZUM"
+	ApmType_PAYCELL_DCB            ApmType = "PAYCELL_DCB"
 	ApmType_FUND_TRANSFER          ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY       ApmType = "CASH_ON_DELIVERY"
 )
@@ -223,6 +224,8 @@ const (
 	PaymentMethod_STRIPE           PaymentMethod = "STRIPE"
 	PaymentMethod_MULTINET         PaymentMethod = "MULTINET"
 	PaymentMethod_MULTINET_GIFT    PaymentMethod = "MULTINET_GIFT"
+	PaymentMethod_BIZUM            PaymentMethod = "BIZUM"
+	PaymentMethod_PAYCELL_DCB      PaymentMethod = "PAYCELL_DCB"
 )
 
 // card type declaration
