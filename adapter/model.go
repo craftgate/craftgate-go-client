@@ -668,7 +668,7 @@ type InitCheckoutPaymentRequest struct {
 	PaymentGroup                PaymentGroup           `json:"paymentGroup,omitempty"`
 	ConversationId              string                 `json:"conversationId,omitempty"`
 	ExternalId                  string                 `json:"externalId,omitempty"`
-	BankOrderId                 string                 `json:"bankOrderId,omitempty"`
+	OrderId                     string                 `json:"orderId,omitempty"`
 	CallbackUrl                 string                 `json:"callbackUrl,omitempty"`
 	ClientIp                    string                 `json:"clientIp,omitempty"`
 	PaymentPhase                PaymentPhase           `json:"paymentPhase,omitempty"`
