@@ -618,7 +618,7 @@ func (api *Payment) RetrieveProviderCard(ctx context.Context, request RetrievePr
 	if err != nil {
 		return nil, err
 	}
-	response := &Response[StoredCardResponse]{}
+	response := &Response[DataResponse[StoredCardResponse]]{}
 	respErr := api.Client.Do(ctx, newRequest, response)
 	if err != nil {
 		return nil, respErr
