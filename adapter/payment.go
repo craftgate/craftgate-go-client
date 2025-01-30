@@ -613,7 +613,7 @@ func (api *Payment) RetrieveMultiPayment(ctx context.Context, token string) (*Mu
 	return response.Data, nil
 }
 
-func (api *Payment) RetrieveProviderCard(ctx context.Context, request RetrieveProviderCardRequest) (*StoredCardResponse, error) {
+func (api *Payment) RetrieveProviderCard(ctx context.Context, request RetrieveProviderCardRequest) (*DataResponse[StoredCardResponse], error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/payment/v1/cards/provider-card-mappings", request)
 	if err != nil {
 		return nil, err
