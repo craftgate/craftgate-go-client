@@ -104,6 +104,7 @@ const (
 	ApmType_ZIP                    ApmType = "ZIP"
 	ApmType_CHIPPIN                ApmType = "CHIPPIN"
 	ApmType_ISPAY                  ApmType = "ISPAY"
+	ApmType_VODAFONE_DCB           ApmType = "VODAFONE_DCB"
 	ApmType_PAYMOB                 ApmType = "PAYMOB"
 	ApmType_BIZUM                  ApmType = "BIZUM"
 	ApmType_PAYCELL_DCB            ApmType = "PAYCELL_DCB"
@@ -145,6 +146,7 @@ const (
 	PaymentProvider_ZIP                         PaymentProvider = "ZIP"
 	PaymentProvider_CHIPPIN                     PaymentProvider = "CHIPPIN"
 	PaymentProvider_ISPAY                       PaymentProvider = "ISPAY"
+	PaymentProvider_VODAFONE                    PaymentProvider = "VODAFONE"
 	PaymentProvider_PAYMOB                      PaymentProvider = "PAYMOB"
 	PaymentProvider_BIZUM                       PaymentProvider = "BIZUM"
 	PaymentProvider_PAYCELL_DCB					PaymentProvider = "PAYCELL_DCB"
@@ -672,7 +674,7 @@ type InitCheckoutPaymentRequest struct {
 	PaymentGroup                PaymentGroup           `json:"paymentGroup,omitempty"`
 	ConversationId              string                 `json:"conversationId,omitempty"`
 	ExternalId                  string                 `json:"externalId,omitempty"`
-	BankOrderId                 string                 `json:"bankOrderId,omitempty"`
+	OrderId                     string                 `json:"orderId,omitempty"`
 	CallbackUrl                 string                 `json:"callbackUrl,omitempty"`
 	ClientIp                    string                 `json:"clientIp,omitempty"`
 	PaymentPhase                PaymentPhase           `json:"paymentPhase,omitempty"`
