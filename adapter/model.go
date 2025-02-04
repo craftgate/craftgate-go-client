@@ -978,11 +978,12 @@ type BnplPaymentCartItem struct {
 }
 
 type BnplPaymentOfferRequest struct {
-	ApmType       ApmType               `json:"apmType"`
-	MerchantApmId int64                 `json:"merchantApmId,omitempty"`
-	Price         float64               `json:"price"`
-	Currency      Currency              `json:"currency"`
-	Items         []BnplPaymentCartItem `json:"items"`
+	ApmType           ApmType               `json:"apmType"`
+	MerchantApmId     int64                 `json:"merchantApmId,omitempty"`
+	Price             float64               `json:"price"`
+	Currency          Currency              `json:"currency"`
+    AdditionalParams  map[string]string     `json:"additionalParams"`
+	Items             []BnplPaymentCartItem `json:"items"`
 }
 
 // responses
@@ -1752,6 +1753,7 @@ type BnplBankOffer struct {
 	BankIconUrl                   string               `json:"bankIconUrl"`
 	BankTableBannerMessage        string               `json:"bankTableBannerMessage"`
 	BankSmallBannerMessage        string               `json:"bankSmallBannerMessage"`
+    PreApprovedApplicationId      string               `json:"preApprovedApplicationId"`
 	IsSupportNonCustomer          bool                 `json:"isSupportNonCustomer"`
 	IsPaymentPlanCalculatedByBank bool                 `json:"isPaymentPlanCalculatedByBank"`
 	BnplBankOfferTerm             *[]BnplBankOfferTerm `json:"bankOfferTerms"`
