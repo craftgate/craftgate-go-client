@@ -36,9 +36,7 @@ func TestBkm_Express_Init(t *testing.T) {
 	res, err := bkmExpressClient.BkmExpress.Init(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
-	if err != nil {
-		t.Errorf("Error %s", err)
-	}
+	require.Nil(t, err, "Error: %v", err)
 }
 
 func TestBkm_Express_Complete(t *testing.T) {
@@ -52,9 +50,7 @@ func TestBkm_Express_Complete(t *testing.T) {
 
 	require.NotNil(t, res.AuthCode)
 	require.NotNil(t, res.HostReference)
-	if err != nil {
-		t.Errorf("Error %s", err)
-	}
+	require.Nil(t, err, "Error: %v", err)
 }
 
 func TestBkm_Express_Complete_By_Token(t *testing.T) {
@@ -69,9 +65,7 @@ func TestBkm_Express_Complete_By_Token(t *testing.T) {
 
 	require.NotNil(t, res.AuthCode)
 	require.NotNil(t, res.HostReference)
-	if err != nil {
-		t.Errorf("Error %s", err)
-	}
+	require.Nil(t, err, "Error: %v", err)
 }
 
 func TestBkm_Express_RetrievePayment(t *testing.T) {
@@ -79,9 +73,7 @@ func TestBkm_Express_RetrievePayment(t *testing.T) {
 	res, err := bkmExpressClient.BkmExpress.RetrievePayment(context.Background(), ticketId)
 
 	require.NotNil(t, res.AuthCode)
-	if err != nil {
-		t.Errorf("Error %s", err)
-	}
+	require.Nil(t, err, "Error: %v", err)
 }
 
 func TestBkm_Express_RetrievePayment_By_Token(t *testing.T) {
@@ -89,7 +81,5 @@ func TestBkm_Express_RetrievePayment_By_Token(t *testing.T) {
 	res, err := bkmExpressClient.BkmExpress.RetrievePaymentByToken(context.Background(), bkmExpressPaymentToken)
 
 	require.NotNil(t, res.AuthCode)
-	if err != nil {
-		t.Errorf("Error %s", err)
-	}
+	require.Nil(t, err, "Error: %v", err)
 }
