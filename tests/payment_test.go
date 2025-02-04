@@ -1186,7 +1186,7 @@ func Test_RetrieveProviderCards(t *testing.T) {
 		ProviderCardUserId: "0309ac2d-c5a5-4b4f-a91f-5c444ba07b24",
 		ExternalId:         "1001",
 	}
-	res, err := paymentClient.Payment.RetrieveProviderCard(context.Background(), request)
+	res, err := paymentClient.Payment.RetrieveProviderCards(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
