@@ -104,8 +104,11 @@ const (
 	ApmType_ZIP                    ApmType = "ZIP"
 	ApmType_CHIPPIN                ApmType = "CHIPPIN"
 	ApmType_ISPAY                  ApmType = "ISPAY"
+	ApmType_VODAFONE_DCB           ApmType = "VODAFONE_DCB"
 	ApmType_PAYMOB                 ApmType = "PAYMOB"
 	ApmType_BIZUM                  ApmType = "BIZUM"
+	ApmType_PAYCELL_DCB            ApmType = "PAYCELL_DCB"
+	ApmType_IWALLET                ApmType = "IWALLET"
 	ApmType_FUND_TRANSFER          ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY       ApmType = "CASH_ON_DELIVERY"
 )
@@ -143,8 +146,11 @@ const (
 	PaymentProvider_ZIP                         PaymentProvider = "ZIP"
 	PaymentProvider_CHIPPIN                     PaymentProvider = "CHIPPIN"
 	PaymentProvider_ISPAY                       PaymentProvider = "ISPAY"
+	PaymentProvider_VODAFONE                    PaymentProvider = "VODAFONE"
 	PaymentProvider_PAYMOB                      PaymentProvider = "PAYMOB"
 	PaymentProvider_BIZUM                       PaymentProvider = "BIZUM"
+	PaymentProvider_PAYCELL_DCB					PaymentProvider = "PAYCELL_DCB"
+	PaymentProvider_IWALLET                     PaymentProvider = "IWALLET"
 	PaymentProvider_OFFLINE                     PaymentProvider = "OFFLINE"
 )
 
@@ -223,6 +229,9 @@ const (
 	PaymentMethod_STRIPE           PaymentMethod = "STRIPE"
 	PaymentMethod_MULTINET         PaymentMethod = "MULTINET"
 	PaymentMethod_MULTINET_GIFT    PaymentMethod = "MULTINET_GIFT"
+	PaymentMethod_BIZUM            PaymentMethod = "BIZUM"
+	PaymentMethod_PAYCELL_DCB      PaymentMethod = "PAYCELL_DCB"
+	PaymentMethod_IWALLET          PaymentMethod = "IWALLET"
 )
 
 // card type declaration
@@ -665,7 +674,7 @@ type InitCheckoutPaymentRequest struct {
 	PaymentGroup                PaymentGroup           `json:"paymentGroup,omitempty"`
 	ConversationId              string                 `json:"conversationId,omitempty"`
 	ExternalId                  string                 `json:"externalId,omitempty"`
-	BankOrderId                 string                 `json:"bankOrderId,omitempty"`
+	OrderId                     string                 `json:"orderId,omitempty"`
 	CallbackUrl                 string                 `json:"callbackUrl,omitempty"`
 	ClientIp                    string                 `json:"clientIp,omitempty"`
 	PaymentPhase                PaymentPhase           `json:"paymentPhase,omitempty"`
@@ -969,11 +978,12 @@ type BnplPaymentCartItem struct {
 }
 
 type BnplPaymentOfferRequest struct {
-	ApmType       ApmType               `json:"apmType"`
-	MerchantApmId int64                 `json:"merchantApmId,omitempty"`
-	Price         float64               `json:"price"`
-	Currency      Currency              `json:"currency"`
-	Items         []BnplPaymentCartItem `json:"items"`
+	ApmType           ApmType               `json:"apmType"`
+	MerchantApmId     int64                 `json:"merchantApmId,omitempty"`
+	Price             float64               `json:"price"`
+	Currency          Currency              `json:"currency"`
+    AdditionalParams  map[string]string     `json:"additionalParams"`
+	Items             []BnplPaymentCartItem `json:"items"`
 }
 
 // responses
@@ -1743,6 +1753,7 @@ type BnplBankOffer struct {
 	BankIconUrl                   string               `json:"bankIconUrl"`
 	BankTableBannerMessage        string               `json:"bankTableBannerMessage"`
 	BankSmallBannerMessage        string               `json:"bankSmallBannerMessage"`
+    PreApprovedApplicationId      string               `json:"preApprovedApplicationId"`
 	IsSupportNonCustomer          bool                 `json:"isSupportNonCustomer"`
 	IsPaymentPlanCalculatedByBank bool                 `json:"isPaymentPlanCalculatedByBank"`
 	BnplBankOfferTerm             *[]BnplBankOfferTerm `json:"bankOfferTerms"`
