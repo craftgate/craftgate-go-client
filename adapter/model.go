@@ -149,7 +149,7 @@ const (
 	PaymentProvider_VODAFONE                    PaymentProvider = "VODAFONE"
 	PaymentProvider_PAYMOB                      PaymentProvider = "PAYMOB"
 	PaymentProvider_BIZUM                       PaymentProvider = "BIZUM"
-	PaymentProvider_PAYCELL_DCB					PaymentProvider = "PAYCELL_DCB"
+	PaymentProvider_PAYCELL_DCB                 PaymentProvider = "PAYCELL_DCB"
 	PaymentProvider_IWALLET                     PaymentProvider = "IWALLET"
 	PaymentProvider_OFFLINE                     PaymentProvider = "OFFLINE"
 )
@@ -331,6 +331,7 @@ const (
 	SettlementEarningsDestination_IBAN         SettlementEarningsDestination = "IBAN"
 	SettlementEarningsDestination_WALLET       SettlementEarningsDestination = "WALLET"
 	SettlementEarningsDestination_CROSS_BORDER SettlementEarningsDestination = "CROSS_BORDER"
+	SettlementEarningsDestination_NONE         SettlementEarningsDestination = "NONE"
 )
 
 // refundDestinationType type declaration
@@ -978,12 +979,12 @@ type BnplPaymentCartItem struct {
 }
 
 type BnplPaymentOfferRequest struct {
-	ApmType           ApmType               `json:"apmType"`
-	MerchantApmId     int64                 `json:"merchantApmId,omitempty"`
-	Price             float64               `json:"price"`
-	Currency          Currency              `json:"currency"`
-    AdditionalParams  map[string]string     `json:"additionalParams"`
-	Items             []BnplPaymentCartItem `json:"items"`
+	ApmType          ApmType               `json:"apmType"`
+	MerchantApmId    int64                 `json:"merchantApmId,omitempty"`
+	Price            float64               `json:"price"`
+	Currency         Currency              `json:"currency"`
+	AdditionalParams map[string]string     `json:"additionalParams"`
+	Items            []BnplPaymentCartItem `json:"items"`
 }
 
 // responses
@@ -1753,7 +1754,7 @@ type BnplBankOffer struct {
 	BankIconUrl                   string               `json:"bankIconUrl"`
 	BankTableBannerMessage        string               `json:"bankTableBannerMessage"`
 	BankSmallBannerMessage        string               `json:"bankSmallBannerMessage"`
-    PreApprovedApplicationId      string               `json:"preApprovedApplicationId"`
+	PreApprovedApplicationId      string               `json:"preApprovedApplicationId"`
 	IsSupportNonCustomer          bool                 `json:"isSupportNonCustomer"`
 	IsPaymentPlanCalculatedByBank bool                 `json:"isPaymentPlanCalculatedByBank"`
 	BnplBankOfferTerm             *[]BnplBankOfferTerm `json:"bankOfferTerms"`
