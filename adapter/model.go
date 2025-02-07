@@ -4,6 +4,7 @@ import "time"
 
 type PaymentType string
 type ApmType string
+type CardProvider string
 type PaymentProvider string
 type PosApmPaymentProvider string
 type PaymentStatus string
@@ -111,6 +112,14 @@ const (
 	ApmType_IWALLET                ApmType = "IWALLET"
 	ApmType_FUND_TRANSFER          ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY       ApmType = "CASH_ON_DELIVERY"
+)
+
+// card provider declaration
+const (
+	CardProvider_IYZICO         CardProvider = "IYZICO"
+	CardProvider_IPARA          CardProvider = "IPARA"
+	CardProvider_BIRLESIK_ODEME CardProvider = "BIRLESIK_ODEME"
+	CardProvider_MEX            CardProvider = "MEX"
 )
 
 // payment provider declaration
@@ -801,6 +810,7 @@ type RetrieveProviderCardRequest struct {
 	ProviderCardToken  string `json:"providerCardToken,omitempty"`
 	ExternalId         string `json:"externalId,omitempty"`
 	ProviderCardUserId string `json:"providerCardUserId,omitempty"`
+	CardProvider       string `json:"cardProvider,omitempty"`
 }
 
 type InitGarantiPayPaymentRequest struct {
