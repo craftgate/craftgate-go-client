@@ -1182,10 +1182,10 @@ func TestPayment_RetrieveMultiPayment(t *testing.T) {
 
 func Test_RetrieveProviderCards(t *testing.T) {
 	request := adapter.RetrieveProviderCardRequest{
-		ProviderCardToken:     "45f12c74-3000-465c-96dc-876850e7dd7a",
-		ProviderCardUserId:    "0309ac2d-c5a5-4b4f-a91f-5c444ba07b24",
-		ExternalId:            "1001",
-		CardMigrationProvider: string(craftgate.CardMigrationProvider_MEX),
+		ProviderCardToken:  "45f12c74-3000-465c-96dc-876850e7dd7a",
+		ProviderCardUserId: "0309ac2d-c5a5-4b4f-a91f-5c444ba07b24",
+		ExternalId:         "1001",
+		CardProvider:       string(craftgate.CardProvider_MEX),
 	}
 	res, err := paymentClient.Payment.RetrieveProviderCards(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
