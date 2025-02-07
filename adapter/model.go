@@ -114,7 +114,7 @@ const (
 	ApmType_CASH_ON_DELIVERY       ApmType = "CASH_ON_DELIVERY"
 )
 
-// apm type declaration
+// card provider declaration
 const (
 	CardProvider_IYZICO         CardProvider = "IYZICO"
 	CardProvider_IPARA          CardProvider = "IPARA"
