@@ -1879,6 +1879,11 @@ type RetrieveDailyTransactionReportRequest struct {
 	FileType   ReportFileType `schema:"fileType,omitempty"`
 }
 
+type RetrieveDailyPaymentReportRequest struct {
+	ReportDate Date           `schema:"reportDate,omitempty"`
+	FileType   ReportFileType `schema:"fileType,omitempty"`
+}
+
 type SearchFraudChecksRequest struct {
 	Page           int              `schema:"page,omitempty"`
 	Size           int              `schema:"size,omitempty"`
