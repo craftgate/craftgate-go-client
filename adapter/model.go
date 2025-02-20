@@ -840,8 +840,9 @@ type RefundPaymentTransactionRequest struct {
 }
 
 type UpdatePaymentTransactionRequest struct {
-	SubMerchantMemberId    int64   `json:"subMerchantMemberId,omitempty"`
-	SubMerchantMemberPrice float64 `json:"subMerchantMemberPrice,omitempty"`
+	SubMerchantMemberId       int64   `json:"subMerchantMemberId,omitempty"`
+	SubMerchantMemberPrice    float64 `json:"subMerchantMemberPrice,omitempty"`
+	SubMerchantMemberTaxPrice float64 `json:"subMerchantMemberTaxPrice,omitempty"`
 }
 
 type UpdateStoredCardRequest struct {
