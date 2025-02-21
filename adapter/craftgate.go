@@ -109,6 +109,7 @@ type Client struct {
 	BankAccountTracking *BankAccountTracking
 	Merchant            *Merchant
 	Juzdan              *Juzdan
+	BkmExpress          *BkmExpress
 }
 
 func New(apiKey, apiSecret, baseURL string, opts ...ClientOption) (*Client, error) {
@@ -148,6 +149,8 @@ func newClient(apiKey, secretKey string) *Client {
 	client.Masterpass = &Masterpass{Client: client}
 	client.BankAccountTracking = &BankAccountTracking{Client: client}
 	client.Merchant = &Merchant{Client: client}
+	client.Juzdan = &Juzdan{Client: client}
+	client.BkmExpress = &BkmExpress{Client: client}
 
 	return client
 }
@@ -251,7 +254,7 @@ func (c *Client) NewRequestForByteResponse(ctx context.Context, method, urlStr s
 	req.Header.Set(ClientVersionHeaderName, ClientVersion)
 	req.Header.Set(SignatureHeaderName, hashStr)
 	req.Header.Set("Content-Type", "application/octet-stream; charset=utf-8")
-	req.Header.Set("Accept", "application/octet-stream; charset=utf-8")
+	req.Header.Set("Accept", "application/octet-stream,application/json; charset=utf-8")
 
 	return req, nil
 }

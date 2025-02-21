@@ -24,3 +24,17 @@ func TestFileReporting_RetrieveDailyTransactionReport(t *testing.T) {
 		t.Errorf("Error %s", err)
 	}
 }
+
+func TestFileReporting_RetrieveDailyPaymentReport(t *testing.T) {
+	request := adapter.RetrieveDailyPaymentReportRequest{
+		ReportDate: craftgate.DateOf(time.Date(2025, 1, 26, 0, 0, 0, 0, time.UTC)),
+		FileType:   craftgate.ReportFileType_CSV,
+	}
+
+	res, err := fileReportingClient.FileReporting.RetrieveDailyPaymentReport(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}

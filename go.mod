@@ -4,8 +4,8 @@ go 1.21
 
 require (
 	github.com/davecgh/go-spew v1.1.1
-	github.com/gorilla/schema v1.3.0
-	github.com/stretchr/testify v1.9.0
+	github.com/gorilla/schema v1.4.1
+	github.com/stretchr/testify v1.10.0
 )
 
 require (
