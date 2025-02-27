@@ -1165,7 +1165,9 @@ func TestPayment_InitTomFinanceBnplPayment(t *testing.T) {
 }
 
 func TestPayment_ApproveBnplPayment(t *testing.T) {
-	err := paymentClient.Payment.ApproveBnplPayment(context.Background(), 1)
+	res, err := paymentClient.Payment.ApproveBnplPayment(context.Background(), 1)
+	_, _ = spew.Printf("%#v\n", res)
+
 	if err != nil {
 		t.Errorf("Error %s", err)
 	}
