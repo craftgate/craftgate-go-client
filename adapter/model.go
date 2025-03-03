@@ -67,12 +67,13 @@ const (
 
 // payment type declaration
 const (
-	PaymentType_CARD_PAYMENT            PaymentType = "CARD_PAYMENT"
-	PaymentType_WALLET_PAYMENT          PaymentType = "WALLET_PAYMENT"
-	PaymentType_CARD_AND_WALLET_PAYMENT PaymentType = "CARD_AND_WALLET_PAYMENT"
-	PaymentType_DEPOSIT_PAYMENT         PaymentType = "DEPOSIT_PAYMENT"
-	PaymentType_BANK_TRANSFER           PaymentType = "BANK_TRANSFER"
-	PaymentType_APM                     PaymentType = "APM"
+	PaymentType_CARD_PAYMENT             PaymentType = "CARD_PAYMENT"
+	PaymentType_WALLET_PAYMENT           PaymentType = "WALLET_PAYMENT"
+	PaymentType_CARD_AND_WALLET_PAYMENT  PaymentType = "CARD_AND_WALLET_PAYMENT"
+	PaymentType_DEPOSIT_PAYMENT          PaymentType = "DEPOSIT_PAYMENT"
+	PaymentType_HEPSIPAY_DEPOSIT_PAYMENT PaymentType = "HEPSIPAY_DEPOSIT_PAYMENT"
+	PaymentType_BANK_TRANSFER            PaymentType = "BANK_TRANSFER"
+	PaymentType_APM                      PaymentType = "APM"
 )
 
 // apm type declaration
