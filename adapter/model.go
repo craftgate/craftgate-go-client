@@ -847,8 +847,9 @@ type RefundPaymentTransactionRequest struct {
 }
 
 type UpdatePaymentTransactionRequest struct {
-	SubMerchantMemberId    int64   `json:"subMerchantMemberId,omitempty"`
-	SubMerchantMemberPrice float64 `json:"subMerchantMemberPrice,omitempty"`
+	SubMerchantMemberId       int64   `json:"subMerchantMemberId,omitempty"`
+	SubMerchantMemberPrice    float64 `json:"subMerchantMemberPrice,omitempty"`
+	SubMerchantMemberTaxPrice float64 `json:"subMerchantMemberTaxPrice,omitempty"`
 }
 
 type UpdateStoredCardRequest struct {
@@ -1067,6 +1068,7 @@ type PaymentTransactionResponse struct {
 	MerchantPayoutAmount          *float64 `json:"merchantPayoutAmount"`
 	SubMerchantMemberID           *int64   `json:"subMerchantMemberId"`
 	SubMerchantMemberPrice        *float64 `json:"subMerchantMemberPrice"`
+	SubMerchantMemberTaxPrice     *float64 `json:"subMerchantMemberTaxPrice"`
 	SubMerchantMemberPayoutRate   *float64 `json:"subMerchantMemberPayoutRate"`
 	SubMerchantMemberPayoutAmount *float64 `json:"subMerchantMemberPayoutAmount"`
 	Payout                        *Payout  `json:"payout"`
@@ -1736,6 +1738,7 @@ type ReportingPaymentTransactionResponse struct {
 	MerchantPayoutAmount          *float64             `json:"merchantPayoutAmount"`
 	SubMerchantMemberId           *int64               `json:"subMerchantMemberId"`
 	SubMerchantMemberPrice        *float64             `json:"subMerchantMemberPrice"`
+	SubMerchantMemberTaxPrice     *float64             `json:"subMerchantMemberTaxPrice"`
 	SubMerchantMemberPayoutRate   *float64             `json:"subMerchantMemberPayoutRate"`
 	SubMerchantMemberPayoutAmount *float64             `json:"subMerchantMemberPayoutAmount"`
 	TransactionStatus             *TransactionStatus   `json:"transactionStatus"`
@@ -2073,11 +2076,12 @@ type PosApmInstallment struct {
 }
 
 type PaymentItem struct {
-	Name                   string  `json:"name,omitempty"`
-	Price                  float64 `json:"price,omitempty"`
-	ExternalId             string  `json:"externalId,omitempty"`
-	SubMerchantMemberId    int64   `json:"subMerchantMemberId,omitempty"`
-	SubMerchantMemberPrice float64 `json:"subMerchantMemberPrice,omitempty"`
+	Name                      string  `json:"name,omitempty"`
+	Price                     float64 `json:"price,omitempty"`
+	ExternalId                string  `json:"externalId,omitempty"`
+	SubMerchantMemberId       int64   `json:"subMerchantMemberId,omitempty"`
+	SubMerchantMemberPrice    float64 `json:"subMerchantMemberPrice,omitempty"`
+	SubMerchantMemberTaxPrice float64 `json:"subMerchantMemberTaxPrice,omitempty"`
 }
 
 type MasterpassCreatePayment struct {
