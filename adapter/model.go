@@ -1683,6 +1683,8 @@ type ReportingPaymentResponse struct {
 	RefundStatus                 *PaymentRefundStatus              `json:"refundStatus"`
 	CardIssuerBankName           *string                           `json:"cardIssuerBankName"`
 	MdStatus                     *int                              `json:"mdStatus"`
+	FraudId                      *int64                            `json:"fraudId"`
+	FraudAction                  *FraudAction                      `json:"fraudAction"`
 	BuyerMember                  *MemberResponse                   `json:"buyerMember"`
 	Refunds                      *[]ReportingPaymentRefundResponse `json:"refunds"`
 	Pos                          *MerchantPos                      `json:"pos"`
