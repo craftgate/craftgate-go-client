@@ -54,6 +54,7 @@ type BnplCartItemType string
 type PaymentAuthenticationType string
 type CardBrand string
 type ClientType string
+type MasterpassValidationType string
 
 const (
 	ApiKeyHeaderName        = "x-api-key"
@@ -616,6 +617,12 @@ const (
 	TokenizedCardType_APPLE_PAY TokenizedCardType = "APPLE_PAY"
 )
 
+const (
+	MasterpassValidationType_NONE     MasterpassValidationType = "NONE"
+	MasterpassValidationType_OTP      MasterpassValidationType = "OTP"
+	MasterpassValidationType_THREE_DS MasterpassValidationType = "THREE_DS"
+)
+
 // requests
 type CreatePaymentRequest struct {
 	Price            float64                `json:"price,omitempty"`
@@ -941,13 +948,14 @@ type SearchPayoutAccountRequest struct {
 }
 
 type MasterpassPaymentTokenGenerateRequest struct {
-	Msisdn                       string                  `json:"msisdn,omitempty"`
-	UserId                       string                  `json:"userId,omitempty"`
-	BinNumber                    string                  `json:"binNumber,omitempty"`
-	ForceThreeDS                 bool                    `json:"forceThreeDS,omitempty"`
-	CreatePayment                MasterpassCreatePayment `json:"createPayment,omitempty"`
-	Loyalty                      *Loyalty                `json:"loyalty,omitempty"`
-	MasterpassIntegrationVersion int                     `json:"masterpassIntegrationVersion,omitempty"`
+	Msisdn                       string                   `json:"msisdn,omitempty"`
+	UserId                       string                   `json:"userId,omitempty"`
+	BinNumber                    string                   `json:"binNumber,omitempty"`
+	ForceThreeDS                 bool                     `json:"forceThreeDS,omitempty"`
+	CreatePayment                MasterpassCreatePayment  `json:"createPayment,omitempty"`
+	Loyalty                      *Loyalty                 `json:"loyalty,omitempty"`
+	MasterpassIntegrationVersion int                      `json:"masterpassIntegrationVersion,omitempty"`
+	ValidationType               MasterpassValidationType `json:"validationType,omitempty"`
 }
 
 type MasterpassPaymentCompleteRequest struct {
