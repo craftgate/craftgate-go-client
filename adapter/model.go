@@ -2034,6 +2034,7 @@ type MerchantPos struct {
 type Reward struct {
 	CardRewardMoney *float64 `json:"cardRewardMoney,omitempty"`
 	FirmRewardMoney *float64 `json:"firmRewardMoney,omitempty"`
+	MilRewardMoney  *float64 `json:"milRewardMoney,omitempty"`
 }
 
 type Loyalty struct {
