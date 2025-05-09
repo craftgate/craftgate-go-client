@@ -211,6 +211,7 @@ const (
 	Currency_RUB Currency = "RUB"
 	Currency_JPY Currency = "JPY"
 	Currency_EGP Currency = "EGP"
+	Currency_MXN Currency = "MXN"
 )
 
 // payment group declaration
