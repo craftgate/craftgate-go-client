@@ -82,6 +82,7 @@ const (
 	ApmType_PAPARA                 ApmType = "PAPARA"
 	ApmType_PAYONEER               ApmType = "PAYONEER"
 	ApmType_SODEXO                 ApmType = "SODEXO"
+	ApmType_SETCARD                ApmType = "SETCARD"
 	ApmType_METROPOL               ApmType = "METROPOL"
 	ApmType_EDENRED                ApmType = "EDENRED"
 	ApmType_EDENRED_GIFT           ApmType = "EDENRED_GIFT"
