@@ -4,6 +4,7 @@ import "time"
 
 type PaymentType string
 type ApmType string
+type CardProvider string
 type PaymentProvider string
 type PosApmPaymentProvider string
 type PaymentStatus string
@@ -53,6 +54,7 @@ type BnplCartItemType string
 type PaymentAuthenticationType string
 type CardBrand string
 type ClientType string
+type MasterpassValidationType string
 
 const (
 	ApiKeyHeaderName        = "x-api-key"
@@ -66,12 +68,13 @@ const (
 
 // payment type declaration
 const (
-	PaymentType_CARD_PAYMENT            PaymentType = "CARD_PAYMENT"
-	PaymentType_WALLET_PAYMENT          PaymentType = "WALLET_PAYMENT"
-	PaymentType_CARD_AND_WALLET_PAYMENT PaymentType = "CARD_AND_WALLET_PAYMENT"
-	PaymentType_DEPOSIT_PAYMENT         PaymentType = "DEPOSIT_PAYMENT"
-	PaymentType_BANK_TRANSFER           PaymentType = "BANK_TRANSFER"
-	PaymentType_APM                     PaymentType = "APM"
+	PaymentType_CARD_PAYMENT             PaymentType = "CARD_PAYMENT"
+	PaymentType_WALLET_PAYMENT           PaymentType = "WALLET_PAYMENT"
+	PaymentType_CARD_AND_WALLET_PAYMENT  PaymentType = "CARD_AND_WALLET_PAYMENT"
+	PaymentType_DEPOSIT_PAYMENT          PaymentType = "DEPOSIT_PAYMENT"
+	PaymentType_HEPSIPAY_DEPOSIT_PAYMENT PaymentType = "HEPSIPAY_DEPOSIT_PAYMENT"
+	PaymentType_BANK_TRANSFER            PaymentType = "BANK_TRANSFER"
+	PaymentType_APM                      PaymentType = "APM"
 )
 
 // apm type declaration
@@ -79,6 +82,7 @@ const (
 	ApmType_PAPARA                 ApmType = "PAPARA"
 	ApmType_PAYONEER               ApmType = "PAYONEER"
 	ApmType_SODEXO                 ApmType = "SODEXO"
+	ApmType_SETCARD                ApmType = "SETCARD"
 	ApmType_METROPOL               ApmType = "METROPOL"
 	ApmType_EDENRED                ApmType = "EDENRED"
 	ApmType_EDENRED_GIFT           ApmType = "EDENRED_GIFT"
@@ -96,6 +100,7 @@ const (
 	ApmType_HASO                   ApmType = "HASO"
 	ApmType_MULTINET               ApmType = "MULTINET"
 	ApmType_MULTINET_GIFT          ApmType = "MULTINET_GIFT"
+	ApmType_MULTINET_NEO_GIFT      ApmType = "MULTINET_NEO_GIFT"
 	ApmType_ALIPAY                 ApmType = "ALIPAY"
 	ApmType_APPLEPAY               ApmType = "APPLEPAY"
 	ApmType_GOOGLEPAY              ApmType = "GOOGLEPAY"
@@ -107,10 +112,19 @@ const (
 	ApmType_VODAFONE_DCB           ApmType = "VODAFONE_DCB"
 	ApmType_PAYMOB                 ApmType = "PAYMOB"
 	ApmType_BIZUM                  ApmType = "BIZUM"
+	ApmType_PAYLANDS_MB_WAY        ApmType = "PAYLANDS_MB_WAY"
 	ApmType_PAYCELL_DCB            ApmType = "PAYCELL_DCB"
 	ApmType_IWALLET                ApmType = "IWALLET"
 	ApmType_FUND_TRANSFER          ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY       ApmType = "CASH_ON_DELIVERY"
+)
+
+// card provider declaration
+const (
+	CardProvider_IYZICO         CardProvider = "IYZICO"
+	CardProvider_IPARA          CardProvider = "IPARA"
+	CardProvider_BIRLESIK_ODEME CardProvider = "BIRLESIK_ODEME"
+	CardProvider_MEX            CardProvider = "MEX"
 )
 
 // payment provider declaration
@@ -149,7 +163,8 @@ const (
 	PaymentProvider_VODAFONE                    PaymentProvider = "VODAFONE"
 	PaymentProvider_PAYMOB                      PaymentProvider = "PAYMOB"
 	PaymentProvider_BIZUM                       PaymentProvider = "BIZUM"
-	PaymentProvider_PAYCELL_DCB					PaymentProvider = "PAYCELL_DCB"
+	PaymentProvider_PAYLANDS_MB_WAY             PaymentProvider = "PAYLANDS_MB_WAY"
+	PaymentProvider_PAYCELL_DCB                 PaymentProvider = "PAYCELL_DCB"
 	PaymentProvider_IWALLET                     PaymentProvider = "IWALLET"
 	PaymentProvider_OFFLINE                     PaymentProvider = "OFFLINE"
 )
@@ -197,6 +212,7 @@ const (
 	Currency_RUB Currency = "RUB"
 	Currency_JPY Currency = "JPY"
 	Currency_EGP Currency = "EGP"
+	Currency_MXN Currency = "MXN"
 )
 
 // payment group declaration
@@ -214,24 +230,25 @@ const (
 
 // payment method declaration
 const (
-	PaymentMethod_CARD             PaymentMethod = "CARD"
-	PaymentMethod_MASTERPASS       PaymentMethod = "MASTERPASS"
-	PaymentMethod_PAPARA           PaymentMethod = "PAPARA"
-	PaymentMethod_PAYONEER         PaymentMethod = "PAYONEER"
-	PaymentMethod_SODEXO           PaymentMethod = "SODEXO"
-	PaymentMethod_EDENRED          PaymentMethod = "EDENRED"
-	PaymentMethod_EDENRED_GIFT     PaymentMethod = "EDENRED_GIFT"
-	PaymentMethod_ALIPAY           PaymentMethod = "ALIPAY"
-	PaymentMethod_PAYPAL           PaymentMethod = "PAYPAL"
-	PaymentMethod_KLARNA           PaymentMethod = "KLARNA"
-	PaymentMethod_AFTERPAY         PaymentMethod = "AFTERPAY"
-	PaymentMethod_INSTANT_TRANSFER PaymentMethod = "INSTANT_TRANSFER"
-	PaymentMethod_STRIPE           PaymentMethod = "STRIPE"
-	PaymentMethod_MULTINET         PaymentMethod = "MULTINET"
-	PaymentMethod_MULTINET_GIFT    PaymentMethod = "MULTINET_GIFT"
-	PaymentMethod_BIZUM            PaymentMethod = "BIZUM"
-	PaymentMethod_PAYCELL_DCB      PaymentMethod = "PAYCELL_DCB"
-	PaymentMethod_IWALLET          PaymentMethod = "IWALLET"
+	PaymentMethod_CARD              PaymentMethod = "CARD"
+	PaymentMethod_MASTERPASS        PaymentMethod = "MASTERPASS"
+	PaymentMethod_PAPARA            PaymentMethod = "PAPARA"
+	PaymentMethod_PAYONEER          PaymentMethod = "PAYONEER"
+	PaymentMethod_SODEXO            PaymentMethod = "SODEXO"
+	PaymentMethod_EDENRED           PaymentMethod = "EDENRED"
+	PaymentMethod_EDENRED_GIFT      PaymentMethod = "EDENRED_GIFT"
+	PaymentMethod_ALIPAY            PaymentMethod = "ALIPAY"
+	PaymentMethod_PAYPAL            PaymentMethod = "PAYPAL"
+	PaymentMethod_KLARNA            PaymentMethod = "KLARNA"
+	PaymentMethod_AFTERPAY          PaymentMethod = "AFTERPAY"
+	PaymentMethod_INSTANT_TRANSFER  PaymentMethod = "INSTANT_TRANSFER"
+	PaymentMethod_STRIPE            PaymentMethod = "STRIPE"
+	PaymentMethod_MULTINET          PaymentMethod = "MULTINET"
+	PaymentMethod_MULTINET_GIFT     PaymentMethod = "MULTINET_GIFT"
+	PaymentMethod_MULTINET_NEO_GIFT PaymentMethod = "MULTINET_NEO_GIFT"
+	PaymentMethod_PAYLANDS_MB_WAY   PaymentMethod = "PAYLANDS_MB_WAY"
+	PaymentMethod_PAYCELL_DCB       PaymentMethod = "PAYCELL_DCB"
+	PaymentMethod_IWALLET           PaymentMethod = "IWALLET"
 )
 
 // card type declaration
@@ -331,6 +348,7 @@ const (
 	SettlementEarningsDestination_IBAN         SettlementEarningsDestination = "IBAN"
 	SettlementEarningsDestination_WALLET       SettlementEarningsDestination = "WALLET"
 	SettlementEarningsDestination_CROSS_BORDER SettlementEarningsDestination = "CROSS_BORDER"
+	SettlementEarningsDestination_NONE         SettlementEarningsDestination = "NONE"
 )
 
 // refundDestinationType type declaration
@@ -603,6 +621,12 @@ const (
 	TokenizedCardType_APPLE_PAY TokenizedCardType = "APPLE_PAY"
 )
 
+const (
+	MasterpassValidationType_NONE     MasterpassValidationType = "NONE"
+	MasterpassValidationType_OTP      MasterpassValidationType = "OTP"
+	MasterpassValidationType_THREE_DS MasterpassValidationType = "THREE_DS"
+)
+
 // requests
 type CreatePaymentRequest struct {
 	Price            float64                `json:"price,omitempty"`
@@ -800,6 +824,13 @@ type RetrieveProviderCardRequest struct {
 	ProviderCardToken  string `json:"providerCardToken,omitempty"`
 	ExternalId         string `json:"externalId,omitempty"`
 	ProviderCardUserId string `json:"providerCardUserId,omitempty"`
+	CardProvider       string `json:"cardProvider,omitempty"`
+}
+
+type MasterpassRetrieveLoyaltiesRequest struct {
+	Msisdn    string `json:"msisdn,omitempty"`
+	BinNumber string `json:"binNumber,omitempty"`
+	CardName  string `json:"cardName,omitempty"`
 }
 
 type InitGarantiPayPaymentRequest struct {
@@ -921,13 +952,14 @@ type SearchPayoutAccountRequest struct {
 }
 
 type MasterpassPaymentTokenGenerateRequest struct {
-	Msisdn                       string                  `json:"msisdn,omitempty"`
-	UserId                       string                  `json:"userId,omitempty"`
-	BinNumber                    string                  `json:"binNumber,omitempty"`
-	ForceThreeDS                 bool                    `json:"forceThreeDS,omitempty"`
-	CreatePayment                MasterpassCreatePayment `json:"createPayment,omitempty"`
-	Loyalty                      *Loyalty                `json:"loyalty,omitempty"`
-	MasterpassIntegrationVersion int                     `json:"masterpassIntegrationVersion,omitempty"`
+	Msisdn                       string                   `json:"msisdn,omitempty"`
+	UserId                       string                   `json:"userId,omitempty"`
+	BinNumber                    string                   `json:"binNumber,omitempty"`
+	ForceThreeDS                 bool                     `json:"forceThreeDS,omitempty"`
+	CreatePayment                MasterpassCreatePayment  `json:"createPayment,omitempty"`
+	Loyalty                      *Loyalty                 `json:"loyalty,omitempty"`
+	MasterpassIntegrationVersion int                      `json:"masterpassIntegrationVersion,omitempty"`
+	ValidationType               MasterpassValidationType `json:"validationType,omitempty"`
 }
 
 type MasterpassPaymentCompleteRequest struct {
@@ -978,12 +1010,12 @@ type BnplPaymentCartItem struct {
 }
 
 type BnplPaymentOfferRequest struct {
-	ApmType           ApmType               `json:"apmType"`
-	MerchantApmId     int64                 `json:"merchantApmId,omitempty"`
-	Price             float64               `json:"price"`
-	Currency          Currency              `json:"currency"`
-    AdditionalParams  map[string]string     `json:"additionalParams"`
-	Items             []BnplPaymentCartItem `json:"items"`
+	ApmType          ApmType               `json:"apmType"`
+	MerchantApmId    int64                 `json:"merchantApmId,omitempty"`
+	Price            float64               `json:"price"`
+	Currency         Currency              `json:"currency"`
+	AdditionalParams map[string]string     `json:"additionalParams"`
+	Items            []BnplPaymentCartItem `json:"items"`
 }
 
 // responses
@@ -1665,6 +1697,8 @@ type ReportingPaymentResponse struct {
 	RefundStatus                 *PaymentRefundStatus              `json:"refundStatus"`
 	CardIssuerBankName           *string                           `json:"cardIssuerBankName"`
 	MdStatus                     *int                              `json:"mdStatus"`
+	FraudId                      *int64                            `json:"fraudId"`
+	FraudAction                  *FraudAction                      `json:"fraudAction"`
 	BuyerMember                  *MemberResponse                   `json:"buyerMember"`
 	Refunds                      *[]ReportingPaymentRefundResponse `json:"refunds"`
 	Pos                          *MerchantPos                      `json:"pos"`
@@ -1753,7 +1787,7 @@ type BnplBankOffer struct {
 	BankIconUrl                   string               `json:"bankIconUrl"`
 	BankTableBannerMessage        string               `json:"bankTableBannerMessage"`
 	BankSmallBannerMessage        string               `json:"bankSmallBannerMessage"`
-    PreApprovedApplicationId      string               `json:"preApprovedApplicationId"`
+	PreApprovedApplicationId      string               `json:"preApprovedApplicationId"`
 	IsSupportNonCustomer          bool                 `json:"isSupportNonCustomer"`
 	IsPaymentPlanCalculatedByBank bool                 `json:"isPaymentPlanCalculatedByBank"`
 	BnplBankOfferTerm             *[]BnplBankOfferTerm `json:"bankOfferTerms"`
@@ -1864,6 +1898,11 @@ type PayoutDetailTransactionResponse struct {
 }
 
 type RetrieveDailyTransactionReportRequest struct {
+	ReportDate Date           `schema:"reportDate,omitempty"`
+	FileType   ReportFileType `schema:"fileType,omitempty"`
+}
+
+type RetrieveDailyPaymentReportRequest struct {
 	ReportDate Date           `schema:"reportDate,omitempty"`
 	FileType   ReportFileType `schema:"fileType,omitempty"`
 }

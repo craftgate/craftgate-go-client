@@ -450,6 +450,54 @@ func TestPayment_CompleteMetropolApmPayment(t *testing.T) {
 	}
 }
 
+func TestPayment_InitSetcardApmPayment(t *testing.T) {
+	request := adapter.InitApmPaymentRequest{
+		ApmType:        craftgate.ApmType_SETCARD,
+		Price:          1.25,
+		PaidPrice:      1.25,
+		Currency:       craftgate.Currency_TRY,
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		ConversationId: "foo-bar",
+		CallbackUrl:    "https://www.your-website.com/callback",
+		Items: []craftgate.PaymentItem{
+			{
+				Name:       "Item 1",
+				Price:      1,
+				ExternalId: "1",
+			},
+			{
+				Name:       "Item 2",
+				Price:      0.25,
+				ExternalId: "2",
+			},
+		},
+		AdditionalParams: map[string]string{
+			"cardNumber": "77500131700998087",
+		},
+	}
+	res, err := paymentClient.Payment.InitApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_CompleteSetcardApmPayment(t *testing.T) {
+	request := adapter.CompleteApmPaymentRequest{
+		PaymentId: 1,
+		AdditionalParams: map[string]string{
+			"otpCode": "00000",
+		},
+	}
+	res, err := paymentClient.Payment.CompleteApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_InitIWalletApmPayment(t *testing.T) {
 	request := adapter.InitApmPaymentRequest{
 		ApmType:        craftgate.ApmType_IWALLET,
@@ -651,6 +699,36 @@ func TestPayment_InitChippinApmPayment(t *testing.T) {
 func TestPayment_InitBizumApmPayment(t *testing.T) {
 	request := adapter.InitApmPaymentRequest{
 		ApmType:        craftgate.ApmType_BIZUM,
+		Price:          1,
+		PaidPrice:      1,
+		Currency:       craftgate.Currency_EUR,
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		ConversationId: "foo-bar",
+		Items: []craftgate.PaymentItem{
+			{
+				Name:  "Item 1",
+				Price: 0.6,
+			},
+			{
+				Name:  "Item 2",
+				Price: 0.4,
+			},
+		},
+		AdditionalParams: map[string]string{
+			"buyerPhoneNumber": "34700000000",
+		},
+	}
+	res, err := paymentClient.Payment.InitApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_InitMbwayApmPayment(t *testing.T) {
+	request := adapter.InitApmPaymentRequest{
+		ApmType:        craftgate.ApmType_PAYLANDS_MB_WAY,
 		Price:          1,
 		PaidPrice:      1,
 		Currency:       craftgate.Currency_EUR,
@@ -1165,7 +1243,9 @@ func TestPayment_InitTomFinanceBnplPayment(t *testing.T) {
 }
 
 func TestPayment_ApproveBnplPayment(t *testing.T) {
-	err := paymentClient.Payment.ApproveBnplPayment(context.Background(), 1)
+	res, err := paymentClient.Payment.ApproveBnplPayment(context.Background(), 1)
+	_, _ = spew.Printf("%#v\n", res)
+
 	if err != nil {
 		t.Errorf("Error %s", err)
 	}
@@ -1185,6 +1265,7 @@ func Test_RetrieveProviderCards(t *testing.T) {
 		ProviderCardToken:  "45f12c74-3000-465c-96dc-876850e7dd7a",
 		ProviderCardUserId: "0309ac2d-c5a5-4b4f-a91f-5c444ba07b24",
 		ExternalId:         "1001",
+		CardProvider:       string(craftgate.CardProvider_MEX),
 	}
 	res, err := paymentClient.Payment.RetrieveProviderCards(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)

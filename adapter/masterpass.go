@@ -83,3 +83,18 @@ func (api *Masterpass) Complete3DSMasterpassPayment(ctx context.Context, request
 
 	return response.Data, nil
 }
+
+func (api *Masterpass) RetrieveLoyalties(ctx context.Context, request MasterpassRetrieveLoyaltiesRequest) (*RetrieveLoyaltiesResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v2/masterpass-payments/loyalties/retrieve", request)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[RetrieveLoyaltiesResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
