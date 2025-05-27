@@ -2177,7 +2177,6 @@ type CreateMerchantPosRequest struct {
 	EnableForeignCard                 bool                        `json:"enableForeignCard"`
 	EnableInstallment                 bool                        `json:"enableInstallment"`
 	EnablePaymentWithoutCvc           bool                        `json:"enablePaymentWithoutCvc"`
-	EnableLoyalty                     bool                        `json:"enableLoyalty"`
 	NewIntegration                    bool                        `json:"newIntegration"`
 	OrderNumber                       int64                       `json:"orderNumber"`
 	PosIntegrator                     PosIntegrator               `json:"posIntegrator"`
@@ -2218,7 +2217,6 @@ type MerchantPosResponse struct {
 	EnableForeignCard                 bool                        `json:"enableForeignCard"`
 	EnableInstallment                 bool                        `json:"enableInstallment"`
 	EnablePaymentWithoutCvc           bool                        `json:"enablePaymentWithoutCvc"`
-	EnableLoyalty                     bool                        `json:"enableLoyalty"`
 	NewIntegration                    bool                        `json:"newIntegration"`
 	OrderNumber                       int64                       `json:"orderNumber"`
 	AutopilotState                    AutopilotState              `json:"autopilotState"`
