@@ -1124,13 +1124,6 @@ type InitPosApmPaymentResponse struct {
 	PaymentError     *PaymentError     `json:"paymentError"`
 }
 
-type CompletePosApmPaymentResponse struct {
-	PaymentId      *int64         `json:"paymentId"`
-	ConversationId *string        `json:"conversationId"`
-	PaymentStatus  *PaymentStatus `json:"paymentStatus"`
-	PaymentError   *PaymentError  `json:"paymentError"`
-}
-
 type DepositPaymentResponse struct {
 	Id                       *int64             `json:"id"`
 	CreatedDate              *TimeResponse      `json:"createdDate"`
