@@ -227,14 +227,14 @@ func (api *Payment) InitPosApmPayment(ctx context.Context, request InitPosApmPay
 	return response.Data, nil
 }
 
-func (api *Payment) CompletePosApmPayment(ctx context.Context, request CompletePosApmPaymentRequest) (*CompletePosApmPaymentResponse, error) {
+func (api *Payment) CompletePosApmPayment(ctx context.Context, request CompletePosApmPaymentRequest) (*PaymentResponse, error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/pos-apm-payments/complete", request)
 
 	if err != nil {
 		return nil, err
 	}
 
-	response := &Response[CompletePosApmPaymentResponse]{}
+	response := &Response[PaymentResponse]{}
 	err = api.Client.Do(ctx, newRequest, response)
 
 	if err != nil {
