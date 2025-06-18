@@ -569,6 +569,22 @@ func (api *Payment) ApproveBnplPayment(ctx context.Context, paymentId int64) (*P
 	return response.Data, nil
 }
 
+func (api *Payment) VerifyBnplPayment(ctx context.Context, paymentId int64) (*BnplPaymentVerifyResponse, error) {
+
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, fmt.Sprintf("/payment/v1/bnpl-payments/%d/verify", paymentId), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[BnplPaymentVerifyResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
 func (api *Payment) RetrieveActiveBanks(ctx context.Context) (*InstantTransferBanksResponse, error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/payment/v1/instant-transfer-banks", nil)
 	if err != nil {
