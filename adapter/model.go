@@ -1768,6 +1768,12 @@ type InitBnplPaymentResponse struct {
 	PaymentError     PaymentError        `json:"paymentError"`
 }
 
+type BnplPaymentVerifyResponse struct {
+	PaymentStatus    PaymentStatus       `json:"paymentStatus"`
+	AdditionalAction ApmAdditionalAction `json:"additionalAction"`
+	PaymentError     PaymentError        `json:"paymentError"`
+}
+
 type BnplPaymentOfferResponse struct {
 	OfferId        string           `json:"offerId"`
 	Price          *float64         `json:"price"`
