@@ -191,6 +191,10 @@ const (
 	PaymentSource_API           PaymentSource = "API"
 	PaymentSource_CHECKOUT_FORM PaymentSource = "CHECKOUT_FORM"
 	PaymentSource_PAY_BY_LINK   PaymentSource = "PAY_BY_LINK"
+	PaymentSource_BKM_EXPRESS   PaymentSource = "BKM_EXPRESS"
+	PaymentSource_HEPSIPAY      PaymentSource = "HEPSIPAY"
+	PaymentSource_JUZDAN        PaymentSource = "JUZDAN"
+	PaymentSource_MONO          PaymentSource = "MONO"
 )
 
 // currency declaration
@@ -692,34 +696,35 @@ type Complete3DSPaymentRequest struct {
 }
 
 type InitCheckoutPaymentRequest struct {
-	Price                       float64                `json:"price,omitempty"`
-	PaidPrice                   float64                `json:"paidPrice,omitempty"`
-	Currency                    Currency               `json:"currency,omitempty"`
-	PaymentGroup                PaymentGroup           `json:"paymentGroup,omitempty"`
-	ConversationId              string                 `json:"conversationId,omitempty"`
-	ExternalId                  string                 `json:"externalId,omitempty"`
-	OrderId                     string                 `json:"orderId,omitempty"`
-	CallbackUrl                 string                 `json:"callbackUrl,omitempty"`
-	ClientIp                    string                 `json:"clientIp,omitempty"`
-	PaymentPhase                PaymentPhase           `json:"paymentPhase,omitempty"`
-	PaymentChannel              string                 `json:"paymentChannel,omitempty"`
-	EnabledPaymentMethods       []PaymentMethod        `json:"enabledPaymentMethods,omitempty"`
-	MasterpassGsmNumber         string                 `json:"masterpassGsmNumber,omitempty"`
-	MasterpassUserId            string                 `json:"masterpassUserId,omitempty"`
-	CardUserKey                 string                 `json:"cardUserKey,omitempty"`
-	BuyerMemberId               int64                  `json:"buyerMemberId,omitempty"`
-	EnabledInstallments         []int                  `json:"enabledInstallments,omitempty"`
-	AlwaysStoreCardAfterPayment bool                   `json:"alwaysStoreCardAfterPayment,omitempty"`
-	AllowOnlyStoredCards        bool                   `json:"allowOnlyStoredCards,omitempty"`
-	AllowOnlyCreditCard         bool                   `json:"allowOnlyCreditCard,omitempty"`
-	ForceThreeDS                bool                   `json:"forceThreeDS,omitempty"`
-	ForceAuthForNonCreditCards  bool                   `json:"forceAuthForNonCreditCards,omitempty"`
-	DepositPayment              bool                   `json:"depositPayment,omitempty"`
-	Ttl                         int64                  `json:"ttl,omitempty"`
-	CustomInstallments          []CustomInstallment    `json:"customInstallments,omitempty"`
-	Items                       []PaymentItem          `json:"items"`
-	FraudParams                 *FraudCheckParameters  `json:"fraudParams,omitempty"`
-	AdditionalParams            map[string]interface{} `json:"additionalParams,omitempty"`
+	Price                       float64                        `json:"price,omitempty"`
+	PaidPrice                   float64                        `json:"paidPrice,omitempty"`
+	Currency                    Currency                       `json:"currency,omitempty"`
+	PaymentGroup                PaymentGroup                   `json:"paymentGroup,omitempty"`
+	ConversationId              string                         `json:"conversationId,omitempty"`
+	ExternalId                  string                         `json:"externalId,omitempty"`
+	OrderId                     string                         `json:"orderId,omitempty"`
+	CallbackUrl                 string                         `json:"callbackUrl,omitempty"`
+	ClientIp                    string                         `json:"clientIp,omitempty"`
+	PaymentPhase                PaymentPhase                   `json:"paymentPhase,omitempty"`
+	PaymentChannel              string                         `json:"paymentChannel,omitempty"`
+	EnabledPaymentMethods       []PaymentMethod                `json:"enabledPaymentMethods,omitempty"`
+	MasterpassGsmNumber         string                         `json:"masterpassGsmNumber,omitempty"`
+	MasterpassUserId            string                         `json:"masterpassUserId,omitempty"`
+	CardUserKey                 string                         `json:"cardUserKey,omitempty"`
+	BuyerMemberId               int64                          `json:"buyerMemberId,omitempty"`
+	EnabledInstallments         []int                          `json:"enabledInstallments,omitempty"`
+	AlwaysStoreCardAfterPayment bool                           `json:"alwaysStoreCardAfterPayment,omitempty"`
+	AllowOnlyStoredCards        bool                           `json:"allowOnlyStoredCards,omitempty"`
+	AllowOnlyCreditCard         bool                           `json:"allowOnlyCreditCard,omitempty"`
+	ForceThreeDS                bool                           `json:"forceThreeDS,omitempty"`
+	ForceAuthForNonCreditCards  bool                           `json:"forceAuthForNonCreditCards,omitempty"`
+	DepositPayment              bool                           `json:"depositPayment,omitempty"`
+	Ttl                         int64                          `json:"ttl,omitempty"`
+	CustomInstallments          []CustomInstallment            `json:"customInstallments,omitempty"`
+	Items                       []PaymentItem                  `json:"items"`
+	FraudParams                 *FraudCheckParameters          `json:"fraudParams,omitempty"`
+	AdditionalParams            map[string]interface{}         `json:"additionalParams,omitempty"`
+	CardBrandInstallments       map[string][]CustomInstallment `json:"cardBrandInstallments,omitempty"`
 }
 
 type InitApmPaymentRequest struct {
