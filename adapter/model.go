@@ -1019,6 +1019,7 @@ type BnplPaymentOfferRequest struct {
 	MerchantApmId    int64                 `json:"merchantApmId,omitempty"`
 	Price            float64               `json:"price"`
 	Currency         Currency              `json:"currency"`
+	ApmOrderId       string                `json:"apmOrderId,omitempty"`
 	AdditionalParams map[string]string     `json:"additionalParams"`
 	Items            []BnplPaymentCartItem `json:"items"`
 }
