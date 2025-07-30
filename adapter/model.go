@@ -1427,6 +1427,18 @@ type SearchInstallmentsRequest struct {
 	LoyaltyExists                           bool     `schema:"loyaltyExists"`
 }
 
+type MerchantApmListResponse struct {
+	Items []MerchantApmResponse `json:"items"`
+}
+
+type MerchantApmResponse struct {
+	Id                  int64      `json:"id"`
+	Status              Status     `json:"status"`
+	Name                string     `json:"name"`
+	ApmType             ApmType    `json:"apmType"`
+	Hostname            string     `json:"hostname"`
+	SupportedCurrencies []Currency `json:"supportedCurrencies"`
+}
 type InstallmentListResponse struct {
 	Items []InstallmentResponse `json:"items"`
 }
