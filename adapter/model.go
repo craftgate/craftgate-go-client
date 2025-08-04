@@ -1785,6 +1785,7 @@ type InitBnplPaymentResponse struct {
 	PaymentStatus    PaymentStatus       `json:"paymentStatus"`
 	AdditionalAction ApmAdditionalAction `json:"additionalAction"`
 	PaymentError     PaymentError        `json:"paymentError"`
+	AdditionalData   map[string]any      `json:"additionalData"`
 }
 
 type BnplPaymentVerifyResponse struct {
