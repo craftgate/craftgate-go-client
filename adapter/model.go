@@ -1095,6 +1095,7 @@ type PaymentTransactionResponse struct {
 type Init3DSPaymentResponse struct {
 	HtmlContent      *string           `json:"htmlContent"`
 	PaymentId        *int64            `json:"paymentId"`
+	RedirectUrl      *string           `json:"redirectUrl"`
 	PaymentStatus    *PaymentStatus    `json:"paymentStatus"`
 	AdditionalAction *AdditionalAction `json:"additionalAction"`
 }
