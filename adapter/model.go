@@ -582,6 +582,7 @@ const (
 	BnplCartItemType_FURNITURE                                 BnplCartItemType = "FURNITURE"
 	BnplCartItemType_HOME_LIVING                               BnplCartItemType = "HOME_LIVING"
 	BnplCartItemType_AUTOMOBILE_MOTORCYCLE                     BnplCartItemType = "AUTOMOBILE_MOTORCYCLE"
+	BnplCartItemType_MOBILE_PHONE_REFURBISHED                  BnplCartItemType = "MOBILE_PHONE_REFURBISHED"
 	BnplCartItemType_OTHER                                     BnplCartItemType = "OTHER"
 )
 
@@ -1785,6 +1786,7 @@ type InitBnplPaymentResponse struct {
 	PaymentStatus    PaymentStatus       `json:"paymentStatus"`
 	AdditionalAction ApmAdditionalAction `json:"additionalAction"`
 	PaymentError     PaymentError        `json:"paymentError"`
+	AdditionalData   map[string]any      `json:"additionalData"`
 }
 
 type BnplPaymentVerifyResponse struct {
