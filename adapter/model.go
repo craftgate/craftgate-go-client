@@ -1096,6 +1096,7 @@ type PaymentTransactionResponse struct {
 type Init3DSPaymentResponse struct {
 	HtmlContent      *string           `json:"htmlContent"`
 	PaymentId        *int64            `json:"paymentId"`
+	RedirectUrl      *string           `json:"redirectUrl"`
 	PaymentStatus    *PaymentStatus    `json:"paymentStatus"`
 	AdditionalAction *AdditionalAction `json:"additionalAction"`
 }
@@ -1786,6 +1787,7 @@ type InitBnplPaymentResponse struct {
 	PaymentStatus    PaymentStatus       `json:"paymentStatus"`
 	AdditionalAction ApmAdditionalAction `json:"additionalAction"`
 	PaymentError     PaymentError        `json:"paymentError"`
+	AdditionalData   map[string]any      `json:"additionalData"`
 }
 
 type BnplPaymentVerifyResponse struct {
