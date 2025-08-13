@@ -2088,6 +2088,7 @@ type Card struct {
 	Cvc                          string         `json:"cvc,omitempty"`
 	CardAlias                    string         `json:"cardAlias,omitempty"`
 	CardUserKey                  string         `json:"cardUserKey,omitempty"`
+	SecureFieldsToken            string         `json:"secureFieldsToken,omitempty"`
 	CardToken                    string         `json:"cardToken,omitempty"`
 	BinNumber                    string         `json:"binNumber,omitempty"`
 	LastFourDigits               string         `json:"lastFourDigits,omitempty"`
