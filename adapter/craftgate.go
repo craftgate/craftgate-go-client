@@ -108,6 +108,7 @@ type Client struct {
 	Masterpass          *Masterpass
 	BankAccountTracking *BankAccountTracking
 	Merchant            *Merchant
+	MerchantApm         *MerchantApm
 	Juzdan              *Juzdan
 	BkmExpress          *BkmExpress
 }
@@ -149,6 +150,7 @@ func newClient(apiKey, secretKey string) *Client {
 	client.Masterpass = &Masterpass{Client: client}
 	client.BankAccountTracking = &BankAccountTracking{Client: client}
 	client.Merchant = &Merchant{Client: client}
+	client.MerchantApm = &MerchantApm{Client: client}
 	client.Juzdan = &Juzdan{Client: client}
 	client.BkmExpress = &BkmExpress{Client: client}
 

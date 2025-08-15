@@ -582,6 +582,7 @@ const (
 	BnplCartItemType_FURNITURE                                 BnplCartItemType = "FURNITURE"
 	BnplCartItemType_HOME_LIVING                               BnplCartItemType = "HOME_LIVING"
 	BnplCartItemType_AUTOMOBILE_MOTORCYCLE                     BnplCartItemType = "AUTOMOBILE_MOTORCYCLE"
+	BnplCartItemType_MOBILE_PHONE_REFURBISHED                  BnplCartItemType = "MOBILE_PHONE_REFURBISHED"
 	BnplCartItemType_OTHER                                     BnplCartItemType = "OTHER"
 )
 
@@ -1019,6 +1020,7 @@ type BnplPaymentOfferRequest struct {
 	MerchantApmId    int64                 `json:"merchantApmId,omitempty"`
 	Price            float64               `json:"price"`
 	Currency         Currency              `json:"currency"`
+	ApmOrderId       string                `json:"apmOrderId,omitempty"`
 	AdditionalParams map[string]string     `json:"additionalParams"`
 	Items            []BnplPaymentCartItem `json:"items"`
 }
@@ -1096,6 +1098,7 @@ type PaymentTransactionResponse struct {
 type Init3DSPaymentResponse struct {
 	HtmlContent      *string           `json:"htmlContent"`
 	PaymentId        *int64            `json:"paymentId"`
+	RedirectUrl      *string           `json:"redirectUrl"`
 	PaymentStatus    *PaymentStatus    `json:"paymentStatus"`
 	AdditionalAction *AdditionalAction `json:"additionalAction"`
 }
@@ -1386,6 +1389,7 @@ type StoredCardResponse struct {
 	CardBrand        *string           `json:"cardBrand"`
 	CardBankName     *string           `json:"cardBankName"`
 	CardBankId       *int64            `json:"cardBankId"`
+	IsCommercial     *bool             `json:"isCommercial"`
 	CreatedAt        *TimeResponse     `json:"createdAt"`
 }
 
@@ -1431,6 +1435,18 @@ type SearchInstallmentsRequest struct {
 	LoyaltyExists                           bool     `schema:"loyaltyExists"`
 }
 
+type MerchantApmListResponse struct {
+	Items []MerchantApmResponse `json:"items"`
+}
+
+type MerchantApmResponse struct {
+	Id                  int64      `json:"id"`
+	Status              Status     `json:"status"`
+	Name                string     `json:"name"`
+	ApmType             ApmType    `json:"apmType"`
+	Hostname            string     `json:"hostname"`
+	SupportedCurrencies []Currency `json:"supportedCurrencies"`
+}
 type InstallmentListResponse struct {
 	Items []InstallmentResponse `json:"items"`
 }
@@ -1776,6 +1792,7 @@ type InitBnplPaymentResponse struct {
 	PaymentStatus    PaymentStatus       `json:"paymentStatus"`
 	AdditionalAction ApmAdditionalAction `json:"additionalAction"`
 	PaymentError     PaymentError        `json:"paymentError"`
+	AdditionalData   map[string]any      `json:"additionalData"`
 }
 
 type BnplPaymentVerifyResponse struct {
@@ -2076,6 +2093,7 @@ type Card struct {
 	Cvc                          string         `json:"cvc,omitempty"`
 	CardAlias                    string         `json:"cardAlias,omitempty"`
 	CardUserKey                  string         `json:"cardUserKey,omitempty"`
+	SecureFieldsToken            string         `json:"secureFieldsToken,omitempty"`
 	CardToken                    string         `json:"cardToken,omitempty"`
 	BinNumber                    string         `json:"binNumber,omitempty"`
 	LastFourDigits               string         `json:"lastFourDigits,omitempty"`
