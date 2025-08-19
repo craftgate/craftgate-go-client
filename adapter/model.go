@@ -875,6 +875,7 @@ type UpdateStoredCardRequest struct {
 	CardToken   string `json:"cardToken,omitempty"`
 	ExpireYear  string `json:"expireYear,omitempty"`
 	ExpireMonth string `json:"expireMonth,omitempty"`
+	CardAlias   string `json:"cardAlias"`
 }
 
 type CloneStoredCardRequest struct {
@@ -1375,6 +1376,8 @@ type PaymentRefundResponse struct {
 type StoredCardResponse struct {
 	BinNumber        *string           `json:"binNumber"`
 	LastFourDigits   *string           `json:"lastFourDigits"`
+	ExpireYear       *string           `json:"expireYear"`
+	ExpireMonth      *string           `json:"expireMonth"`
 	CardUserKey      *string           `json:"cardUserKey"`
 	CardToken        *string           `json:"cardToken"`
 	CardHolderName   *string           `json:"cardHolderName"`
