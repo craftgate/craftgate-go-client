@@ -1376,8 +1376,6 @@ type PaymentRefundResponse struct {
 type StoredCardResponse struct {
 	BinNumber        *string           `json:"binNumber"`
 	LastFourDigits   *string           `json:"lastFourDigits"`
-	ExpireYear       *string           `json:"expireYear"`
-	ExpireMonth      *string           `json:"expireMonth"`
 	CardUserKey      *string           `json:"cardUserKey"`
 	CardToken        *string           `json:"cardToken"`
 	CardHolderName   *string           `json:"cardHolderName"`
