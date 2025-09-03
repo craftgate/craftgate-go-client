@@ -871,10 +871,11 @@ type UpdatePaymentTransactionRequest struct {
 }
 
 type UpdateStoredCardRequest struct {
-	CardUserKey string `json:"cardUserKey,omitempty"`
-	CardToken   string `json:"cardToken,omitempty"`
-	ExpireYear  string `json:"expireYear,omitempty"`
-	ExpireMonth string `json:"expireMonth,omitempty"`
+	CardUserKey string  `json:"cardUserKey,omitempty"`
+	CardToken   string  `json:"cardToken,omitempty"`
+	ExpireYear  string  `json:"expireYear,omitempty"`
+	ExpireMonth string  `json:"expireMonth,omitempty"`
+	CardAlias   *string `json:"cardAlias,omitempty"`
 }
 
 type CloneStoredCardRequest struct {
