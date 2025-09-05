@@ -116,6 +116,7 @@ const (
 	ApmType_PAYLANDS_MB_WAY        ApmType = "PAYLANDS_MB_WAY"
 	ApmType_PAYCELL_DCB            ApmType = "PAYCELL_DCB"
 	ApmType_IWALLET                ApmType = "IWALLET"
+	ApmType_PAPEL                  ApmType = "PAPEL"
 	ApmType_FUND_TRANSFER          ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY       ApmType = "CASH_ON_DELIVERY"
 )
@@ -422,6 +423,7 @@ const (
 	ApmAdditionalAction_SHOW_HTML_CONTENT ApmAdditionalAction = "SHOW_HTML_CONTENT"
 	ApmAdditionalAction_WAIT_FOR_WEBHOOK  ApmAdditionalAction = "WAIT_FOR_WEBHOOK"
 	ApmAdditionalAction_APPROVAL_REQUIRED ApmAdditionalAction = "APPROVAL_REQUIRED"
+	ApmAdditionalAction_SHOW_QR_CODE      ApmAdditionalAction = "SHOW_QR_CODE"
 	ApmAdditionalAction_NONE              ApmAdditionalAction = "NONE"
 )
 
@@ -1116,6 +1118,7 @@ type InitApmPaymentResponse struct {
 	PaymentId           *int64               `json:"paymentId"`
 	RedirectUrl         *string              `json:"redirectUrl"`
 	HtmlContent         *string              `json:"htmlContent"`
+	QrCode              *string              `json:"qrCode"`
 	PaymentStatus       *PaymentStatus       `json:"paymentStatus"`
 	ApmAdditionalAction *ApmAdditionalAction `json:"additionalAction"`
 	PaymentError        *PaymentError        `json:"paymentError"`
