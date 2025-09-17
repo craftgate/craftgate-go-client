@@ -313,6 +313,7 @@ const (
 const (
 	RefundStatus_SUCCESS RefundStatus = "SUCCESS"
 	RefundStatus_FAILURE RefundStatus = "FAILURE"
+	RefundStatus_WAITING RefundStatus = "WAITING"
 )
 
 // onboarding status declaration
