@@ -63,7 +63,7 @@ const (
 	ClientVersionHeaderName = "x-client-version"
 	SignatureHeaderName     = "x-signature"
 	AuthVersion             = "1"
-	ClientVersion           = "craftgate-go-client:1.0.22"
+	ClientVersion           = "craftgate-go-client:1.0.27"
 )
 
 // payment type declaration
@@ -82,6 +82,7 @@ const (
 	ApmType_PAPARA                 ApmType = "PAPARA"
 	ApmType_PAYONEER               ApmType = "PAYONEER"
 	ApmType_SODEXO                 ApmType = "SODEXO"
+	ApmType_SODEXO_GIFT            ApmType = "SODEXO_GIFT"
 	ApmType_SETCARD                ApmType = "SETCARD"
 	ApmType_METROPOL               ApmType = "METROPOL"
 	ApmType_EDENRED                ApmType = "EDENRED"
@@ -115,6 +116,7 @@ const (
 	ApmType_PAYLANDS_MB_WAY        ApmType = "PAYLANDS_MB_WAY"
 	ApmType_PAYCELL_DCB            ApmType = "PAYCELL_DCB"
 	ApmType_IWALLET                ApmType = "IWALLET"
+	ApmType_PAPEL                  ApmType = "PAPEL"
 	ApmType_FUND_TRANSFER          ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY       ApmType = "CASH_ON_DELIVERY"
 )
@@ -239,6 +241,7 @@ const (
 	PaymentMethod_PAPARA            PaymentMethod = "PAPARA"
 	PaymentMethod_PAYONEER          PaymentMethod = "PAYONEER"
 	PaymentMethod_SODEXO            PaymentMethod = "SODEXO"
+	PaymentMethod_SODEXO_GIFT       PaymentMethod = "SODEXO_GIFT"
 	PaymentMethod_EDENRED           PaymentMethod = "EDENRED"
 	PaymentMethod_EDENRED_GIFT      PaymentMethod = "EDENRED_GIFT"
 	PaymentMethod_ALIPAY            PaymentMethod = "ALIPAY"
@@ -310,6 +313,7 @@ const (
 const (
 	RefundStatus_SUCCESS RefundStatus = "SUCCESS"
 	RefundStatus_FAILURE RefundStatus = "FAILURE"
+	RefundStatus_WAITING RefundStatus = "WAITING"
 )
 
 // onboarding status declaration
@@ -420,6 +424,7 @@ const (
 	ApmAdditionalAction_SHOW_HTML_CONTENT ApmAdditionalAction = "SHOW_HTML_CONTENT"
 	ApmAdditionalAction_WAIT_FOR_WEBHOOK  ApmAdditionalAction = "WAIT_FOR_WEBHOOK"
 	ApmAdditionalAction_APPROVAL_REQUIRED ApmAdditionalAction = "APPROVAL_REQUIRED"
+	ApmAdditionalAction_SHOW_QR_CODE      ApmAdditionalAction = "SHOW_QR_CODE"
 	ApmAdditionalAction_NONE              ApmAdditionalAction = "NONE"
 )
 
@@ -1062,6 +1067,8 @@ type PaymentResponse struct {
 	OrderId                      *string                      `json:"orderId"`
 	CardHolderName               *string                      `json:"cardHolderName"`
 	BankCardHolderName           *string                      `json:"bankCardHolderName"`
+	CardIssuerBankName           *string                      `json:"cardIssuerBankName"`
+	CardIssuerBankId             *int64                       `json:"cardIssuerBankId"`
 	CardType                     *string                      `json:"cardType"`
 	CardAssociation              *string                      `json:"cardAssociation"`
 	CardBrand                    *string                      `json:"cardBrand"`
@@ -1112,6 +1119,7 @@ type InitApmPaymentResponse struct {
 	PaymentId           *int64               `json:"paymentId"`
 	RedirectUrl         *string              `json:"redirectUrl"`
 	HtmlContent         *string              `json:"htmlContent"`
+	QrCode              *string              `json:"qrCode"`
 	PaymentStatus       *PaymentStatus       `json:"paymentStatus"`
 	ApmAdditionalAction *ApmAdditionalAction `json:"additionalAction"`
 	PaymentError        *PaymentError        `json:"paymentError"`
@@ -1331,10 +1339,12 @@ type InitGarantiPayPaymentResponse struct {
 }
 
 type RetrieveLoyaltiesResponse struct {
-	CardBrand *string      `json:"cardBrand"`
-	Force3ds  *bool        `json:"force3ds"`
-	Pos       *MerchantPos `json:"pos"`
-	Loyalties []Loyalty    `json:"loyalties"`
+	CardBrand          *string      `json:"cardBrand"`
+	CardIssuerBankName *string      `json:"cardIssuerBankName"`
+	CardIssuerBankId   *int64       `json:"cardIssuerBankId"`
+	Force3ds           *bool        `json:"force3ds"`
+	Pos                *MerchantPos `json:"pos"`
+	Loyalties          []Loyalty    `json:"loyalties"`
 }
 
 type PaymentTransactionRefundResponse struct {
@@ -1711,6 +1721,7 @@ type ReportingPaymentResponse struct {
 	RefundablePrice              *float64                          `json:"refundablePrice"`
 	RefundStatus                 *PaymentRefundStatus              `json:"refundStatus"`
 	CardIssuerBankName           *string                           `json:"cardIssuerBankName"`
+	CardIssuerBankId             *int64                            `json:"cardIssuerBankId"`
 	MdStatus                     *int                              `json:"mdStatus"`
 	FraudId                      *int64                            `json:"fraudId"`
 	FraudAction                  *FraudAction                      `json:"fraudAction"`
