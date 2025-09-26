@@ -63,7 +63,7 @@ const (
 	ClientVersionHeaderName = "x-client-version"
 	SignatureHeaderName     = "x-signature"
 	AuthVersion             = "1"
-	ClientVersion           = "craftgate-go-client:1.0.27"
+	ClientVersion           = "craftgate-go-client:1.0.28"
 )
 
 // payment type declaration
