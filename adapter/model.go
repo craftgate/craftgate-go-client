@@ -1068,7 +1068,7 @@ type PaymentResponse struct {
 	CardHolderName               *string                      `json:"cardHolderName"`
 	BankCardHolderName           *string                      `json:"bankCardHolderName"`
 	CardIssuerBankName           *string                      `json:"cardIssuerBankName"`
-	CardIssuerBankId             *string                      `json:"cardIssuerBankId"`
+	CardIssuerBankId             *int64                       `json:"cardIssuerBankId"`
 	CardType                     *string                      `json:"cardType"`
 	CardAssociation              *string                      `json:"cardAssociation"`
 	CardBrand                    *string                      `json:"cardBrand"`
@@ -1341,7 +1341,7 @@ type InitGarantiPayPaymentResponse struct {
 type RetrieveLoyaltiesResponse struct {
 	CardBrand          *string      `json:"cardBrand"`
 	CardIssuerBankName *string      `json:"cardIssuerBankName"`
-	CardIssuerBankId   *string      `json:"cardIssuerBankId"`
+	CardIssuerBankId   *int64       `json:"cardIssuerBankId"`
 	Force3ds           *bool        `json:"force3ds"`
 	Pos                *MerchantPos `json:"pos"`
 	Loyalties          []Loyalty    `json:"loyalties"`
@@ -1721,7 +1721,7 @@ type ReportingPaymentResponse struct {
 	RefundablePrice              *float64                          `json:"refundablePrice"`
 	RefundStatus                 *PaymentRefundStatus              `json:"refundStatus"`
 	CardIssuerBankName           *string                           `json:"cardIssuerBankName"`
-	CardIssuerBankId             *string                           `json:"cardIssuerBankId"`
+	CardIssuerBankId             *int64                            `json:"cardIssuerBankId"`
 	MdStatus                     *int                              `json:"mdStatus"`
 	FraudId                      *int64                            `json:"fraudId"`
 	FraudAction                  *FraudAction                      `json:"fraudAction"`
