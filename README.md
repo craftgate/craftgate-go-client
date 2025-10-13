@@ -1,6 +1,6 @@
 # Craftgate Go Client
 
-[![Build Status](https://github.com/craftgate/craftgate-go-client/workflows/Craftgate%20Go%20Client%20CI/badge.svg?branch=master)](https://github.com/craftgate/craftgate-go-client/actions)
+[![Build Status](https://github.com/craftgate/craftgate-go-client/actions/workflows/go.yml/badge.svg?branch=master)](https://github.com/craftgate/craftgate-go-client/actions?query=branch%3Amaster)
 
 This repo contains the Go library for Craftgate API.
 
