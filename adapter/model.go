@@ -1188,9 +1188,10 @@ type MasterpassPaymentThreeDSInitResponse struct {
 }
 
 type MasterpassPaymentTokenGenerateResponse struct {
-	Token       *string `json:"token"`
-	ReferenceId *string `json:"referenceId"`
-	OrderNo     *string `json:"orderNo"`
+	Token           *string `json:"token"`
+	ReferenceId     *string `json:"referenceId"`
+	OrderNo         *string `json:"orderNo"`
+	TerminalGroupId *string `json:"terminalGroupId"`
 }
 
 type RefundWalletTransactionRequest struct {
