@@ -1434,6 +1434,7 @@ type InstallmentPrice struct {
 	InstallmentLabel       *string  `json:"installmentLabel"`
 	Force3ds               *bool    `json:"force3ds"`
 	CvcRequired            *bool    `json:"cvcRequired"`
+	PosAlias               *string  `json:"posAlias"`
 }
 
 type SearchInstallmentsRequest struct {
@@ -1471,7 +1472,6 @@ type InstallmentResponse struct {
 	Force3Ds          *bool              `json:"force3ds"`
 	CvcRequired       *bool              `json:"cvcRequired"`
 	Commercial        *bool              `json:"commercial"`
-	PosAlias          *string            `json:"posAlias"`
 	InstallmentPrices []InstallmentPrice `json:"installmentPrices"`
 }
 
