@@ -1051,6 +1051,7 @@ type PaymentResponse struct {
 	PaymentStatus                *PaymentStatus               `json:"paymentStatus"`
 	PaymentPhase                 *PaymentPhase                `json:"paymentPhase"`
 	FraudAction                  *FraudAction                 `json:"fraudAction"`
+	FraudScore                   *float64                     `json:"fraudScore"`
 	PaymentChannel               *string                      `json:"paymentChannel"`
 	IsThreeDS                    *bool                        `json:"isThreeDS"`
 	MerchantCommissionRate       *float64                     `json:"merchantCommissionRate"`
@@ -1187,9 +1188,10 @@ type MasterpassPaymentThreeDSInitResponse struct {
 }
 
 type MasterpassPaymentTokenGenerateResponse struct {
-	Token       *string `json:"token"`
-	ReferenceId *string `json:"referenceId"`
-	OrderNo     *string `json:"orderNo"`
+	Token           *string `json:"token"`
+	ReferenceId     *string `json:"referenceId"`
+	OrderNo         *string `json:"orderNo"`
+	TerminalGroupId *string `json:"terminalGroupId"`
 }
 
 type RefundWalletTransactionRequest struct {
