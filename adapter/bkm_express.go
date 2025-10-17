@@ -41,9 +41,23 @@ func (api *BkmExpress) Complete(ctx context.Context, request CompleteBkmExpressR
 }
 
 func (api *BkmExpress) RetrievePayment(ctx context.Context, ticketId string) (*PaymentResponse, error) {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment/v1/card-payments/%s", ticketId), nil)
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment/v1/bkm-express/payments/%s", ticketId), nil)
 	if err != nil {
 		return nil, err
+	}
+
+	response := &Response[PaymentResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
+}
+
+func (api *BkmExpress) RetrievePaymentByToken(ctx context.Context, bkmExpressPaymentToken string) (*PaymentResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment/v1/bkm-express/%s", bkmExpressPaymentToken), nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create request: %v", err)
 	}
 	response := &Response[PaymentResponse]{}
 	err = api.Client.Do(ctx, newRequest, response)
