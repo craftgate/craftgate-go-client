@@ -13,13 +13,13 @@ type BkmExpress struct {
 func (api *BkmExpress) Init(ctx context.Context, request InitBkmExpressRequest) (*InitBkmExpressResponse, error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/bkm-express/init", request)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create request: %v", err)
+		return nil, err
 	}
 
 	response := &Response[InitBkmExpressResponse]{}
 	err = api.Client.Do(ctx, newRequest, response)
 	if err != nil {
-		return nil, fmt.Errorf("failed to init payment: %v", err)
+		return nil, err
 	}
 
 	return response.Data, nil
@@ -28,13 +28,13 @@ func (api *BkmExpress) Init(ctx context.Context, request InitBkmExpressRequest) 
 func (api *BkmExpress) Complete(ctx context.Context, request CompleteBkmExpressRequest) (*PaymentResponse, error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/bkm-express/complete", request)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create request: %v", err)
+		return nil, err
 	}
 
 	response := &Response[PaymentResponse]{}
 	err = api.Client.Do(ctx, newRequest, response)
 	if err != nil {
-		return nil, fmt.Errorf("failed to complete payment: %v", err)
+		return nil, err
 	}
 
 	return response.Data, nil
@@ -43,13 +43,13 @@ func (api *BkmExpress) Complete(ctx context.Context, request CompleteBkmExpressR
 func (api *BkmExpress) RetrievePayment(ctx context.Context, ticketId string) (*PaymentResponse, error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment/v1/bkm-express/payments/%s", ticketId), nil)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create request: %v", err)
+		return nil, err
 	}
 
 	response := &Response[PaymentResponse]{}
 	err = api.Client.Do(ctx, newRequest, response)
 	if err != nil {
-		return nil, fmt.Errorf("failed to retrieve payment: %v", err)
+		return nil, err
 	}
 	return response.Data, nil
 }
@@ -62,7 +62,7 @@ func (api *BkmExpress) RetrievePaymentByToken(ctx context.Context, bkmExpressPay
 	response := &Response[PaymentResponse]{}
 	err = api.Client.Do(ctx, newRequest, response)
 	if err != nil {
-		return nil, fmt.Errorf("failed to retrieve payment: %v", err)
+		return nil, err
 	}
 
 	return response.Data, nil
