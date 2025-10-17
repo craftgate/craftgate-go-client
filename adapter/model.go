@@ -2135,6 +2135,7 @@ type PaymentItem struct {
 	ExternalId             string  `json:"externalId,omitempty"`
 	SubMerchantMemberId    int64   `json:"subMerchantMemberId,omitempty"`
 	SubMerchantMemberPrice float64 `json:"subMerchantMemberPrice,omitempty"`
+	BlockageDay            int     `json:"blockageDay,omitempty"`
 }
 
 type MasterpassCreatePayment struct {
