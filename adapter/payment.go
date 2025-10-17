@@ -227,14 +227,14 @@ func (api *Payment) InitPosApmPayment(ctx context.Context, request InitPosApmPay
 	return response.Data, nil
 }
 
-func (api *Payment) CompletePosApmPayment(ctx context.Context, request CompletePosApmPaymentRequest) (*CompletePosApmPaymentResponse, error) {
+func (api *Payment) CompletePosApmPayment(ctx context.Context, request CompletePosApmPaymentRequest) (*PaymentResponse, error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/pos-apm-payments/complete", request)
 
 	if err != nil {
 		return nil, err
 	}
 
-	response := &Response[CompletePosApmPaymentResponse]{}
+	response := &Response[PaymentResponse]{}
 	err = api.Client.Do(ctx, newRequest, response)
 
 	if err != nil {
@@ -561,6 +561,22 @@ func (api *Payment) ApproveBnplPayment(ctx context.Context, paymentId int64) (*P
 	}
 
 	response := &Response[PaymentResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
+func (api *Payment) VerifyBnplPayment(ctx context.Context, paymentId int64) (*BnplPaymentVerifyResponse, error) {
+
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, fmt.Sprintf("/payment/v1/bnpl-payments/%d/verify", paymentId), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[BnplPaymentVerifyResponse]{}
 	err = api.Client.Do(ctx, newRequest, response)
 	if err != nil {
 		return nil, err

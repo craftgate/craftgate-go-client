@@ -63,7 +63,7 @@ const (
 	ClientVersionHeaderName = "x-client-version"
 	SignatureHeaderName     = "x-signature"
 	AuthVersion             = "1"
-	ClientVersion           = "craftgate-go-client:1.0.22"
+	ClientVersion           = "craftgate-go-client:1.0.29"
 )
 
 // payment type declaration
@@ -82,6 +82,7 @@ const (
 	ApmType_PAPARA                 ApmType = "PAPARA"
 	ApmType_PAYONEER               ApmType = "PAYONEER"
 	ApmType_SODEXO                 ApmType = "SODEXO"
+	ApmType_SODEXO_GIFT            ApmType = "SODEXO_GIFT"
 	ApmType_SETCARD                ApmType = "SETCARD"
 	ApmType_METROPOL               ApmType = "METROPOL"
 	ApmType_EDENRED                ApmType = "EDENRED"
@@ -115,6 +116,7 @@ const (
 	ApmType_PAYLANDS_MB_WAY        ApmType = "PAYLANDS_MB_WAY"
 	ApmType_PAYCELL_DCB            ApmType = "PAYCELL_DCB"
 	ApmType_IWALLET                ApmType = "IWALLET"
+	ApmType_PAPEL                  ApmType = "PAPEL"
 	ApmType_FUND_TRANSFER          ApmType = "FUND_TRANSFER"
 	ApmType_CASH_ON_DELIVERY       ApmType = "CASH_ON_DELIVERY"
 )
@@ -191,6 +193,10 @@ const (
 	PaymentSource_API           PaymentSource = "API"
 	PaymentSource_CHECKOUT_FORM PaymentSource = "CHECKOUT_FORM"
 	PaymentSource_PAY_BY_LINK   PaymentSource = "PAY_BY_LINK"
+	PaymentSource_BKM_EXPRESS   PaymentSource = "BKM_EXPRESS"
+	PaymentSource_HEPSIPAY      PaymentSource = "HEPSIPAY"
+	PaymentSource_JUZDAN        PaymentSource = "JUZDAN"
+	PaymentSource_MONO          PaymentSource = "MONO"
 )
 
 // currency declaration
@@ -235,6 +241,7 @@ const (
 	PaymentMethod_PAPARA            PaymentMethod = "PAPARA"
 	PaymentMethod_PAYONEER          PaymentMethod = "PAYONEER"
 	PaymentMethod_SODEXO            PaymentMethod = "SODEXO"
+	PaymentMethod_SODEXO_GIFT       PaymentMethod = "SODEXO_GIFT"
 	PaymentMethod_EDENRED           PaymentMethod = "EDENRED"
 	PaymentMethod_EDENRED_GIFT      PaymentMethod = "EDENRED_GIFT"
 	PaymentMethod_ALIPAY            PaymentMethod = "ALIPAY"
@@ -306,6 +313,7 @@ const (
 const (
 	RefundStatus_SUCCESS RefundStatus = "SUCCESS"
 	RefundStatus_FAILURE RefundStatus = "FAILURE"
+	RefundStatus_WAITING RefundStatus = "WAITING"
 )
 
 // onboarding status declaration
@@ -416,6 +424,7 @@ const (
 	ApmAdditionalAction_SHOW_HTML_CONTENT ApmAdditionalAction = "SHOW_HTML_CONTENT"
 	ApmAdditionalAction_WAIT_FOR_WEBHOOK  ApmAdditionalAction = "WAIT_FOR_WEBHOOK"
 	ApmAdditionalAction_APPROVAL_REQUIRED ApmAdditionalAction = "APPROVAL_REQUIRED"
+	ApmAdditionalAction_SHOW_QR_CODE      ApmAdditionalAction = "SHOW_QR_CODE"
 	ApmAdditionalAction_NONE              ApmAdditionalAction = "NONE"
 )
 
@@ -578,6 +587,7 @@ const (
 	BnplCartItemType_FURNITURE                                 BnplCartItemType = "FURNITURE"
 	BnplCartItemType_HOME_LIVING                               BnplCartItemType = "HOME_LIVING"
 	BnplCartItemType_AUTOMOBILE_MOTORCYCLE                     BnplCartItemType = "AUTOMOBILE_MOTORCYCLE"
+	BnplCartItemType_MOBILE_PHONE_REFURBISHED                  BnplCartItemType = "MOBILE_PHONE_REFURBISHED"
 	BnplCartItemType_OTHER                                     BnplCartItemType = "OTHER"
 )
 
@@ -692,34 +702,35 @@ type Complete3DSPaymentRequest struct {
 }
 
 type InitCheckoutPaymentRequest struct {
-	Price                       float64                `json:"price,omitempty"`
-	PaidPrice                   float64                `json:"paidPrice,omitempty"`
-	Currency                    Currency               `json:"currency,omitempty"`
-	PaymentGroup                PaymentGroup           `json:"paymentGroup,omitempty"`
-	ConversationId              string                 `json:"conversationId,omitempty"`
-	ExternalId                  string                 `json:"externalId,omitempty"`
-	OrderId                     string                 `json:"orderId,omitempty"`
-	CallbackUrl                 string                 `json:"callbackUrl,omitempty"`
-	ClientIp                    string                 `json:"clientIp,omitempty"`
-	PaymentPhase                PaymentPhase           `json:"paymentPhase,omitempty"`
-	PaymentChannel              string                 `json:"paymentChannel,omitempty"`
-	EnabledPaymentMethods       []PaymentMethod        `json:"enabledPaymentMethods,omitempty"`
-	MasterpassGsmNumber         string                 `json:"masterpassGsmNumber,omitempty"`
-	MasterpassUserId            string                 `json:"masterpassUserId,omitempty"`
-	CardUserKey                 string                 `json:"cardUserKey,omitempty"`
-	BuyerMemberId               int64                  `json:"buyerMemberId,omitempty"`
-	EnabledInstallments         []int                  `json:"enabledInstallments,omitempty"`
-	AlwaysStoreCardAfterPayment bool                   `json:"alwaysStoreCardAfterPayment,omitempty"`
-	AllowOnlyStoredCards        bool                   `json:"allowOnlyStoredCards,omitempty"`
-	AllowOnlyCreditCard         bool                   `json:"allowOnlyCreditCard,omitempty"`
-	ForceThreeDS                bool                   `json:"forceThreeDS,omitempty"`
-	ForceAuthForNonCreditCards  bool                   `json:"forceAuthForNonCreditCards,omitempty"`
-	DepositPayment              bool                   `json:"depositPayment,omitempty"`
-	Ttl                         int64                  `json:"ttl,omitempty"`
-	CustomInstallments          []CustomInstallment    `json:"customInstallments,omitempty"`
-	Items                       []PaymentItem          `json:"items"`
-	FraudParams                 *FraudCheckParameters  `json:"fraudParams,omitempty"`
-	AdditionalParams            map[string]interface{} `json:"additionalParams,omitempty"`
+	Price                       float64                        `json:"price,omitempty"`
+	PaidPrice                   float64                        `json:"paidPrice,omitempty"`
+	Currency                    Currency                       `json:"currency,omitempty"`
+	PaymentGroup                PaymentGroup                   `json:"paymentGroup,omitempty"`
+	ConversationId              string                         `json:"conversationId,omitempty"`
+	ExternalId                  string                         `json:"externalId,omitempty"`
+	OrderId                     string                         `json:"orderId,omitempty"`
+	CallbackUrl                 string                         `json:"callbackUrl,omitempty"`
+	ClientIp                    string                         `json:"clientIp,omitempty"`
+	PaymentPhase                PaymentPhase                   `json:"paymentPhase,omitempty"`
+	PaymentChannel              string                         `json:"paymentChannel,omitempty"`
+	EnabledPaymentMethods       []PaymentMethod                `json:"enabledPaymentMethods,omitempty"`
+	MasterpassGsmNumber         string                         `json:"masterpassGsmNumber,omitempty"`
+	MasterpassUserId            string                         `json:"masterpassUserId,omitempty"`
+	CardUserKey                 string                         `json:"cardUserKey,omitempty"`
+	BuyerMemberId               int64                          `json:"buyerMemberId,omitempty"`
+	EnabledInstallments         []int                          `json:"enabledInstallments,omitempty"`
+	AlwaysStoreCardAfterPayment bool                           `json:"alwaysStoreCardAfterPayment,omitempty"`
+	AllowOnlyStoredCards        bool                           `json:"allowOnlyStoredCards,omitempty"`
+	AllowOnlyCreditCard         bool                           `json:"allowOnlyCreditCard,omitempty"`
+	ForceThreeDS                bool                           `json:"forceThreeDS,omitempty"`
+	ForceAuthForNonCreditCards  bool                           `json:"forceAuthForNonCreditCards,omitempty"`
+	DepositPayment              bool                           `json:"depositPayment,omitempty"`
+	Ttl                         int64                          `json:"ttl,omitempty"`
+	CustomInstallments          []CustomInstallment            `json:"customInstallments,omitempty"`
+	Items                       []PaymentItem                  `json:"items"`
+	FraudParams                 *FraudCheckParameters          `json:"fraudParams,omitempty"`
+	AdditionalParams            map[string]interface{}         `json:"additionalParams,omitempty"`
+	CardBrandInstallments       map[string][]CustomInstallment `json:"cardBrandInstallments,omitempty"`
 }
 
 type InitApmPaymentRequest struct {
@@ -865,10 +876,11 @@ type UpdatePaymentTransactionRequest struct {
 }
 
 type UpdateStoredCardRequest struct {
-	CardUserKey string `json:"cardUserKey,omitempty"`
-	CardToken   string `json:"cardToken,omitempty"`
-	ExpireYear  string `json:"expireYear,omitempty"`
-	ExpireMonth string `json:"expireMonth,omitempty"`
+	CardUserKey string  `json:"cardUserKey,omitempty"`
+	CardToken   string  `json:"cardToken,omitempty"`
+	ExpireYear  string  `json:"expireYear,omitempty"`
+	ExpireMonth string  `json:"expireMonth,omitempty"`
+	CardAlias   *string `json:"cardAlias,omitempty"`
 }
 
 type CloneStoredCardRequest struct {
@@ -1014,6 +1026,7 @@ type BnplPaymentOfferRequest struct {
 	MerchantApmId    int64                 `json:"merchantApmId,omitempty"`
 	Price            float64               `json:"price"`
 	Currency         Currency              `json:"currency"`
+	ApmOrderId       string                `json:"apmOrderId,omitempty"`
 	AdditionalParams map[string]string     `json:"additionalParams"`
 	Items            []BnplPaymentCartItem `json:"items"`
 }
@@ -1038,6 +1051,7 @@ type PaymentResponse struct {
 	PaymentStatus                *PaymentStatus               `json:"paymentStatus"`
 	PaymentPhase                 *PaymentPhase                `json:"paymentPhase"`
 	FraudAction                  *FraudAction                 `json:"fraudAction"`
+	FraudScore                   *float64                     `json:"fraudScore"`
 	PaymentChannel               *string                      `json:"paymentChannel"`
 	IsThreeDS                    *bool                        `json:"isThreeDS"`
 	MerchantCommissionRate       *float64                     `json:"merchantCommissionRate"`
@@ -1054,6 +1068,8 @@ type PaymentResponse struct {
 	OrderId                      *string                      `json:"orderId"`
 	CardHolderName               *string                      `json:"cardHolderName"`
 	BankCardHolderName           *string                      `json:"bankCardHolderName"`
+	CardIssuerBankName           *string                      `json:"cardIssuerBankName"`
+	CardIssuerBankId             *int64                       `json:"cardIssuerBankId"`
 	CardType                     *string                      `json:"cardType"`
 	CardAssociation              *string                      `json:"cardAssociation"`
 	CardBrand                    *string                      `json:"cardBrand"`
@@ -1089,6 +1105,7 @@ type PaymentTransactionResponse struct {
 type Init3DSPaymentResponse struct {
 	HtmlContent      *string           `json:"htmlContent"`
 	PaymentId        *int64            `json:"paymentId"`
+	RedirectUrl      *string           `json:"redirectUrl"`
 	PaymentStatus    *PaymentStatus    `json:"paymentStatus"`
 	AdditionalAction *AdditionalAction `json:"additionalAction"`
 }
@@ -1103,6 +1120,7 @@ type InitApmPaymentResponse struct {
 	PaymentId           *int64               `json:"paymentId"`
 	RedirectUrl         *string              `json:"redirectUrl"`
 	HtmlContent         *string              `json:"htmlContent"`
+	QrCode              *string              `json:"qrCode"`
 	PaymentStatus       *PaymentStatus       `json:"paymentStatus"`
 	ApmAdditionalAction *ApmAdditionalAction `json:"additionalAction"`
 	PaymentError        *PaymentError        `json:"paymentError"`
@@ -1122,13 +1140,6 @@ type InitPosApmPaymentResponse struct {
 	AdditionalAction *AdditionalAction `json:"additionalAction"`
 	AdditionalData   map[string]any    `json:"additionalData"`
 	PaymentError     *PaymentError     `json:"paymentError"`
-}
-
-type CompletePosApmPaymentResponse struct {
-	PaymentId      *int64         `json:"paymentId"`
-	ConversationId *string        `json:"conversationId"`
-	PaymentStatus  *PaymentStatus `json:"paymentStatus"`
-	PaymentError   *PaymentError  `json:"paymentError"`
 }
 
 type DepositPaymentResponse struct {
@@ -1177,9 +1188,10 @@ type MasterpassPaymentThreeDSInitResponse struct {
 }
 
 type MasterpassPaymentTokenGenerateResponse struct {
-	Token       *string `json:"token"`
-	ReferenceId *string `json:"referenceId"`
-	OrderNo     *string `json:"orderNo"`
+	Token           *string `json:"token"`
+	ReferenceId     *string `json:"referenceId"`
+	OrderNo         *string `json:"orderNo"`
+	TerminalGroupId *string `json:"terminalGroupId"`
 }
 
 type RefundWalletTransactionRequest struct {
@@ -1329,10 +1341,12 @@ type InitGarantiPayPaymentResponse struct {
 }
 
 type RetrieveLoyaltiesResponse struct {
-	CardBrand *string      `json:"cardBrand"`
-	Force3ds  *bool        `json:"force3ds"`
-	Pos       *MerchantPos `json:"pos"`
-	Loyalties []Loyalty    `json:"loyalties"`
+	CardBrand          *string      `json:"cardBrand"`
+	CardIssuerBankName *string      `json:"cardIssuerBankName"`
+	CardIssuerBankId   *int64       `json:"cardIssuerBankId"`
+	Force3ds           *bool        `json:"force3ds"`
+	Pos                *MerchantPos `json:"pos"`
+	Loyalties          []Loyalty    `json:"loyalties"`
 }
 
 type PaymentTransactionRefundResponse struct {
@@ -1384,6 +1398,7 @@ type StoredCardResponse struct {
 	CardBrand        *string           `json:"cardBrand"`
 	CardBankName     *string           `json:"cardBankName"`
 	CardBankId       *int64            `json:"cardBankId"`
+	IsCommercial     *bool             `json:"isCommercial"`
 	CreatedAt        *TimeResponse     `json:"createdAt"`
 }
 
@@ -1419,6 +1434,7 @@ type InstallmentPrice struct {
 	InstallmentLabel       *string  `json:"installmentLabel"`
 	Force3ds               *bool    `json:"force3ds"`
 	CvcRequired            *bool    `json:"cvcRequired"`
+	PosAlias               *string  `json:"posAlias"`
 }
 
 type SearchInstallmentsRequest struct {
@@ -1429,6 +1445,18 @@ type SearchInstallmentsRequest struct {
 	LoyaltyExists                           bool     `schema:"loyaltyExists"`
 }
 
+type MerchantApmListResponse struct {
+	Items []MerchantApmResponse `json:"items"`
+}
+
+type MerchantApmResponse struct {
+	Id                  int64      `json:"id"`
+	Status              Status     `json:"status"`
+	Name                string     `json:"name"`
+	ApmType             ApmType    `json:"apmType"`
+	Hostname            string     `json:"hostname"`
+	SupportedCurrencies []Currency `json:"supportedCurrencies"`
+}
 type InstallmentListResponse struct {
 	Items []InstallmentResponse `json:"items"`
 }
@@ -1542,60 +1570,65 @@ type MemberResponse struct {
 }
 
 type CreateProductRequest struct {
-	Name                string   `json:"name"`
-	Channel             string   `json:"channel,omitempty"`
-	OrderId             string   `json:"orderId,omitempty"`
-	ConversationId      string   `json:"conversationId,omitempty"`
-	ExternalId          string   `json:"externalId,omitempty"`
-	Stock               int      `json:"stock,omitempty"`
-	Price               float64  `json:"price"`
-	Currency            Currency `json:"currency"`
-	Description         string   `json:"description,omitempty"`
-	MultiPayment        bool     `json:"multiPayment,omitempty"`
-	EnabledInstallments []int    `json:"enabledInstallments"`
+	Name                string    `json:"name"`
+	Channel             string    `json:"channel,omitempty"`
+	OrderId             string    `json:"orderId,omitempty"`
+	ConversationId      string    `json:"conversationId,omitempty"`
+	ExternalId          string    `json:"externalId,omitempty"`
+	Stock               int       `json:"stock,omitempty"`
+	Price               float64   `json:"price"`
+	Currency            Currency  `json:"currency"`
+	Description         string    `json:"description,omitempty"`
+	MultiPayment        bool      `json:"multiPayment,omitempty"`
+	ExpiresAt           time.Time `json:"expiresAt,omitempty"`
+	EnabledInstallments []int     `json:"enabledInstallments"`
 }
 
 type UpdateProductRequest struct {
-	Name                string   `json:"name"`
-	Channel             string   `json:"channel,omitempty"`
-	OrderId             string   `json:"orderId,omitempty"`
-	ConversationId      string   `json:"conversationId,omitempty"`
-	ExternalId          string   `json:"externalId,omitempty"`
-	Stock               int      `json:"stock,omitempty"`
-	Status              Status   `json:"status"`
-	Price               float64  `json:"price"`
-	Currency            Currency `json:"currency"`
-	Description         string   `json:"description,omitempty"`
-	EnabledInstallments []int    `json:"enabledInstallments"`
+	Name                string    `json:"name"`
+	Channel             string    `json:"channel,omitempty"`
+	OrderId             string    `json:"orderId,omitempty"`
+	ConversationId      string    `json:"conversationId,omitempty"`
+	ExternalId          string    `json:"externalId,omitempty"`
+	Stock               int       `json:"stock,omitempty"`
+	Status              Status    `json:"status"`
+	Price               float64   `json:"price"`
+	Currency            Currency  `json:"currency"`
+	Description         string    `json:"description,omitempty"`
+	ExpiresAt           time.Time `json:"expiresAt,omitempty"`
+	EnabledInstallments []int     `json:"enabledInstallments"`
 }
 
 type SearchProductsRequest struct {
-	Name     string   `schema:"name,omitempty"`
-	MinPrice float64  `schema:"minPrice,omitempty"`
-	MaxPrice float64  `schema:"maxPrice,omitempty"`
-	Currency Currency `schema:"currency,omitempty"`
-	Channel  string   `schema:"channel,omitempty"`
-	Page     int      `schema:"page,omitempty"`
-	Size     int      `schema:"size,omitempty"`
+	Name         string    `schema:"name,omitempty"`
+	MinPrice     float64   `schema:"minPrice,omitempty"`
+	MaxPrice     float64   `schema:"maxPrice,omitempty"`
+	Currency     Currency  `schema:"currency,omitempty"`
+	Channel      string    `schema:"channel,omitempty"`
+	MinExpiresAt time.Time `schema:"minExpiresAt,omitempty"`
+	MaxExpiresAt time.Time `schema:"maxExpiresAt,omitempty"`
+	Page         int       `schema:"page,omitempty"`
+	Size         int       `schema:"size,omitempty"`
 }
 
 type ProductResponse struct {
-	Id                  *int64    `json:"id"`
-	Name                *string   `json:"name"`
-	Description         *string   `json:"description"`
-	OrderId             *string   `json:"orderId,omitempty"`
-	ConversationId      *string   `json:"conversationId,omitempty"`
-	ExternalId          *string   `json:"externalId,omitempty"`
-	Status              *Status   `json:"status"`
-	Price               *float64  `json:"price"`
-	Currency            *Currency `json:"currency"`
-	Stock               *int      `json:"stock"`
-	SoldCount           *int      `json:"soldCount"`
-	Token               *string   `json:"token"`
-	EnabledInstallments []int     `json:"enabledInstallments"`
-	Url                 *string   `json:"url"`
-	QrCodeUrl           *string   `json:"qrCodeUrl"`
-	Channel             *string   `json:"channel"`
+	Id                  *int64     `json:"id"`
+	Name                *string    `json:"name"`
+	Description         *string    `json:"description"`
+	OrderId             *string    `json:"orderId,omitempty"`
+	ConversationId      *string    `json:"conversationId,omitempty"`
+	ExternalId          *string    `json:"externalId,omitempty"`
+	Status              *Status    `json:"status"`
+	Price               *float64   `json:"price"`
+	Currency            *Currency  `json:"currency"`
+	Stock               *int       `json:"stock"`
+	SoldCount           *int       `json:"soldCount"`
+	Token               *string    `json:"token"`
+	EnabledInstallments []int      `json:"enabledInstallments"`
+	Url                 *string    `json:"url"`
+	QrCodeUrl           *string    `json:"qrCodeUrl"`
+	Channel             *string    `json:"channel"`
+	ExpiresAt           *time.Time `json:"expiresAt"`
 }
 
 type SearchPaymentsRequest struct {
@@ -1696,6 +1729,7 @@ type ReportingPaymentResponse struct {
 	RefundablePrice              *float64                          `json:"refundablePrice"`
 	RefundStatus                 *PaymentRefundStatus              `json:"refundStatus"`
 	CardIssuerBankName           *string                           `json:"cardIssuerBankName"`
+	CardIssuerBankId             *int64                            `json:"cardIssuerBankId"`
 	MdStatus                     *int                              `json:"mdStatus"`
 	FraudId                      *int64                            `json:"fraudId"`
 	FraudAction                  *FraudAction                      `json:"fraudAction"`
@@ -1770,6 +1804,13 @@ type ReportingPaymentTransactionResponse struct {
 type InitBnplPaymentResponse struct {
 	PaymentId        int64               `json:"paymentId"`
 	RedirectUrl      string              `json:"redirectUrl"`
+	PaymentStatus    PaymentStatus       `json:"paymentStatus"`
+	AdditionalAction ApmAdditionalAction `json:"additionalAction"`
+	PaymentError     PaymentError        `json:"paymentError"`
+	AdditionalData   map[string]any      `json:"additionalData"`
+}
+
+type BnplPaymentVerifyResponse struct {
 	PaymentStatus    PaymentStatus       `json:"paymentStatus"`
 	AdditionalAction ApmAdditionalAction `json:"additionalAction"`
 	PaymentError     PaymentError        `json:"paymentError"`
@@ -2067,6 +2108,7 @@ type Card struct {
 	Cvc                          string         `json:"cvc,omitempty"`
 	CardAlias                    string         `json:"cardAlias,omitempty"`
 	CardUserKey                  string         `json:"cardUserKey,omitempty"`
+	SecureFieldsToken            string         `json:"secureFieldsToken,omitempty"`
 	CardToken                    string         `json:"cardToken,omitempty"`
 	BinNumber                    string         `json:"binNumber,omitempty"`
 	LastFourDigits               string         `json:"lastFourDigits,omitempty"`
@@ -2094,6 +2136,7 @@ type PaymentItem struct {
 	ExternalId             string  `json:"externalId,omitempty"`
 	SubMerchantMemberId    int64   `json:"subMerchantMemberId,omitempty"`
 	SubMerchantMemberPrice float64 `json:"subMerchantMemberPrice,omitempty"`
+	BlockageDay            int     `json:"blockageDay,omitempty"`
 }
 
 type MasterpassCreatePayment struct {
