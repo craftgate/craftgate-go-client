@@ -63,7 +63,7 @@ const (
 	ClientVersionHeaderName = "x-client-version"
 	SignatureHeaderName     = "x-signature"
 	AuthVersion             = "1"
-	ClientVersion           = "craftgate-go-client:1.0.28"
+	ClientVersion           = "craftgate-go-client:1.0.29"
 )
 
 // payment type declaration
@@ -1472,6 +1472,7 @@ type InstallmentResponse struct {
 	Force3Ds          *bool              `json:"force3ds"`
 	CvcRequired       *bool              `json:"cvcRequired"`
 	Commercial        *bool              `json:"commercial"`
+	PosAlias          *string            `json:"posAlias"`
 	InstallmentPrices []InstallmentPrice `json:"installmentPrices"`
 }
 
