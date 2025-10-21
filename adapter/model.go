@@ -823,12 +823,15 @@ type InitApmDepositPaymentRequest struct {
 }
 
 type RetrieveLoyaltiesRequest struct {
-	CardNumber  string `json:"cardNumber,omitempty"`
-	ExpireYear  string `json:"expireYear,omitempty"`
-	ExpireMonth string `json:"expireMonth,omitempty"`
-	Cvc         string `json:"cvc,omitempty"`
-	CardUserKey string `json:"cardUserKey,omitempty"`
-	CardToken   string `json:"cardToken,omitempty"`
+	CardNumber     string                `json:"cardNumber,omitempty"`
+	ExpireYear     string                `json:"expireYear,omitempty"`
+	ExpireMonth    string                `json:"expireMonth,omitempty"`
+	Cvc            string                `json:"cvc,omitempty"`
+	CardUserKey    string                `json:"cardUserKey,omitempty"`
+	CardToken      string                `json:"cardToken,omitempty"`
+	ClientIp       *string               `json:"clientIp,omitempty"`
+	ConversationId *string               `json:"conversationId,omitempty"`
+	FraudParams    *FraudCheckParameters `json:"fraudParams,omitempty"`
 }
 
 type RetrieveProviderCardRequest struct {
@@ -1346,6 +1349,7 @@ type RetrieveLoyaltiesResponse struct {
 	CardIssuerBankId   *int64       `json:"cardIssuerBankId"`
 	Force3ds           *bool        `json:"force3ds"`
 	Pos                *MerchantPos `json:"pos"`
+	FraudResult        *FraudResult `json:"fraudResult"`
 	Loyalties          []Loyalty    `json:"loyalties"`
 }
 
@@ -2001,6 +2005,12 @@ type FraudValue struct {
 	Label           *string `json:"label"`
 	Value           *string `json:"value"`
 	ExpireInSeconds *int    `json:"expireInSeconds"`
+}
+
+type FraudResult struct {
+	Id          int64       `json:"id"`
+	Score       *float64    `json:"score"`
+	FraudAction FraudAction `json:"action"`
 }
 
 type PayoutRowResponse struct {
