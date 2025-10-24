@@ -38,6 +38,8 @@ type FraudValueType string
 type AdditionalAction string
 type ApmAdditionalAction string
 type ReportFileType string
+type ReportType string
+type ReportPeriod string
 type WalletTransactionType string
 type WebhookEventType string
 type WebhookStatus string
@@ -432,6 +434,17 @@ const (
 const (
 	ReportFileType_CSV  ReportFileType = "CSV"
 	ReportFileType_XLSX ReportFileType = "XLSX"
+)
+
+// report type declaration
+const (
+	ReportType_TRANSACTION ReportType = "TRANSACTION"
+	ReportType_PAYMENT     ReportType = "PAYMENT"
+)
+
+// report period declaration
+const (
+	ReportPeriod_INSTANT ReportPeriod = "INSTANT"
 )
 
 // wallet transaction type declaration
@@ -1946,6 +1959,25 @@ type RetrieveDailyTransactionReportRequest struct {
 type RetrieveDailyPaymentReportRequest struct {
 	ReportDate Date           `schema:"reportDate,omitempty"`
 	FileType   ReportFileType `schema:"fileType,omitempty"`
+}
+
+type CreateReportRequest struct {
+	StartDate    time.Time    `json:"startDate,omitempty"`
+	EndDate      time.Time    `json:"endDate,omitempty"`
+	ReportType   ReportType   `json:"reportType,omitempty"`
+	ReportPeriod ReportPeriod `json:"reportPeriod,omitempty"`
+}
+
+type RetrieveReportRequest struct {
+	FileType ReportFileType `schema:"fileType,omitempty"`
+}
+
+type ReportDemandResponse struct {
+	Id           *int64        `json:"id"`
+	ReportType   *ReportType   `json:"reportType"`
+	ReportPeriod *ReportPeriod `json:"reportPeriod"`
+	StartDate    *TimeResponse `json:"startDate"`
+	EndDate      *TimeResponse `json:"endDate"`
 }
 
 type SearchFraudChecksRequest struct {
