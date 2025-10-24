@@ -2,12 +2,11 @@ package tests
 
 import (
 	"context"
-	"testing"
-	"time"
-
 	"github.com/craftgate/craftgate-go-client/adapter"
 	craftgate "github.com/craftgate/craftgate-go-client/adapter"
 	"github.com/davecgh/go-spew/spew"
+	"testing"
+	"time"
 )
 
 var fileReportingClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
