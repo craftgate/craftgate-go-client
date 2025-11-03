@@ -35,6 +35,7 @@ type WalletTransactionRefundTransactionType string
 type FraudAction string
 type FraudCheckStatus string
 type FraudValueType string
+type FraudOperation string
 type AdditionalAction string
 type ApmAdditionalAction string
 type ReportFileType string
@@ -415,6 +416,11 @@ const (
 	FraudValueType_PHONE_NUMBER FraudValueType = "PHONE_NUMBER"
 	FraudValueType_EMAIL        FraudValueType = "EMAIL"
 	FraudValueType_OTHER        FraudValueType = "OTHER"
+)
+
+const (
+	FraudOperation_PAYMENT FraudOperation = "PAYMENT"
+	FraudOperation_LOYALTY FraudOperation = "LOYALTY"
 )
 
 // apm additional action type declaration
@@ -1992,6 +1998,13 @@ type FraudValueListRequest struct {
 	Label             string         `json:"label,omitempty"`
 	Value             string         `json:"value,omitempty"`
 	PaymentId         int64          `json:"paymentId"`
+	DurationInSeconds int            `json:"durationInSeconds,omitempty"`
+}
+
+type AddCardFingerprintFraudValueListRequest struct {
+	Label             string         `json:"label,omitempty"`
+	Operation         FraudOperation `json:"operation,omitempty"`
+	OperationId       string         `json:"operationId"`
 	DurationInSeconds int            `json:"durationInSeconds,omitempty"`
 }
 

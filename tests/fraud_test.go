@@ -71,6 +71,20 @@ func Test_AddValueToFraudValueList(t *testing.T) {
 	}
 }
 
+func Test_AddCardValueToFraudValueList(t *testing.T) {
+	request := adapter.AddCardFingerprintFraudValueListRequest{
+		Label:             "John Doe's Card",
+		Operation:         craftgate.FraudOperation_LOYALTY,
+		OperationId:       "93e1e6ed-13c2-49dd-b03c-019887078c6c",
+		DurationInSeconds: 3600,
+	}
+	err := fraudClient.Fraud.AddCardValueToFraudValueList(context.Background(), request, "cardList")
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func Test_AddTemporaryValueToFraudValueList(t *testing.T) {
 	request := adapter.FraudValueListRequest{
 		ListName:          "ipList",
