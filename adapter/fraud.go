@@ -89,7 +89,7 @@ func (api *Fraud) DeleteFraudValueList(ctx context.Context, listName string) err
 	return nil
 }
 
-func (api *Fraud) AddCardValueToFraudValueList(ctx context.Context, request AddCardFingerprintFraudValueListRequest, listName string) error {
+func (api *Fraud) AddCardFingerprintToFraudValueList(ctx context.Context, request AddCardFingerprintFraudValueListRequest, listName string) error {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/fraud/v1/value-lists/"+listName+"/card-fingerprints", request)
 	if err != nil {
 		return err
