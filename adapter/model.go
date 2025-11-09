@@ -883,6 +883,12 @@ type RefundPaymentTransactionRequest struct {
 	ChargeFromMe          bool                  `json:"chargeFromMe"`
 }
 
+type RefundPaymentTransactionMarkAsRefundedRequest struct {
+	PaymentTransactionId int64   `json:"paymentTransactionId"`
+	ConversationId       *string `json:"conversationId"`
+	RefundPrice          float64 `json:"refundPrice"`
+}
+
 type UpdatePaymentTransactionRequest struct {
 	SubMerchantMemberId    int64   `json:"subMerchantMemberId,omitempty"`
 	SubMerchantMemberPrice float64 `json:"subMerchantMemberPrice,omitempty"`
@@ -1378,6 +1384,10 @@ type PaymentTransactionRefundResponse struct {
 	PaymentTransactionId  *int64                 `json:"paymentTransactionId"`
 	Currency              *Currency              `json:"currency"`
 	PaymentId             *int64                 `json:"paymentId"`
+}
+
+type PaymentTransactionRefundListResponse struct {
+	Items []PaymentTransactionRefundResponse `json:"items"`
 }
 
 type PaymentRefundResponse struct {
