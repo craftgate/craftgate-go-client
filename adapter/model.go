@@ -861,9 +861,10 @@ type RetrieveProviderCardRequest struct {
 }
 
 type MasterpassRetrieveLoyaltiesRequest struct {
-	Msisdn    string `json:"msisdn,omitempty"`
-	BinNumber string `json:"binNumber,omitempty"`
-	CardName  string `json:"cardName,omitempty"`
+	Msisdn                       string `json:"msisdn,omitempty"`
+	BinNumber                    string `json:"binNumber,omitempty"`
+	CardName                     string `json:"cardName,omitempty"`
+	MasterpassIntegrationVersion int    `json:"masterpassIntegrationVersion,omitempty"`
 }
 
 type InitGarantiPayPaymentRequest struct {
