@@ -962,6 +962,18 @@ func TestPayment_RefundPayment(t *testing.T) {
 	}
 }
 
+func TestPayment_RefundWaitingPayment(t *testing.T) {
+	request := adapter.RefundWaitingPaymentRequest{
+		PaymentId: 1,
+	}
+	res, err := paymentClient.Payment.RefundWaitingPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_RetrievePaymentRefund(t *testing.T) {
 	res, err := paymentClient.Payment.RetrievePaymentRefund(context.Background(), 123)
 	_, _ = spew.Printf("%#v\n", res)
