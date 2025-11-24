@@ -1096,6 +1096,7 @@ type PaymentResponse struct {
 	CardAssociation              *string                      `json:"cardAssociation"`
 	CardBrand                    *string                      `json:"cardBrand"`
 	RequestedPosAlias            *string                      `json:"requestedPosAlias"`
+	BlockageResolvedDate         *TimeResponse                `json:"blockageResolvedDate"`
 	Pos                          *MerchantPos                 `json:"pos"`
 	Loyalty                      *Loyalty                     `json:"loyalty"`
 	PaymentError                 *PaymentError                `json:"paymentError"`
@@ -1756,6 +1757,7 @@ type ReportingPaymentResponse struct {
 	MdStatus                     *int                              `json:"mdStatus"`
 	FraudId                      *int64                            `json:"fraudId"`
 	FraudAction                  *FraudAction                      `json:"fraudAction"`
+	BlockageResolvedDate         *TimeResponse                     `json:"blockageResolvedDate"`
 	BuyerMember                  *MemberResponse                   `json:"buyerMember"`
 	Refunds                      *[]ReportingPaymentRefundResponse `json:"refunds"`
 	Pos                          *MerchantPos                      `json:"pos"`
