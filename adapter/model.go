@@ -739,6 +739,7 @@ type InitCheckoutPaymentRequest struct {
 	BuyerMemberId               int64                          `json:"buyerMemberId,omitempty"`
 	EnabledInstallments         []int                          `json:"enabledInstallments,omitempty"`
 	AlwaysStoreCardAfterPayment bool                           `json:"alwaysStoreCardAfterPayment,omitempty"`
+	AllowDeleteStoredCard       bool                           `json:"allowDeleteStoredCard,omitempty"`
 	AllowOnlyStoredCards        bool                           `json:"allowOnlyStoredCards,omitempty"`
 	AllowOnlyCreditCard         bool                           `json:"allowOnlyCreditCard,omitempty"`
 	ForceThreeDS                bool                           `json:"forceThreeDS,omitempty"`
