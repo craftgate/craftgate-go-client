@@ -35,6 +35,7 @@ type WalletTransactionRefundTransactionType string
 type FraudAction string
 type FraudCheckStatus string
 type FraudValueType string
+type FraudOperation string
 type AdditionalAction string
 type ApmAdditionalAction string
 type ReportFileType string
@@ -417,6 +418,11 @@ const (
 	FraudValueType_PHONE_NUMBER FraudValueType = "PHONE_NUMBER"
 	FraudValueType_EMAIL        FraudValueType = "EMAIL"
 	FraudValueType_OTHER        FraudValueType = "OTHER"
+)
+
+const (
+	FraudOperation_PAYMENT FraudOperation = "PAYMENT"
+	FraudOperation_LOYALTY FraudOperation = "LOYALTY"
 )
 
 // apm additional action type declaration
@@ -836,12 +842,15 @@ type InitApmDepositPaymentRequest struct {
 }
 
 type RetrieveLoyaltiesRequest struct {
-	CardNumber  string `json:"cardNumber,omitempty"`
-	ExpireYear  string `json:"expireYear,omitempty"`
-	ExpireMonth string `json:"expireMonth,omitempty"`
-	Cvc         string `json:"cvc,omitempty"`
-	CardUserKey string `json:"cardUserKey,omitempty"`
-	CardToken   string `json:"cardToken,omitempty"`
+	CardNumber     string                `json:"cardNumber,omitempty"`
+	ExpireYear     string                `json:"expireYear,omitempty"`
+	ExpireMonth    string                `json:"expireMonth,omitempty"`
+	Cvc            string                `json:"cvc,omitempty"`
+	CardUserKey    string                `json:"cardUserKey,omitempty"`
+	CardToken      string                `json:"cardToken,omitempty"`
+	ClientIp       *string               `json:"clientIp,omitempty"`
+	ConversationId *string               `json:"conversationId,omitempty"`
+	FraudParams    *FraudCheckParameters `json:"fraudParams,omitempty"`
 }
 
 type RetrieveProviderCardRequest struct {
@@ -1365,6 +1374,7 @@ type RetrieveLoyaltiesResponse struct {
 	CardIssuerBankId   *int64       `json:"cardIssuerBankId"`
 	Force3ds           *bool        `json:"force3ds"`
 	Pos                *MerchantPos `json:"pos"`
+	FraudResult        *FraudResult `json:"fraudResult"`
 	Loyalties          []Loyalty    `json:"loyalties"`
 }
 
@@ -2033,6 +2043,13 @@ type FraudValueListRequest struct {
 	DurationInSeconds int            `json:"durationInSeconds,omitempty"`
 }
 
+type AddCardFingerprintFraudValueListRequest struct {
+	Label             string         `json:"label,omitempty"`
+	Operation         FraudOperation `json:"operation,omitempty"`
+	OperationId       string         `json:"operationId"`
+	DurationInSeconds int            `json:"durationInSeconds,omitempty"`
+}
+
 type FraudValuesResponse struct {
 	Name   string       `json:"name"`
 	Values []FraudValue `json:"values"`
@@ -2043,6 +2060,12 @@ type FraudValue struct {
 	Label           *string `json:"label"`
 	Value           *string `json:"value"`
 	ExpireInSeconds *int    `json:"expireInSeconds"`
+}
+
+type FraudResult struct {
+	Id          int64       `json:"id"`
+	Score       *float64    `json:"score"`
+	FraudAction FraudAction `json:"action"`
 }
 
 type PayoutRowResponse struct {

@@ -88,13 +88,13 @@ func Test_AddTemporaryValueToFraudValueList(t *testing.T) {
 }
 
 func Test_AddCardFingerprintToFraudValueList(t *testing.T) {
-	request := adapter.FraudValueListRequest{
-		ListName:  "cardList",
-		Type:      craftgate.FraudValueType_CARD,
-		Label:     "John Doe's Card",
-		PaymentId: 11675,
+	request := adapter.AddCardFingerprintFraudValueListRequest{
+		Label:             "John Doe's Card",
+		Operation:         craftgate.FraudOperation_PAYMENT,
+		OperationId:       "11675", //PaymentId
+		DurationInSeconds: 3600,
 	}
-	err := fraudClient.Fraud.AddValueToFraudValueList(context.Background(), request)
+	err := fraudClient.Fraud.AddCardFingerprintToFraudValueList(context.Background(), request, "cardList")
 
 	if err != nil {
 		t.Errorf("Error %s", err)
