@@ -1471,7 +1471,7 @@ type InstallmentPrice struct {
 }
 
 type SearchInstallmentsRequest struct {
-	BinNumber                               string   `schema:"binNumber"`
+	BinNumber                               string   `schema:"binNumber,omitempty"`
 	Price                                   float64  `schema:"price"`
 	Currency                                Currency `schema:"currency"`
 	DistinctCardBrandsWithLowestCommissions bool     `schema:"distinctCardBrandsWithLowestCommissions"`
