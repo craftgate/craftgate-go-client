@@ -949,6 +949,10 @@ type RefundPaymentRequest struct {
     ChargeFromMe          bool                  `json:"chargeFromMe,omitempty"`
 }
 
+type RefundWaitingPaymentRequest struct {
+	PaymentId int64 `json:"paymentId,omitempty"`
+}
+
 type StoreCardRequest struct {
     CardHolderName string `json:"cardHolderName,omitempty"`
     CardNumber     string `json:"cardNumber,omitempty"`
@@ -1416,6 +1420,10 @@ type PaymentRefundResponse struct {
     RefundType                *RefundType                        `json:"refundType"`
     Currency                  *Currency                          `json:"currency"`
     PaymentTransactionRefunds []PaymentTransactionRefundResponse `json:"paymentTransactionRefunds"`
+}
+
+type WaitingPaymentRefundResponse struct {
+	Status *RefundStatus `json:"status"`
 }
 
 type StoredCardResponse struct {
