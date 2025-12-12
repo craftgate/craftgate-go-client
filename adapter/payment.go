@@ -355,6 +355,22 @@ func (api *Payment) RefundPaymentTransaction(ctx context.Context, request Refund
 	return response.Data, nil
 }
 
+func (api *Payment) RefundPaymentTransactionMarkAsRefunded(ctx context.Context, request RefundPaymentTransactionMarkAsRefundedRequest) (*PaymentTransactionRefundResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/refund-transactions/mark-as-refunded", request)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[PaymentTransactionRefundResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
 func (api *Payment) RetrievePaymentTransactionRefund(ctx context.Context, id int64) (*PaymentTransactionRefundResponse, error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment/v1/refund-transactions/%d", id), nil)
 	if err != nil {
@@ -378,6 +394,38 @@ func (api *Payment) RefundPayment(ctx context.Context, request RefundPaymentRequ
 	}
 
 	response := &Response[PaymentRefundResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
+func (api *Payment) RefundPaymentMarkAsRefunded(ctx context.Context, request RefundPaymentRequest) (*PaymentTransactionRefundListResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/refunds/mark-as-refunded", request)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[PaymentTransactionRefundListResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
+func (api *Payment) RefundWaitingPayment(ctx context.Context, request RefundWaitingPaymentRequest) (*WaitingPaymentRefundResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/refunds/refund-waiting-payment", request)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[WaitingPaymentRefundResponse]{}
 	err = api.Client.Do(ctx, newRequest, response)
 
 	if err != nil {

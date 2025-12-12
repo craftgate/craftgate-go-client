@@ -940,6 +940,23 @@ func TestPayment_RefundPaymentTransaction(t *testing.T) {
 	}
 }
 
+func TestPayment_RefundPaymentTransactionMarkAsRefunded(t *testing.T) {
+	ConversationId := "456d1297-908e-4bd6-a13b-4be31a6e47d5"
+
+	request := adapter.RefundPaymentTransactionMarkAsRefundedRequest{
+		PaymentTransactionId: 1, // change it with a valid PaymentTransactionId
+		ConversationId:       &ConversationId,
+		RefundPrice:          20,
+	}
+
+	res, err := paymentClient.Payment.RefundPaymentTransactionMarkAsRefunded(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_RetrievePaymentTransactionRefund(t *testing.T) {
 	res, err := paymentClient.Payment.RetrievePaymentTransactionRefund(context.Background(), 123)
 	_, _ = spew.Printf("%#v\n", res)
@@ -955,6 +972,31 @@ func TestPayment_RefundPayment(t *testing.T) {
 		RefundDestinationType: craftgate.RefundDestinationType_PROVIDER,
 	}
 	res, err := paymentClient.Payment.RefundPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_RefundPaymentMarkAsRefunded(t *testing.T) {
+	request := adapter.RefundPaymentRequest{
+		PaymentId:      1, // change it with a valid paymentId
+		ConversationId: "456d1297-908e-4bd6-a13b-4be31a6e47d5",
+	}
+	res, err := paymentClient.Payment.RefundPaymentMarkAsRefunded(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_RefundWaitingPayment(t *testing.T) {
+	request := adapter.RefundWaitingPaymentRequest{
+		PaymentId: 1,
+	}
+	res, err := paymentClient.Payment.RefundWaitingPayment(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
