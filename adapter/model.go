@@ -171,6 +171,7 @@ const (
     PaymentProvider_PAYLANDS_MB_WAY             PaymentProvider = "PAYLANDS_MB_WAY"
     PaymentProvider_PAYCELL_DCB                 PaymentProvider = "PAYCELL_DCB"
     PaymentProvider_IWALLET                     PaymentProvider = "IWALLET"
+    PaymentProvider_BKM_EXPRESS                 PaymentProvider = "BKM_EXPRESS"
     PaymentProvider_OFFLINE                     PaymentProvider = "OFFLINE"
 )
 
@@ -196,7 +197,6 @@ const (
     PaymentSource_API           PaymentSource = "API"
     PaymentSource_CHECKOUT_FORM PaymentSource = "CHECKOUT_FORM"
     PaymentSource_PAY_BY_LINK   PaymentSource = "PAY_BY_LINK"
-    PaymentSource_BKM_EXPRESS   PaymentSource = "BKM_EXPRESS"
     PaymentSource_HEPSIPAY      PaymentSource = "HEPSIPAY"
     PaymentSource_JUZDAN        PaymentSource = "JUZDAN"
     PaymentSource_MONO          PaymentSource = "MONO"
