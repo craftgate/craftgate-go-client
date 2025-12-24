@@ -542,6 +542,7 @@ const (
     PosIntegrator_AKBANK_VPOS       PosIntegrator = "AKBANK_VPOS"
     PosIntegrator_TAP               PosIntegrator = "TAP"
     PosIntegrator_RUBIK             PosIntegrator = "RUBIK"
+    PosIntegrator_BIN_PAY           PosIntegrator = "BIN_PAY"
 )
 
 const (
