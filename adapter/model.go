@@ -1637,20 +1637,25 @@ type UpdateProductRequest struct {
     Price               float64    `json:"price"`
     Currency            Currency   `json:"currency"`
     Description         string     `json:"description,omitempty"`
+	MultiPayment        bool       `json:"multiPayment,omitempty"`
     ExpiresAt           *time.Time `json:"expiresAt,omitempty"`
     EnabledInstallments []int      `json:"enabledInstallments"`
 }
 
 type SearchProductsRequest struct {
-    Name         string    `schema:"name,omitempty"`
-    MinPrice     float64   `schema:"minPrice,omitempty"`
-    MaxPrice     float64   `schema:"maxPrice,omitempty"`
-    Currency     Currency  `schema:"currency,omitempty"`
-    Channel      string    `schema:"channel,omitempty"`
-    MinExpiresAt time.Time `schema:"minExpiresAt,omitempty"`
-    MaxExpiresAt time.Time `schema:"maxExpiresAt,omitempty"`
-    Page         int       `schema:"page,omitempty"`
-    Size         int       `schema:"size,omitempty"`
+	Id             int64     `schema:"id,omitempty"`
+	Name           string    `schema:"name,omitempty"`
+	OrderId        string    `schema:"orderId,omitempty"`
+	ConversationId string    `schema:"conversationId,omitempty"`
+	ExternalId     string    `schema:"externalId,omitempty"`
+	MinPrice       float64   `schema:"minPrice,omitempty"`
+	MaxPrice       float64   `schema:"maxPrice,omitempty"`
+	Currency       Currency  `schema:"currency,omitempty"`
+	Channel        string    `schema:"channel,omitempty"`
+	MinExpiresAt   time.Time `schema:"minExpiresAt,omitempty"`
+	MaxExpiresAt   time.Time `schema:"maxExpiresAt,omitempty"`
+	Page           int       `schema:"page,omitempty"`
+	Size           int       `schema:"size,omitempty"`
 }
 
 type ProductResponse struct {
@@ -1668,8 +1673,8 @@ type ProductResponse struct {
     Token               *string       `json:"token"`
     EnabledInstallments []int         `json:"enabledInstallments"`
     Url                 *string       `json:"url"`
-    QrCodeUrl           *string       `json:"qrCodeUrl"`
     Channel             *string       `json:"channel"`
+	MultiPayment        *bool         `json:"multiPayment"`
     ExpiresAt           *TimeResponse `json:"expiresAt"`
 }
 
