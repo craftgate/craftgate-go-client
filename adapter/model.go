@@ -2026,6 +2026,16 @@ type SearchFraudChecksRequest struct {
     PaymentStatus  PaymentStatus    `schema:"paymentStatus,omitempty"`
 }
 
+type SearchFraudRuleRequest struct {
+    Name           string           `json:"name,omitempty"`
+    MinCreatedDate time.Time        `schema:"minCreatedDate,omitempty"`
+    MaxCreatedDate time.Time        `schema:"maxCreatedDate,omitempty"`
+    Action         FraudAction      `schema:"action,omitempty"`
+    Operation      FraudOperation   `schema:"operation,omitempty"`
+    Size           int              `schema:"size,omitempty"`
+    Page           int              `schema:"page,omitempty"`
+}
+
 type FraudCheckResponse struct {
     Id             *int64            `json:"id"`
     Status         *Status           `json:"status"`
@@ -2038,6 +2048,15 @@ type FraudCheckResponse struct {
     PaymentId      *int64            `json:"paymentId"`
     PaymentStatus  *PaymentStatus    `json:"paymentStatus"`
 }
+
+type FraudRuleResponse struct {
+    Id             *int64            `json:"id"`
+    Status         *Status           `json:"status"`
+    Action         *FraudAction      `json:"action"`
+    Conditions     *string           `json:"conditions"`
+    Operations     *[]FraudOperation `json:"operations"`
+}
+
 
 type FraudPaymentData struct {
     PaymentDate    *time.Time `json:"paymentDate"`

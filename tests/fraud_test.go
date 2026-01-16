@@ -1,10 +1,10 @@
 package tests
 
 import (
-	"context"
-	"github.com/craftgate/craftgate-go-client/adapter"
-	craftgate "github.com/craftgate/craftgate-go-client/adapter"
-	"github.com/davecgh/go-spew/spew"
+    "context"
+    "github.com/craftgate/craftgate-go-client/adapter"
+    craftgate "github.com/craftgate/craftgate-go-client/adapter"
+    "github.com/davecgh/go-spew/spew"
 	"testing"
 )
 
@@ -21,6 +21,19 @@ func Test_SearchFraudChecks(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error %s", err)
 	}
+}
+
+func Test_SearchFraudRule(t *testing.T) {
+    request := adapter.SearchFraudRuleRequest{
+        Page: 0, Size: 10,
+    }
+
+    res, err := fraudClient.Fraud.SearchFraudRule(context.Background(), request)
+    _, _ = spew.Printf("%#v\n", res)
+
+    if err != nil {
+        t.Errorf("Error %s", err)
+    }
 }
 
 func Test_RetrieveAllFraudValueList(t *testing.T) {

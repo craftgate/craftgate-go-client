@@ -24,6 +24,21 @@ func (api *Fraud) SearchFraudChecks(ctx context.Context, request SearchFraudChec
 	return response.Data, nil
 }
 
+func (api *Fraud) SearchFraudRule(ctx context.Context, request SearchFraudRuleRequest) (*DataResponse[FraudRuleResponse], error) {
+    newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/fraud/v1/rules", request)
+    if err != nil {
+        return nil, err
+    }
+
+    response := &Response[DataResponse[FraudRuleResponse]]{}
+    err = api.Client.Do(ctx, newRequest, response)
+    if err != nil {
+        return nil, err
+    }
+
+    return response.Data, nil
+}
+
 func (api *Fraud) RetrieveAllFraudValueList(ctx context.Context) (*DataResponse[FraudValuesResponse], error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/fraud/v1/value-lists/all", nil)
 	if err != nil {
