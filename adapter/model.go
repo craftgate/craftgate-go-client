@@ -1085,6 +1085,7 @@ type PaymentResponse struct {
     PaymentPhase                 *PaymentPhase                `json:"paymentPhase"`
     FraudAction                  *FraudAction                 `json:"fraudAction"`
     FraudScore                   *float64                     `json:"fraudScore"`
+    FraudRuleId                  *int64                         `json:"fraudRuleId"`
     PaymentChannel               *string                      `json:"paymentChannel"`
     IsThreeDS                    *bool                        `json:"isThreeDS"`
     MerchantCommissionRate       *float64                     `json:"merchantCommissionRate"`
