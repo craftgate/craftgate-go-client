@@ -961,6 +961,7 @@ type StoreCardRequest struct {
     ExpireMonth    string `json:"expireMonth,omitempty"`
     CardAlias      string `json:"cardAlias,omitempty"`
     CardUserKey    string `json:"cardUserKey,omitempty"`
+    SecureFieldsToken string `json:"secureFieldsToken,omitempty"`
 }
 
 type ApplePayMerchantSessionCreateRequest struct {
