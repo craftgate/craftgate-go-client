@@ -24,7 +24,7 @@ func (api *Fraud) SearchFraudChecks(ctx context.Context, request SearchFraudChec
 	return response.Data, nil
 }
 
-func (api *Fraud) SearchFraudRule(ctx context.Context, request SearchFraudRuleRequest) (*DataResponse[FraudRuleResponse], error) {
+func (api *Fraud) SearchFraudRules(ctx context.Context, request SearchFraudRuleRequest) (*DataResponse[FraudRuleResponse], error) {
     newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/fraud/v1/rules", request)
     if err != nil {
         return nil, err

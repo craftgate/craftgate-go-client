@@ -2,10 +2,11 @@ package tests
 
 import (
     "context"
+    "testing"
+
     "github.com/craftgate/craftgate-go-client/adapter"
     craftgate "github.com/craftgate/craftgate-go-client/adapter"
     "github.com/davecgh/go-spew/spew"
-	"testing"
 )
 
 var fraudClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
@@ -23,12 +24,12 @@ func Test_SearchFraudChecks(t *testing.T) {
 	}
 }
 
-func Test_SearchFraudRule(t *testing.T) {
+func Test_SearchFraudRules(t *testing.T) {
     request := adapter.SearchFraudRuleRequest{
         Page: 0, Size: 10,
     }
 
-    res, err := fraudClient.Fraud.SearchFraudRule(context.Background(), request)
+    res, err := fraudClient.Fraud.SearchFraudRules(context.Background(), request)
     _, _ = spew.Printf("%#v\n", res)
 
     if err != nil {
