@@ -108,6 +108,7 @@ const (
     ApmType_ALIPAY                 ApmType = "ALIPAY"
     ApmType_APPLEPAY               ApmType = "APPLEPAY"
     ApmType_GOOGLEPAY              ApmType = "GOOGLEPAY"
+    ApmType_HEPSIPAY_FINANCE       ApmType = "HEPSIPAY_FINANCE"
     ApmType_HEPSIPAY_WALLET        ApmType = "HEPSIPAY_WALLET"
     ApmType_HEPSIPAY_SHOPPING_LOAN ApmType = "HEPSIPAY_SHOPPING_LOAN"
     ApmType_ZIP                    ApmType = "ZIP"
@@ -122,6 +123,7 @@ const (
     ApmType_PAPEL                  ApmType = "PAPEL"
     ApmType_FUND_TRANSFER          ApmType = "FUND_TRANSFER"
     ApmType_CASH_ON_DELIVERY       ApmType = "CASH_ON_DELIVERY"
+    ApmType_DKB                    ApmType = "DKB"
 )
 
 // card provider declaration
@@ -139,11 +141,13 @@ const (
     PaymentProvider_MASTERPASS                  PaymentProvider = "MASTERPASS"
     PaymentProvider_GARANTI_PAY                 PaymentProvider = "GARANTI_PAY"
     PaymentProvider_YKB_WORLD_PAY               PaymentProvider = "YKB_WORLD_PAY"
+    PaymentProvider_YKB_WORLD_PAY_SHOPPING_LOAN PaymentProvider = "YKB_WORLD_PAY_SHOPPING_LOAN"
     PaymentProvider_PAPARA                      PaymentProvider = "PAPARA"
     PaymentProvider_PAYONEER                    PaymentProvider = "PAYONEER"
     PaymentProvider_SODEXO                      PaymentProvider = "SODEXO"
-    PaymentProvider_METROPOL                    PaymentProvider = "METROPOL"
     PaymentProvider_EDENRED                     PaymentProvider = "EDENRED"
+    PaymentProvider_METROPOL                    PaymentProvider = "METROPOL"
+    PaymentProvider_IWALLET                     PaymentProvider = "IWALLET"
     PaymentProvider_ALIPAY                      PaymentProvider = "ALIPAY"
     PaymentProvider_PAYPAL                      PaymentProvider = "PAYPAL"
     PaymentProvider_KLARNA                      PaymentProvider = "KLARNA"
@@ -158,19 +162,19 @@ const (
     PaymentProvider_TOMPAY                      PaymentProvider = "TOMPAY"
     PaymentProvider_TOM_FINANCE                 PaymentProvider = "TOM_FINANCE"
     PaymentProvider_ALFABANK                    PaymentProvider = "ALFABANK"
-    PaymentProvider_PAYCELL                     PaymentProvider = "PAYCELL"
-    PaymentProvider_HASO                        PaymentProvider = "HASO"
-    PaymentProvider_MULTINET                    PaymentProvider = "MULTINET"
-    PaymentProvider_YKB_WORLD_PAY_SHOPPING_LOAN PaymentProvider = "YKB_WORLD_PAY_SHOPPING_LOAN"
     PaymentProvider_ZIP                         PaymentProvider = "ZIP"
+    PaymentProvider_DKB                         PaymentProvider = "DKB"
+    PaymentProvider_HASO                        PaymentProvider = "HASO"
+    PaymentProvider_PAYCELL                     PaymentProvider = "PAYCELL"
+    PaymentProvider_MULTINET                    PaymentProvider = "MULTINET"
     PaymentProvider_CHIPPIN                     PaymentProvider = "CHIPPIN"
     PaymentProvider_ISPAY                       PaymentProvider = "ISPAY"
-    PaymentProvider_VODAFONE                    PaymentProvider = "VODAFONE"
     PaymentProvider_PAYMOB                      PaymentProvider = "PAYMOB"
+    PaymentProvider_VODAFONE                    PaymentProvider = "VODAFONE"
     PaymentProvider_BIZUM                       PaymentProvider = "BIZUM"
     PaymentProvider_PAYLANDS_MB_WAY             PaymentProvider = "PAYLANDS_MB_WAY"
-    PaymentProvider_PAYCELL_DCB                 PaymentProvider = "PAYCELL_DCB"
-    PaymentProvider_IWALLET                     PaymentProvider = "IWALLET"
+    PaymentProvider_SETCARD                     PaymentProvider = "SETCARD"
+    PaymentProvider_PAPEL                       PaymentProvider = "PAPEL"
     PaymentProvider_BKM_EXPRESS                 PaymentProvider = "BKM_EXPRESS"
     PaymentProvider_OFFLINE                     PaymentProvider = "OFFLINE"
 )
@@ -239,26 +243,42 @@ const (
 
 // payment method declaration
 const (
-    PaymentMethod_CARD              PaymentMethod = "CARD"
-    PaymentMethod_MASTERPASS        PaymentMethod = "MASTERPASS"
-    PaymentMethod_PAPARA            PaymentMethod = "PAPARA"
-    PaymentMethod_PAYONEER          PaymentMethod = "PAYONEER"
-    PaymentMethod_SODEXO            PaymentMethod = "SODEXO"
-    PaymentMethod_SODEXO_GIFT       PaymentMethod = "SODEXO_GIFT"
-    PaymentMethod_EDENRED           PaymentMethod = "EDENRED"
-    PaymentMethod_EDENRED_GIFT      PaymentMethod = "EDENRED_GIFT"
-    PaymentMethod_ALIPAY            PaymentMethod = "ALIPAY"
-    PaymentMethod_PAYPAL            PaymentMethod = "PAYPAL"
-    PaymentMethod_KLARNA            PaymentMethod = "KLARNA"
-    PaymentMethod_AFTERPAY          PaymentMethod = "AFTERPAY"
-    PaymentMethod_INSTANT_TRANSFER  PaymentMethod = "INSTANT_TRANSFER"
-    PaymentMethod_STRIPE            PaymentMethod = "STRIPE"
-    PaymentMethod_MULTINET          PaymentMethod = "MULTINET"
-    PaymentMethod_MULTINET_GIFT     PaymentMethod = "MULTINET_GIFT"
-    PaymentMethod_MULTINET_NEO_GIFT PaymentMethod = "MULTINET_NEO_GIFT"
-    PaymentMethod_PAYLANDS_MB_WAY   PaymentMethod = "PAYLANDS_MB_WAY"
-    PaymentMethod_PAYCELL_DCB       PaymentMethod = "PAYCELL_DCB"
-    PaymentMethod_IWALLET           PaymentMethod = "IWALLET"
+    PaymentMethod_CARD                        PaymentMethod = "CARD"
+    PaymentMethod_MASTERPASS                  PaymentMethod = "MASTERPASS"
+    PaymentMethod_PAPARA                      PaymentMethod = "PAPARA"
+    PaymentMethod_PAYONEER                    PaymentMethod = "PAYONEER"
+    PaymentMethod_SODEXO                      PaymentMethod = "SODEXO"
+    PaymentMethod_SODEXO_GIFT                 PaymentMethod = "SODEXO_GIFT"
+    PaymentMethod_EDENRED                     PaymentMethod = "EDENRED"
+    PaymentMethod_EDENRED_GIFT                PaymentMethod = "EDENRED_GIFT"
+    PaymentMethod_ALIPAY                      PaymentMethod = "ALIPAY"
+    PaymentMethod_PAYPAL                      PaymentMethod = "PAYPAL"
+    PaymentMethod_KLARNA                      PaymentMethod = "KLARNA"
+    PaymentMethod_AFTERPAY                    PaymentMethod = "AFTERPAY"
+    PaymentMethod_INSTANT_TRANSFER            PaymentMethod = "INSTANT_TRANSFER"
+    PaymentMethod_STRIPE                      PaymentMethod = "STRIPE"
+    PaymentMethod_HEPSIPAY                    PaymentMethod = "HEPSIPAY"
+    PaymentMethod_GARANTI_PAY                 PaymentMethod = "GARANTI_PAY"
+    PaymentMethod_JUZDAN                      PaymentMethod = "JUZDAN"
+    PaymentMethod_YKB_WORLD_PAY               PaymentMethod = "YKB_WORLD_PAY"
+    PaymentMethod_YKB_WORLD_PAY_SHOPPING_LOAN PaymentMethod = "YKB_WORLD_PAY_SHOPPING_LOAN"
+    PaymentMethod_MULTINET                    PaymentMethod = "MULTINET"
+    PaymentMethod_MULTINET_GIFT               PaymentMethod = "MULTINET_GIFT"
+    PaymentMethod_MULTINET_NEO_GIFT           PaymentMethod = "MULTINET_NEO_GIFT"
+    PaymentMethod_METROPOL                    PaymentMethod = "METROPOL"
+    PaymentMethod_ISPAY                       PaymentMethod = "ISPAY"
+    PaymentMethod_PAYMOB                      PaymentMethod = "PAYMOB"
+    PaymentMethod_VODAFONE_DCB                PaymentMethod = "VODAFONE_DCB"
+    PaymentMethod_KASPI                       PaymentMethod = "KASPI"
+    PaymentMethod_BIZUM                       PaymentMethod = "BIZUM"
+    PaymentMethod_PAYLANDS_MB_WAY             PaymentMethod = "PAYLANDS_MB_WAY"
+    PaymentMethod_ZIP                         PaymentMethod = "ZIP"
+    PaymentMethod_DKB                         PaymentMethod = "DKB"
+    PaymentMethod_PAYCELL_DCB                 PaymentMethod = "PAYCELL_DCB"
+    PaymentMethod_SETCARD                     PaymentMethod = "SETCARD"
+    PaymentMethod_IWALLET                     PaymentMethod = "IWALLET"
+    PaymentMethod_PAPEL                       PaymentMethod = "PAPEL"
+    PaymentMethod_BKM_EXPRESS                 PaymentMethod = "BKM_EXPRESS"
 )
 
 // card type declaration
@@ -296,6 +316,7 @@ const (
     LoyaltyType_EXTRA_POINTS           LoyaltyType = "EXTRA_POINTS"
     LoyaltyType_GAINING_MINUTES        LoyaltyType = "GAINING_MINUTES"
     LoyaltyType_POSTPONING_STATEMENT   LoyaltyType = "POSTPONING_STATEMENT"
+    LoyaltyType_POSTPONING_PAYMENT     LoyaltyType = "POSTPONING_STATEMENT"
 )
 
 // multi payment status declaration
@@ -432,6 +453,7 @@ const (
     ApmAdditionalAction_SHOW_HTML_CONTENT ApmAdditionalAction = "SHOW_HTML_CONTENT"
     ApmAdditionalAction_WAIT_FOR_WEBHOOK  ApmAdditionalAction = "WAIT_FOR_WEBHOOK"
     ApmAdditionalAction_APPROVAL_REQUIRED ApmAdditionalAction = "APPROVAL_REQUIRED"
+    ApmAdditionalAction_VERIFY_REQUIRED   ApmAdditionalAction = "VERIFY_REQUIRED"
     ApmAdditionalAction_SHOW_QR_CODE      ApmAdditionalAction = "SHOW_QR_CODE"
     ApmAdditionalAction_NONE              ApmAdditionalAction = "NONE"
 )
@@ -476,17 +498,21 @@ const (
 )
 
 const (
-    WebhookEventType_API_AUTH            WebhookEventType = "API_AUTH"
-    WebhookEventType_API_VERIFY_AND_AUTH WebhookEventType = "API_VERIFY_AND_AUTH"
-    WebhookEventType_CHECKOUTFORM_AUTH   WebhookEventType = "CHECKOUTFORM_AUTH"
-    WebhookEventType_THREEDS_VERIFY      WebhookEventType = "THREEDS_VERIFY"
-    WebhookEventType_REFUND              WebhookEventType = "REFUND"
-    WebhookEventType_REFUND_TX           WebhookEventType = "REFUND_TX"
-    WebhookEventType_PAYOUT_COMPLETED    WebhookEventType = "PAYOUT_COMPLETED"
-    WebhookEventType_AUTOPILOT           WebhookEventType = "AUTOPILOT"
-    WebhookEventType_WALLET_CREATED      WebhookEventType = "WALLET_CREATED"
-    WebhookEventType_WALLET_TX_CREATED   WebhookEventType = "WALLET_TX_CREATED"
-    WebhookEventType_BNPL_NOTIFICATION   WebhookEventType = "BNPL_NOTIFICATION"
+    WebhookEventType_API_AUTH                         WebhookEventType = "API_AUTH"
+    WebhookEventType_API_VERIFY_AND_AUTH              WebhookEventType = "API_VERIFY_AND_AUTH"
+    WebhookEventType_CHECKOUTFORM_AUTH                WebhookEventType = "CHECKOUTFORM_AUTH"
+    WebhookEventType_THREEDS_VERIFY                   WebhookEventType = "THREEDS_VERIFY"
+    WebhookEventType_REFUND                           WebhookEventType = "REFUND"
+    WebhookEventType_REFUND_TX                        WebhookEventType = "REFUND_TX"
+    WebhookEventType_PAYOUT_COMPLETED                 WebhookEventType = "PAYOUT_COMPLETED"
+    WebhookEventType_AUTOPILOT                        WebhookEventType = "AUTOPILOT"
+    WebhookEventType_WALLET_CREATED                   WebhookEventType = "WALLET_CREATED"
+    WebhookEventType_WALLET_TX_CREATED                WebhookEventType = "WALLET_TX_CREATED"
+    WebhookEventType_BNPL_NOTIFICATION                WebhookEventType = "BNPL_NOTIFICATION"
+    WebhookEventType_BANK_ACCOUNT_TRACKING_RECORD     WebhookEventType = "BANK_ACCOUNT_TRACKING_RECORD"
+    WebhookEventType_BKM_EXPRESS_PAYMENT_NOTIFICATION WebhookEventType = "BKM_EXPRESS_PAYMENT_NOTIFICATION"
+    WebhookEventType_MULTI_PAYMENT_COMPLETED          WebhookEventType = "MULTI_PAYMENT_COMPLETED"
+    WebhookEventType_REPORT_CREATED                   WebhookEventType = "REPORT_CREATED"
 )
 
 const (
@@ -503,46 +529,59 @@ const (
 )
 
 const (
-    PosIntegrator_YKB               PosIntegrator = "YKB"
-    PosIntegrator_GARANTI           PosIntegrator = "GARANTI"
-    PosIntegrator_ISBANK            PosIntegrator = "ISBANK"
+    PosIntegrator_ADYEN             PosIntegrator = "ADYEN"
     PosIntegrator_AKBANK            PosIntegrator = "AKBANK"
+    PosIntegrator_AKBANK_VPOS       PosIntegrator = "AKBANK_VPOS"
+    PosIntegrator_ALGORITMA         PosIntegrator = "ALGORITMA"
+    PosIntegrator_ANADOLUBANK       PosIntegrator = "ANADOLUBANK"
+    PosIntegrator_BIRLESIK_ODEME    PosIntegrator = "BIRLESIK_ODEME"
+    PosIntegrator_BRAINTREE         PosIntegrator = "BRAINTREE"
+    PosIntegrator_CHECKOUT          PosIntegrator = "CHECKOUT"
+    PosIntegrator_DENIZBANK         PosIntegrator = "DENIZBANK"
+    PosIntegrator_ELEKSE            PosIntegrator = "ELEKSE"
+    PosIntegrator_FIBABANK          PosIntegrator = "FIBABANK"
+    PosIntegrator_FIBABANK_ASSECO   PosIntegrator = "FIBABANK_ASSECO"
+    PosIntegrator_FINANSBANK        PosIntegrator = "FINANSBANK"
+    PosIntegrator_FINANSKATILIM     PosIntegrator = "FINANSKATILIM"
+    PosIntegrator_GARANTI           PosIntegrator = "GARANTI"
+    PosIntegrator_HALKBANK          PosIntegrator = "HALKBANK"
+    PosIntegrator_HALKBANK_VPOS     PosIntegrator = "HALKBANK_VPOS"
+    PosIntegrator_HALKODE           PosIntegrator = "HALKODE"
+    PosIntegrator_HALYKBANK         PosIntegrator = "HALYKBANK"
+    PosIntegrator_INGBANK           PosIntegrator = "INGBANK"
+    PosIntegrator_ISBANK            PosIntegrator = "ISBANK"
+    PosIntegrator_ISBANK_VPOS       PosIntegrator = "ISBANK_VPOS"
+    PosIntegrator_IYZICO            PosIntegrator = "IYZICO"
+    PosIntegrator_KUVEYTTURK        PosIntegrator = "KUVEYTTURK"
+    PosIntegrator_MOKA              PosIntegrator = "MOKA"
+    PosIntegrator_MONEYPAY          PosIntegrator = "MONEYPAY"
+    PosIntegrator_NKOLAY            PosIntegrator = "NKOLAY"
+    PosIntegrator_NUVEI             PosIntegrator = "NUVEI"
+    PosIntegrator_PAPEL             PosIntegrator = "PAPEL"
+    PosIntegrator_PARAM_POS         PosIntegrator = "PARAM_POS"
+    PosIntegrator_PAYBYME           PosIntegrator = "PAYBYME"
+    PosIntegrator_PAYCELL           PosIntegrator = "PAYCELL"
+    PosIntegrator_PAYLANDS          PosIntegrator = "PAYLANDS"
+    PosIntegrator_PAYMOB            PosIntegrator = "PAYMOB"
+    PosIntegrator_PAYNET            PosIntegrator = "PAYNET"
+    PosIntegrator_PAYTABS           PosIntegrator = "PAYTABS"
+    PosIntegrator_PAYTR             PosIntegrator = "PAYTR"
+    PosIntegrator_QNB_PAY           PosIntegrator = "QNB_PAY"
+    PosIntegrator_REDSYS            PosIntegrator = "REDSYS"
+    PosIntegrator_RUBIK             PosIntegrator = "RUBIK"
+    PosIntegrator_SIPAY             PosIntegrator = "SIPAY"
+    PosIntegrator_STRIPE            PosIntegrator = "STRIPE"
+    PosIntegrator_TAMI              PosIntegrator = "TAMI"
+    PosIntegrator_TAP               PosIntegrator = "TAP"
+    PosIntegrator_TEB               PosIntegrator = "TEB"
+    PosIntegrator_TRPOS             PosIntegrator = "TRPOS"
+    PosIntegrator_VAKIFBANK         PosIntegrator = "VAKIFBANK"
+    PosIntegrator_VAKIFKATILIM      PosIntegrator = "VAKIFKATILIM"
+    PosIntegrator_WORLDPAY          PosIntegrator = "WORLDPAY"
+    PosIntegrator_YKB               PosIntegrator = "YKB"
     PosIntegrator_ZIRAATBANK        PosIntegrator = "ZIRAATBANK"
     PosIntegrator_ZIRAATBANK_INNOVA PosIntegrator = "ZIRAATBANK_INNOVA"
     PosIntegrator_ZIRAATKATILIM     PosIntegrator = "ZIRAATKATILIM"
-    PosIntegrator_KUVEYTTURK        PosIntegrator = "KUVEYTTURK"
-    PosIntegrator_HALKBANK          PosIntegrator = "HALKBANK"
-    PosIntegrator_DENIZBANK         PosIntegrator = "DENIZBANK"
-    PosIntegrator_VAKIFBANK         PosIntegrator = "VAKIFBANK"
-    PosIntegrator_VAKIFKATILIM      PosIntegrator = "VAKIFKATILIM"
-    PosIntegrator_FINANSBANK        PosIntegrator = "FINANSBANK"
-    PosIntegrator_FIBABANK          PosIntegrator = "FIBABANK"
-    PosIntegrator_FIBABANK_ASSECO   PosIntegrator = "FIBABANK_ASSECO"
-    PosIntegrator_ANADOLUBANK       PosIntegrator = "ANADOLUBANK"
-    PosIntegrator_PARAM_POS         PosIntegrator = "PARAM_POS"
-    PosIntegrator_IYZICO            PosIntegrator = "IYZICO"
-    PosIntegrator_SIPAY             PosIntegrator = "SIPAY"
-    PosIntegrator_PAYNET            PosIntegrator = "PAYNET"
-    PosIntegrator_PAYTR             PosIntegrator = "PAYTR"
-    PosIntegrator_BIRLESIK_ODEME    PosIntegrator = "BIRLESIK_ODEME"
-    PosIntegrator_MOKA              PosIntegrator = "MOKA"
-    PosIntegrator_STRIPE            PosIntegrator = "STRIPE"
-    PosIntegrator_TEB               PosIntegrator = "TEB"
-    PosIntegrator_IPARA             PosIntegrator = "IPARA"
-    PosIntegrator_OZAN              PosIntegrator = "OZAN"
-    PosIntegrator_BRAINTREE         PosIntegrator = "BRAINTREE"
-    PosIntegrator_NKOLAY            PosIntegrator = "NKOLAY"
-    PosIntegrator_PAYTABS           PosIntegrator = "PAYTABS"
-    PosIntegrator_PAYBULL           PosIntegrator = "PAYBULL"
-    PosIntegrator_ELEKSE            PosIntegrator = "ELEKSE"
-    PosIntegrator_ALGORITMA         PosIntegrator = "ALGORITMA"
-    PosIntegrator_PAYCELL           PosIntegrator = "PAYCELL"
-    PosIntegrator_TAMI              PosIntegrator = "TAMI"
-    PosIntegrator_QNB_PAY           PosIntegrator = "QNB_PAY"
-    PosIntegrator_AKBANK_VPOS       PosIntegrator = "AKBANK_VPOS"
-    PosIntegrator_TAP               PosIntegrator = "TAP"
-    PosIntegrator_RUBIK             PosIntegrator = "RUBIK"
-    PosIntegrator_BIN_PAY           PosIntegrator = "BIN_PAY"
 )
 
 const (
@@ -588,6 +627,7 @@ const (
     BnplCartItemType_MOBILE_PHONE_PRICE_BELOW_REGULATION_LIMIT BnplCartItemType = "MOBILE_PHONE_PRICE_BELOW_REGULATION_LIMIT"
     BnplCartItemType_TABLET                                    BnplCartItemType = "TABLET"
     BnplCartItemType_COMPUTER                                  BnplCartItemType = "COMPUTER"
+    BnplCartItemType_TABLET_WITH_CAMPAIGN                      BnplCartItemType = "TABLET_WITH_CAMPAIGN"
     BnplCartItemType_CONSTRUCTION_MARKET                       BnplCartItemType = "CONSTRUCTION_MARKET"
     BnplCartItemType_GOLD                                      BnplCartItemType = "GOLD"
     BnplCartItemType_DIGITAL_PRODUCTS                          BnplCartItemType = "DIGITAL_PRODUCTS"
@@ -624,9 +664,16 @@ const (
 )
 
 const (
-    PaymentAuthenticationType_THREE_DS     PaymentAuthenticationType = "THREE_DS"
-    PaymentAuthenticationType_NON_THREE_DS PaymentAuthenticationType = "NON_THREE_DS"
-    PaymentAuthenticationType_BKM_EXPRESS  PaymentAuthenticationType = "BKM_EXPRESS"
+    PaymentAuthenticationType_THREE_DS                          PaymentAuthenticationType = "THREE_DS"
+    PaymentAuthenticationType_NON_THREE_DS                      PaymentAuthenticationType = "NON_THREE_DS"
+    PaymentAuthenticationType_BKM_EXPRESS                       PaymentAuthenticationType = "BKM_EXPRESS"
+    PaymentAuthenticationType_THREE_DS_FALLBACK_TO_NON_THREE_DS PaymentAuthenticationType = "THREE_DS_FALLBACK_TO_NON_THREE_DS"
+    PaymentAuthenticationType_GOOGLEPAY                         PaymentAuthenticationType = "GOOGLEPAY"
+    PaymentAuthenticationType_APPLEPAY                          PaymentAuthenticationType = "APPLEPAY"
+    PaymentAuthenticationType_YKB_WORLD_PAY                     PaymentAuthenticationType = "YKB_WORLD_PAY"
+    PaymentAuthenticationType_YKB_WORLD_PAY_SHOPPING_LOAN       PaymentAuthenticationType = "YKB_WORLD_PAY_SHOPPING_LOAN"
+    PaymentAuthenticationType_GARANTI_PAY                       PaymentAuthenticationType = "GARANTI_PAY"
+    PaymentAuthenticationType_JUZDAN                            PaymentAuthenticationType = "JUZDAN"
 )
 
 const (
@@ -951,7 +998,7 @@ type RefundPaymentRequest struct {
 }
 
 type RefundWaitingPaymentRequest struct {
-	PaymentId int64 `json:"paymentId,omitempty"`
+    PaymentId int64 `json:"paymentId,omitempty"`
 }
 
 type StoreCardRequest struct {
@@ -1426,7 +1473,7 @@ type PaymentRefundResponse struct {
 }
 
 type WaitingPaymentRefundResponse struct {
-	Status *RefundStatus `json:"status"`
+    Status *RefundStatus `json:"status"`
 }
 
 type StoredCardResponse struct {
@@ -2187,6 +2234,7 @@ type MerchantPos struct {
 type Reward struct {
     CardRewardMoney *float64 `json:"cardRewardMoney,omitempty"`
     FirmRewardMoney *float64 `json:"firmRewardMoney,omitempty"`
+    MileRewardMoney *float64 `json:"mileRewardMoney,omitempty"`
 }
 
 type Loyalty struct {
