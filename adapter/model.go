@@ -250,6 +250,8 @@ const (
 	PaymentMethod_SODEXO_GIFT       PaymentMethod = "SODEXO_GIFT"
 	PaymentMethod_EDENRED           PaymentMethod = "EDENRED"
 	PaymentMethod_EDENRED_GIFT      PaymentMethod = "EDENRED_GIFT"
+	PaymentMethod_TOKENFLEX         PaymentMethod = "TOKENFLEX"
+	PaymentMethod_TOKENFLEX_GIFT    PaymentMethod = "TOKENFLEX_GIFT"
 	PaymentMethod_ALIPAY            PaymentMethod = "ALIPAY"
 	PaymentMethod_PAYPAL            PaymentMethod = "PAYPAL"
 	PaymentMethod_KLARNA            PaymentMethod = "KLARNA"
