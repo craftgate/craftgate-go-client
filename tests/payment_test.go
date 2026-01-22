@@ -546,6 +546,102 @@ func TestPayment_CompleteIWalletApmPayment(t *testing.T) {
 	}
 }
 
+func TestPayment_InitTokenflexPayment(t *testing.T) {
+	request := adapter.InitApmPaymentRequest{
+		ApmType:        craftgate.ApmType_TOKENFLEX,
+		Price:          1.25,
+		PaidPrice:      1.25,
+		Currency:       craftgate.Currency_TRY,
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		ConversationId: "foo-bar",
+		AdditionalParams: map[string]string{
+			"paymentCode": "123456",
+		},
+		CallbackUrl: "https://www.your-website.com/callback",
+		Items: []craftgate.PaymentItem{
+			{
+				Name:       "Item 1",
+				Price:      1,
+				ExternalId: "1",
+			},
+			{
+				Name:       "Item 2",
+				Price:      0.25,
+				ExternalId: "2",
+			},
+		},
+	}
+	res, err := paymentClient.Payment.InitApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_CompleteTokenflexPayment(t *testing.T) {
+	request := adapter.CompleteApmPaymentRequest{
+		PaymentId: 1,
+		AdditionalParams: map[string]string{
+			"otpCode": "0000",
+		},
+	}
+	res, err := paymentClient.Payment.CompleteApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_InitTokenflexGiftPayment(t *testing.T) {
+	request := adapter.InitApmPaymentRequest{
+		ApmType:        craftgate.ApmType_TOKENFLEX_GIFT,
+		Price:          1.25,
+		PaidPrice:      1.25,
+		Currency:       craftgate.Currency_TRY,
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		ConversationId: "foo-bar",
+		AdditionalParams: map[string]string{
+			"paymentCode": "123456",
+		},
+		CallbackUrl: "https://www.your-website.com/callback",
+		Items: []craftgate.PaymentItem{
+			{
+				Name:       "Item 1",
+				Price:      1,
+				ExternalId: "1",
+			},
+			{
+				Name:       "Item 2",
+				Price:      0.25,
+				ExternalId: "2",
+			},
+		},
+	}
+	res, err := paymentClient.Payment.InitApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_CompleteTokenflexGiftPayment(t *testing.T) {
+	request := adapter.CompleteApmPaymentRequest{
+		PaymentId: 1,
+		AdditionalParams: map[string]string{
+			"otpCode": "0000",
+		},
+	}
+	res, err := paymentClient.Payment.CompleteApmPayment(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_InitKlarnaApmPayment(t *testing.T) {
 	request := adapter.InitApmPaymentRequest{
 		ApmType:        craftgate.ApmType_KLARNA,
