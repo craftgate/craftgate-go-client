@@ -900,8 +900,9 @@ type RefundPaymentTransactionMarkAsRefundedRequest struct {
 }
 
 type UpdatePaymentTransactionRequest struct {
-    SubMerchantMemberId    int64   `json:"subMerchantMemberId,omitempty"`
-    SubMerchantMemberPrice float64 `json:"subMerchantMemberPrice,omitempty"`
+    SubMerchantMemberId    int64      `json:"subMerchantMemberId,omitempty"`
+    SubMerchantMemberPrice float64    `json:"subMerchantMemberPrice,omitempty"`
+    BlockageResolvedDate   *time.Time `json:"blockageResolvedDate,omitempty"`
 }
 
 type UpdateStoredCardRequest struct {
@@ -951,7 +952,7 @@ type RefundPaymentRequest struct {
 }
 
 type RefundWaitingPaymentRequest struct {
-	PaymentId int64 `json:"paymentId,omitempty"`
+    PaymentId int64 `json:"paymentId,omitempty"`
 }
 
 type StoreCardRequest struct {
@@ -1426,7 +1427,7 @@ type PaymentRefundResponse struct {
 }
 
 type WaitingPaymentRefundResponse struct {
-	Status *RefundStatus `json:"status"`
+    Status *RefundStatus `json:"status"`
 }
 
 type StoredCardResponse struct {
@@ -1641,25 +1642,25 @@ type UpdateProductRequest struct {
     Price               float64    `json:"price"`
     Currency            Currency   `json:"currency"`
     Description         string     `json:"description,omitempty"`
-	MultiPayment        bool       `json:"multiPayment,omitempty"`
+    MultiPayment        bool       `json:"multiPayment,omitempty"`
     ExpiresAt           *time.Time `json:"expiresAt,omitempty"`
     EnabledInstallments []int      `json:"enabledInstallments"`
 }
 
 type SearchProductsRequest struct {
-	Id             int64     `schema:"id,omitempty"`
-	Name           string    `schema:"name,omitempty"`
-	OrderId        string    `schema:"orderId,omitempty"`
-	ConversationId string    `schema:"conversationId,omitempty"`
-	ExternalId     string    `schema:"externalId,omitempty"`
-	MinPrice       float64   `schema:"minPrice,omitempty"`
-	MaxPrice       float64   `schema:"maxPrice,omitempty"`
-	Currency       Currency  `schema:"currency,omitempty"`
-	Channel        string    `schema:"channel,omitempty"`
-	MinExpiresAt   time.Time `schema:"minExpiresAt,omitempty"`
-	MaxExpiresAt   time.Time `schema:"maxExpiresAt,omitempty"`
-	Page           int       `schema:"page,omitempty"`
-	Size           int       `schema:"size,omitempty"`
+    Id             int64     `schema:"id,omitempty"`
+    Name           string    `schema:"name,omitempty"`
+    OrderId        string    `schema:"orderId,omitempty"`
+    ConversationId string    `schema:"conversationId,omitempty"`
+    ExternalId     string    `schema:"externalId,omitempty"`
+    MinPrice       float64   `schema:"minPrice,omitempty"`
+    MaxPrice       float64   `schema:"maxPrice,omitempty"`
+    Currency       Currency  `schema:"currency,omitempty"`
+    Channel        string    `schema:"channel,omitempty"`
+    MinExpiresAt   time.Time `schema:"minExpiresAt,omitempty"`
+    MaxExpiresAt   time.Time `schema:"maxExpiresAt,omitempty"`
+    Page           int       `schema:"page,omitempty"`
+    Size           int       `schema:"size,omitempty"`
 }
 
 type ProductResponse struct {
@@ -1678,7 +1679,7 @@ type ProductResponse struct {
     EnabledInstallments []int         `json:"enabledInstallments"`
     Url                 *string       `json:"url"`
     Channel             *string       `json:"channel"`
-	MultiPayment        *bool         `json:"multiPayment"`
+    MultiPayment        *bool         `json:"multiPayment"`
     ExpiresAt           *TimeResponse `json:"expiresAt"`
 }
 
@@ -2031,13 +2032,13 @@ type SearchFraudChecksRequest struct {
 }
 
 type SearchFraudRuleRequest struct {
-    Name           string           `json:"name,omitempty"`
-    MinCreatedDate time.Time        `schema:"minCreatedDate,omitempty"`
-    MaxCreatedDate time.Time        `schema:"maxCreatedDate,omitempty"`
-    Action         FraudAction      `schema:"action,omitempty"`
-    Operation      FraudOperation   `schema:"operation,omitempty"`
-    Size           int              `schema:"size,omitempty"`
-    Page           int              `schema:"page,omitempty"`
+    Name           string         `json:"name,omitempty"`
+    MinCreatedDate time.Time      `schema:"minCreatedDate,omitempty"`
+    MaxCreatedDate time.Time      `schema:"maxCreatedDate,omitempty"`
+    Action         FraudAction    `schema:"action,omitempty"`
+    Operation      FraudOperation `schema:"operation,omitempty"`
+    Size           int            `schema:"size,omitempty"`
+    Page           int            `schema:"page,omitempty"`
 }
 
 type FraudCheckResponse struct {
@@ -2054,13 +2055,12 @@ type FraudCheckResponse struct {
 }
 
 type FraudRuleResponse struct {
-    Id             *int64            `json:"id"`
-    Status         *Status           `json:"status"`
-    Action         *FraudAction      `json:"action"`
-    Conditions     *string           `json:"conditions"`
-    Operations     *[]FraudOperation `json:"operations"`
+    Id         *int64            `json:"id"`
+    Status     *Status           `json:"status"`
+    Action     *FraudAction      `json:"action"`
+    Conditions *string           `json:"conditions"`
+    Operations *[]FraudOperation `json:"operations"`
 }
-
 
 type FraudPaymentData struct {
     PaymentDate    *time.Time `json:"paymentDate"`
