@@ -1442,6 +1442,8 @@ type StoredCardResponse struct {
     CardBrand        *string           `json:"cardBrand"`
     CardBankName     *string           `json:"cardBankName"`
     CardBankId       *int64            `json:"cardBankId"`
+    ExpireYear       *string           `json:"expireYear"`
+    ExpireMonth      *string           `json:"expireMonth"`
     IsCommercial     *bool             `json:"isCommercial"`
     CreatedAt        *TimeResponse     `json:"createdAt"`
 }
