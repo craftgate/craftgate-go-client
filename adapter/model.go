@@ -900,8 +900,8 @@ type RefundPaymentTransactionMarkAsRefundedRequest struct {
 }
 
 type UpdatePaymentTransactionRequest struct {
-	SubMerchantMemberId    int64      `json:"subMerchantMemberId"`
-	SubMerchantMemberPrice float64    `json:"subMerchantMemberPrice"`
+	SubMerchantMemberId    int64      `json:"subMerchantMemberId,omitempty"`
+	SubMerchantMemberPrice float64    `json:"subMerchantMemberPrice,omitempty"`
 	BlockageResolvedDate   *time.Time `json:"blockageResolvedDate,omitempty"`
 }
 
@@ -1431,22 +1431,22 @@ type WaitingPaymentRefundResponse struct {
 }
 
 type StoredCardResponse struct {
-    BinNumber        *string           `json:"binNumber"`
-    LastFourDigits   *string           `json:"lastFourDigits"`
-    CardUserKey      *string           `json:"cardUserKey"`
-    CardToken        *string           `json:"cardToken"`
-    CardHolderName   *string           `json:"cardHolderName"`
-    CardAlias        *string           `json:"cardAlias"`
-    CardType         *CardType         `json:"cardType"`
-    CardAssociation  *CardAssociation  `json:"cardAssociation"`
-    CardExpiryStatus *CardExpiryStatus `json:"cardExpiryStatus"`
-    CardBrand        *string           `json:"cardBrand"`
-    CardBankName     *string           `json:"cardBankName"`
-    CardBankId       *int64            `json:"cardBankId"`
-    ExpireYear       *string           `json:"expireYear"`
-    ExpireMonth      *string           `json:"expireMonth"`
-    IsCommercial     *bool             `json:"isCommercial"`
-    CreatedAt        *TimeResponse     `json:"createdAt"`
+	BinNumber        *string           `json:"binNumber"`
+	LastFourDigits   *string           `json:"lastFourDigits"`
+	CardUserKey      *string           `json:"cardUserKey"`
+	CardToken        *string           `json:"cardToken"`
+	CardHolderName   *string           `json:"cardHolderName"`
+	CardAlias        *string           `json:"cardAlias"`
+	CardType         *CardType         `json:"cardType"`
+	CardAssociation  *CardAssociation  `json:"cardAssociation"`
+	CardExpiryStatus *CardExpiryStatus `json:"cardExpiryStatus"`
+	CardBrand        *string           `json:"cardBrand"`
+	CardBankName     *string           `json:"cardBankName"`
+	CardBankId       *int64            `json:"cardBankId"`
+	ExpireYear       *string           `json:"expireYear"`
+	ExpireMonth      *string           `json:"expireMonth"`
+	IsCommercial     *bool             `json:"isCommercial"`
+	CreatedAt        *TimeResponse     `json:"createdAt"`
 }
 
 type PaymentTransactionsApprovalResponse struct {
@@ -2202,6 +2202,11 @@ type TokenizedCard struct {
 	Data              map[string]interface{} `json:"data,omitempty"`
 }
 
+type EncryptedCard struct {
+	CardData string `json:"cardData,omitempty"`
+	Type     string `json:"type,omitempty"`
+}
+
 type Card struct {
 	CardHolderName               string         `json:"cardHolderName,omitempty"`
 	CardNumber                   string         `json:"cardNumber,omitempty"`
@@ -2218,6 +2223,7 @@ type Card struct {
 	Loyalty                      *Loyalty       `json:"loyalty,omitempty"`
 	StoreCardAfterSuccessPayment bool           `json:"storeCardAfterSuccessPayment,omitempty"`
 	TokenizedCard                *TokenizedCard `json:"tokenizedCard,omitempty"`
+	EncryptedCard                *EncryptedCard `json:"encryptedCard,omitempty"`
 }
 
 type FraudCheckParameters struct {
