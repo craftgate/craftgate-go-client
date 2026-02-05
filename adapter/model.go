@@ -1431,20 +1431,22 @@ type WaitingPaymentRefundResponse struct {
 }
 
 type StoredCardResponse struct {
-	BinNumber        *string           `json:"binNumber"`
-	LastFourDigits   *string           `json:"lastFourDigits"`
-	CardUserKey      *string           `json:"cardUserKey"`
-	CardToken        *string           `json:"cardToken"`
-	CardHolderName   *string           `json:"cardHolderName"`
-	CardAlias        *string           `json:"cardAlias"`
-	CardType         *CardType         `json:"cardType"`
-	CardAssociation  *CardAssociation  `json:"cardAssociation"`
-	CardExpiryStatus *CardExpiryStatus `json:"cardExpiryStatus"`
-	CardBrand        *string           `json:"cardBrand"`
-	CardBankName     *string           `json:"cardBankName"`
-	CardBankId       *int64            `json:"cardBankId"`
-	IsCommercial     *bool             `json:"isCommercial"`
-	CreatedAt        *TimeResponse     `json:"createdAt"`
+    BinNumber        *string           `json:"binNumber"`
+    LastFourDigits   *string           `json:"lastFourDigits"`
+    CardUserKey      *string           `json:"cardUserKey"`
+    CardToken        *string           `json:"cardToken"`
+    CardHolderName   *string           `json:"cardHolderName"`
+    CardAlias        *string           `json:"cardAlias"`
+    CardType         *CardType         `json:"cardType"`
+    CardAssociation  *CardAssociation  `json:"cardAssociation"`
+    CardExpiryStatus *CardExpiryStatus `json:"cardExpiryStatus"`
+    CardBrand        *string           `json:"cardBrand"`
+    CardBankName     *string           `json:"cardBankName"`
+    CardBankId       *int64            `json:"cardBankId"`
+    ExpireYear       *string           `json:"expireYear"`
+    ExpireMonth      *string           `json:"expireMonth"`
+    IsCommercial     *bool             `json:"isCommercial"`
+    CreatedAt        *TimeResponse     `json:"createdAt"`
 }
 
 type PaymentTransactionsApprovalResponse struct {
