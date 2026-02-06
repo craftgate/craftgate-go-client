@@ -955,12 +955,12 @@ type RefundWaitingPaymentRequest struct {
 }
 
 type StoreCardRequest struct {
-    CardHolderName string `json:"cardHolderName,omitempty"`
-    CardNumber     string `json:"cardNumber,omitempty"`
-    ExpireYear     string `json:"expireYear,omitempty"`
-    ExpireMonth    string `json:"expireMonth,omitempty"`
-    CardAlias      string `json:"cardAlias,omitempty"`
-    CardUserKey    string `json:"cardUserKey,omitempty"`
+    CardHolderName    string `json:"cardHolderName,omitempty"`
+    CardNumber        string `json:"cardNumber,omitempty"`
+    ExpireYear        string `json:"expireYear,omitempty"`
+    ExpireMonth       string `json:"expireMonth,omitempty"`
+    CardAlias         string `json:"cardAlias,omitempty"`
+    CardUserKey       string `json:"cardUserKey,omitempty"`
     SecureFieldsToken string `json:"secureFieldsToken,omitempty"`
 }
 
