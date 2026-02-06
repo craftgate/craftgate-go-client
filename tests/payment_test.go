@@ -1029,6 +1029,17 @@ func TestPayment_StoreCard(t *testing.T) {
 	}
 }
 
+func TestPayment_StoreCard_With_SecureFields(t *testing.T) {
+    request := adapter.StoreCardRequest{
+        SecureFieldsToken: "xxXXxx",
+    }
+    res, err := paymentClient.Payment.StoreCard(context.Background(), request)
+    _, _ = spew.Printf("%#v\n", res)
+    if err != nil {
+        t.Errorf("Error %s", err)
+    }
+}
+
 func TestPayment_UpdateStoredCard(t *testing.T) {
 	request := adapter.UpdateStoredCardRequest{
 		CardUserKey: "6bcbac4b-6460-418d-b060-2d9896c08156",
