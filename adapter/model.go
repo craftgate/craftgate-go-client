@@ -1443,6 +1443,8 @@ type StoredCardResponse struct {
     CardBrand        *string           `json:"cardBrand"`
     CardBankName     *string           `json:"cardBankName"`
     CardBankId       *int64            `json:"cardBankId"`
+    ExpireYear       *string           `json:"expireYear"`
+    ExpireMonth      *string           `json:"expireMonth"`
     IsCommercial     *bool             `json:"isCommercial"`
     CreatedAt        *TimeResponse     `json:"createdAt"`
 }
@@ -2201,6 +2203,11 @@ type TokenizedCard struct {
     Data              map[string]interface{} `json:"data,omitempty"`
 }
 
+type EncryptedCard struct {
+    CardData string `json:"cardData,omitempty"`
+    Type     string `json:"type,omitempty"`
+}
+
 type Card struct {
     CardHolderName               string         `json:"cardHolderName,omitempty"`
     CardNumber                   string         `json:"cardNumber,omitempty"`
@@ -2217,6 +2224,7 @@ type Card struct {
     Loyalty                      *Loyalty       `json:"loyalty,omitempty"`
     StoreCardAfterSuccessPayment bool           `json:"storeCardAfterSuccessPayment,omitempty"`
     TokenizedCard                *TokenizedCard `json:"tokenizedCard,omitempty"`
+    EncryptedCard                *EncryptedCard `json:"encryptedCard,omitempty"`
 }
 
 type FraudCheckParameters struct {
