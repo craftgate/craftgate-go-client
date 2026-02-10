@@ -225,6 +225,27 @@ func TestPayment_InitCheckoutPayment(t *testing.T) {
 	}
 }
 
+func TestPayment_InitCheckoutCardVerifyWithNon3DSAuthType(t *testing.T) {
+	request := adapter.InitCheckoutCardVerifyRequest{
+		VerificationPrice:         10,
+		Currency:                  craftgate.Currency_TRY,
+		ConversationId:            "456d1297-908e-4bd6-a13b-4be31a6e47d5",
+		CallbackUrl:               "https://www.your-website.com/craftgate-checkout-card-verify-callback",
+		PaymentAuthenticationType: craftgate.CardVerificationAuthType_NON_THREE_DS,
+	}
+
+	res, err := paymentClient.Payment.InitCheckoutCardVerify(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	require.NotNil(t, res)
+	require.NotNil(t, res.PageUrl)
+	require.NotNil(t, res.Token)
+	require.NotNil(t, res.TokenExpireDate)
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_RetrieveCheckoutPayment(t *testing.T) {
 	res, err := paymentClient.Payment.RetrieveCheckoutPayment(context.Background(), "foo-bar")
 	_, _ = spew.Printf("%#v\n", res)
@@ -1076,6 +1097,35 @@ func TestPayment_DeleteStoredCard(t *testing.T) {
 	}
 	err := paymentClient.Payment.DeleteStoredCard(context.Background(), request)
 
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_VerifyCardWith3DS(t *testing.T) {
+	request := adapter.VerifyCardRequest{
+		Card: &adapter.VerifyCard{
+			CardHolderName: "Haluk Demir",
+			CardNumber:     "5258640000000001",
+			ExpireYear:     "2044",
+			ExpireMonth:    "07",
+			Cvc:            "000",
+			CardAlias:      "My YKB Card",
+		},
+		PaymentAuthenticationType: craftgate.CardVerificationAuthType_THREE_DS,
+		CallbackUrl:               "https://www.your-website.com/craftgate-3DSecure-card-verify-callback",
+		ConversationId:            "456d1297-908e-4bd6-a13b-4be31a6e47d5",
+		VerificationPrice:         10,
+		Currency:                  craftgate.Currency_TRY,
+		ClientIp:                  "127.0.0.1",
+	}
+	res, err := paymentClient.Payment.VerifyCard(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	require.NotNil(t, res)
+	require.NotNil(t, res.HtmlContent)
+	require.NotNil(t, res.CardVerifyStatus)
+	require.Equal(t, craftgate.CardVerifyStatus_THREE_DS_PENDING, *res.CardVerifyStatus)
 	if err != nil {
 		t.Errorf("Error %s", err)
 	}
