@@ -90,6 +90,8 @@ const (
     ApmType_METROPOL               ApmType = "METROPOL"
     ApmType_EDENRED                ApmType = "EDENRED"
     ApmType_EDENRED_GIFT           ApmType = "EDENRED_GIFT"
+    ApmType_TOKENFLEX              ApmType = "TOKENFLEX"
+    ApmType_TOKENFLEX_GIFT         ApmType = "TOKENFLEX_GIFT"
     ApmType_PAYPAL                 ApmType = "PAYPAL"
     ApmType_KLARNA                 ApmType = "KLARNA"
     ApmType_AFTERPAY               ApmType = "AFTERPAY"
@@ -144,6 +146,7 @@ const (
     PaymentProvider_SODEXO                      PaymentProvider = "SODEXO"
     PaymentProvider_METROPOL                    PaymentProvider = "METROPOL"
     PaymentProvider_EDENRED                     PaymentProvider = "EDENRED"
+    PaymentProvider_TOKENFLEX                   PaymentProvider = "TOKENFLEX"
     PaymentProvider_ALIPAY                      PaymentProvider = "ALIPAY"
     PaymentProvider_PAYPAL                      PaymentProvider = "PAYPAL"
     PaymentProvider_KLARNA                      PaymentProvider = "KLARNA"
@@ -247,6 +250,8 @@ const (
     PaymentMethod_SODEXO_GIFT       PaymentMethod = "SODEXO_GIFT"
     PaymentMethod_EDENRED           PaymentMethod = "EDENRED"
     PaymentMethod_EDENRED_GIFT      PaymentMethod = "EDENRED_GIFT"
+    PaymentMethod_TOKENFLEX         PaymentMethod = "TOKENFLEX"
+    PaymentMethod_TOKENFLEX_GIFT    PaymentMethod = "TOKENFLEX_GIFT"
     PaymentMethod_ALIPAY            PaymentMethod = "ALIPAY"
     PaymentMethod_PAYPAL            PaymentMethod = "PAYPAL"
     PaymentMethod_KLARNA            PaymentMethod = "KLARNA"
@@ -951,7 +956,7 @@ type RefundPaymentRequest struct {
 }
 
 type RefundWaitingPaymentRequest struct {
-	PaymentId int64 `json:"paymentId,omitempty"`
+    PaymentId int64 `json:"paymentId,omitempty"`
 }
 
 type StoreCardRequest struct {
@@ -1428,7 +1433,7 @@ type PaymentRefundResponse struct {
 }
 
 type WaitingPaymentRefundResponse struct {
-	Status *RefundStatus `json:"status"`
+    Status *RefundStatus `json:"status"`
 }
 
 type StoredCardResponse struct {
@@ -1643,25 +1648,25 @@ type UpdateProductRequest struct {
     Price               float64    `json:"price"`
     Currency            Currency   `json:"currency"`
     Description         string     `json:"description,omitempty"`
-	MultiPayment        bool       `json:"multiPayment,omitempty"`
+    MultiPayment        bool       `json:"multiPayment,omitempty"`
     ExpiresAt           *time.Time `json:"expiresAt,omitempty"`
     EnabledInstallments []int      `json:"enabledInstallments"`
 }
 
 type SearchProductsRequest struct {
-	Id             int64     `schema:"id,omitempty"`
-	Name           string    `schema:"name,omitempty"`
-	OrderId        string    `schema:"orderId,omitempty"`
-	ConversationId string    `schema:"conversationId,omitempty"`
-	ExternalId     string    `schema:"externalId,omitempty"`
-	MinPrice       float64   `schema:"minPrice,omitempty"`
-	MaxPrice       float64   `schema:"maxPrice,omitempty"`
-	Currency       Currency  `schema:"currency,omitempty"`
-	Channel        string    `schema:"channel,omitempty"`
-	MinExpiresAt   time.Time `schema:"minExpiresAt,omitempty"`
-	MaxExpiresAt   time.Time `schema:"maxExpiresAt,omitempty"`
-	Page           int       `schema:"page,omitempty"`
-	Size           int       `schema:"size,omitempty"`
+    Id             int64     `schema:"id,omitempty"`
+    Name           string    `schema:"name,omitempty"`
+    OrderId        string    `schema:"orderId,omitempty"`
+    ConversationId string    `schema:"conversationId,omitempty"`
+    ExternalId     string    `schema:"externalId,omitempty"`
+    MinPrice       float64   `schema:"minPrice,omitempty"`
+    MaxPrice       float64   `schema:"maxPrice,omitempty"`
+    Currency       Currency  `schema:"currency,omitempty"`
+    Channel        string    `schema:"channel,omitempty"`
+    MinExpiresAt   time.Time `schema:"minExpiresAt,omitempty"`
+    MaxExpiresAt   time.Time `schema:"maxExpiresAt,omitempty"`
+    Page           int       `schema:"page,omitempty"`
+    Size           int       `schema:"size,omitempty"`
 }
 
 type ProductResponse struct {
@@ -1680,7 +1685,7 @@ type ProductResponse struct {
     EnabledInstallments []int         `json:"enabledInstallments"`
     Url                 *string       `json:"url"`
     Channel             *string       `json:"channel"`
-	MultiPayment        *bool         `json:"multiPayment"`
+    MultiPayment        *bool         `json:"multiPayment"`
     ExpiresAt           *TimeResponse `json:"expiresAt"`
 }
 
@@ -2033,13 +2038,13 @@ type SearchFraudChecksRequest struct {
 }
 
 type SearchFraudRuleRequest struct {
-    Name           string           `json:"name,omitempty"`
-    MinCreatedDate time.Time        `schema:"minCreatedDate,omitempty"`
-    MaxCreatedDate time.Time        `schema:"maxCreatedDate,omitempty"`
-    Action         FraudAction      `schema:"action,omitempty"`
-    Operation      FraudOperation   `schema:"operation,omitempty"`
-    Size           int              `schema:"size,omitempty"`
-    Page           int              `schema:"page,omitempty"`
+    Name           string         `json:"name,omitempty"`
+    MinCreatedDate time.Time      `schema:"minCreatedDate,omitempty"`
+    MaxCreatedDate time.Time      `schema:"maxCreatedDate,omitempty"`
+    Action         FraudAction    `schema:"action,omitempty"`
+    Operation      FraudOperation `schema:"operation,omitempty"`
+    Size           int            `schema:"size,omitempty"`
+    Page           int            `schema:"page,omitempty"`
 }
 
 type FraudCheckResponse struct {
@@ -2056,13 +2061,12 @@ type FraudCheckResponse struct {
 }
 
 type FraudRuleResponse struct {
-    Id             *int64            `json:"id"`
-    Status         *Status           `json:"status"`
-    Action         *FraudAction      `json:"action"`
-    Conditions     *string           `json:"conditions"`
-    Operations     *[]FraudOperation `json:"operations"`
+    Id         *int64            `json:"id"`
+    Status     *Status           `json:"status"`
+    Action     *FraudAction      `json:"action"`
+    Conditions *string           `json:"conditions"`
+    Operations *[]FraudOperation `json:"operations"`
 }
-
 
 type FraudPaymentData struct {
     PaymentDate    *time.Time `json:"paymentDate"`
@@ -2162,7 +2166,7 @@ type Response[T any] struct {
 
 func (r Response[ErrorResponse]) Error() string {
     if r.Errors.ErrorGroup != nil {
-        return *r.Errors.ErrorGroup + "-" + *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription
+    	return *r.Errors.ErrorGroup + "-" + *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription
     }
 
     return *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription
