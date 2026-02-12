@@ -246,6 +246,15 @@ func TestPayment_InitCheckoutCardVerifyWithNon3DSAuthType(t *testing.T) {
 	}
 }
 
+func TestPayment_RetrieveCheckoutCardVerify(t *testing.T) {
+	res, err := paymentClient.Payment.RetrieveCheckoutCardVerify(context.Background(), "foo-bar")
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_RetrieveCheckoutPayment(t *testing.T) {
 	res, err := paymentClient.Payment.RetrieveCheckoutPayment(context.Background(), "foo-bar")
 	_, _ = spew.Printf("%#v\n", res)

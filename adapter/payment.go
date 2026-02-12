@@ -142,6 +142,21 @@ func (api *Payment) InitCheckoutCardVerify(ctx context.Context, request InitChec
 	return response.Data, nil
 }
 
+func (api *Payment) RetrieveCheckoutCardVerify(ctx context.Context, token string) (*RetrieveCheckoutCardVerifyResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment/v1/checkout-card-verify/%s", token), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[RetrieveCheckoutCardVerifyResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
 func (api *Payment) RetrieveCheckoutPayment(ctx context.Context, token string) (*PaymentResponse, error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment/v1/checkout-payments/%s", token), nil)
 	if err != nil {
