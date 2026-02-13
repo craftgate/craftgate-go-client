@@ -2221,17 +2221,32 @@ type Response[T any] struct {
 }
 
 func (r Response[ErrorResponse]) Error() string {
-    if r.Errors.ErrorGroup != nil {
-        return *r.Errors.ErrorGroup + "-" + *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription
-    }
+	if r.Errors.ProviderError != nil {
+		if r.Errors.ErrorGroup != nil {
+			return *r.Errors.ErrorGroup + "-" + *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription +
+				" (ProviderError: " + *r.Errors.ProviderError.ErrorCode + "-" + *r.Errors.ProviderError.ErrorMessage + ")"
+		}
+		return *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription +
+			" (ProviderError: " + *r.Errors.ProviderError.ErrorCode + "-" + *r.Errors.ProviderError.ErrorMessage + ")"
+	}
 
-    return *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription
+	if r.Errors.ErrorGroup != nil {
+		return *r.Errors.ErrorGroup + "-" + *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription
+	}
+
+	return *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription
 }
 
 type ErrorResponse struct {
-    ErrorGroup       *string `json:"errorGroup"`
-    ErrorDescription *string `json:"errorDescription"`
-    ErrorCode        *string `json:"errorCode"`
+	ErrorGroup       *string        `json:"errorGroup"`
+	ErrorDescription *string        `json:"errorDescription"`
+	ErrorCode        *string        `json:"errorCode"`
+	ProviderError    *ProviderError `json:"providerError"`
+}
+
+type ProviderError struct {
+	ErrorCode    *string `json:"errorCode"`
+	ErrorMessage *string `json:"errorMessage"`
 }
 
 type DataResponse[T any] struct {
