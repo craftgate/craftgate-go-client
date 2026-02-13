@@ -55,6 +55,8 @@ type RecordType string
 type BankAccountTrackingSource string
 type BnplCartItemType string
 type PaymentAuthenticationType string
+type CardVerificationAuthType string
+type CardVerifyStatus string
 type CardBrand string
 type ClientType string
 type MasterpassValidationType string
@@ -630,6 +632,18 @@ const (
 )
 
 const (
+    CardVerificationAuthType_NON_THREE_DS CardVerificationAuthType = "NON_THREE_DS"
+    CardVerificationAuthType_THREE_DS     CardVerificationAuthType = "THREE_DS"
+    CardVerificationAuthType_NONE         CardVerificationAuthType = "NONE"
+)
+
+const (
+    CardVerifyStatus_SUCCESS          CardVerifyStatus = "SUCCESS"
+    CardVerifyStatus_FAILURE          CardVerifyStatus = "FAILURE"
+    CardVerifyStatus_THREE_DS_PENDING CardVerifyStatus = "THREE_DS_PENDING"
+)
+
+const (
     CardBrand_BONUS          CardBrand = "Bonus"
     CardBrand_AXESS          CardBrand = "Axess"
     CardBrand_MAXIMUM        CardBrand = "Maximum"
@@ -751,6 +765,36 @@ type InitCheckoutPaymentRequest struct {
     FraudParams                 *FraudCheckParameters          `json:"fraudParams,omitempty"`
     AdditionalParams            map[string]interface{}         `json:"additionalParams,omitempty"`
     CardBrandInstallments       map[string][]CustomInstallment `json:"cardBrandInstallments,omitempty"`
+}
+
+type InitCheckoutCardVerifyRequest struct {
+    VerificationPrice        float64                   `json:"verificationPrice,omitempty"`
+    Currency                 Currency                  `json:"currency,omitempty"`
+    ConversationId           string                    `json:"conversationId,omitempty"`
+    CallbackUrl              string                    `json:"callbackUrl,omitempty"`
+    CardUserKey              string                    `json:"cardUserKey,omitempty"`
+    PaymentAuthenticationType CardVerificationAuthType `json:"paymentAuthenticationType,omitempty"`
+    Ttl                      int64                     `json:"ttl,omitempty"`
+}
+
+type VerifyCard struct {
+    CardHolderName string `json:"cardHolderName,omitempty"`
+    CardNumber     string `json:"cardNumber,omitempty"`
+    ExpireYear     string `json:"expireYear,omitempty"`
+    ExpireMonth    string `json:"expireMonth,omitempty"`
+    Cvc            string `json:"cvc,omitempty"`
+    CardAlias      string `json:"cardAlias,omitempty"`
+    CardUserKey    string `json:"cardUserKey,omitempty"`
+}
+
+type VerifyCardRequest struct {
+    Card                     *VerifyCard               `json:"card,omitempty"`
+    PaymentAuthenticationType CardVerificationAuthType `json:"paymentAuthenticationType,omitempty"`
+    VerificationPrice        float64                   `json:"verificationPrice,omitempty"`
+    Currency                 Currency                  `json:"currency,omitempty"`
+    ClientIp                 string                    `json:"clientIp,omitempty"`
+    ConversationId           string                    `json:"conversationId,omitempty"`
+    CallbackUrl              string                    `json:"callbackUrl,omitempty"`
 }
 
 type InitApmPaymentRequest struct {
@@ -1150,6 +1194,22 @@ type InitCheckoutPaymentResponse struct {
     Token           *string       `json:"token"`
     PageUrl         *string       `json:"pageUrl"`
     TokenExpireDate *TimeResponse `json:"tokenExpireDate"`
+}
+
+type InitCheckoutCardVerifyResponse struct {
+    Token           *string       `json:"token"`
+    PageUrl         *string       `json:"pageUrl"`
+    TokenExpireDate *TimeResponse `json:"tokenExpireDate"`
+}
+
+type VerifyCardResponse struct {
+    CardUserKey        *string           `json:"cardUserKey"`
+    CardToken          *string           `json:"cardToken"`
+    HtmlContent        *string           `json:"htmlContent"`
+    RedirectUrl        *string           `json:"redirectUrl"`
+    MerchantCallbackUrl *string          `json:"merchantCallbackUrl"`
+    RefundStatus       *RefundStatus     `json:"refundStatus"`
+    CardVerifyStatus   *CardVerifyStatus `json:"cardVerifyStatus"`
 }
 
 type InitApmPaymentResponse struct {
