@@ -1060,14 +1060,14 @@ func TestPayment_StoreCard(t *testing.T) {
 }
 
 func TestPayment_StoreCard_With_SecureFields(t *testing.T) {
-    request := adapter.StoreCardRequest{
-        SecureFieldsToken: "xxXXxx",
-    }
-    res, err := paymentClient.Payment.StoreCard(context.Background(), request)
-    _, _ = spew.Printf("%#v\n", res)
-    if err != nil {
-        t.Errorf("Error %s", err)
-    }
+	request := adapter.StoreCardRequest{
+		SecureFieldsToken: "xxXXxx",
+	}
+	res, err := paymentClient.Payment.StoreCard(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
 }
 
 func TestPayment_UpdateStoredCard(t *testing.T) {
@@ -1365,6 +1365,38 @@ func TestPayment_ApproveBnplPayment(t *testing.T) {
 
 func TestPayment_VerifyBnplPayment(t *testing.T) {
 	res, err := paymentClient.Payment.VerifyBnplPayment(context.Background(), 1)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_InitMultiPayment(t *testing.T) {
+	request := adapter.InitMultiPaymentRequest{
+		Price:          100,
+		PaidPrice:      100,
+		CallbackUrl:    "https://www.your-website.com/callback",
+		Currency:       craftgate.Currency_TRY,
+		ConversationId: "foo-bar",
+		ExternalId:     "115",
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		PaymentPhase:   craftgate.PaymentPhase_AUTH,
+		Items: []craftgate.PaymentItem{
+			{
+				Name:       "Item 1",
+				Price:      50,
+				ExternalId: "1",
+			},
+			{
+				Name:       "Item 2",
+				Price:      50,
+				ExternalId: "2",
+			},
+		},
+	}
+
+	res, err := paymentClient.Payment.InitMultiPayment(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
