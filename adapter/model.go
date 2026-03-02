@@ -55,6 +55,8 @@ type RecordType string
 type BankAccountTrackingSource string
 type BnplCartItemType string
 type PaymentAuthenticationType string
+type CardVerificationAuthType string
+type CardVerifyStatus string
 type CardBrand string
 type ClientType string
 type MasterpassValidationType string
@@ -630,6 +632,18 @@ const (
 )
 
 const (
+    CardVerificationAuthType_NON_THREE_DS CardVerificationAuthType = "NON_THREE_DS"
+    CardVerificationAuthType_THREE_DS     CardVerificationAuthType = "THREE_DS"
+    CardVerificationAuthType_NONE         CardVerificationAuthType = "NONE"
+)
+
+const (
+    CardVerifyStatus_SUCCESS          CardVerifyStatus = "SUCCESS"
+    CardVerifyStatus_FAILURE          CardVerifyStatus = "FAILURE"
+    CardVerifyStatus_THREE_DS_PENDING CardVerifyStatus = "THREE_DS_PENDING"
+)
+
+const (
     CardBrand_BONUS          CardBrand = "Bonus"
     CardBrand_AXESS          CardBrand = "Axess"
     CardBrand_MAXIMUM        CardBrand = "Maximum"
@@ -745,12 +759,43 @@ type InitCheckoutPaymentRequest struct {
     ForceThreeDS                bool                           `json:"forceThreeDS,omitempty"`
     ForceAuthForNonCreditCards  bool                           `json:"forceAuthForNonCreditCards,omitempty"`
     DepositPayment              bool                           `json:"depositPayment,omitempty"`
+    ReturnBackUrl               string                         `json:"returnBackUrl,omitempty"`
     Ttl                         int64                          `json:"ttl,omitempty"`
     CustomInstallments          []CustomInstallment            `json:"customInstallments,omitempty"`
     Items                       []PaymentItem                  `json:"items"`
     FraudParams                 *FraudCheckParameters          `json:"fraudParams,omitempty"`
     AdditionalParams            map[string]interface{}         `json:"additionalParams,omitempty"`
     CardBrandInstallments       map[string][]CustomInstallment `json:"cardBrandInstallments,omitempty"`
+}
+
+type InitCheckoutCardVerifyRequest struct {
+    VerificationPrice        float64                   `json:"verificationPrice,omitempty"`
+    Currency                 Currency                  `json:"currency,omitempty"`
+    ConversationId           string                    `json:"conversationId,omitempty"`
+    CallbackUrl              string                    `json:"callbackUrl,omitempty"`
+    CardUserKey              string                    `json:"cardUserKey,omitempty"`
+    PaymentAuthenticationType CardVerificationAuthType `json:"paymentAuthenticationType,omitempty"`
+    Ttl                      int64                     `json:"ttl,omitempty"`
+}
+
+type VerifyCard struct {
+    CardHolderName string `json:"cardHolderName,omitempty"`
+    CardNumber     string `json:"cardNumber,omitempty"`
+    ExpireYear     string `json:"expireYear,omitempty"`
+    ExpireMonth    string `json:"expireMonth,omitempty"`
+    Cvc            string `json:"cvc,omitempty"`
+    CardAlias      string `json:"cardAlias,omitempty"`
+    CardUserKey    string `json:"cardUserKey,omitempty"`
+}
+
+type VerifyCardRequest struct {
+    Card                     *VerifyCard               `json:"card,omitempty"`
+    PaymentAuthenticationType CardVerificationAuthType `json:"paymentAuthenticationType,omitempty"`
+    VerificationPrice        float64                   `json:"verificationPrice,omitempty"`
+    Currency                 Currency                  `json:"currency,omitempty"`
+    ClientIp                 string                    `json:"clientIp,omitempty"`
+    ConversationId           string                    `json:"conversationId,omitempty"`
+    CallbackUrl              string                    `json:"callbackUrl,omitempty"`
 }
 
 type InitApmPaymentRequest struct {
@@ -955,12 +1000,14 @@ type RefundWaitingPaymentRequest struct {
 }
 
 type StoreCardRequest struct {
-    CardHolderName string `json:"cardHolderName,omitempty"`
-    CardNumber     string `json:"cardNumber,omitempty"`
-    ExpireYear     string `json:"expireYear,omitempty"`
-    ExpireMonth    string `json:"expireMonth,omitempty"`
-    CardAlias      string `json:"cardAlias,omitempty"`
-    CardUserKey    string `json:"cardUserKey,omitempty"`
+    CardHolderName    string         `json:"cardHolderName,omitempty"`
+    CardNumber        string         `json:"cardNumber,omitempty"`
+    ExpireYear        string         `json:"expireYear,omitempty"`
+    ExpireMonth       string         `json:"expireMonth,omitempty"`
+    CardAlias         string         `json:"cardAlias,omitempty"`
+    CardUserKey       string         `json:"cardUserKey,omitempty"`
+    SecureFieldsToken string         `json:"secureFieldsToken,omitempty"`
+    EncryptedCard     *EncryptedCard `json:"encryptedCard,omitempty"`
 }
 
 type ApplePayMerchantSessionCreateRequest struct {
@@ -1085,6 +1132,7 @@ type PaymentResponse struct {
     PaymentPhase                 *PaymentPhase                `json:"paymentPhase"`
     FraudAction                  *FraudAction                 `json:"fraudAction"`
     FraudScore                   *float64                     `json:"fraudScore"`
+    FraudRuleId                  *int64                       `json:"fraudRuleId"`
     PaymentChannel               *string                      `json:"paymentChannel"`
     IsThreeDS                    *bool                        `json:"isThreeDS"`
     MerchantCommissionRate       *float64                     `json:"merchantCommissionRate"`
@@ -1149,6 +1197,22 @@ type InitCheckoutPaymentResponse struct {
     TokenExpireDate *TimeResponse `json:"tokenExpireDate"`
 }
 
+type InitCheckoutCardVerifyResponse struct {
+    Token           *string       `json:"token"`
+    PageUrl         *string       `json:"pageUrl"`
+    TokenExpireDate *TimeResponse `json:"tokenExpireDate"`
+}
+
+type VerifyCardResponse struct {
+    CardUserKey        *string           `json:"cardUserKey"`
+    CardToken          *string           `json:"cardToken"`
+    HtmlContent        *string           `json:"htmlContent"`
+    RedirectUrl        *string           `json:"redirectUrl"`
+    MerchantCallbackUrl *string          `json:"merchantCallbackUrl"`
+    RefundStatus       *RefundStatus     `json:"refundStatus"`
+    CardVerifyStatus   *CardVerifyStatus `json:"cardVerifyStatus"`
+}
+
 type InitApmPaymentResponse struct {
     PaymentId           *int64               `json:"paymentId"`
     RedirectUrl         *string              `json:"redirectUrl"`
@@ -1195,6 +1259,7 @@ type DepositPaymentResponse struct {
     WalletTransaction        *WalletTransaction `json:"walletTransaction"`
     FraudId                  *int64             `json:"fraudId"`
     FraudAction              *FraudAction       `json:"fraudAction"`
+    FraudRuleId              *int64             `json:"fraudRuleId"`
 }
 
 type ApmDepositPaymentResponse struct {
@@ -1440,6 +1505,8 @@ type StoredCardResponse struct {
     CardBrand        *string           `json:"cardBrand"`
     CardBankName     *string           `json:"cardBankName"`
     CardBankId       *int64            `json:"cardBankId"`
+    ExpireYear       *string           `json:"expireYear"`
+    ExpireMonth      *string           `json:"expireMonth"`
     IsCommercial     *bool             `json:"isCommercial"`
     CreatedAt        *TimeResponse     `json:"createdAt"`
 }
@@ -1637,20 +1704,25 @@ type UpdateProductRequest struct {
     Price               float64    `json:"price"`
     Currency            Currency   `json:"currency"`
     Description         string     `json:"description,omitempty"`
+	MultiPayment        bool       `json:"multiPayment,omitempty"`
     ExpiresAt           *time.Time `json:"expiresAt,omitempty"`
     EnabledInstallments []int      `json:"enabledInstallments"`
 }
 
 type SearchProductsRequest struct {
-    Name         string    `schema:"name,omitempty"`
-    MinPrice     float64   `schema:"minPrice,omitempty"`
-    MaxPrice     float64   `schema:"maxPrice,omitempty"`
-    Currency     Currency  `schema:"currency,omitempty"`
-    Channel      string    `schema:"channel,omitempty"`
-    MinExpiresAt time.Time `schema:"minExpiresAt,omitempty"`
-    MaxExpiresAt time.Time `schema:"maxExpiresAt,omitempty"`
-    Page         int       `schema:"page,omitempty"`
-    Size         int       `schema:"size,omitempty"`
+	Id             int64     `schema:"id,omitempty"`
+	Name           string    `schema:"name,omitempty"`
+	OrderId        string    `schema:"orderId,omitempty"`
+	ConversationId string    `schema:"conversationId,omitempty"`
+	ExternalId     string    `schema:"externalId,omitempty"`
+	MinPrice       float64   `schema:"minPrice,omitempty"`
+	MaxPrice       float64   `schema:"maxPrice,omitempty"`
+	Currency       Currency  `schema:"currency,omitempty"`
+	Channel        string    `schema:"channel,omitempty"`
+	MinExpiresAt   time.Time `schema:"minExpiresAt,omitempty"`
+	MaxExpiresAt   time.Time `schema:"maxExpiresAt,omitempty"`
+	Page           int       `schema:"page,omitempty"`
+	Size           int       `schema:"size,omitempty"`
 }
 
 type ProductResponse struct {
@@ -1668,8 +1740,8 @@ type ProductResponse struct {
     Token               *string       `json:"token"`
     EnabledInstallments []int         `json:"enabledInstallments"`
     Url                 *string       `json:"url"`
-    QrCodeUrl           *string       `json:"qrCodeUrl"`
     Channel             *string       `json:"channel"`
+	MultiPayment        *bool         `json:"multiPayment"`
     ExpiresAt           *TimeResponse `json:"expiresAt"`
 }
 
@@ -2021,6 +2093,16 @@ type SearchFraudChecksRequest struct {
     PaymentStatus  PaymentStatus    `schema:"paymentStatus,omitempty"`
 }
 
+type SearchFraudRuleRequest struct {
+    Name           string           `json:"name,omitempty"`
+    MinCreatedDate time.Time        `schema:"minCreatedDate,omitempty"`
+    MaxCreatedDate time.Time        `schema:"maxCreatedDate,omitempty"`
+    Action         FraudAction      `schema:"action,omitempty"`
+    Operation      FraudOperation   `schema:"operation,omitempty"`
+    Size           int              `schema:"size,omitempty"`
+    Page           int              `schema:"page,omitempty"`
+}
+
 type FraudCheckResponse struct {
     Id             *int64            `json:"id"`
     Status         *Status           `json:"status"`
@@ -2033,6 +2115,15 @@ type FraudCheckResponse struct {
     PaymentId      *int64            `json:"paymentId"`
     PaymentStatus  *PaymentStatus    `json:"paymentStatus"`
 }
+
+type FraudRuleResponse struct {
+    Id             *int64            `json:"id"`
+    Status         *Status           `json:"status"`
+    Action         *FraudAction      `json:"action"`
+    Conditions     *string           `json:"conditions"`
+    Operations     *[]FraudOperation `json:"operations"`
+}
+
 
 type FraudPaymentData struct {
     PaymentDate    *time.Time `json:"paymentDate"`
@@ -2189,6 +2280,11 @@ type TokenizedCard struct {
     Data              map[string]interface{} `json:"data,omitempty"`
 }
 
+type EncryptedCard struct {
+    CardData string `json:"cardData,omitempty"`
+    Type     string `json:"type,omitempty"`
+}
+
 type Card struct {
     CardHolderName               string         `json:"cardHolderName,omitempty"`
     CardNumber                   string         `json:"cardNumber,omitempty"`
@@ -2205,6 +2301,7 @@ type Card struct {
     Loyalty                      *Loyalty       `json:"loyalty,omitempty"`
     StoreCardAfterSuccessPayment bool           `json:"storeCardAfterSuccessPayment,omitempty"`
     TokenizedCard                *TokenizedCard `json:"tokenizedCard,omitempty"`
+    EncryptedCard                *EncryptedCard `json:"encryptedCard,omitempty"`
 }
 
 type FraudCheckParameters struct {

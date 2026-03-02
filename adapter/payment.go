@@ -129,6 +129,34 @@ func (api *Payment) InitCheckoutPayment(ctx context.Context, request InitCheckou
 	return response.Data, nil
 }
 
+func (api *Payment) InitCheckoutCardVerify(ctx context.Context, request InitCheckoutCardVerifyRequest) (*InitCheckoutCardVerifyResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/checkout-card-verify/init", request)
+	if err != nil {
+		return nil, err
+	}
+	response := &Response[InitCheckoutCardVerifyResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
+}
+
+func (api *Payment) RetrieveCheckoutCardVerify(ctx context.Context, token string) (*RetrieveCheckoutCardVerifyResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment/v1/checkout-card-verify/%s", token), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[RetrieveCheckoutCardVerifyResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
 func (api *Payment) RetrieveCheckoutPayment(ctx context.Context, token string) (*PaymentResponse, error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment/v1/checkout-payments/%s", token), nil)
 	if err != nil {
@@ -510,6 +538,21 @@ func (api *Payment) DeleteStoredCard(ctx context.Context, request DeleteStoredCa
 	}
 
 	return nil
+}
+
+func (api *Payment) VerifyCard(ctx context.Context, request VerifyCardRequest) (*VerifyCardResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/cards/verify", request)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[VerifyCardResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
 }
 
 func (api *Payment) SearchStoredCards(ctx context.Context, request SearchStoredCardsRequest) (*DataResponse[StoredCardResponse], error) {
