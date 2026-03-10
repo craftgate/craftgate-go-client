@@ -122,6 +122,7 @@ const (
     ApmType_PAYCELL_DCB            ApmType = "PAYCELL_DCB"
     ApmType_IWALLET                ApmType = "IWALLET"
     ApmType_PAPEL                  ApmType = "PAPEL"
+    ApmType_ALBARAKA               ApmType = "ALBARAKA"
     ApmType_FUND_TRANSFER          ApmType = "FUND_TRANSFER"
     ApmType_CASH_ON_DELIVERY       ApmType = "CASH_ON_DELIVERY"
 )
@@ -174,6 +175,7 @@ const (
     PaymentProvider_PAYCELL_DCB                 PaymentProvider = "PAYCELL_DCB"
     PaymentProvider_IWALLET                     PaymentProvider = "IWALLET"
     PaymentProvider_BKM_EXPRESS                 PaymentProvider = "BKM_EXPRESS"
+    PaymentProvider_ALBARAKA                    PaymentProvider = "ALBARAKA"
     PaymentProvider_OFFLINE                     PaymentProvider = "OFFLINE"
 )
 
