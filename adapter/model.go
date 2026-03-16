@@ -1691,6 +1691,7 @@ type CreateProductRequest struct {
     MultiPayment        bool       `json:"multiPayment,omitempty"`
     ExpiresAt           *time.Time `json:"expiresAt,omitempty"`
     EnabledInstallments []int      `json:"enabledInstallments"`
+    BasketIdentifier    string     `json:"basketIdentifier,omitempty"`
 }
 
 type UpdateProductRequest struct {
@@ -1707,6 +1708,7 @@ type UpdateProductRequest struct {
 	MultiPayment        bool       `json:"multiPayment,omitempty"`
     ExpiresAt           *time.Time `json:"expiresAt,omitempty"`
     EnabledInstallments []int      `json:"enabledInstallments"`
+    BasketIdentifier    string     `json:"basketIdentifier,omitempty"`
 }
 
 type SearchProductsRequest struct {
@@ -1743,6 +1745,7 @@ type ProductResponse struct {
     Channel             *string       `json:"channel"`
 	MultiPayment        *bool         `json:"multiPayment"`
     ExpiresAt           *TimeResponse `json:"expiresAt"`
+    BasketIdentifier    *string       `json:"basketIdentifier,omitempty"`
 }
 
 type SearchPaymentsRequest struct {
