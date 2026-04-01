@@ -644,7 +644,7 @@ func (api *Payment) InitBnplPayment(ctx context.Context, request InitBnplPayment
 	return response.Data, nil
 }
 
-func (api *Payment) InitBnplLimitInquiry(ctx context.Context, request InitBnplLimitInquiry) (*BnplLimitInquiryResponse, error) {
+func (api *Payment) BnplLimitInquiryInit(ctx context.Context, request BnplLimitInquiryRequest) (*BnplLimitInquiryResponse, error) {
     newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/bnpl-payments/limit-inquiry/init", request)
     if err != nil {
         return nil, err
@@ -658,8 +658,8 @@ func (api *Payment) InitBnplLimitInquiry(ctx context.Context, request InitBnplLi
     return response.Data, nil
 }
 
-func (api *Payment) CompleteBnplLimitInquiry(ctx context.Context, request InitBnplLimitInquiry) (*BnplLimitInquiryResponse, error) {
-    newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/bnpl-payments/limit-inquiry/complete", request)
+func (api *Payment) BnplLimitInquiry(ctx context.Context, request BnplLimitInquiryRequest) (*BnplLimitInquiryResponse, error) {
+    newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/bnpl-payments/limit-inquiry", request)
     if err != nil {
         return nil, err
     }

@@ -1111,7 +1111,7 @@ type BnplPaymentOfferRequest struct {
     Items            []BnplPaymentCartItem `json:"items"`
 }
 
-type InitBnplLimitInquiry struct {
+type BnplLimitInquiryRequest struct {
     ApmType          ApmType               `json:"apmType"`
     MerchantApmId    int64                 `json:"merchantApmId,omitempty"`
     AdditionalParams map[string]string     `json:"additionalParams"`
