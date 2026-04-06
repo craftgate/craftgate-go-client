@@ -1127,6 +1127,12 @@ type BnplPaymentOfferRequest struct {
     Items            []BnplPaymentCartItem `json:"items"`
 }
 
+type BnplLimitInquiryRequest struct {
+    ApmType          ApmType               `json:"apmType"`
+    MerchantApmId    int64                 `json:"merchantApmId,omitempty"`
+    AdditionalParams map[string]string     `json:"additionalParams"`
+}
+
 // responses
 type PaymentResponse struct {
     Id                           *int64                       `json:"id"`
@@ -1950,6 +1956,14 @@ type BnplPaymentOfferResponse struct {
     OfferId        string           `json:"offerId"`
     Price          *float64         `json:"price"`
     BnplBankOffers *[]BnplBankOffer `json:"nnplBankOffers"`
+}
+
+type BnplLimitInquiryResponse struct {
+    PaymentStatus    PaymentStatus       `json:"paymentStatus"`
+    AdditionalAction ApmAdditionalAction `json:"additionalAction"`
+    ErrorCode        string              `json:"errorCode"`
+    ErrorMessage     string              `json:"errorMessage"`
+    AdditionalData   map[string]any      `json:"additionalData"`
 }
 
 type BnplBankOffer struct {
