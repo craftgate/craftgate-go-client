@@ -777,6 +777,7 @@ type InitCheckoutPaymentRequest struct {
     Ttl                         int64                          `json:"ttl,omitempty"`
     CustomInstallments          []CustomInstallment            `json:"customInstallments,omitempty"`
     Items                       []PaymentItem                  `json:"items"`
+    UseTopRedirection           bool                           `json:"useTopRedirection,omitempty"`
     RoutingOptions              *RoutingOptions                `json:"routingOptions,omitempty"`
     FraudParams                 *FraudCheckParameters          `json:"fraudParams,omitempty"`
     AdditionalParams            map[string]interface{}         `json:"additionalParams,omitempty"`
