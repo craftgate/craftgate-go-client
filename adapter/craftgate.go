@@ -332,6 +332,11 @@ func (c *Client) DoForByteResponse(ctx context.Context, req *http.Request) ([]by
 }
 
 func (r *ErrorResponse) Error() string {
+	if r.ProviderError != nil {
+		return fmt.Sprintf("%v %v %v (ProviderError: %v %v)",
+			r.ErrorGroup, r.ErrorCode, r.ErrorDescription,
+			r.ProviderError.ErrorCode, r.ProviderError.ErrorMessage)
+	}
 	return fmt.Sprintf("%v %v %v", r.ErrorGroup, r.ErrorCode, r.ErrorDescription)
 }
 

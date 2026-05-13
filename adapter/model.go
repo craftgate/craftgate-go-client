@@ -60,6 +60,7 @@ type CardVerifyStatus string
 type CardBrand string
 type ClientType string
 type MasterpassValidationType string
+type OrderingRule string
 
 const (
     ApiKeyHeaderName        = "x-api-key"
@@ -671,6 +672,17 @@ const (
     MasterpassValidationType_THREE_DS MasterpassValidationType = "THREE_DS"
 )
 
+const (
+    OrderingRule_ON_US               OrderingRule = "ON_US"
+    OrderingRule_LOW_COMMISSION_RATE OrderingRule = "LOW_COMMISSION_RATE"
+    OrderingRule_IN_ORDER            OrderingRule = "IN_ORDER"
+)
+
+type RoutingOptions struct {
+    OrderingRule *OrderingRule `json:"orderingRule,omitempty"`
+    PosAliases   []string      `json:"posAliases,omitempty"`
+}
+
 // requests
 type CreatePaymentRequest struct {
     Price            float64                `json:"price,omitempty"`
@@ -688,6 +700,7 @@ type CreatePaymentRequest struct {
     BuyerMemberId    int64                  `json:"buyerMemberId,omitempty"`
     BankOrderId      string                 `json:"bankOrderId,omitempty"`
     Card             *Card                  `json:"card,omitempty"`
+    RoutingOptions   *RoutingOptions        `json:"routingOptions,omitempty"`
     FraudParams      *FraudCheckParameters  `json:"fraudParams,omitempty"`
     Items            []PaymentItem          `json:"items"`
     AdditionalParams map[string]interface{} `json:"additionalParams,omitempty"`
@@ -725,6 +738,7 @@ type Init3DSPaymentRequest struct {
     BuyerMemberId    int64                  `json:"buyerMemberId,omitempty"`
     BankOrderId      string                 `json:"bankOrderId,omitempty"`
     Card             *Card                  `json:"card,omitempty"`
+    RoutingOptions   *RoutingOptions        `json:"routingOptions,omitempty"`
     CallbackUrl      string                 `json:"callbackUrl,omitempty"`
     Items            []PaymentItem          `json:"items"`
     AdditionalParams map[string]interface{} `json:"additionalParams"`
@@ -763,6 +777,8 @@ type InitCheckoutPaymentRequest struct {
     Ttl                         int64                          `json:"ttl,omitempty"`
     CustomInstallments          []CustomInstallment            `json:"customInstallments,omitempty"`
     Items                       []PaymentItem                  `json:"items"`
+    UseTopRedirection           bool                           `json:"useTopRedirection,omitempty"`
+    RoutingOptions              *RoutingOptions                `json:"routingOptions,omitempty"`
     FraudParams                 *FraudCheckParameters          `json:"fraudParams,omitempty"`
     AdditionalParams            map[string]interface{}         `json:"additionalParams,omitempty"`
     CardBrandInstallments       map[string][]CustomInstallment `json:"cardBrandInstallments,omitempty"`
@@ -854,14 +870,15 @@ type PostAuthPaymentRequest struct {
 }
 
 type DepositPaymentRequest struct {
-    BuyerMemberId  int64    `json:"buyerMemberId,omitempty"`
-    Price          float64  `json:"price,omitempty"`
-    Currency       Currency `json:"currency,omitempty"`
-    ConversationId string   `json:"conversationId,omitempty"`
-    CallbackUrl    string   `json:"callbackUrl,omitempty"`
-    PosAlias       string   `json:"posAlias,omitempty"`
-    ClientIp       string   `json:"clientIp,omitempty"`
-    Card           Card     `json:"card"`
+    BuyerMemberId  int64            `json:"buyerMemberId,omitempty"`
+    Price          float64          `json:"price,omitempty"`
+    Currency       Currency         `json:"currency,omitempty"`
+    ConversationId string           `json:"conversationId,omitempty"`
+    CallbackUrl    string           `json:"callbackUrl,omitempty"`
+    PosAlias       string           `json:"posAlias,omitempty"`
+    ClientIp       string           `json:"clientIp,omitempty"`
+    Card           Card             `json:"card"`
+    RoutingOptions *RoutingOptions  `json:"routingOptions,omitempty"`
 }
 
 type CreateFundTransferDepositPaymentRequest struct {
@@ -1109,6 +1126,12 @@ type BnplPaymentOfferRequest struct {
     ApmOrderId       string                `json:"apmOrderId,omitempty"`
     AdditionalParams map[string]string     `json:"additionalParams"`
     Items            []BnplPaymentCartItem `json:"items"`
+}
+
+type BnplLimitInquiryRequest struct {
+    ApmType          ApmType               `json:"apmType"`
+    MerchantApmId    int64                 `json:"merchantApmId,omitempty"`
+    AdditionalParams map[string]string     `json:"additionalParams"`
 }
 
 // responses
@@ -1939,6 +1962,14 @@ type BnplPaymentOfferResponse struct {
     BnplBankOffers *[]BnplBankOffer `json:"nnplBankOffers"`
 }
 
+type BnplLimitInquiryResponse struct {
+    PaymentStatus    PaymentStatus       `json:"paymentStatus"`
+    AdditionalAction ApmAdditionalAction `json:"additionalAction"`
+    ErrorCode        string              `json:"errorCode"`
+    ErrorMessage     string              `json:"errorMessage"`
+    AdditionalData   map[string]any      `json:"additionalData"`
+}
+
 type BnplBankOffer struct {
     BankCode                      string               `json:"bankCode"`
     BankName                      string               `json:"bankName"`
@@ -2225,17 +2256,32 @@ type Response[T any] struct {
 }
 
 func (r Response[ErrorResponse]) Error() string {
-    if r.Errors.ErrorGroup != nil {
-        return *r.Errors.ErrorGroup + "-" + *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription
-    }
+	if r.Errors.ProviderError != nil {
+		if r.Errors.ErrorGroup != nil {
+			return *r.Errors.ErrorGroup + "-" + *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription +
+				" (ProviderError: " + *r.Errors.ProviderError.ErrorCode + "-" + *r.Errors.ProviderError.ErrorMessage + ")"
+		}
+		return *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription +
+			" (ProviderError: " + *r.Errors.ProviderError.ErrorCode + "-" + *r.Errors.ProviderError.ErrorMessage + ")"
+	}
 
-    return *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription
+	if r.Errors.ErrorGroup != nil {
+		return *r.Errors.ErrorGroup + "-" + *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription
+	}
+
+	return *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription
 }
 
 type ErrorResponse struct {
-    ErrorGroup       *string `json:"errorGroup"`
-    ErrorDescription *string `json:"errorDescription"`
-    ErrorCode        *string `json:"errorCode"`
+	ErrorGroup       *string        `json:"errorGroup"`
+	ErrorDescription *string        `json:"errorDescription"`
+	ErrorCode        *string        `json:"errorCode"`
+	ProviderError    *ProviderError `json:"providerError"`
+}
+
+type ProviderError struct {
+	ErrorCode    *string `json:"errorCode"`
+	ErrorMessage *string `json:"errorMessage"`
 }
 
 type DataResponse[T any] struct {
