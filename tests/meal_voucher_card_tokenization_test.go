@@ -16,7 +16,7 @@ func TestMealVoucherCardTokenization_Init(t *testing.T) {
 	request := adapter.MealVoucherCardTokenizationInitRequest{
 		ApmType: craftgate.ApmType_SETCARD,
 		MealVoucherCardTokenizationData: adapter.MealVoucherCardTokenizationData{
-			CallbackUrl: "https://webhook.site/e806070a-da76-4d02-a67b-54ba9e8332d3",
+			CallbackUrl: "https://www.yourdomain.com/callback",
 		},
 	}
 
