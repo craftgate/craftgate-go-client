@@ -24,8 +24,12 @@ func (api *Installment) SearchInstallments(ctx context.Context, request SearchIn
 	return response.Data, nil
 }
 
-func (api *Installment) RetrieveBinNumber(ctx context.Context, binNumber string) (*RetrieveBinNumberResponse, error) {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/installment/v1/bins/%s", binNumber), nil)
+func (api *Installment) RetrieveBinNumber(ctx context.Context, binNumber string, includeGlobalBins ...bool) (*RetrieveBinNumberResponse, error) {
+	path := fmt.Sprintf("/installment/v1/bins/%s", binNumber)
+	if len(includeGlobalBins) > 0 && includeGlobalBins[0] {
+		path += "?includeGlobalBins=true"
+	}
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, path, nil)
 
 	if err != nil {
 		return nil, err
