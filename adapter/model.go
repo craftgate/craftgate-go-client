@@ -2571,6 +2571,40 @@ type InitJuzdanPaymentResponse struct {
     JuzdanQrUrl string `json:"juzdanQrUrl"`
 }
 
+type MealVoucherCardTokenizationInitRequest struct {
+	ApmType                         ApmType                         `json:"apmType,omitempty"`
+	MealVoucherCardTokenizationData MealVoucherCardTokenizationData `json:"mealVoucherCardTokenizationData,omitempty"`
+}
+
+type MealVoucherCardTokenizationRegenerateRequest struct {
+	MealVoucherCardTokenizationData MealVoucherCardTokenizationData `json:"mealVoucherCardTokenizationData,omitempty"`
+}
+
+type MealVoucherCardTokenizationCompleteRequest struct {
+	ValidationCode string `json:"validationCode,omitempty"`
+}
+
+type MealVoucherCardTokenizationData struct {
+	CardNumber          string `json:"cardNumber,omitempty"`
+	UserReferenceNumber string `json:"userReferenceNumber,omitempty"`
+	GsmNumber           string `json:"gsmNumber,omitempty"`
+	CallbackUrl         string `json:"callbackUrl,omitempty"`
+}
+
+type MealVoucherCardTokenizationInitResponse struct {
+	SessionId        *string              `json:"sessionId"`
+	AdditionalAction *ApmAdditionalAction `json:"additionalAction"`
+	HtmlContent      *string              `json:"htmlContent"`
+	RedirectUrl      *string              `json:"redirectUrl"`
+}
+
+type MealVoucherCardTokenizationCompleteResponse struct {
+	SessionId        *string  `json:"sessionId"`
+	MaskedCardNumber *string  `json:"maskedCardNumber"`
+	Fingerprint      *string  `json:"fingerprint"`
+	Balance          *float64 `json:"balance"`
+}
+
 type PaymentError ErrorResponse
 
 type Void struct {
