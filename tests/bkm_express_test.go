@@ -82,3 +82,14 @@ func TestBkm_Express_RetrievePayment_By_Token(t *testing.T) {
 		t.Errorf("Error %s", err)
 	}
 }
+
+func TestBkm_Express_GenerateToken(t *testing.T) {
+    request := adapter.BkmExpressGenerateTokenRequest{
+       GsmNumber: "905555555555",
+       UserId: "1234567890",
+    }
+    res, err := bkmExpressClient.BkmExpress.GenerateToken(context.Background(), request)
+    _, _ = spew.Printf("%#v\n", res)
+
+    require.Nil(t, err, "Error: %v", err)
+}

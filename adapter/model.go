@@ -1598,6 +1598,12 @@ type InitBkmExpressResponse struct {
     Token *string `json:"token"`
 }
 
+type BkmExpressGenerateTokenResponse struct {
+    Token           *string `json:"token"`
+    ErrorCode       *string `json:"errorCode"`
+    ErrorMessage    *string `json:"errorMessage"`
+}
+
 type InstallmentPrice struct {
     InstallmentPrice       *float64 `json:"installmentPrice"`
     BankCommissionRate     *float64 `json:"bankCommissionRate"`
@@ -2429,6 +2435,11 @@ type InitBkmExpressRequest struct {
     BankOrderId         string        `json:"bankOrderId,omitempty"`
     Items               []PaymentItem `json:"items"`
     EnabledInstallments []int         `json:"enabledInstallments,omitempty"`
+}
+
+type BkmExpressGenerateTokenRequest struct {
+    GsmNumber        string       `json:"gsmNumber"`
+    UserId           string       `json:"userId"`
 }
 
 type CreateMerchantRequest struct {
