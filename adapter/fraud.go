@@ -24,6 +24,21 @@ func (api *Fraud) SearchFraudChecks(ctx context.Context, request SearchFraudChec
 	return response.Data, nil
 }
 
+func (api *Fraud) SearchFraudRules(ctx context.Context, request SearchFraudRuleRequest) (*DataResponse[FraudRuleResponse], error) {
+    newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/fraud/v1/rules", request)
+    if err != nil {
+        return nil, err
+    }
+
+    response := &Response[DataResponse[FraudRuleResponse]]{}
+    err = api.Client.Do(ctx, newRequest, response)
+    if err != nil {
+        return nil, err
+    }
+
+    return response.Data, nil
+}
+
 func (api *Fraud) RetrieveAllFraudValueList(ctx context.Context) (*DataResponse[FraudValuesResponse], error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/fraud/v1/value-lists/all", nil)
 	if err != nil {
@@ -76,6 +91,21 @@ func (api *Fraud) CreateFraudValueList(ctx context.Context, listName string, fra
 
 func (api *Fraud) DeleteFraudValueList(ctx context.Context, listName string) error {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodDelete, "/fraud/v1/value-lists/"+listName, nil)
+	if err != nil {
+		return err
+	}
+
+	response := &Void{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (api *Fraud) AddCardFingerprintToFraudValueList(ctx context.Context, request AddCardFingerprintFraudValueListRequest, listName string) error {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/fraud/v1/value-lists/"+listName+"/card-fingerprints", request)
 	if err != nil {
 		return err
 	}

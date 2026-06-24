@@ -6,6 +6,7 @@ import (
 	craftgate "github.com/craftgate/craftgate-go-client/adapter"
 	"github.com/davecgh/go-spew/spew"
 	"testing"
+	"time"
 )
 
 var payByLinkClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
@@ -16,6 +17,25 @@ func Test_CreateProduct(t *testing.T) {
 		Channel:             "API",
 		Price:               10,
 		Currency:            craftgate.Currency_TRY,
+		EnabledInstallments: []int{1, 2, 3, 6},
+	}
+
+	res, err := payByLinkClient.PayByLink.CreateProduct(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func Test_CreateProduct_WithExpiresAt(t *testing.T) {
+	expiresAt := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), time.Now().Hour(), time.Now().Minute(), time.Now().Second(), time.Now().Nanosecond(), time.UTC).Add(72 * time.Hour)
+	request := adapter.CreateProductRequest{
+		Name:                "A new Product 2",
+		Channel:             "API",
+		Price:               10,
+		Currency:            craftgate.Currency_TRY,
+		ExpiresAt:           &expiresAt,
 		EnabledInstallments: []int{1, 2, 3, 6},
 	}
 
