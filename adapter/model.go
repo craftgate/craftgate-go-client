@@ -681,8 +681,9 @@ const (
 )
 
 type RoutingOptions struct {
-    OrderingRule *OrderingRule `json:"orderingRule,omitempty"`
-    PosAliases   []string      `json:"posAliases,omitempty"`
+    OrderingRule                  *OrderingRule `json:"orderingRule,omitempty"`
+    PosAliases                    []string      `json:"posAliases,omitempty"`
+    IgnoreAdvancedPosRoutingRules bool         `json:"ignoreAdvancedPosRoutingRules,omitempty"`
 }
 
 // requests
