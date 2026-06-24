@@ -771,12 +771,13 @@ type InitCheckoutPaymentRequest struct {
     BuyerMemberId               int64                          `json:"buyerMemberId,omitempty"`
     EnabledInstallments         []int                          `json:"enabledInstallments,omitempty"`
     AlwaysStoreCardAfterPayment bool                           `json:"alwaysStoreCardAfterPayment,omitempty"`
-    AllowOnlyStoredCards        bool                           `json:"allowOnlyStoredCards,omitempty"`
-    AllowOnlyCreditCard         bool                           `json:"allowOnlyCreditCard,omitempty"`
-    ForceThreeDS                bool                           `json:"forceThreeDS,omitempty"`
-    ForceAuthForNonCreditCards  bool                           `json:"forceAuthForNonCreditCards,omitempty"`
-    DepositPayment              bool                           `json:"depositPayment,omitempty"`
-    ReturnBackUrl               string                         `json:"returnBackUrl,omitempty"`
+    AllowDeleteStoredCard       bool                           `json:"allowDeleteStoredCard,omitempty"`
+	AllowOnlyStoredCards        bool                           `json:"allowOnlyStoredCards,omitempty"`
+	AllowOnlyCreditCard         bool                           `json:"allowOnlyCreditCard,omitempty"`
+	ForceThreeDS                bool                           `json:"forceThreeDS,omitempty"`
+	ForceAuthForNonCreditCards  bool                           `json:"forceAuthForNonCreditCards,omitempty"`
+	DepositPayment              bool                           `json:"depositPayment,omitempty"`
+	ReturnBackUrl               string                         `json:"returnBackUrl,omitempty"`
     Ttl                         int64                          `json:"ttl,omitempty"`
     CustomInstallments          []CustomInstallment            `json:"customInstallments,omitempty"`
     Items                       []PaymentItem                  `json:"items"`
