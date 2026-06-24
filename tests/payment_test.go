@@ -1354,6 +1354,39 @@ func TestPayment_InitTomFinanceBnplPayment(t *testing.T) {
 	}
 }
 
+func TestPayment_BnplLimitInquiryInit(t *testing.T) {
+    request := adapter.BnplLimitInquiryRequest{
+        ApmType:  craftgate.ApmType_ZIP,
+        AdditionalParams: map[string]string{
+            "buyerPhoneNumber": "5554443322",
+            "buyerIdentityNumber": "11111111110",
+            "buyerBirthdate": "2000-01-01",
+        },
+    }
+    res, err := paymentClient.Payment.BnplLimitInquiryInit(context.Background(), request)
+    _, _ = spew.Printf("%#v\n", res)
+
+    if err != nil {
+        t.Errorf("Error %s", err)
+    }
+}
+
+func TestPayment_BnplLimitInquiry(t *testing.T) {
+    request := adapter.BnplLimitInquiryRequest{
+        ApmType:  craftgate.ApmType_ZIP,
+        AdditionalParams: map[string]string{
+            "buyerPhoneNumber": "5554443322",
+            "otpCode": "123456",
+        },
+    }
+    res, err := paymentClient.Payment.BnplLimitInquiry(context.Background(), request)
+    _, _ = spew.Printf("%#v\n", res)
+
+    if err != nil {
+        t.Errorf("Error %s", err)
+    }
+}
+
 func TestPayment_ApproveBnplPayment(t *testing.T) {
 	res, err := paymentClient.Payment.ApproveBnplPayment(context.Background(), 1)
 	_, _ = spew.Printf("%#v\n", res)
