@@ -1,11 +1,12 @@
 package tests
 
 import (
-	"context"
-	"github.com/craftgate/craftgate-go-client/adapter"
-	craftgate "github.com/craftgate/craftgate-go-client/adapter"
-	"github.com/davecgh/go-spew/spew"
-	"testing"
+    "context"
+    "testing"
+
+    "github.com/craftgate/craftgate-go-client/adapter"
+    craftgate "github.com/craftgate/craftgate-go-client/adapter"
+    "github.com/davecgh/go-spew/spew"
 )
 
 var fraudClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
@@ -21,6 +22,19 @@ func Test_SearchFraudChecks(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error %s", err)
 	}
+}
+
+func Test_SearchFraudRules(t *testing.T) {
+    request := adapter.SearchFraudRuleRequest{
+        Page: 0, Size: 10,
+    }
+
+    res, err := fraudClient.Fraud.SearchFraudRules(context.Background(), request)
+    _, _ = spew.Printf("%#v\n", res)
+
+    if err != nil {
+        t.Errorf("Error %s", err)
+    }
 }
 
 func Test_RetrieveAllFraudValueList(t *testing.T) {
@@ -88,13 +102,13 @@ func Test_AddTemporaryValueToFraudValueList(t *testing.T) {
 }
 
 func Test_AddCardFingerprintToFraudValueList(t *testing.T) {
-	request := adapter.FraudValueListRequest{
-		ListName:  "cardList",
-		Type:      craftgate.FraudValueType_CARD,
-		Label:     "John Doe's Card",
-		PaymentId: 11675,
+	request := adapter.AddCardFingerprintFraudValueListRequest{
+		Label:             "John Doe's Card",
+		Operation:         craftgate.FraudOperation_PAYMENT,
+		OperationId:       "11675", //PaymentId
+		DurationInSeconds: 3600,
 	}
-	err := fraudClient.Fraud.AddValueToFraudValueList(context.Background(), request)
+	err := fraudClient.Fraud.AddCardFingerprintToFraudValueList(context.Background(), request, "cardList")
 
 	if err != nil {
 		t.Errorf("Error %s", err)
