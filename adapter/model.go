@@ -997,8 +997,9 @@ type RefundPaymentTransactionMarkAsRefundedRequest struct {
 }
 
 type UpdatePaymentTransactionRequest struct {
-    SubMerchantMemberId    int64   `json:"subMerchantMemberId,omitempty"`
-    SubMerchantMemberPrice float64 `json:"subMerchantMemberPrice,omitempty"`
+    SubMerchantMemberId    int64      `json:"subMerchantMemberId,omitempty"`
+    SubMerchantMemberPrice float64    `json:"subMerchantMemberPrice,omitempty"`
+    BlockageResolvedDate   *time.Time `json:"blockageResolvedDate,omitempty"`
 }
 
 type UpdateStoredCardRequest struct {
