@@ -733,6 +733,21 @@ func (api *Payment) CreateApplePayMerchantSession(ctx context.Context, request A
 	return response.Data, nil
 }
 
+func (api *Payment) InitMultiPayment(ctx context.Context, request InitMultiPaymentRequest) (*InitMultiPaymentResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/multi-payments/init", request)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[InitMultiPaymentResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
 func (api *Payment) RetrieveMultiPayment(ctx context.Context, token string) (*MultiPaymentResponse, error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment/v1/multi-payments/%s", token), nil)
 	if err != nil {
