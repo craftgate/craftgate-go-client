@@ -1460,3 +1460,16 @@ func Test_RetrieveProviderCards(t *testing.T) {
 		t.Errorf("Error %s", err)
 	}
 }
+
+func Test_RetrieveCardFromIvr(t *testing.T) {
+	request := adapter.RetrieveCardFromIvrRequest{
+		CallToken:  "45f12c74-3000-465c-96dc-876850e7dd7a",
+		CardUserKey: "0309ac2d-c5a5-4b4f-a91f-5c444ba07b24",
+	}
+	res, err := paymentClient.Payment.RetrieveCardFromIvr(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}

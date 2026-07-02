@@ -958,6 +958,11 @@ type RetrieveProviderCardRequest struct {
     CardProvider       string `json:"cardProvider,omitempty"`
 }
 
+type RetrieveCardFromIvrRequest struct {
+    CardUserKey  string `json:"cardUserKey,omitempty"`
+    CallToken string `json:"callToken,omitempty"`
+}
+
 type MasterpassRetrieveLoyaltiesRequest struct {
     Msisdn                       string `json:"msisdn,omitempty"`
     BinNumber                    string `json:"binNumber,omitempty"`
@@ -1574,6 +1579,14 @@ type StoredCardResponse struct {
     ExpireMonth      *string           `json:"expireMonth"`
     IsCommercial     *bool             `json:"isCommercial"`
     CreatedAt        *TimeResponse     `json:"createdAt"`
+}
+
+type IVRCardTokenizationResponse struct {
+    BinNumber         *string `json:"binNumber"`
+    LastFourDigits    *string `json:"lastFourDigits"`
+    CardUserKey       *string `json:"cardUserKey"`
+    CardToken         *string `json:"cardToken"`
+    SecureFieldsToken *string `json:"secureFieldsToken"`
 }
 
 type PaymentTransactionsApprovalResponse struct {
