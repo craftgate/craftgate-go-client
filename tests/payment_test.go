@@ -1355,36 +1355,36 @@ func TestPayment_InitTomFinanceBnplPayment(t *testing.T) {
 }
 
 func TestPayment_BnplLimitInquiryInit(t *testing.T) {
-    request := adapter.BnplLimitInquiryRequest{
-        ApmType:  craftgate.ApmType_ZIP,
-        AdditionalParams: map[string]string{
-            "buyerPhoneNumber": "5554443322",
-            "buyerIdentityNumber": "11111111110",
-            "buyerBirthdate": "2000-01-01",
-        },
-    }
-    res, err := paymentClient.Payment.BnplLimitInquiryInit(context.Background(), request)
-    _, _ = spew.Printf("%#v\n", res)
+	request := adapter.BnplLimitInquiryRequest{
+		ApmType: craftgate.ApmType_ZIP,
+		AdditionalParams: map[string]string{
+			"buyerPhoneNumber":    "5554443322",
+			"buyerIdentityNumber": "11111111110",
+			"buyerBirthdate":      "2000-01-01",
+		},
+	}
+	res, err := paymentClient.Payment.BnplLimitInquiryInit(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
-    if err != nil {
-        t.Errorf("Error %s", err)
-    }
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
 }
 
 func TestPayment_BnplLimitInquiry(t *testing.T) {
-    request := adapter.BnplLimitInquiryRequest{
-        ApmType:  craftgate.ApmType_ZIP,
-        AdditionalParams: map[string]string{
-            "buyerPhoneNumber": "5554443322",
-            "otpCode": "123456",
-        },
-    }
-    res, err := paymentClient.Payment.BnplLimitInquiry(context.Background(), request)
-    _, _ = spew.Printf("%#v\n", res)
+	request := adapter.BnplLimitInquiryRequest{
+		ApmType: craftgate.ApmType_ZIP,
+		AdditionalParams: map[string]string{
+			"buyerPhoneNumber": "5554443322",
+			"otpCode":          "123456",
+		},
+	}
+	res, err := paymentClient.Payment.BnplLimitInquiry(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
-    if err != nil {
-        t.Errorf("Error %s", err)
-    }
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
 }
 
 func TestPayment_ApproveBnplPayment(t *testing.T) {
@@ -1414,7 +1414,6 @@ func TestPayment_InitMultiPayment(t *testing.T) {
 		ConversationId: "foo-bar",
 		ExternalId:     "115",
 		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
-		PaymentPhase:   craftgate.PaymentPhase_AUTH,
 		Items: []craftgate.PaymentItem{
 			{
 				Name:       "Item 1",
@@ -1463,7 +1462,7 @@ func Test_RetrieveProviderCards(t *testing.T) {
 
 func Test_RetrieveCardFromIvr(t *testing.T) {
 	request := adapter.RetrieveCardFromIvrRequest{
-		CallToken:  "45f12c74-3000-465c-96dc-876850e7dd7a",
+		CallToken:   "45f12c74-3000-465c-96dc-876850e7dd7a",
 		CardUserKey: "0309ac2d-c5a5-4b4f-a91f-5c444ba07b24",
 	}
 	res, err := paymentClient.Payment.RetrieveCardFromIvr(context.Background(), request)
