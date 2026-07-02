@@ -804,13 +804,12 @@ type InitMultiPaymentRequest struct {
     PaidPrice                           float64                `json:"paidPrice,omitempty"`
     Currency                            Currency               `json:"currency,omitempty"`
     PaymentGroup                        PaymentGroup           `json:"paymentGroup,omitempty"`
-    PaymentSource                       PaymentSource          `json:"paymentSource,omitempty"`
     ConversationId                      string                 `json:"conversationId,omitempty"`
     ExternalId                          string                 `json:"externalId,omitempty"`
     CallbackUrl                         string                 `json:"callbackUrl,omitempty"`
-    PaymentPhase                        PaymentPhase           `json:"paymentPhase,omitempty"`
     PaymentChannel                      string                 `json:"paymentChannel,omitempty"`
     EnabledPaymentMethods               []PaymentMethod        `json:"enabledPaymentMethods,omitempty"`
+    EnabledInstallments                 []int                  `json:"enabledInstallments,omitempty"`
     CardUserKey                         string                 `json:"cardUserKey,omitempty"`
     BuyerMemberId                       int64                  `json:"buyerMemberId,omitempty"`
     AllowOnlyCreditCard                 bool                   `json:"allowOnlyCreditCard,omitempty"`
