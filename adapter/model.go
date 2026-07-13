@@ -801,7 +801,6 @@ type InitCheckoutCardVerifyRequest struct {
 
 type InitMultiPaymentRequest struct {
     Price                               float64                `json:"price,omitempty"`
-    PaidPrice                           float64                `json:"paidPrice,omitempty"`
     Currency                            Currency               `json:"currency,omitempty"`
     PaymentGroup                        PaymentGroup           `json:"paymentGroup,omitempty"`
     ConversationId                      string                 `json:"conversationId,omitempty"`
