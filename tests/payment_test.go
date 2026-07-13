@@ -1408,7 +1408,6 @@ func TestPayment_VerifyBnplPayment(t *testing.T) {
 func TestPayment_InitMultiPayment(t *testing.T) {
 	request := adapter.InitMultiPaymentRequest{
 		Price:          100,
-		PaidPrice:      100,
 		CallbackUrl:    "https://www.your-website.com/callback",
 		Currency:       craftgate.Currency_TRY,
 		ConversationId: "foo-bar",

@@ -801,7 +801,6 @@ type InitCheckoutCardVerifyRequest struct {
 
 type InitMultiPaymentRequest struct {
     Price                               float64                `json:"price,omitempty"`
-    PaidPrice                           float64                `json:"paidPrice,omitempty"`
     Currency                            Currency               `json:"currency,omitempty"`
     PaymentGroup                        PaymentGroup           `json:"paymentGroup,omitempty"`
     ConversationId                      string                 `json:"conversationId,omitempty"`
@@ -2570,7 +2569,7 @@ type MultiPaymentResponse struct {
     Token              *string             `json:"token"`
     ConversationId     *string             `json:"conversationId"`
     ExternalId         *string             `json:"externalId"`
-    PaidPrice          *float64            `json:"paidPrice"`
+    Price              *float64            `json:"price"`
     RemainingAmount    *float64            `json:"remainingAmount"`
     TokenExpireDate    *TimeResponse       `json:"tokenExpireDate"`
     PaymentIds         []int64             `json:"paymentIds"`
