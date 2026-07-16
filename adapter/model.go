@@ -549,6 +549,7 @@ const (
     PosIntegrator_TAP               PosIntegrator = "TAP"
     PosIntegrator_RUBIK             PosIntegrator = "RUBIK"
     PosIntegrator_BIN_PAY           PosIntegrator = "BIN_PAY"
+    PosIntegrator_TURKONAY          PosIntegrator = "TURKONAY"
 )
 
 const (
