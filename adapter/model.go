@@ -1226,6 +1226,7 @@ type PaymentResponse struct {
     CardAssociation              *string                      `json:"cardAssociation"`
     CardBrand                    *string                      `json:"cardBrand"`
     RequestedPosAlias            *string                      `json:"requestedPosAlias"`
+    BlockageResolvedDate         *TimeResponse                `json:"blockageResolvedDate"`
     Pos                          *MerchantPos                 `json:"pos"`
     Loyalty                      *Loyalty                     `json:"loyalty"`
     PaymentError                 *PaymentError                `json:"paymentError"`
@@ -1827,6 +1828,7 @@ type ProductResponse struct {
     Token               *string       `json:"token"`
     EnabledInstallments []int         `json:"enabledInstallments"`
     Url                 *string       `json:"url"`
+    QrCodeUrl           *string       `json:"qrCodeUrl"`
     Channel             *string       `json:"channel"`
     MultiPayment        *bool         `json:"multiPayment"`
     ExpiresAt           *TimeResponse `json:"expiresAt"`
