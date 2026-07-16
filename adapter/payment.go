@@ -644,6 +644,34 @@ func (api *Payment) InitBnplPayment(ctx context.Context, request InitBnplPayment
 	return response.Data, nil
 }
 
+func (api *Payment) BnplLimitInquiryInit(ctx context.Context, request BnplLimitInquiryRequest) (*BnplLimitInquiryResponse, error) {
+    newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/bnpl-payments/limit-inquiry/init", request)
+    if err != nil {
+        return nil, err
+    }
+    response := &Response[BnplLimitInquiryResponse]{}
+    err = api.Client.Do(ctx, newRequest, response)
+    if err != nil {
+        return nil, err
+    }
+
+    return response.Data, nil
+}
+
+func (api *Payment) BnplLimitInquiry(ctx context.Context, request BnplLimitInquiryRequest) (*BnplLimitInquiryResponse, error) {
+    newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/bnpl-payments/limit-inquiry", request)
+    if err != nil {
+        return nil, err
+    }
+    response := &Response[BnplLimitInquiryResponse]{}
+    err = api.Client.Do(ctx, newRequest, response)
+    if err != nil {
+        return nil, err
+    }
+
+    return response.Data, nil
+}
+
 func (api *Payment) ApproveBnplPayment(ctx context.Context, paymentId int64) (*PaymentResponse, error) {
 
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, fmt.Sprintf("/payment/v1/bnpl-payments/%d/approve", paymentId), nil)
@@ -705,6 +733,21 @@ func (api *Payment) CreateApplePayMerchantSession(ctx context.Context, request A
 	return response.Data, nil
 }
 
+func (api *Payment) InitMultiPayment(ctx context.Context, request InitMultiPaymentRequest) (*InitMultiPaymentResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/multi-payments/init", request)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[InitMultiPaymentResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
 func (api *Payment) RetrieveMultiPayment(ctx context.Context, token string) (*MultiPaymentResponse, error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/payment/v1/multi-payments/%s", token), nil)
 	if err != nil {
@@ -726,6 +769,20 @@ func (api *Payment) RetrieveProviderCards(ctx context.Context, request RetrieveP
 		return nil, err
 	}
 	response := &Response[DataResponse[StoredCardResponse]]{}
+	respErr := api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, respErr
+	}
+
+	return response.Data, nil
+}
+
+func (api *Payment) RetrieveCardFromIvr(ctx context.Context, request RetrieveCardFromIvrRequest) (*IVRCardTokenizationResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/payment/v1/ivr-cards", request)
+	if err != nil {
+		return nil, err
+	}
+	response := &Response[IVRCardTokenizationResponse]{}
 	respErr := api.Client.Do(ctx, newRequest, response)
 	if err != nil {
 		return nil, respErr
