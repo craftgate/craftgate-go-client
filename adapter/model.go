@@ -93,6 +93,8 @@ const (
     ApmType_METROPOL               ApmType = "METROPOL"
     ApmType_EDENRED                ApmType = "EDENRED"
     ApmType_EDENRED_GIFT           ApmType = "EDENRED_GIFT"
+    ApmType_TOKENFLEX              ApmType = "TOKENFLEX"
+    ApmType_TOKENFLEX_GIFT         ApmType = "TOKENFLEX_GIFT"
     ApmType_PAYPAL                 ApmType = "PAYPAL"
     ApmType_KLARNA                 ApmType = "KLARNA"
     ApmType_AFTERPAY               ApmType = "AFTERPAY"
@@ -148,6 +150,7 @@ const (
     PaymentProvider_SODEXO                      PaymentProvider = "SODEXO"
     PaymentProvider_METROPOL                    PaymentProvider = "METROPOL"
     PaymentProvider_EDENRED                     PaymentProvider = "EDENRED"
+    PaymentProvider_TOKENFLEX                   PaymentProvider = "TOKENFLEX"
     PaymentProvider_ALIPAY                      PaymentProvider = "ALIPAY"
     PaymentProvider_PAYPAL                      PaymentProvider = "PAYPAL"
     PaymentProvider_KLARNA                      PaymentProvider = "KLARNA"
@@ -253,6 +256,8 @@ const (
     PaymentMethod_SODEXO_GIFT       PaymentMethod = "SODEXO_GIFT"
     PaymentMethod_EDENRED           PaymentMethod = "EDENRED"
     PaymentMethod_EDENRED_GIFT      PaymentMethod = "EDENRED_GIFT"
+    PaymentMethod_TOKENFLEX         PaymentMethod = "TOKENFLEX"
+    PaymentMethod_TOKENFLEX_GIFT    PaymentMethod = "TOKENFLEX_GIFT"
     PaymentMethod_ALIPAY            PaymentMethod = "ALIPAY"
     PaymentMethod_PAYPAL            PaymentMethod = "PAYPAL"
     PaymentMethod_KLARNA            PaymentMethod = "KLARNA"
@@ -2321,7 +2326,7 @@ func (r Response[ErrorResponse]) Error() string {
     }
 
     if r.Errors.ErrorGroup != nil {
-        return *r.Errors.ErrorGroup + "-" + *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription
+    	return *r.Errors.ErrorGroup + "-" + *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription
     }
 
     return *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription
