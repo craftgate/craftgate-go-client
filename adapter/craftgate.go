@@ -1,21 +1,22 @@
 package adapter
 
 import (
-	"bytes"
-	"context"
-	"crypto/sha256"
-	"encoding/base64"
-	"encoding/json"
-	"errors"
-	"fmt"
-	"github.com/gorilla/schema"
-	"io"
-	"net/http"
-	"net/url"
-	"reflect"
-	"strconv"
-	"strings"
-	"time"
+    "bytes"
+    "context"
+    "crypto/sha256"
+    "encoding/base64"
+    "encoding/json"
+    "errors"
+    "fmt"
+    "io"
+    "net/http"
+    "net/url"
+    "reflect"
+    "strconv"
+    "strings"
+    "time"
+
+    "github.com/gorilla/schema"
 )
 
 var schemaEncoder = schema.NewEncoder()
@@ -94,23 +95,24 @@ type Client struct {
 	secretKey  string
 	headers    map[string]string
 
-	Installment         *Installment
-	Payment             *Payment
-	PaymentReporting    *PaymentReporting
-	Wallet              *Wallet
-	Onboarding          *Onboarding
-	PayByLink           *PayByLink
-	Settlement          *Settlement
-	SettlementReporting *SettlementReporting
-	FileReporting       *FileReporting
-	Fraud               *Fraud
-	Hook                *Hook
-	Masterpass          *Masterpass
-	BankAccountTracking *BankAccountTracking
-	Merchant            *Merchant
-	MerchantApm         *MerchantApm
-	Juzdan              *Juzdan
-	BkmExpress          *BkmExpress
+	Installment                 *Installment
+	Payment                     *Payment
+	PaymentReporting            *PaymentReporting
+	Wallet                      *Wallet
+	Onboarding                  *Onboarding
+	PayByLink                   *PayByLink
+	Settlement                  *Settlement
+	SettlementReporting         *SettlementReporting
+	FileReporting               *FileReporting
+	Fraud                       *Fraud
+	Hook                        *Hook
+	Masterpass                  *Masterpass
+	BankAccountTracking         *BankAccountTracking
+	Merchant                    *Merchant
+	MerchantApm                 *MerchantApm
+	Juzdan                      *Juzdan
+	BkmExpress                  *BkmExpress
+	MealVoucherCardTokenization *MealVoucherCardTokenization
 }
 
 func New(apiKey, apiSecret, baseURL string, opts ...ClientOption) (*Client, error) {
@@ -153,6 +155,7 @@ func newClient(apiKey, secretKey string) *Client {
 	client.MerchantApm = &MerchantApm{Client: client}
 	client.Juzdan = &Juzdan{Client: client}
 	client.BkmExpress = &BkmExpress{Client: client}
+	client.MealVoucherCardTokenization = &MealVoucherCardTokenization{Client: client}
 
 	return client
 }
@@ -332,6 +335,11 @@ func (c *Client) DoForByteResponse(ctx context.Context, req *http.Request) ([]by
 }
 
 func (r *ErrorResponse) Error() string {
+	if r.ProviderError != nil {
+		return fmt.Sprintf("%v %v %v (ProviderError: %v %v)",
+			r.ErrorGroup, r.ErrorCode, r.ErrorDescription,
+			r.ProviderError.ErrorCode, r.ProviderError.ErrorMessage)
+	}
 	return fmt.Sprintf("%v %v %v", r.ErrorGroup, r.ErrorCode, r.ErrorDescription)
 }
 

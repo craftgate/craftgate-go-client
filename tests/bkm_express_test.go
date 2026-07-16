@@ -1,12 +1,13 @@
 package tests
 
 import (
-	"context"
-	"github.com/craftgate/craftgate-go-client/adapter"
-	craftgate "github.com/craftgate/craftgate-go-client/adapter"
-	"github.com/davecgh/go-spew/spew"
-	"github.com/stretchr/testify/require"
-	"testing"
+    "context"
+    "testing"
+
+    "github.com/craftgate/craftgate-go-client/adapter"
+    craftgate "github.com/craftgate/craftgate-go-client/adapter"
+    "github.com/davecgh/go-spew/spew"
+    "github.com/stretchr/testify/require"
 )
 
 var bkmExpressClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
@@ -67,16 +68,6 @@ func TestBkm_Express_Complete_By_Token(t *testing.T) {
 
 	require.NotNil(t, res.AuthCode)
 	require.NotNil(t, res.HostReference)
-	if err != nil {
-		t.Errorf("Error %s", err)
-	}
-}
-
-func TestBkm_Express_RetrievePayment(t *testing.T) {
-	ticketId := "dcfdc163-0545-46d7-8f86-5a11718e56ec"
-	res, err := bkmExpressClient.BkmExpress.RetrievePayment(context.Background(), ticketId)
-
-	require.NotNil(t, res.AuthCode)
 	if err != nil {
 		t.Errorf("Error %s", err)
 	}

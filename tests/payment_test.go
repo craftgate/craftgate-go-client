@@ -225,6 +225,36 @@ func TestPayment_InitCheckoutPayment(t *testing.T) {
 	}
 }
 
+func TestPayment_InitCheckoutCardVerifyWithNon3DSAuthType(t *testing.T) {
+	request := adapter.InitCheckoutCardVerifyRequest{
+		VerificationPrice:         10,
+		Currency:                  craftgate.Currency_TRY,
+		ConversationId:            "456d1297-908e-4bd6-a13b-4be31a6e47d5",
+		CallbackUrl:               "https://www.your-website.com/craftgate-checkout-card-verify-callback",
+		PaymentAuthenticationType: craftgate.CardVerificationAuthType_NON_THREE_DS,
+	}
+
+	res, err := paymentClient.Payment.InitCheckoutCardVerify(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	require.NotNil(t, res)
+	require.NotNil(t, res.PageUrl)
+	require.NotNil(t, res.Token)
+	require.NotNil(t, res.TokenExpireDate)
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_RetrieveCheckoutCardVerify(t *testing.T) {
+	res, err := paymentClient.Payment.RetrieveCheckoutCardVerify(context.Background(), "foo-bar")
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_RetrieveCheckoutPayment(t *testing.T) {
 	res, err := paymentClient.Payment.RetrieveCheckoutPayment(context.Background(), "foo-bar")
 	_, _ = spew.Printf("%#v\n", res)
@@ -1125,6 +1155,17 @@ func TestPayment_StoreCard(t *testing.T) {
 	}
 }
 
+func TestPayment_StoreCard_With_SecureFields(t *testing.T) {
+	request := adapter.StoreCardRequest{
+		SecureFieldsToken: "xxXXxx",
+	}
+	res, err := paymentClient.Payment.StoreCard(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_UpdateStoredCard(t *testing.T) {
 	request := adapter.UpdateStoredCardRequest{
 		CardUserKey: "6bcbac4b-6460-418d-b060-2d9896c08156",
@@ -1161,6 +1202,35 @@ func TestPayment_DeleteStoredCard(t *testing.T) {
 	}
 	err := paymentClient.Payment.DeleteStoredCard(context.Background(), request)
 
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_VerifyCardWith3DS(t *testing.T) {
+	request := adapter.VerifyCardRequest{
+		Card: &adapter.VerifyCard{
+			CardHolderName: "Haluk Demir",
+			CardNumber:     "5258640000000001",
+			ExpireYear:     "2044",
+			ExpireMonth:    "07",
+			Cvc:            "000",
+			CardAlias:      "My YKB Card",
+		},
+		PaymentAuthenticationType: craftgate.CardVerificationAuthType_THREE_DS,
+		CallbackUrl:               "https://www.your-website.com/craftgate-3DSecure-card-verify-callback",
+		ConversationId:            "456d1297-908e-4bd6-a13b-4be31a6e47d5",
+		VerificationPrice:         10,
+		Currency:                  craftgate.Currency_TRY,
+		ClientIp:                  "127.0.0.1",
+	}
+	res, err := paymentClient.Payment.VerifyCard(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	require.NotNil(t, res)
+	require.NotNil(t, res.HtmlContent)
+	require.NotNil(t, res.CardVerifyStatus)
+	require.Equal(t, craftgate.CardVerifyStatus_THREE_DS_PENDING, *res.CardVerifyStatus)
 	if err != nil {
 		t.Errorf("Error %s", err)
 	}
@@ -1380,6 +1450,39 @@ func TestPayment_InitTomFinanceBnplPayment(t *testing.T) {
 	}
 }
 
+func TestPayment_BnplLimitInquiryInit(t *testing.T) {
+	request := adapter.BnplLimitInquiryRequest{
+		ApmType: craftgate.ApmType_ZIP,
+		AdditionalParams: map[string]string{
+			"buyerPhoneNumber":    "5554443322",
+			"buyerIdentityNumber": "11111111110",
+			"buyerBirthdate":      "2000-01-01",
+		},
+	}
+	res, err := paymentClient.Payment.BnplLimitInquiryInit(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_BnplLimitInquiry(t *testing.T) {
+	request := adapter.BnplLimitInquiryRequest{
+		ApmType: craftgate.ApmType_ZIP,
+		AdditionalParams: map[string]string{
+			"buyerPhoneNumber": "5554443322",
+			"otpCode":          "123456",
+		},
+	}
+	res, err := paymentClient.Payment.BnplLimitInquiry(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_ApproveBnplPayment(t *testing.T) {
 	res, err := paymentClient.Payment.ApproveBnplPayment(context.Background(), 1)
 	_, _ = spew.Printf("%#v\n", res)
@@ -1391,6 +1494,36 @@ func TestPayment_ApproveBnplPayment(t *testing.T) {
 
 func TestPayment_VerifyBnplPayment(t *testing.T) {
 	res, err := paymentClient.Payment.VerifyBnplPayment(context.Background(), 1)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_InitMultiPayment(t *testing.T) {
+	request := adapter.InitMultiPaymentRequest{
+		Price:          100,
+		CallbackUrl:    "https://www.your-website.com/callback",
+		Currency:       craftgate.Currency_TRY,
+		ConversationId: "foo-bar",
+		ExternalId:     "115",
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		Items: []craftgate.PaymentItem{
+			{
+				Name:       "Item 1",
+				Price:      50,
+				ExternalId: "1",
+			},
+			{
+				Name:       "Item 2",
+				Price:      50,
+				ExternalId: "2",
+			},
+		},
+	}
+
+	res, err := paymentClient.Payment.InitMultiPayment(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -1415,6 +1548,19 @@ func Test_RetrieveProviderCards(t *testing.T) {
 		CardProvider:       string(craftgate.CardProvider_MEX),
 	}
 	res, err := paymentClient.Payment.RetrieveProviderCards(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func Test_RetrieveCardFromIvr(t *testing.T) {
+	request := adapter.RetrieveCardFromIvrRequest{
+		CallToken:   "45f12c74-3000-465c-96dc-876850e7dd7a",
+		CardUserKey: "0309ac2d-c5a5-4b4f-a91f-5c444ba07b24",
+	}
+	res, err := paymentClient.Payment.RetrieveCardFromIvr(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
