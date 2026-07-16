@@ -1060,14 +1060,14 @@ func TestPayment_StoreCard(t *testing.T) {
 }
 
 func TestPayment_StoreCard_With_SecureFields(t *testing.T) {
-    request := adapter.StoreCardRequest{
-        SecureFieldsToken: "xxXXxx",
-    }
-    res, err := paymentClient.Payment.StoreCard(context.Background(), request)
-    _, _ = spew.Printf("%#v\n", res)
-    if err != nil {
-        t.Errorf("Error %s", err)
-    }
+	request := adapter.StoreCardRequest{
+		SecureFieldsToken: "xxXXxx",
+	}
+	res, err := paymentClient.Payment.StoreCard(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
 }
 
 func TestPayment_UpdateStoredCard(t *testing.T) {
@@ -1355,36 +1355,36 @@ func TestPayment_InitTomFinanceBnplPayment(t *testing.T) {
 }
 
 func TestPayment_BnplLimitInquiryInit(t *testing.T) {
-    request := adapter.BnplLimitInquiryRequest{
-        ApmType:  craftgate.ApmType_ZIP,
-        AdditionalParams: map[string]string{
-            "buyerPhoneNumber": "5554443322",
-            "buyerIdentityNumber": "11111111110",
-            "buyerBirthdate": "2000-01-01",
-        },
-    }
-    res, err := paymentClient.Payment.BnplLimitInquiryInit(context.Background(), request)
-    _, _ = spew.Printf("%#v\n", res)
+	request := adapter.BnplLimitInquiryRequest{
+		ApmType: craftgate.ApmType_ZIP,
+		AdditionalParams: map[string]string{
+			"buyerPhoneNumber":    "5554443322",
+			"buyerIdentityNumber": "11111111110",
+			"buyerBirthdate":      "2000-01-01",
+		},
+	}
+	res, err := paymentClient.Payment.BnplLimitInquiryInit(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
-    if err != nil {
-        t.Errorf("Error %s", err)
-    }
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
 }
 
 func TestPayment_BnplLimitInquiry(t *testing.T) {
-    request := adapter.BnplLimitInquiryRequest{
-        ApmType:  craftgate.ApmType_ZIP,
-        AdditionalParams: map[string]string{
-            "buyerPhoneNumber": "5554443322",
-            "otpCode": "123456",
-        },
-    }
-    res, err := paymentClient.Payment.BnplLimitInquiry(context.Background(), request)
-    _, _ = spew.Printf("%#v\n", res)
+	request := adapter.BnplLimitInquiryRequest{
+		ApmType: craftgate.ApmType_ZIP,
+		AdditionalParams: map[string]string{
+			"buyerPhoneNumber": "5554443322",
+			"otpCode":          "123456",
+		},
+	}
+	res, err := paymentClient.Payment.BnplLimitInquiry(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
 
-    if err != nil {
-        t.Errorf("Error %s", err)
-    }
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
 }
 
 func TestPayment_ApproveBnplPayment(t *testing.T) {
@@ -1398,6 +1398,36 @@ func TestPayment_ApproveBnplPayment(t *testing.T) {
 
 func TestPayment_VerifyBnplPayment(t *testing.T) {
 	res, err := paymentClient.Payment.VerifyBnplPayment(context.Background(), 1)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func TestPayment_InitMultiPayment(t *testing.T) {
+	request := adapter.InitMultiPaymentRequest{
+		Price:          100,
+		CallbackUrl:    "https://www.your-website.com/callback",
+		Currency:       craftgate.Currency_TRY,
+		ConversationId: "foo-bar",
+		ExternalId:     "115",
+		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		Items: []craftgate.PaymentItem{
+			{
+				Name:       "Item 1",
+				Price:      50,
+				ExternalId: "1",
+			},
+			{
+				Name:       "Item 2",
+				Price:      50,
+				ExternalId: "2",
+			},
+		},
+	}
+
+	res, err := paymentClient.Payment.InitMultiPayment(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -1422,6 +1452,19 @@ func Test_RetrieveProviderCards(t *testing.T) {
 		CardProvider:       string(craftgate.CardProvider_MEX),
 	}
 	res, err := paymentClient.Payment.RetrieveProviderCards(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
+func Test_RetrieveCardFromIvr(t *testing.T) {
+	request := adapter.RetrieveCardFromIvrRequest{
+		CallToken:   "45f12c74-3000-465c-96dc-876850e7dd7a",
+		CardUserKey: "0309ac2d-c5a5-4b4f-a91f-5c444ba07b24",
+	}
+	res, err := paymentClient.Payment.RetrieveCardFromIvr(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
