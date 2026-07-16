@@ -777,6 +777,20 @@ func (api *Payment) RetrieveProviderCards(ctx context.Context, request RetrieveP
 	return response.Data, nil
 }
 
+func (api *Payment) RetrieveCardFromIvr(ctx context.Context, request RetrieveCardFromIvrRequest) (*IVRCardTokenizationResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/payment/v1/ivr-cards", request)
+	if err != nil {
+		return nil, err
+	}
+	response := &Response[IVRCardTokenizationResponse]{}
+	respErr := api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, respErr
+	}
+
+	return response.Data, nil
+}
+
 func (c *Payment) Is3DSecureCallbackVerified(threeDSecureCallbackKey string, params map[string]string) bool {
 	hash := params["hash"]
 	hashString := strings.Join([]string{threeDSecureCallbackKey,

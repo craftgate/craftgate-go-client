@@ -93,6 +93,8 @@ const (
     ApmType_METROPOL               ApmType = "METROPOL"
     ApmType_EDENRED                ApmType = "EDENRED"
     ApmType_EDENRED_GIFT           ApmType = "EDENRED_GIFT"
+    ApmType_TOKENFLEX              ApmType = "TOKENFLEX"
+    ApmType_TOKENFLEX_GIFT         ApmType = "TOKENFLEX_GIFT"
     ApmType_PAYPAL                 ApmType = "PAYPAL"
     ApmType_KLARNA                 ApmType = "KLARNA"
     ApmType_AFTERPAY               ApmType = "AFTERPAY"
@@ -123,6 +125,7 @@ const (
     ApmType_PAYCELL_DCB            ApmType = "PAYCELL_DCB"
     ApmType_IWALLET                ApmType = "IWALLET"
     ApmType_PAPEL                  ApmType = "PAPEL"
+    ApmType_ALBARAKA               ApmType = "ALBARAKA"
     ApmType_FUND_TRANSFER          ApmType = "FUND_TRANSFER"
     ApmType_CASH_ON_DELIVERY       ApmType = "CASH_ON_DELIVERY"
 )
@@ -147,6 +150,7 @@ const (
     PaymentProvider_SODEXO                      PaymentProvider = "SODEXO"
     PaymentProvider_METROPOL                    PaymentProvider = "METROPOL"
     PaymentProvider_EDENRED                     PaymentProvider = "EDENRED"
+    PaymentProvider_TOKENFLEX                   PaymentProvider = "TOKENFLEX"
     PaymentProvider_ALIPAY                      PaymentProvider = "ALIPAY"
     PaymentProvider_PAYPAL                      PaymentProvider = "PAYPAL"
     PaymentProvider_KLARNA                      PaymentProvider = "KLARNA"
@@ -175,6 +179,7 @@ const (
     PaymentProvider_PAYCELL_DCB                 PaymentProvider = "PAYCELL_DCB"
     PaymentProvider_IWALLET                     PaymentProvider = "IWALLET"
     PaymentProvider_BKM_EXPRESS                 PaymentProvider = "BKM_EXPRESS"
+    PaymentProvider_ALBARAKA                    PaymentProvider = "ALBARAKA"
     PaymentProvider_OFFLINE                     PaymentProvider = "OFFLINE"
 )
 
@@ -225,6 +230,7 @@ const (
     Currency_JPY Currency = "JPY"
     Currency_EGP Currency = "EGP"
     Currency_MXN Currency = "MXN"
+    Currency_RON Currency = "RON"
 )
 
 // payment group declaration
@@ -250,6 +256,8 @@ const (
     PaymentMethod_SODEXO_GIFT       PaymentMethod = "SODEXO_GIFT"
     PaymentMethod_EDENRED           PaymentMethod = "EDENRED"
     PaymentMethod_EDENRED_GIFT      PaymentMethod = "EDENRED_GIFT"
+    PaymentMethod_TOKENFLEX         PaymentMethod = "TOKENFLEX"
+    PaymentMethod_TOKENFLEX_GIFT    PaymentMethod = "TOKENFLEX_GIFT"
     PaymentMethod_ALIPAY            PaymentMethod = "ALIPAY"
     PaymentMethod_PAYPAL            PaymentMethod = "PAYPAL"
     PaymentMethod_KLARNA            PaymentMethod = "KLARNA"
@@ -548,6 +556,7 @@ const (
     PosIntegrator_TAP               PosIntegrator = "TAP"
     PosIntegrator_RUBIK             PosIntegrator = "RUBIK"
     PosIntegrator_BIN_PAY           PosIntegrator = "BIN_PAY"
+    PosIntegrator_TURKONAY          PosIntegrator = "TURKONAY"
 )
 
 const (
@@ -800,16 +809,14 @@ type InitCheckoutCardVerifyRequest struct {
 
 type InitMultiPaymentRequest struct {
     Price                               float64                `json:"price,omitempty"`
-    PaidPrice                           float64                `json:"paidPrice,omitempty"`
     Currency                            Currency               `json:"currency,omitempty"`
     PaymentGroup                        PaymentGroup           `json:"paymentGroup,omitempty"`
-    PaymentSource                       PaymentSource          `json:"paymentSource,omitempty"`
     ConversationId                      string                 `json:"conversationId,omitempty"`
     ExternalId                          string                 `json:"externalId,omitempty"`
     CallbackUrl                         string                 `json:"callbackUrl,omitempty"`
-    PaymentPhase                        PaymentPhase           `json:"paymentPhase,omitempty"`
     PaymentChannel                      string                 `json:"paymentChannel,omitempty"`
     EnabledPaymentMethods               []PaymentMethod        `json:"enabledPaymentMethods,omitempty"`
+    EnabledInstallments                 []int                  `json:"enabledInstallments,omitempty"`
     CardUserKey                         string                 `json:"cardUserKey,omitempty"`
     BuyerMemberId                       int64                  `json:"buyerMemberId,omitempty"`
     AllowOnlyCreditCard                 bool                   `json:"allowOnlyCreditCard,omitempty"`
@@ -955,6 +962,11 @@ type RetrieveProviderCardRequest struct {
     ExternalId         string `json:"externalId,omitempty"`
     ProviderCardUserId string `json:"providerCardUserId,omitempty"`
     CardProvider       string `json:"cardProvider,omitempty"`
+}
+
+type RetrieveCardFromIvrRequest struct {
+    CardUserKey  string `json:"cardUserKey,omitempty"`
+    CallToken string `json:"callToken,omitempty"`
 }
 
 type MasterpassRetrieveLoyaltiesRequest struct {
@@ -1574,6 +1586,14 @@ type StoredCardResponse struct {
     ExpireMonth      *string           `json:"expireMonth"`
     IsCommercial     *bool             `json:"isCommercial"`
     CreatedAt        *TimeResponse     `json:"createdAt"`
+}
+
+type IVRCardTokenizationResponse struct {
+    BinNumber         *string `json:"binNumber"`
+    LastFourDigits    *string `json:"lastFourDigits"`
+    CardUserKey       *string `json:"cardUserKey"`
+    CardToken         *string `json:"cardToken"`
+    SecureFieldsToken *string `json:"secureFieldsToken"`
 }
 
 type PaymentTransactionsApprovalResponse struct {
@@ -2307,7 +2327,7 @@ func (r Response[ErrorResponse]) Error() string {
     }
 
     if r.Errors.ErrorGroup != nil {
-        return *r.Errors.ErrorGroup + "-" + *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription
+    	return *r.Errors.ErrorGroup + "-" + *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription
     }
 
     return *r.Errors.ErrorCode + "-" + *r.Errors.ErrorDescription
@@ -2558,7 +2578,7 @@ type MultiPaymentResponse struct {
     Token              *string             `json:"token"`
     ConversationId     *string             `json:"conversationId"`
     ExternalId         *string             `json:"externalId"`
-    PaidPrice          *float64            `json:"paidPrice"`
+    Price              *float64            `json:"price"`
     RemainingAmount    *float64            `json:"remainingAmount"`
     TokenExpireDate    *TimeResponse       `json:"tokenExpireDate"`
     PaymentIds         []int64             `json:"paymentIds"`
