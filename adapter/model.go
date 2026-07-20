@@ -842,6 +842,7 @@ type InitCheckoutPaymentRequest struct {
     FraudParams                 *FraudCheckParameters          `json:"fraudParams,omitempty"`
     AdditionalParams            map[string]interface{}         `json:"additionalParams,omitempty"`
     CardBrandInstallments       map[string][]CustomInstallment `json:"cardBrandInstallments,omitempty"`
+    Retry                       *bool                          `json:"retry,omitempty"`
 }
 
 type InitCheckoutCardVerifyRequest struct {
@@ -880,6 +881,7 @@ type InitMultiPaymentRequest struct {
     Ttl                                 int64                  `json:"ttl,omitempty"`
     MaximumSplitPaymentCount            int                    `json:"maximumSplitPaymentCount,omitempty"`
     AdditionalParams                    map[string]interface{} `json:"additionalParams,omitempty"`
+    Retry                               *bool                  `json:"retry,omitempty"`
 }
 
 type VerifyCard struct {
