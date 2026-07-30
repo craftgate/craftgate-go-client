@@ -199,15 +199,15 @@ func BaseRequestOf(request interface{}) BaseRequest {
 
 // setRequestScopedHeaders applies the options that travel as headers rather than in the payload.
 // New options are added here and nowhere else.
-func setRequestScopedHeaders(req *http.Request, source interface{}) {
-	options := BaseRequestOf(source)
+func setRequestScopedHeaders(req *http.Request, headerOptions interface{}) {
+	options := BaseRequestOf(headerOptions)
 
 	if options.IdempotencyKey != "" {
 		req.Header.Set(IdempotencyKeyHeaderName, options.IdempotencyKey)
 	}
 }
 
-func (c *Client) newRequest(ctx context.Context, method, urlStr string, body, options interface{},
+func (c *Client) newRequest(ctx context.Context, method, urlStr string, body, headerOptions interface{},
 	contentType, accept string) (*http.Request, error) {
 	u, err := c.baseURL.Parse(urlStr)
 	if err != nil {
@@ -256,7 +256,7 @@ func (c *Client) newRequest(ctx context.Context, method, urlStr string, body, op
 	req.Header.Set(SignatureHeaderName, hashStr)
 	req.Header.Set("Content-Type", contentType)
 	req.Header.Set("Accept", accept)
-	setRequestScopedHeaders(req, options)
+	setRequestScopedHeaders(req, headerOptions)
 
 	return req, nil
 }
