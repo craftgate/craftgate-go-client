@@ -753,6 +753,13 @@ type BaseRequest struct {
     IdempotencyKey string `json:"-" schema:"-"`
 }
 
+// baseRequest is promoted to every request that embeds BaseRequest, so the options can be read by
+// type assertion instead of reflection. It returns the whole struct rather than one field, so
+// adding a new request-scoped option needs no new plumbing.
+func (r BaseRequest) baseRequest() BaseRequest {
+    return r
+}
+
 type CreatePaymentRequest struct {
     BaseRequest
     Price            float64                `json:"price,omitempty"`

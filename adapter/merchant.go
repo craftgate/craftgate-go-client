@@ -56,9 +56,8 @@ func (api *Merchant) SearchMerchantPos(ctx context.Context, request SearchMercha
 }
 
 func (api *Merchant) UpdateMerchantPosStatus(ctx context.Context, request UpdateMerchantPosStatusRequest) error {
-	newRequest, err := api.Client.NewRequestWithIdempotencyKey(ctx, http.MethodPut,
-		fmt.Sprintf("/merchant/v1/merchant-poses/%d/status/%s", request.MerchantPosId, request.PosStatus), nil,
-		request.IdempotencyKey)
+	newRequest, err := api.Client.NewRequestWithoutBody(ctx, http.MethodPut,
+		fmt.Sprintf("/merchant/v1/merchant-poses/%d/status/%s", request.MerchantPosId, request.PosStatus), request)
 
 	if err != nil {
 		return err
@@ -73,8 +72,8 @@ func (api *Merchant) UpdateMerchantPosStatus(ctx context.Context, request Update
 }
 
 func (api *Merchant) DeleteMerchantPosStatus(ctx context.Context, request DeleteMerchantPosRequest) error {
-	newRequest, err := api.Client.NewRequestWithIdempotencyKey(ctx, http.MethodDelete,
-		fmt.Sprintf("/merchant/v1/merchant-poses/%d", request.MerchantPosId), nil, request.IdempotencyKey)
+	newRequest, err := api.Client.NewRequestWithoutBody(ctx, http.MethodDelete,
+		fmt.Sprintf("/merchant/v1/merchant-poses/%d", request.MerchantPosId), request)
 
 	if err != nil {
 		return err

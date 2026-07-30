@@ -24,6 +24,10 @@ var schemaEncoder = schema.NewEncoder()
 const (
 	timeEncodeLayout = "2006-01-02T15:04:05"
 	timeDecodeLayout = "\"2006-01-02T15:04:05\""
+
+	jsonContentType  = "application/json; charset=utf-8"
+	byteContentType  = "application/octet-stream; charset=utf-8"
+	byteAcceptHeader = "application/octet-stream,application/json; charset=utf-8"
 )
 
 type TimeResponse struct {
@@ -160,54 +164,51 @@ func newClient(apiKey, secretKey string) *Client {
 	return client
 }
 
-// NewRequest builds a signed request, picking up the idempotency key from body when it embeds
-// BaseRequest.
+// NewRequest builds a signed request. Request-scoped options are read from body.
 func (c *Client) NewRequest(ctx context.Context, method, urlStr string, body interface{}) (*http.Request, error) {
-	return c.newRequest(ctx, method, urlStr, body, IdempotencyKeyOf(body),
-		"application/json; charset=utf-8", "application/json; charset=utf-8")
+	return c.newRequest(ctx, method, urlStr, body, body, jsonContentType, jsonContentType)
 }
 
-// NewRequestWithIdempotencyKey takes the key separately from the body.
+// NewRequestWithoutBody builds a signed request that sends no body, for endpoints whose parameters
+// live in the URL path.
 //
-// Path-only endpoints must use this and pass a nil body: newRequest encodes a non-nil body into
-// the query string for DELETE, and since the signature covers the final URL that ships silently.
-func (c *Client) NewRequestWithIdempotencyKey(ctx context.Context, method, urlStr string, body interface{}, idempotencyKey string) (*http.Request, error) {
-	return c.newRequest(ctx, method, urlStr, body, idempotencyKey,
-		"application/json; charset=utf-8", "application/json; charset=utf-8")
+// request supplies the request-scoped options and is never sent as a body: newRequest encodes a
+// non-nil body into the query string for DELETE, and since the signature covers the final URL that
+// would ship silently.
+func (c *Client) NewRequestWithoutBody(ctx context.Context, method, urlStr string, request interface{}) (*http.Request, error) {
+	return c.newRequest(ctx, method, urlStr, nil, request, jsonContentType, jsonContentType)
 }
 
 func (c *Client) NewRequestForByteResponse(ctx context.Context, method, urlStr string, body interface{}) (*http.Request, error) {
-	return c.newRequest(ctx, method, urlStr, body, IdempotencyKeyOf(body),
-		"application/octet-stream; charset=utf-8", "application/octet-stream,application/json; charset=utf-8")
+	return c.newRequest(ctx, method, urlStr, body, body, byteContentType, byteAcceptHeader)
 }
 
-// IdempotencyKeyOf returns the key of a request that embeds BaseRequest, or "" if it has none.
-func IdempotencyKeyOf(request interface{}) string {
-	if request == nil {
-		return ""
-	}
-
-	value := reflect.ValueOf(request)
-	for value.Kind() == reflect.Ptr {
-		if value.IsNil() {
-			return ""
-		}
-		value = value.Elem()
-	}
-	if value.Kind() != reflect.Struct {
-		return ""
-	}
-
-	field := value.FieldByName("IdempotencyKey")
-	if !field.IsValid() || field.Kind() != reflect.String {
-		return ""
-	}
-
-	return field.String()
+// baseRequestCarrier is satisfied by every request embedding BaseRequest.
+type baseRequestCarrier interface {
+	baseRequest() BaseRequest
 }
 
-func (c *Client) newRequest(ctx context.Context, method, urlStr string, body interface{},
-	idempotencyKey, contentType, accept string) (*http.Request, error) {
+// BaseRequestOf returns the request-scoped options carried by a request, or a zero value when the
+// request carries none.
+func BaseRequestOf(request interface{}) BaseRequest {
+	if carrier, ok := request.(baseRequestCarrier); ok {
+		return carrier.baseRequest()
+	}
+	return BaseRequest{}
+}
+
+// setRequestScopedHeaders applies the options that travel as headers rather than in the payload.
+// New options are added here and nowhere else.
+func setRequestScopedHeaders(req *http.Request, source interface{}) {
+	options := BaseRequestOf(source)
+
+	if options.IdempotencyKey != "" {
+		req.Header.Set(IdempotencyKeyHeaderName, options.IdempotencyKey)
+	}
+}
+
+func (c *Client) newRequest(ctx context.Context, method, urlStr string, body, options interface{},
+	contentType, accept string) (*http.Request, error) {
 	u, err := c.baseURL.Parse(urlStr)
 	if err != nil {
 		return nil, err
@@ -255,9 +256,7 @@ func (c *Client) newRequest(ctx context.Context, method, urlStr string, body int
 	req.Header.Set(SignatureHeaderName, hashStr)
 	req.Header.Set("Content-Type", contentType)
 	req.Header.Set("Accept", accept)
-	if idempotencyKey != "" {
-		req.Header.Set(IdempotencyKeyHeaderName, idempotencyKey)
-	}
+	setRequestScopedHeaders(req, options)
 
 	return req, nil
 }

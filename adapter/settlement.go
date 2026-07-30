@@ -56,8 +56,8 @@ func (api *Settlement) UpdatePayoutAccount(ctx context.Context, id int64, reques
 }
 
 func (api *Settlement) DeletePayoutAccount(ctx context.Context, request DeletePayoutAccountRequest) error {
-	newRequest, err := api.Client.NewRequestWithIdempotencyKey(ctx, http.MethodDelete,
-		fmt.Sprintf("/settlement/v1/payout-accounts/%d", request.Id), nil, request.IdempotencyKey)
+	newRequest, err := api.Client.NewRequestWithoutBody(ctx, http.MethodDelete,
+		fmt.Sprintf("/settlement/v1/payout-accounts/%d", request.Id), request)
 	if err != nil {
 		return err
 	}

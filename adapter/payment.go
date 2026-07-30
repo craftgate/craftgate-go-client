@@ -173,8 +173,8 @@ func (api *Payment) RetrieveCheckoutPayment(ctx context.Context, token string) (
 }
 
 func (api *Payment) ExpireCheckoutPayment(ctx context.Context, request ExpireCheckoutPaymentRequest) error {
-	newRequest, err := api.Client.NewRequestWithIdempotencyKey(ctx, http.MethodDelete,
-		fmt.Sprintf("/payment/v1/checkout-payments/%s", request.Token), nil, request.IdempotencyKey)
+	newRequest, err := api.Client.NewRequestWithoutBody(ctx, http.MethodDelete,
+		fmt.Sprintf("/payment/v1/checkout-payments/%s", request.Token), request)
 	if err != nil {
 		return err
 	}
@@ -675,8 +675,8 @@ func (api *Payment) BnplLimitInquiry(ctx context.Context, request BnplLimitInqui
 
 func (api *Payment) ApproveBnplPayment(ctx context.Context, request ApproveBnplPaymentRequest) (*PaymentResponse, error) {
 
-	newRequest, err := api.Client.NewRequestWithIdempotencyKey(ctx, http.MethodPost,
-		fmt.Sprintf("/payment/v1/bnpl-payments/%d/approve", request.PaymentId), nil, request.IdempotencyKey)
+	newRequest, err := api.Client.NewRequestWithoutBody(ctx, http.MethodPost,
+		fmt.Sprintf("/payment/v1/bnpl-payments/%d/approve", request.PaymentId), request)
 	if err != nil {
 		return nil, err
 	}
@@ -692,8 +692,8 @@ func (api *Payment) ApproveBnplPayment(ctx context.Context, request ApproveBnplP
 
 func (api *Payment) VerifyBnplPayment(ctx context.Context, request VerifyBnplPaymentRequest) (*BnplPaymentVerifyResponse, error) {
 
-	newRequest, err := api.Client.NewRequestWithIdempotencyKey(ctx, http.MethodPost,
-		fmt.Sprintf("/payment/v1/bnpl-payments/%d/verify", request.PaymentId), nil, request.IdempotencyKey)
+	newRequest, err := api.Client.NewRequestWithoutBody(ctx, http.MethodPost,
+		fmt.Sprintf("/payment/v1/bnpl-payments/%d/verify", request.PaymentId), request)
 	if err != nil {
 		return nil, err
 	}
