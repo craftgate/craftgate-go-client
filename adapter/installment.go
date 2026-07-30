@@ -17,7 +17,7 @@ func (api *Installment) SearchInstallments(ctx context.Context, request SearchIn
 	}
 	response := &Response[InstallmentListResponse]{}
 	respErr := api.Client.Do(ctx, newRequest, response)
-	if err != nil {
+	if respErr != nil {
 		return nil, respErr
 	}
 
