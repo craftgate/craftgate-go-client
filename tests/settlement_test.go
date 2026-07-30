@@ -68,7 +68,8 @@ func TestSettlement_UpdatePayoutAccount(t *testing.T) {
 }
 
 func TestSettlement_DeletePayoutAccount(t *testing.T) {
-	err := settlementClient.Settlement.DeletePayoutAccount(context.Background(), 18)
+	err := settlementClient.Settlement.DeletePayoutAccount(context.Background(),
+		adapter.DeletePayoutAccountRequest{Id: 18})
 
 	if err != nil {
 		t.Errorf("Error %s", err)

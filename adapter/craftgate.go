@@ -160,59 +160,54 @@ func newClient(apiKey, secretKey string) *Client {
 	return client
 }
 
+// NewRequest builds a signed request, picking up the idempotency key from body when it embeds
+// BaseRequest.
 func (c *Client) NewRequest(ctx context.Context, method, urlStr string, body interface{}) (*http.Request, error) {
-	u, err := c.baseURL.Parse(urlStr)
-	if err != nil {
-		return nil, err
-	}
+	return c.newRequest(ctx, method, urlStr, body, IdempotencyKeyOf(body),
+		"application/json; charset=utf-8", "application/json; charset=utf-8")
+}
 
-	var req *http.Request
-
-	switch method {
-	case http.MethodGet, http.MethodDelete, http.MethodHead, http.MethodOptions:
-		req, err = http.NewRequestWithContext(ctx, method, u.String(), nil)
-		if err != nil {
-			return nil, err
-		}
-
-		if body != nil {
-			req.URL.RawQuery, _ = QueryParams(body)
-		}
-	default:
-		buf := new(bytes.Buffer)
-		if body != nil {
-			err = json.NewEncoder(buf).Encode(body)
-			if err != nil {
-				return nil, err
-			}
-		}
-
-		req, err = http.NewRequest(method, u.String(), buf)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	for k, v := range c.headers {
-		req.Header.Add(k, v)
-	}
-
-	authorizationRequestBody := c.extractRequestBodyForAuthorization(body, method, req)
-	randomStr := GenerateRandomString()
-	hashStr := GenerateHash(req.URL.String(), c.apiKey, c.secretKey, randomStr, authorizationRequestBody)
-
-	req.Header.Set(ApiKeyHeaderName, c.apiKey)
-	req.Header.Set(RandomHeaderName, randomStr)
-	req.Header.Set(AuthVersionHeaderName, AuthVersion)
-	req.Header.Set(ClientVersionHeaderName, ClientVersion)
-	req.Header.Set(SignatureHeaderName, hashStr)
-	req.Header.Set("Content-Type", "application/json; charset=utf-8")
-	req.Header.Set("Accept", "application/json; charset=utf-8")
-
-	return req, nil
+// NewRequestWithIdempotencyKey takes the key separately from the body.
+//
+// Path-only endpoints must use this and pass a nil body: newRequest encodes a non-nil body into
+// the query string for DELETE, and since the signature covers the final URL that ships silently.
+func (c *Client) NewRequestWithIdempotencyKey(ctx context.Context, method, urlStr string, body interface{}, idempotencyKey string) (*http.Request, error) {
+	return c.newRequest(ctx, method, urlStr, body, idempotencyKey,
+		"application/json; charset=utf-8", "application/json; charset=utf-8")
 }
 
 func (c *Client) NewRequestForByteResponse(ctx context.Context, method, urlStr string, body interface{}) (*http.Request, error) {
+	return c.newRequest(ctx, method, urlStr, body, IdempotencyKeyOf(body),
+		"application/octet-stream; charset=utf-8", "application/octet-stream,application/json; charset=utf-8")
+}
+
+// IdempotencyKeyOf returns the key of a request that embeds BaseRequest, or "" if it has none.
+func IdempotencyKeyOf(request interface{}) string {
+	if request == nil {
+		return ""
+	}
+
+	value := reflect.ValueOf(request)
+	for value.Kind() == reflect.Ptr {
+		if value.IsNil() {
+			return ""
+		}
+		value = value.Elem()
+	}
+	if value.Kind() != reflect.Struct {
+		return ""
+	}
+
+	field := value.FieldByName("IdempotencyKey")
+	if !field.IsValid() || field.Kind() != reflect.String {
+		return ""
+	}
+
+	return field.String()
+}
+
+func (c *Client) newRequest(ctx context.Context, method, urlStr string, body interface{},
+	idempotencyKey, contentType, accept string) (*http.Request, error) {
 	u, err := c.baseURL.Parse(urlStr)
 	if err != nil {
 		return nil, err
@@ -258,8 +253,11 @@ func (c *Client) NewRequestForByteResponse(ctx context.Context, method, urlStr s
 	req.Header.Set(AuthVersionHeaderName, AuthVersion)
 	req.Header.Set(ClientVersionHeaderName, ClientVersion)
 	req.Header.Set(SignatureHeaderName, hashStr)
-	req.Header.Set("Content-Type", "application/octet-stream; charset=utf-8")
-	req.Header.Set("Accept", "application/octet-stream,application/json; charset=utf-8")
+	req.Header.Set("Content-Type", contentType)
+	req.Header.Set("Accept", accept)
+	if idempotencyKey != "" {
+		req.Header.Set(IdempotencyKeyHeaderName, idempotencyKey)
+	}
 
 	return req, nil
 }

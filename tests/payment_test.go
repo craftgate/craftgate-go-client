@@ -265,7 +265,8 @@ func TestPayment_RetrieveCheckoutPayment(t *testing.T) {
 }
 
 func TestPayment_ExpireCheckoutPayment(t *testing.T) {
-	err := paymentClient.Payment.ExpireCheckoutPayment(context.Background(), "foo-bar")
+	err := paymentClient.Payment.ExpireCheckoutPayment(context.Background(),
+		adapter.ExpireCheckoutPaymentRequest{Token: "foo-bar"})
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -1484,7 +1485,7 @@ func TestPayment_BnplLimitInquiry(t *testing.T) {
 }
 
 func TestPayment_ApproveBnplPayment(t *testing.T) {
-	res, err := paymentClient.Payment.ApproveBnplPayment(context.Background(), 1)
+	res, err := paymentClient.Payment.ApproveBnplPayment(context.Background(), adapter.ApproveBnplPaymentRequest{PaymentId: 1})
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
@@ -1493,7 +1494,7 @@ func TestPayment_ApproveBnplPayment(t *testing.T) {
 }
 
 func TestPayment_VerifyBnplPayment(t *testing.T) {
-	res, err := paymentClient.Payment.VerifyBnplPayment(context.Background(), 1)
+	res, err := paymentClient.Payment.VerifyBnplPayment(context.Background(), adapter.VerifyBnplPaymentRequest{PaymentId: 1})
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {

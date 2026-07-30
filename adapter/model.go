@@ -63,13 +63,14 @@ type MasterpassValidationType string
 type OrderingRule string
 
 const (
-    ApiKeyHeaderName        = "x-api-key"
-    RandomHeaderName        = "x-rnd-key"
-    AuthVersionHeaderName   = "x-auth-version"
-    ClientVersionHeaderName = "x-client-version"
-    SignatureHeaderName     = "x-signature"
-    AuthVersion             = "1"
-    ClientVersion           = "craftgate-go-client:1.0.31"
+    ApiKeyHeaderName         = "x-api-key"
+    RandomHeaderName         = "x-rnd-key"
+    AuthVersionHeaderName    = "x-auth-version"
+    ClientVersionHeaderName  = "x-client-version"
+    SignatureHeaderName      = "x-signature"
+    IdempotencyKeyHeaderName = "x-idempotency-key"
+    AuthVersion              = "1"
+    ClientVersion            = "craftgate-go-client:1.0.31"
 )
 
 // payment type declaration
@@ -743,7 +744,17 @@ type RoutingOptions struct {
 }
 
 // requests
+
+// BaseRequest holds options sent as headers rather than in the body. `json:"-"` keeps them out
+// of the body and signature; `schema:"-"` keeps them out of query strings.
+type BaseRequest struct {
+    // IdempotencyKey is sent as the x-idempotency-key header so a mutating call can be safely
+    // retried.
+    IdempotencyKey string `json:"-" schema:"-"`
+}
+
 type CreatePaymentRequest struct {
+    BaseRequest
     Price            float64                `json:"price,omitempty"`
     PaidPrice        float64                `json:"paidPrice,omitempty"`
     WalletPrice      float64                `json:"walletPrice,omitempty"`
@@ -767,6 +778,7 @@ type CreatePaymentRequest struct {
 }
 
 type CreateApmPaymentRequest struct {
+    BaseRequest
     ApmType        ApmType       `json:"apmType,omitempty"`
     Price          float64       `json:"price,omitempty"`
     PaidPrice      float64       `json:"paidPrice,omitempty"`
@@ -782,6 +794,7 @@ type CreateApmPaymentRequest struct {
 }
 
 type Init3DSPaymentRequest struct {
+    BaseRequest
     Price            float64                `json:"price,omitempty"`
     PaidPrice        float64                `json:"paidPrice,omitempty"`
     WalletPrice      float64                `json:"walletPrice,omitempty"`
@@ -805,10 +818,12 @@ type Init3DSPaymentRequest struct {
 }
 
 type Complete3DSPaymentRequest struct {
+    BaseRequest
     PaymentId int64 `json:"paymentId"`
 }
 
 type InitCheckoutPaymentRequest struct {
+    BaseRequest
     Price                       float64                        `json:"price,omitempty"`
     PaidPrice                   float64                        `json:"paidPrice,omitempty"`
     Currency                    Currency                       `json:"currency,omitempty"`
@@ -846,6 +861,7 @@ type InitCheckoutPaymentRequest struct {
 }
 
 type InitCheckoutCardVerifyRequest struct {
+    BaseRequest
     VerificationPrice         float64                  `json:"verificationPrice,omitempty"`
     Currency                  Currency                 `json:"currency,omitempty"`
     ConversationId            string                   `json:"conversationId,omitempty"`
@@ -856,6 +872,7 @@ type InitCheckoutCardVerifyRequest struct {
 }
 
 type InitMultiPaymentRequest struct {
+    BaseRequest
     Price                               float64                `json:"price,omitempty"`
     Currency                            Currency               `json:"currency,omitempty"`
     PaymentGroup                        PaymentGroup           `json:"paymentGroup,omitempty"`
@@ -895,6 +912,7 @@ type VerifyCard struct {
 }
 
 type VerifyCardRequest struct {
+    BaseRequest
     Card                      *VerifyCard              `json:"card,omitempty"`
     PaymentAuthenticationType CardVerificationAuthType `json:"paymentAuthenticationType,omitempty"`
     VerificationPrice         float64                  `json:"verificationPrice,omitempty"`
@@ -905,6 +923,7 @@ type VerifyCardRequest struct {
 }
 
 type InitApmPaymentRequest struct {
+    BaseRequest
     ApmType          ApmType           `json:"apmType,omitempty"`
     MerchantApmId    int64             `json:"merchantApmId,omitempty"`
     Price            float64           `json:"price,omitempty"`
@@ -924,11 +943,13 @@ type InitApmPaymentRequest struct {
 }
 
 type CompleteApmPaymentRequest struct {
+    BaseRequest
     PaymentId        int64             `json:"paymentId,omitempty"`
     AdditionalParams map[string]string `json:"additionalParams,omitempty"`
 }
 
 type InitPosApmPaymentRequest struct {
+    BaseRequest
     Price             float64               `json:"price,omitempty"`
     PaidPrice         float64               `json:"paidPrice,omitempty"`
     PosAlias          string                `json:"posAlias,omitempty"`
@@ -951,15 +972,18 @@ type InitPosApmPaymentRequest struct {
 }
 
 type CompletePosApmPaymentRequest struct {
+    BaseRequest
     PaymentId        int64                  `json:"paymentId"`
     AdditionalParams map[string]interface{} `json:"additionalParams"`
 }
 
 type PostAuthPaymentRequest struct {
+    BaseRequest
     PaidPrice float64 `json:"paidPrice"`
 }
 
 type DepositPaymentRequest struct {
+    BaseRequest
     BuyerMemberId  int64           `json:"buyerMemberId,omitempty"`
     Price          float64         `json:"price,omitempty"`
     Currency       Currency        `json:"currency,omitempty"`
@@ -972,6 +996,7 @@ type DepositPaymentRequest struct {
 }
 
 type CreateFundTransferDepositPaymentRequest struct {
+    BaseRequest
     Price          float64 `json:"price,omitempty"`
     BuyerMemberId  int64   `json:"buyerMemberId,omitempty"`
     ConversationId string  `json:"conversationId,omitempty"`
@@ -979,6 +1004,7 @@ type CreateFundTransferDepositPaymentRequest struct {
 }
 
 type InitApmDepositPaymentRequest struct {
+    BaseRequest
     ApmType          ApmType           `json:"apmType,omitempty"`
     MerchantApmId    int64             `json:"merchantApmId,omitempty"`
     Price            float64           `json:"price,omitempty"`
@@ -995,6 +1021,7 @@ type InitApmDepositPaymentRequest struct {
 }
 
 type RetrieveLoyaltiesRequest struct {
+    BaseRequest
     CardNumber     string                `json:"cardNumber,omitempty"`
     ExpireYear     string                `json:"expireYear,omitempty"`
     ExpireMonth    string                `json:"expireMonth,omitempty"`
@@ -1007,6 +1034,7 @@ type RetrieveLoyaltiesRequest struct {
 }
 
 type RetrieveProviderCardRequest struct {
+    BaseRequest
     ProviderCardToken  string `json:"providerCardToken,omitempty"`
     ExternalId         string `json:"externalId,omitempty"`
     ProviderCardUserId string `json:"providerCardUserId,omitempty"`
@@ -1014,11 +1042,13 @@ type RetrieveProviderCardRequest struct {
 }
 
 type RetrieveCardFromIvrRequest struct {
+    BaseRequest
     CardUserKey  string `json:"cardUserKey,omitempty"`
     CallToken string `json:"callToken,omitempty"`
 }
 
 type MasterpassRetrieveLoyaltiesRequest struct {
+    BaseRequest
     Msisdn                       string `json:"msisdn,omitempty"`
     BinNumber                    string `json:"binNumber,omitempty"`
     CardName                     string `json:"cardName,omitempty"`
@@ -1026,6 +1056,7 @@ type MasterpassRetrieveLoyaltiesRequest struct {
 }
 
 type InitGarantiPayPaymentRequest struct {
+    BaseRequest
     Price               float64                 `json:"price,omitempty"`
     PaidPrice           float64                 `json:"paidPrice,omitempty"`
     Currency            Currency                `json:"currency,omitempty"`
@@ -1044,6 +1075,7 @@ type InitGarantiPayPaymentRequest struct {
 }
 
 type RefundPaymentTransactionRequest struct {
+    BaseRequest
     PaymentTransactionId  int64                 `json:"paymentTransactionId"`
     ConversationId        string                `json:"conversationId"`
     RefundPrice           float64               `json:"refundPrice"`
@@ -1052,18 +1084,21 @@ type RefundPaymentTransactionRequest struct {
 }
 
 type RefundPaymentTransactionMarkAsRefundedRequest struct {
+    BaseRequest
     PaymentTransactionId int64   `json:"paymentTransactionId"`
     ConversationId       *string `json:"conversationId"`
     RefundPrice          float64 `json:"refundPrice"`
 }
 
 type UpdatePaymentTransactionRequest struct {
+    BaseRequest
     SubMerchantMemberId    int64      `json:"subMerchantMemberId,omitempty"`
     SubMerchantMemberPrice float64    `json:"subMerchantMemberPrice,omitempty"`
     BlockageResolvedDate   *time.Time `json:"blockageResolvedDate,omitempty"`
 }
 
 type UpdateStoredCardRequest struct {
+    BaseRequest
     CardUserKey string  `json:"cardUserKey,omitempty"`
     CardToken   string  `json:"cardToken,omitempty"`
     ExpireYear  string  `json:"expireYear,omitempty"`
@@ -1072,6 +1107,7 @@ type UpdateStoredCardRequest struct {
 }
 
 type CloneStoredCardRequest struct {
+    BaseRequest
     SourceCardUserKey string `json:"sourceCardUserKey"`
     SourceCardToken   string `json:"sourceCardToken"`
     TargetCardUserKey string `json:"targetCardUserKey,omitempty"`
@@ -1079,11 +1115,13 @@ type CloneStoredCardRequest struct {
 }
 
 type DeleteStoredCardRequest struct {
+    BaseRequest
     CardUserKey string `json:"cardUserKey,omitempty"`
     CardToken   string `json:"cardToken,omitempty"`
 }
 
 type SearchStoredCardsRequest struct {
+    BaseRequest
     CardAlias       string          `schema:"cardAlias,omitempty"`
     CardBrand       string          `schema:"cardBrand,omitempty"`
     CardType        CardType        `schema:"cardType,omitempty"`
@@ -1098,11 +1136,13 @@ type SearchStoredCardsRequest struct {
 }
 
 type PaymentTransactionsApprovalRequest struct {
+    BaseRequest
     PaymentTransactionIds []int64 `json:"paymentTransactionIds,omitempty"`
     IsTransactional       bool    `json:"isTransactional,omitempty"`
 }
 
 type RefundPaymentRequest struct {
+    BaseRequest
     PaymentId             int64                 `json:"paymentId,omitempty"`
     ConversationId        string                `json:"conversationId,omitempty"`
     RefundDestinationType RefundDestinationType `json:"refundDestinationType,omitempty"`
@@ -1110,10 +1150,12 @@ type RefundPaymentRequest struct {
 }
 
 type RefundWaitingPaymentRequest struct {
+    BaseRequest
     PaymentId int64 `json:"paymentId,omitempty"`
 }
 
 type StoreCardRequest struct {
+    BaseRequest
     CardHolderName    string         `json:"cardHolderName,omitempty"`
     CardNumber        string         `json:"cardNumber,omitempty"`
     ExpireYear        string         `json:"expireYear,omitempty"`
@@ -1125,6 +1167,7 @@ type StoreCardRequest struct {
 }
 
 type ApplePayMerchantSessionCreateRequest struct {
+    BaseRequest
     MerchantIdentifier string `json:"merchantIdentifier,omitempty"`
     DisplayName        string `json:"displayName,omitempty"`
     Initiative         string `json:"initiative,omitempty"`
@@ -1133,10 +1176,12 @@ type ApplePayMerchantSessionCreateRequest struct {
 }
 
 type CheckMasterpassUserRequest struct {
+    BaseRequest
     MasterpassGsmNumber string `json:"masterpassGsmNumber"`
 }
 
 type CreatePayoutAccountRequest struct {
+    BaseRequest
     AccountType         PayoutAccountType `json:"type,omitempty"`
     ExternalAccountId   string            `json:"externalAccountId,omitempty"`
     Currency            Currency          `json:"currency,omitempty"`
@@ -1145,11 +1190,13 @@ type CreatePayoutAccountRequest struct {
 }
 
 type UpdatePayoutAccountRequest struct {
+    BaseRequest
     AccountType       PayoutAccountType `json:"type,omitempty"`
     ExternalAccountId string            `json:"externalAccountId,omitempty"`
 }
 
 type SearchPayoutAccountRequest struct {
+    BaseRequest
     Currency            Currency     `json:"currency,omitempty"`
     AccountOwner        AccountOwner `json:"accountOwner,omitempty"`
     SubMerchantMemberId int64        `json:"subMerchantMemberId,omitempty"`
@@ -1158,6 +1205,7 @@ type SearchPayoutAccountRequest struct {
 }
 
 type MasterpassPaymentTokenGenerateRequest struct {
+    BaseRequest
     Msisdn                       string                   `json:"msisdn,omitempty"`
     UserId                       string                   `json:"userId,omitempty"`
     BinNumber                    string                   `json:"binNumber,omitempty"`
@@ -1169,20 +1217,24 @@ type MasterpassPaymentTokenGenerateRequest struct {
 }
 
 type MasterpassPaymentCompleteRequest struct {
+    BaseRequest
     ReferenceId string `json:"referenceId,omitempty"`
     Token       string `json:"token,omitempty"`
 }
 
 type MasterpassPaymentThreeDSInitRequest struct {
+    BaseRequest
     ReferenceId string `json:"referenceId,omitempty"`
     CallbackUrl string `json:"callbackUrl,omitempty"`
 }
 
 type MasterpassPaymentThreeDSCompleteRequest struct {
+    BaseRequest
     PaymentId int64 `json:"paymentId,omitempty"`
 }
 
 type InitBnplPaymentRequest struct {
+    BaseRequest
     ApmType          ApmType               `json:"apmType"`
     MerchantApmId    int64                 `json:"merchantApmId,omitempty"`
     Price            float64               `json:"price"`
@@ -1216,6 +1268,7 @@ type BnplPaymentCartItem struct {
 }
 
 type BnplPaymentOfferRequest struct {
+    BaseRequest
     ApmType          ApmType               `json:"apmType"`
     MerchantApmId    int64                 `json:"merchantApmId,omitempty"`
     Price            float64               `json:"price"`
@@ -1226,6 +1279,7 @@ type BnplPaymentOfferRequest struct {
 }
 
 type BnplLimitInquiryRequest struct {
+    BaseRequest
     ApmType          ApmType           `json:"apmType"`
     MerchantApmId    int64             `json:"merchantApmId,omitempty"`
     AdditionalParams map[string]string `json:"additionalParams"`
@@ -1420,10 +1474,12 @@ type MasterpassPaymentTokenGenerateResponse struct {
 }
 
 type RefundWalletTransactionRequest struct {
+    BaseRequest
     RefundPrice float64 `json:"refundPrice"`
 }
 
 type RemittanceRequest struct {
+    BaseRequest
     MemberId             int64    `json:"memberId"`
     Price                float64  `json:"price"`
     Currency             Currency `json:"currency,omitempty"`
@@ -1432,15 +1488,18 @@ type RemittanceRequest struct {
 }
 
 type CreateMemberWalletRequest struct {
+    BaseRequest
     NegativeAmountLimit float64  `json:"negativeAmountLimit"`
     Currency            Currency `json:"currency"`
 }
 
 type UpdateMemberWalletRequest struct {
+    BaseRequest
     NegativeAmountLimit float64 `json:"negativeAmountLimit"`
 }
 
 type CreateWithdrawRequest struct {
+    BaseRequest
     MemberId    int64    `json:"memberId"`
     Price       float64  `json:"price"`
     Description string   `json:"description"`
@@ -1448,6 +1507,7 @@ type CreateWithdrawRequest struct {
 }
 
 type SearchWalletTransactionsRequest struct {
+    BaseRequest
     WalletTransactionTypes []WalletTransactionType `schema:"walletTransactionTypes,omitempty"`
     MinAmount              float64                 `schema:"minWithdrawPrice,omitempty"`
     MaxAmount              float64                 `schema:"maxWithdrawPrice,omitempty"`
@@ -1458,6 +1518,7 @@ type SearchWalletTransactionsRequest struct {
 }
 
 type SearchWithdrawsRequest struct {
+    BaseRequest
     MemberId         int64     `schema:"walletId,omitempty"`
     PayoutStatus     string    `schema:"payoutStatus,omitempty"`
     Currency         Currency  `schema:"currency,omitempty"`
@@ -1528,6 +1589,7 @@ type SearchWalletTransactionsResponse struct {
 }
 
 type ResetMerchantMemberWalletBalanceRequest struct {
+    BaseRequest
     WalletAmount float64 `json:"walletAmount"`
 }
 
@@ -1682,6 +1744,7 @@ type InstallmentPrice struct {
 }
 
 type SearchInstallmentsRequest struct {
+    BaseRequest
     BinNumber                               string   `schema:"binNumber,omitempty"`
     Price                                   float64  `schema:"price"`
     Currency                                Currency `schema:"currency"`
@@ -1741,6 +1804,7 @@ type RetrieveBinNumberResponse struct {
 }
 
 type CreateMemberRequest struct {
+    BaseRequest
     MemberExternalId                         string                        `json:"memberExternalId,omitempty"`
     Name                                     string                        `json:"name,omitempty"`
     Address                                  string                        `json:"address,omitempty"`
@@ -1761,6 +1825,7 @@ type CreateMemberRequest struct {
 }
 
 type UpdateMemberRequest struct {
+    BaseRequest
     Name                                     string                        `json:"name,omitempty"`
     Address                                  string                        `json:"address,omitempty"`
     Email                                    string                        `json:"email,omitempty"`
@@ -1780,6 +1845,7 @@ type UpdateMemberRequest struct {
 }
 
 type SearchMembersRequest struct {
+    BaseRequest
     Page             int        `schema:"page,omitempty"`
     Size             int        `schema:"size,omitempty"`
     IsBuyer          bool       `schema:"isBuyer,omitempty"`
@@ -1814,6 +1880,7 @@ type MemberResponse struct {
 }
 
 type CreateProductRequest struct {
+    BaseRequest
     Name                string     `json:"name"`
     Channel             string     `json:"channel,omitempty"`
     OrderId             string     `json:"orderId,omitempty"`
@@ -1830,6 +1897,7 @@ type CreateProductRequest struct {
 }
 
 type UpdateProductRequest struct {
+    BaseRequest
     Name                string     `json:"name"`
     Channel             string     `json:"channel,omitempty"`
     OrderId             string     `json:"orderId,omitempty"`
@@ -1847,6 +1915,7 @@ type UpdateProductRequest struct {
 }
 
 type SearchProductsRequest struct {
+    BaseRequest
     Id             int64     `schema:"id,omitempty"`
     Name           string    `schema:"name,omitempty"`
     OrderId        string    `schema:"orderId,omitempty"`
@@ -1885,6 +1954,7 @@ type ProductResponse struct {
 }
 
 type SearchPaymentsRequest struct {
+    BaseRequest
     Page                 int             `schema:"page,omitempty"`
     Size                 int             `schema:"size,omitempty"`
     PaymentId            int64           `schema:"paymentId,omitempty"`
@@ -1911,6 +1981,7 @@ type SearchPaymentsRequest struct {
 }
 
 type SearchPaymentRefundsRequest struct {
+    BaseRequest
     Page           int          `schema:"page,omitempty"`
     Size           int          `schema:"size,omitempty"`
     Id             int64        `schema:"id,omitempty"`
@@ -1926,6 +1997,7 @@ type SearchPaymentRefundsRequest struct {
 }
 
 type SearchPaymentTransactionRefundsRequest struct {
+    BaseRequest
     Page                 int          `schema:"page,omitempty"`
     Size                 int          `schema:"size,omitempty"`
     Id                   int64        `schema:"id,omitempty"`
@@ -2119,6 +2191,7 @@ type PayoutStatus struct {
 }
 
 type CreateInstantWalletSettlementRequest struct {
+    BaseRequest
     ExcludedSubMerchantMemberIds []int64
 }
 
@@ -2127,6 +2200,7 @@ type CreateInstantWalletSettlementResponse struct {
 }
 
 type SearchPayoutCompletedTransactionsRequest struct {
+    BaseRequest
     SettlementFileId int64          `schema:"settlementFileId,omitempty"`
     SettlementType   SettlementType `schema:"settlementType,omitempty"`
     StartDate        time.Time      `schema:"startDate,omitempty"`
@@ -2136,11 +2210,13 @@ type SearchPayoutCompletedTransactionsRequest struct {
 }
 
 type SearchPayoutBouncedTransactionsRequest struct {
+    BaseRequest
     StartDate time.Time `schema:"startDate,omitempty"`
     EndDate   time.Time `schema:"endDate,omitempty"`
 }
 
 type SearchPayoutRowRequest struct {
+    BaseRequest
     Page       int        `schema:"page,omitempty"`
     Size       int        `schema:"size,omitempty"`
     FileStatus FileStatus `schema:"fileStatus,omitempty"`
@@ -2149,6 +2225,7 @@ type SearchPayoutRowRequest struct {
 }
 
 type RetrievePayoutDetailsRequest struct {
+    BaseRequest
     PayoutDetailId int64
 }
 
@@ -2200,16 +2277,19 @@ type PayoutDetailTransactionResponse struct {
 }
 
 type RetrieveDailyTransactionReportRequest struct {
+    BaseRequest
     ReportDate Date           `schema:"reportDate,omitempty"`
     FileType   ReportFileType `schema:"fileType,omitempty"`
 }
 
 type RetrieveDailyPaymentReportRequest struct {
+    BaseRequest
     ReportDate Date           `schema:"reportDate,omitempty"`
     FileType   ReportFileType `schema:"fileType,omitempty"`
 }
 
 type CreateReportRequest struct {
+    BaseRequest
     StartDate    time.Time    `json:"startDate,omitempty"`
     EndDate      time.Time    `json:"endDate,omitempty"`
     ReportType   ReportType   `json:"reportType,omitempty"`
@@ -2217,6 +2297,7 @@ type CreateReportRequest struct {
 }
 
 type RetrieveReportRequest struct {
+    BaseRequest
     FileType ReportFileType `schema:"fileType,omitempty"`
 }
 
@@ -2229,6 +2310,7 @@ type ReportDemandResponse struct {
 }
 
 type SearchFraudChecksRequest struct {
+    BaseRequest
     Page           int              `schema:"page,omitempty"`
     Size           int              `schema:"size,omitempty"`
     Action         FraudAction      `schema:"action,omitempty"`
@@ -2241,6 +2323,7 @@ type SearchFraudChecksRequest struct {
 }
 
 type SearchFraudRuleRequest struct {
+    BaseRequest
     Name           string         `json:"name,omitempty"`
     MinCreatedDate time.Time      `schema:"minCreatedDate,omitempty"`
     MaxCreatedDate time.Time      `schema:"maxCreatedDate,omitempty"`
@@ -2281,6 +2364,7 @@ type FraudPaymentData struct {
 }
 
 type FraudValueListRequest struct {
+    BaseRequest
     ListName          string         `json:"listName,omitempty"`
     Type              FraudValueType `json:"type,omitempty"`
     Label             string         `json:"label,omitempty"`
@@ -2290,6 +2374,7 @@ type FraudValueListRequest struct {
 }
 
 type AddCardFingerprintFraudValueListRequest struct {
+    BaseRequest
     Label             string         `json:"label,omitempty"`
     Operation         FraudOperation `json:"operation,omitempty"`
     OperationId       string         `json:"operationId"`
@@ -2333,6 +2418,7 @@ type WebhookData struct {
 }
 
 type SearchBankAccountTrackingRecordRequest struct {
+    BaseRequest
     SenderName    string    `schema:"senderName,omitempty"`
     SenderIban    string    `schema:"senderIban,omitempty"`
     Description   string    `schema:"description,omitempty"`
@@ -2491,6 +2577,7 @@ type MasterpassCreatePayment struct {
 }
 
 type InitBkmExpressRequest struct {
+    BaseRequest
     Price               float64       `json:"price,omitempty"`
     PaidPrice           float64       `json:"paidPrice,omitempty"`
     Currency            Currency      `json:"currency,omitempty"`
@@ -2505,6 +2592,7 @@ type InitBkmExpressRequest struct {
 }
 
 type CreateMerchantRequest struct {
+    BaseRequest
     Name               string `json:"name"`
     LegalCompanyTitle  string `json:"legalCompanyTitle"`
     Email              string `json:"email"`
@@ -2517,6 +2605,7 @@ type CreateMerchantRequest struct {
 }
 
 type CompleteBkmExpressRequest struct {
+    BaseRequest
     Status                 bool   `json:"status"`
     Message                string `json:"message"`
     TicketId               string `json:"ticketId"`
@@ -2543,6 +2632,7 @@ type CreateMerchantPosUser struct {
 }
 
 type CreateMerchantPosRequest struct {
+    BaseRequest
     Status                            PosStatus                   `json:"status"`
     Name                              string                      `json:"name"`
     ClientId                          string                      `json:"clientId"`
@@ -2651,6 +2741,7 @@ type CreateMerchantPosCommission struct {
 }
 
 type SearchMerchantPosRequest struct {
+    BaseRequest
     Name              string   `schema:"name,omitempty"`
     Alias             string   `schema:"alias,omitempty"`
     Currency          Currency `schema:"currency,omitempty"`
@@ -2662,10 +2753,12 @@ type SearchMerchantPosRequest struct {
 }
 
 type CreateMerchantPosCommissionRequest struct {
+    BaseRequest
     Commissions []CreateMerchantPosCommission `json:"commissions"`
 }
 
 type InitJuzdanPaymentRequest struct {
+    BaseRequest
     Price          float64       `json:"price,omitempty"`
     PaidPrice      float64       `json:"paidPrice,omitempty"`
     Currency       Currency      `json:"currency,omitempty"`
@@ -2688,15 +2781,18 @@ type InitJuzdanPaymentResponse struct {
 }
 
 type MealVoucherCardTokenizationInitRequest struct {
+    BaseRequest
     ApmType                         ApmType                         `json:"apmType,omitempty"`
     MealVoucherCardTokenizationData MealVoucherCardTokenizationData `json:"mealVoucherCardTokenizationData,omitempty"`
 }
 
 type MealVoucherCardTokenizationRegenerateRequest struct {
+    BaseRequest
     MealVoucherCardTokenizationData MealVoucherCardTokenizationData `json:"mealVoucherCardTokenizationData,omitempty"`
 }
 
 type MealVoucherCardTokenizationCompleteRequest struct {
+    BaseRequest
     ValidationCode string `json:"validationCode,omitempty"`
 }
 
@@ -2724,4 +2820,59 @@ type MealVoucherCardTokenizationCompleteResponse struct {
 type PaymentError ErrorResponse
 
 type Void struct {
+}
+
+// Wrappers for mutating endpoints whose parameters live in the URL path. They carry only path
+// variables plus the inherited key, and are never sent as a body.
+
+type ExpireCheckoutPaymentRequest struct {
+    BaseRequest
+    Token string
+}
+
+type DeleteMerchantPosRequest struct {
+    BaseRequest
+    MerchantPosId int64
+}
+
+type DeleteProductRequest struct {
+    BaseRequest
+    Id int64
+}
+
+type DeletePayoutAccountRequest struct {
+    BaseRequest
+    Id int64
+}
+
+type DeleteValueListRequest struct {
+    BaseRequest
+    ListName string
+}
+
+type RemoveValueFromValueListRequest struct {
+    BaseRequest
+    ListName string
+    ValueId  string
+}
+
+type UpdateMerchantPosStatusRequest struct {
+    BaseRequest
+    MerchantPosId int64
+    PosStatus     PosStatus
+}
+
+type ApproveBnplPaymentRequest struct {
+    BaseRequest
+    PaymentId int64
+}
+
+type VerifyBnplPaymentRequest struct {
+    BaseRequest
+    PaymentId int64
+}
+
+type CancelWithdrawRequest struct {
+    BaseRequest
+    WithdrawId int64
 }

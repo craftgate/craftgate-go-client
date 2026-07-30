@@ -55,8 +55,9 @@ func (api *PayByLink) RetrieveProduct(ctx context.Context, id int64) (interface{
 	return response.Data, nil
 }
 
-func (api *PayByLink) DeleteProduct(ctx context.Context, id int64) error {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodDelete, fmt.Sprintf("/craftlink/v1/products/%d", id), nil)
+func (api *PayByLink) DeleteProduct(ctx context.Context, request DeleteProductRequest) error {
+	newRequest, err := api.Client.NewRequestWithIdempotencyKey(ctx, http.MethodDelete,
+		fmt.Sprintf("/craftlink/v1/products/%d", request.Id), nil, request.IdempotencyKey)
 	if err != nil {
 		return err
 	}

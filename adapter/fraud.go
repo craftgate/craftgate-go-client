@@ -89,8 +89,9 @@ func (api *Fraud) CreateFraudValueList(ctx context.Context, listName string, fra
 	return nil
 }
 
-func (api *Fraud) DeleteFraudValueList(ctx context.Context, listName string) error {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodDelete, "/fraud/v1/value-lists/"+listName, nil)
+func (api *Fraud) DeleteFraudValueList(ctx context.Context, request DeleteValueListRequest) error {
+	newRequest, err := api.Client.NewRequestWithIdempotencyKey(ctx, http.MethodDelete,
+		"/fraud/v1/value-lists/"+request.ListName, nil, request.IdempotencyKey)
 	if err != nil {
 		return err
 	}
@@ -134,8 +135,9 @@ func (api *Fraud) AddValueToFraudValueList(ctx context.Context, request FraudVal
 	return nil
 }
 
-func (api *Fraud) RemoveValueFromFraudValueList(ctx context.Context, listName, valueId string) error {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodDelete, "/fraud/v1/value-lists/"+listName+"/values/"+valueId, nil)
+func (api *Fraud) RemoveValueFromFraudValueList(ctx context.Context, request RemoveValueFromValueListRequest) error {
+	newRequest, err := api.Client.NewRequestWithIdempotencyKey(ctx, http.MethodDelete,
+		"/fraud/v1/value-lists/"+request.ListName+"/values/"+request.ValueId, nil, request.IdempotencyKey)
 	if err != nil {
 		return err
 	}

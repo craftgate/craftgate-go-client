@@ -204,8 +204,9 @@ func (api *Wallet) CreateWithdraw(ctx context.Context, request CreateWithdrawReq
 	return response.Data, nil
 }
 
-func (api *Wallet) CancelWithdraw(ctx context.Context, withdrawId int64) (interface{}, error) {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, fmt.Sprintf("/wallet/v1/withdraws/%d/cancel", withdrawId), nil)
+func (api *Wallet) CancelWithdraw(ctx context.Context, request CancelWithdrawRequest) (interface{}, error) {
+	newRequest, err := api.Client.NewRequestWithIdempotencyKey(ctx, http.MethodPost,
+		fmt.Sprintf("/wallet/v1/withdraws/%d/cancel", request.WithdrawId), nil, request.IdempotencyKey)
 	if err != nil {
 		return nil, err
 	}
