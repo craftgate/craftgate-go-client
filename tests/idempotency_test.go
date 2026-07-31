@@ -101,7 +101,7 @@ func Test_Idempotency_PathOnlyRequest_SendsKeyAndNoQueryOrBody(t *testing.T) {
 	request.IdempotencyKey = "idempotency-key-1"
 
 	req, err := idempotencyClient.NewRequestWithoutBody(context.Background(), http.MethodDelete,
-		"/payment/v1/checkout-payments/token-1", request)
+		"/payment/v1/checkout-payments/token-1", request.ToHeaderOptions())
 	if err != nil {
 		t.Fatalf("Error %s", err)
 	}
@@ -123,12 +123,13 @@ func Test_Idempotency_PathOnlySignatureIsUnchangedByKey(t *testing.T) {
 	withKey := adapter.ExpireCheckoutPaymentRequest{Token: "token-1"}
 	withKey.IdempotencyKey = "idempotency-key-1"
 
-	a, err := idempotencyClient.NewRequestWithoutBody(context.Background(), http.MethodDelete, path, withKey)
+	a, err := idempotencyClient.NewRequestWithoutBody(context.Background(), http.MethodDelete, path,
+		withKey.ToHeaderOptions())
 	if err != nil {
 		t.Fatalf("Error %s", err)
 	}
 	b, err := idempotencyClient.NewRequestWithoutBody(context.Background(), http.MethodDelete, path,
-		adapter.ExpireCheckoutPaymentRequest{Token: "token-1"})
+		adapter.ExpireCheckoutPaymentRequest{Token: "token-1"}.ToHeaderOptions())
 	if err != nil {
 		t.Fatalf("Error %s", err)
 	}
@@ -167,23 +168,23 @@ func Test_Idempotency_KeyIsExcludedFromQueryParams(t *testing.T) {
 	}
 }
 
-func Test_Idempotency_OptionsAreReadFromAnyRequest(t *testing.T) {
+func Test_Idempotency_HeaderOptionsAreReadFromAnyRequest(t *testing.T) {
 	request := adapter.DeleteProductRequest{Id: 42}
 	request.IdempotencyKey = "idempotency-key-1"
 
-	if got := adapter.BaseRequestOf(request).IdempotencyKey; got != "idempotency-key-1" {
+	if got := adapter.HeaderOptionsOf(request).IdempotencyKey; got != "idempotency-key-1" {
 		t.Errorf("expected idempotency-key-1, got %q", got)
 	}
-	if got := adapter.BaseRequestOf(&request).IdempotencyKey; got != "idempotency-key-1" {
+	if got := adapter.HeaderOptionsOf(&request).IdempotencyKey; got != "idempotency-key-1" {
 		t.Errorf("expected idempotency-key-1 for pointer, got %q", got)
 	}
-	if got := adapter.BaseRequestOf(adapter.DeleteProductRequest{Id: 42}).IdempotencyKey; got != "" {
+	if got := adapter.HeaderOptionsOf(adapter.DeleteProductRequest{Id: 42}).IdempotencyKey; got != "" {
 		t.Errorf("expected empty key, got %q", got)
 	}
-	if got := adapter.BaseRequestOf(nil).IdempotencyKey; got != "" {
+	if got := adapter.HeaderOptionsOf(nil).IdempotencyKey; got != "" {
 		t.Errorf("expected empty key for nil, got %q", got)
 	}
-	if got := adapter.BaseRequestOf("not-a-struct").IdempotencyKey; got != "" {
+	if got := adapter.HeaderOptionsOf("not-a-struct").IdempotencyKey; got != "" {
 		t.Errorf("expected empty key for non-struct, got %q", got)
 	}
 }

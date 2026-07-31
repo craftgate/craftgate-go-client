@@ -164,51 +164,49 @@ func newClient(apiKey, secretKey string) *Client {
 	return client
 }
 
-// NewRequest builds a signed request. Request-scoped options are read from body.
+// NewRequest builds a signed request. Header options are read from body.
 func (c *Client) NewRequest(ctx context.Context, method, urlStr string, body interface{}) (*http.Request, error) {
-	return c.newRequest(ctx, method, urlStr, body, body, jsonContentType, jsonContentType)
+	return c.newRequest(ctx, method, urlStr, body, HeaderOptionsOf(body), jsonContentType, jsonContentType)
 }
 
 // NewRequestWithoutBody builds a signed request that sends no body, for endpoints whose parameters
 // live in the URL path.
 //
-// request supplies the request-scoped options and is never sent as a body: newRequest encodes a
-// non-nil body into the query string for DELETE, and since the signature covers the final URL that
-// would ship silently.
-func (c *Client) NewRequestWithoutBody(ctx context.Context, method, urlStr string, request interface{}) (*http.Request, error) {
-	return c.newRequest(ctx, method, urlStr, nil, request, jsonContentType, jsonContentType)
+// Only the header options are passed, never the request itself: newRequest encodes a non-nil body
+// into the query string for DELETE, and since the signature covers the final URL that would ship
+// silently.
+func (c *Client) NewRequestWithoutBody(ctx context.Context, method, urlStr string, headerOptions HeaderOptions) (*http.Request, error) {
+	return c.newRequest(ctx, method, urlStr, nil, headerOptions, jsonContentType, jsonContentType)
 }
 
 func (c *Client) NewRequestForByteResponse(ctx context.Context, method, urlStr string, body interface{}) (*http.Request, error) {
-	return c.newRequest(ctx, method, urlStr, body, body, byteContentType, byteAcceptHeader)
+	return c.newRequest(ctx, method, urlStr, body, HeaderOptionsOf(body), byteContentType, byteAcceptHeader)
 }
 
-// baseRequestCarrier is satisfied by every request embedding BaseRequest.
-type baseRequestCarrier interface {
-	baseRequest() BaseRequest
+// headerOptionsCarrier is satisfied by every request embedding BaseRequest.
+type headerOptionsCarrier interface {
+	ToHeaderOptions() HeaderOptions
 }
 
-// BaseRequestOf returns the request-scoped options carried by a request, or a zero value when the
-// request carries none.
-func BaseRequestOf(request interface{}) BaseRequest {
-	if carrier, ok := request.(baseRequestCarrier); ok {
-		return carrier.baseRequest()
+// HeaderOptionsOf returns the header options carried by a request, or a zero value when the request
+// carries none.
+func HeaderOptionsOf(request interface{}) HeaderOptions {
+	if carrier, ok := request.(headerOptionsCarrier); ok {
+		return carrier.ToHeaderOptions()
 	}
-	return BaseRequest{}
+	return HeaderOptions{}
 }
 
 // setRequestScopedHeaders applies the options that travel as headers rather than in the payload.
 // New options are added here and nowhere else.
-func setRequestScopedHeaders(req *http.Request, headerOptions interface{}) {
-	options := BaseRequestOf(headerOptions)
-
-	if options.IdempotencyKey != "" {
-		req.Header.Set(IdempotencyKeyHeaderName, options.IdempotencyKey)
+func setRequestScopedHeaders(req *http.Request, headerOptions HeaderOptions) {
+	if headerOptions.IdempotencyKey != "" {
+		req.Header.Set(IdempotencyKeyHeaderName, headerOptions.IdempotencyKey)
 	}
 }
 
-func (c *Client) newRequest(ctx context.Context, method, urlStr string, body, headerOptions interface{},
-	contentType, accept string) (*http.Request, error) {
+func (c *Client) newRequest(ctx context.Context, method, urlStr string, body interface{},
+	headerOptions HeaderOptions, contentType, accept string) (*http.Request, error) {
 	u, err := c.baseURL.Parse(urlStr)
 	if err != nil {
 		return nil, err

@@ -753,11 +753,20 @@ type BaseRequest struct {
     IdempotencyKey string `json:"-" schema:"-"`
 }
 
-// baseRequest is promoted to every request that embeds BaseRequest, so the options can be read by
-// type assertion instead of reflection. It returns the whole struct rather than one field, so
-// adding a new request-scoped option needs no new plumbing.
-func (r BaseRequest) baseRequest() BaseRequest {
-    return r
+// HeaderOptions carries the request-scoped options that travel as headers rather than in the
+// payload. It is a distinct type from BaseRequest so the header layer cannot reach path variables
+// or body fields, and distinct from RequestOptions, which holds client configuration.
+type HeaderOptions struct {
+    IdempotencyKey string
+}
+
+// ToHeaderOptions is promoted to every request that embeds BaseRequest, so the options can be read
+// by type assertion instead of reflection. Returning the whole struct means adding a new
+// request-scoped option needs no new plumbing.
+func (r BaseRequest) ToHeaderOptions() HeaderOptions {
+    return HeaderOptions{
+        IdempotencyKey: r.IdempotencyKey,
+    }
 }
 
 type CreatePaymentRequest struct {
