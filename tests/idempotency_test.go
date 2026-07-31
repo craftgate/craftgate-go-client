@@ -73,7 +73,6 @@ func Test_Idempotency_KeyIsExcludedFromBody(t *testing.T) {
 	}
 }
 
-// A regression here rejects every delete/approve/cancel call at the API.
 func Test_Idempotency_BodySignatureIsUnchangedByKey(t *testing.T) {
 	withKey := adapter.CreatePaymentRequest{Price: 100}
 	withKey.IdempotencyKey = "idempotency-key-1"
@@ -88,7 +87,6 @@ func Test_Idempotency_BodySignatureIsUnchangedByKey(t *testing.T) {
 		t.Fatalf("Error %s", err)
 	}
 
-	// Signatures are salted with a random key, so recompute b's hash over a's random key.
 	expected := adapter.GenerateHash(b.URL.String(), "api-key", "secret-key",
 		a.Header.Get(adapter.RandomHeaderName), readBody(t, b))
 	if got := a.Header.Get(adapter.SignatureHeaderName); got != expected {
@@ -144,7 +142,6 @@ func Test_Idempotency_PathOnlySignatureIsUnchangedByKey(t *testing.T) {
 	}
 }
 
-// gorilla/schema flattens embedded structs, so BaseRequest needs `schema:"-"`.
 func Test_Idempotency_KeyIsExcludedFromQueryParams(t *testing.T) {
 	request := adapter.SearchPaymentsRequest{Page: 0, Size: 10}
 	request.IdempotencyKey = "idempotency-key-1"

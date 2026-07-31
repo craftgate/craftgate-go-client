@@ -164,17 +164,10 @@ func newClient(apiKey, secretKey string) *Client {
 	return client
 }
 
-// NewRequest builds a signed request. Header options are read from body.
 func (c *Client) NewRequest(ctx context.Context, method, urlStr string, body interface{}) (*http.Request, error) {
 	return c.newRequest(ctx, method, urlStr, body, HeaderOptionsOf(body), jsonContentType, jsonContentType)
 }
 
-// NewRequestWithoutBody builds a signed request that sends no body, for endpoints whose parameters
-// live in the URL path.
-//
-// Only the header options are passed, never the request itself: newRequest encodes a non-nil body
-// into the query string for DELETE, and since the signature covers the final URL that would ship
-// silently.
 func (c *Client) NewRequestWithoutBody(ctx context.Context, method, urlStr string, headerOptions HeaderOptions) (*http.Request, error) {
 	return c.newRequest(ctx, method, urlStr, nil, headerOptions, jsonContentType, jsonContentType)
 }
@@ -183,13 +176,10 @@ func (c *Client) NewRequestForByteResponse(ctx context.Context, method, urlStr s
 	return c.newRequest(ctx, method, urlStr, body, HeaderOptionsOf(body), byteContentType, byteAcceptHeader)
 }
 
-// headerOptionsCarrier is satisfied by every request embedding BaseRequest.
 type headerOptionsCarrier interface {
 	ToHeaderOptions() HeaderOptions
 }
 
-// HeaderOptionsOf returns the header options carried by a request, or a zero value when the request
-// carries none.
 func HeaderOptionsOf(request interface{}) HeaderOptions {
 	if carrier, ok := request.(headerOptionsCarrier); ok {
 		return carrier.ToHeaderOptions()
@@ -197,8 +187,6 @@ func HeaderOptionsOf(request interface{}) HeaderOptions {
 	return HeaderOptions{}
 }
 
-// setRequestScopedHeaders applies the options that travel as headers rather than in the payload.
-// New options are added here and nowhere else.
 func setRequestScopedHeaders(req *http.Request, headerOptions HeaderOptions) {
 	if headerOptions.IdempotencyKey != "" {
 		req.Header.Set(IdempotencyKeyHeaderName, headerOptions.IdempotencyKey)
