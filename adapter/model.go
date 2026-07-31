@@ -763,10 +763,12 @@ type HeaderOptions struct {
 // ToHeaderOptions is promoted to every request that embeds BaseRequest, so the options can be read
 // by type assertion instead of reflection. Returning the whole struct means adding a new
 // request-scoped option needs no new plumbing.
+//
+// The conversion holds because the two structs carry the same fields; struct tags are ignored. If
+// they ever diverge, this stops compiling — which is the right place to decide whether the new
+// field belongs in the header layer.
 func (r BaseRequest) ToHeaderOptions() HeaderOptions {
-    return HeaderOptions{
-        IdempotencyKey: r.IdempotencyKey,
-    }
+    return HeaderOptions(r)
 }
 
 type CreatePaymentRequest struct {
