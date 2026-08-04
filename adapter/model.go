@@ -746,15 +746,15 @@ type RoutingOptions struct {
 // requests
 
 type BaseRequest struct {
-    IdempotencyKey string `json:"-" schema:"-"`
+    HeaderOptions HeaderOptions `json:"-" schema:"-"`
 }
 
 type HeaderOptions struct {
     IdempotencyKey string
 }
 
-func (r BaseRequest) ToHeaderOptions() HeaderOptions {
-    return HeaderOptions(r)
+func (r BaseRequest) getHeaderOptions() HeaderOptions {
+    return r.HeaderOptions
 }
 
 type CreatePaymentRequest struct {

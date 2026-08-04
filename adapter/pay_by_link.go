@@ -57,7 +57,7 @@ func (api *PayByLink) RetrieveProduct(ctx context.Context, id int64) (interface{
 
 func (api *PayByLink) DeleteProduct(ctx context.Context, request DeleteProductRequest) error {
 	newRequest, err := api.Client.NewRequestWithoutBody(ctx, http.MethodDelete,
-		fmt.Sprintf("/craftlink/v1/products/%d", request.Id), request.ToHeaderOptions())
+		fmt.Sprintf("/craftlink/v1/products/%d", request.Id), request)
 	if err != nil {
 		return err
 	}

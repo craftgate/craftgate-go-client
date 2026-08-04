@@ -29,7 +29,7 @@ func readBody(t *testing.T, req *http.Request) string {
 
 func Test_Idempotency_BodyRequest_SendsKeyAsHeader(t *testing.T) {
 	request := adapter.CreatePaymentRequest{Price: 100}
-	request.IdempotencyKey = "idempotency-key-1"
+	request.HeaderOptions = adapter.HeaderOptions{IdempotencyKey: "idempotency-key-1"}
 
 	req, err := idempotencyClient.NewRequest(context.Background(), http.MethodPost, "/payment/v1/card-payments", request)
 	if err != nil {
@@ -56,7 +56,7 @@ func Test_Idempotency_BodyRequest_WithoutKeySendsNoHeader(t *testing.T) {
 
 func Test_Idempotency_KeyIsExcludedFromBody(t *testing.T) {
 	request := adapter.CreatePaymentRequest{Price: 100}
-	request.IdempotencyKey = "idempotency-key-1"
+	request.HeaderOptions = adapter.HeaderOptions{IdempotencyKey: "idempotency-key-1"}
 
 	req, err := idempotencyClient.NewRequest(context.Background(), http.MethodPost, "/payment/v1/card-payments", request)
 	if err != nil {
@@ -67,7 +67,8 @@ func Test_Idempotency_KeyIsExcludedFromBody(t *testing.T) {
 	if !strings.Contains(body, `"price":100`) {
 		t.Errorf("expected price in body, got %q", body)
 	}
-	if strings.Contains(body, "IdempotencyKey") || strings.Contains(body, "idempotencyKey") ||
+	if strings.Contains(body, "HeaderOptions") || strings.Contains(body, "headerOptions") ||
+		strings.Contains(body, "IdempotencyKey") || strings.Contains(body, "idempotencyKey") ||
 		strings.Contains(body, "idempotency-key-1") {
 		t.Errorf("idempotency key leaked into body: %q", body)
 	}
@@ -75,7 +76,7 @@ func Test_Idempotency_KeyIsExcludedFromBody(t *testing.T) {
 
 func Test_Idempotency_BodySignatureIsUnchangedByKey(t *testing.T) {
 	withKey := adapter.CreatePaymentRequest{Price: 100}
-	withKey.IdempotencyKey = "idempotency-key-1"
+	withKey.HeaderOptions = adapter.HeaderOptions{IdempotencyKey: "idempotency-key-1"}
 	withoutKey := adapter.CreatePaymentRequest{Price: 100}
 
 	a, err := idempotencyClient.NewRequest(context.Background(), http.MethodPost, "/payment/v1/card-payments", withKey)
@@ -96,10 +97,10 @@ func Test_Idempotency_BodySignatureIsUnchangedByKey(t *testing.T) {
 
 func Test_Idempotency_PathOnlyRequest_SendsKeyAndNoQueryOrBody(t *testing.T) {
 	request := adapter.ExpireCheckoutPaymentRequest{Token: "token-1"}
-	request.IdempotencyKey = "idempotency-key-1"
+	request.HeaderOptions = adapter.HeaderOptions{IdempotencyKey: "idempotency-key-1"}
 
 	req, err := idempotencyClient.NewRequestWithoutBody(context.Background(), http.MethodDelete,
-		"/payment/v1/checkout-payments/token-1", request.ToHeaderOptions())
+		"/payment/v1/checkout-payments/token-1", request)
 	if err != nil {
 		t.Fatalf("Error %s", err)
 	}
@@ -119,15 +120,15 @@ func Test_Idempotency_PathOnlySignatureIsUnchangedByKey(t *testing.T) {
 	path := "/payment/v1/checkout-payments/token-1"
 
 	withKey := adapter.ExpireCheckoutPaymentRequest{Token: "token-1"}
-	withKey.IdempotencyKey = "idempotency-key-1"
+	withKey.HeaderOptions = adapter.HeaderOptions{IdempotencyKey: "idempotency-key-1"}
 
 	a, err := idempotencyClient.NewRequestWithoutBody(context.Background(), http.MethodDelete, path,
-		withKey.ToHeaderOptions())
+		withKey)
 	if err != nil {
 		t.Fatalf("Error %s", err)
 	}
 	b, err := idempotencyClient.NewRequestWithoutBody(context.Background(), http.MethodDelete, path,
-		adapter.ExpireCheckoutPaymentRequest{Token: "token-1"}.ToHeaderOptions())
+		adapter.ExpireCheckoutPaymentRequest{Token: "token-1"})
 	if err != nil {
 		t.Fatalf("Error %s", err)
 	}
@@ -144,14 +145,15 @@ func Test_Idempotency_PathOnlySignatureIsUnchangedByKey(t *testing.T) {
 
 func Test_Idempotency_KeyIsExcludedFromQueryParams(t *testing.T) {
 	request := adapter.SearchPaymentsRequest{Page: 0, Size: 10}
-	request.IdempotencyKey = "idempotency-key-1"
+	request.HeaderOptions = adapter.HeaderOptions{IdempotencyKey: "idempotency-key-1"}
 
 	query, err := adapter.QueryParams(request)
 	if err != nil {
 		t.Fatalf("Error %s", err)
 	}
 
-	if strings.Contains(query, "IdempotencyKey") || strings.Contains(query, "idempotencyKey") ||
+	if strings.Contains(query, "HeaderOptions") || strings.Contains(query, "headerOptions") ||
+		strings.Contains(query, "IdempotencyKey") || strings.Contains(query, "idempotencyKey") ||
 		strings.Contains(query, "idempotency-key-1") {
 		t.Errorf("idempotency key leaked into query params: %q", query)
 	}
@@ -165,40 +167,52 @@ func Test_Idempotency_KeyIsExcludedFromQueryParams(t *testing.T) {
 	}
 }
 
-func Test_Idempotency_HeaderOptionsAreReadFromAnyRequest(t *testing.T) {
+func Test_Idempotency_HeaderOptionsAreReadFromValueAndPointerRequests(t *testing.T) {
+	path := "/craftlink/v1/products/42"
 	request := adapter.DeleteProductRequest{Id: 42}
-	request.IdempotencyKey = "idempotency-key-1"
+	request.HeaderOptions = adapter.HeaderOptions{IdempotencyKey: "idempotency-key-1"}
 
-	if got := adapter.HeaderOptionsOf(request).IdempotencyKey; got != "idempotency-key-1" {
+	value, err := idempotencyClient.NewRequestWithoutBody(context.Background(), http.MethodDelete, path, request)
+	if err != nil {
+		t.Fatalf("Error %s", err)
+	}
+	if got := value.Header.Get(idempotencyKeyHeaderName); got != "idempotency-key-1" {
 		t.Errorf("expected idempotency-key-1, got %q", got)
 	}
-	if got := adapter.HeaderOptionsOf(&request).IdempotencyKey; got != "idempotency-key-1" {
+
+	pointer, err := idempotencyClient.NewRequestWithoutBody(context.Background(), http.MethodDelete, path, &request)
+	if err != nil {
+		t.Fatalf("Error %s", err)
+	}
+	if got := pointer.Header.Get(idempotencyKeyHeaderName); got != "idempotency-key-1" {
 		t.Errorf("expected idempotency-key-1 for pointer, got %q", got)
 	}
-	if got := adapter.HeaderOptionsOf(adapter.DeleteProductRequest{Id: 42}).IdempotencyKey; got != "" {
-		t.Errorf("expected empty key, got %q", got)
+}
+
+func Test_Idempotency_NilBodySendsNoHeader(t *testing.T) {
+	req, err := idempotencyClient.NewRequest(context.Background(), http.MethodGet, "/craftlink/v1/products/42", nil)
+	if err != nil {
+		t.Fatalf("Error %s", err)
 	}
-	if got := adapter.HeaderOptionsOf(nil).IdempotencyKey; got != "" {
-		t.Errorf("expected empty key for nil, got %q", got)
-	}
-	if got := adapter.HeaderOptionsOf("not-a-struct").IdempotencyKey; got != "" {
-		t.Errorf("expected empty key for non-struct, got %q", got)
+
+	if _, present := req.Header[http.CanonicalHeaderKey(idempotencyKeyHeaderName)]; present {
+		t.Error("expected no idempotency key header for a nil body")
 	}
 }
 
 func Test_Idempotency_WrappersCarryPathVariables(t *testing.T) {
 	removeValue := adapter.RemoveValueFromValueListRequest{ListName: "ipList", ValueId: "value-1"}
-	removeValue.IdempotencyKey = "idempotency-key-1"
+	removeValue.HeaderOptions = adapter.HeaderOptions{IdempotencyKey: "idempotency-key-1"}
 
 	posStatus := adapter.UpdateMerchantPosStatusRequest{MerchantPosId: 1, PosStatus: adapter.PosStatus_PASSIVE}
-	posStatus.IdempotencyKey = "idempotency-key-2"
+	posStatus.HeaderOptions = adapter.HeaderOptions{IdempotencyKey: "idempotency-key-2"}
 
 	if removeValue.ListName != "ipList" || removeValue.ValueId != "value-1" ||
-		removeValue.IdempotencyKey != "idempotency-key-1" {
+		removeValue.HeaderOptions.IdempotencyKey != "idempotency-key-1" {
 		t.Errorf("unexpected wrapper contents: %+v", removeValue)
 	}
 	if posStatus.MerchantPosId != 1 || posStatus.PosStatus != adapter.PosStatus_PASSIVE ||
-		posStatus.IdempotencyKey != "idempotency-key-2" {
+		posStatus.HeaderOptions.IdempotencyKey != "idempotency-key-2" {
 		t.Errorf("unexpected wrapper contents: %+v", posStatus)
 	}
 }

@@ -164,27 +164,27 @@ func newClient(apiKey, secretKey string) *Client {
 	return client
 }
 
-func (c *Client) NewRequest(ctx context.Context, method, urlStr string, body interface{}) (*http.Request, error) {
-	return c.newRequest(ctx, method, urlStr, body, HeaderOptionsOf(body), jsonContentType, jsonContentType)
+func (c *Client) NewRequest(ctx context.Context, method, urlStr string, body Request) (*http.Request, error) {
+	return c.newRequest(ctx, method, urlStr, body, headerOptionsOf(body), jsonContentType, jsonContentType)
 }
 
-func (c *Client) NewRequestWithoutBody(ctx context.Context, method, urlStr string, headerOptions HeaderOptions) (*http.Request, error) {
-	return c.newRequest(ctx, method, urlStr, nil, headerOptions, jsonContentType, jsonContentType)
+func (c *Client) NewRequestWithoutBody(ctx context.Context, method, urlStr string, request Request) (*http.Request, error) {
+	return c.newRequest(ctx, method, urlStr, nil, headerOptionsOf(request), jsonContentType, jsonContentType)
 }
 
-func (c *Client) NewRequestForByteResponse(ctx context.Context, method, urlStr string, body interface{}) (*http.Request, error) {
-	return c.newRequest(ctx, method, urlStr, body, HeaderOptionsOf(body), byteContentType, byteAcceptHeader)
+func (c *Client) NewRequestForByteResponse(ctx context.Context, method, urlStr string, body Request) (*http.Request, error) {
+	return c.newRequest(ctx, method, urlStr, body, headerOptionsOf(body), byteContentType, byteAcceptHeader)
 }
 
-type headerOptionsCarrier interface {
-	ToHeaderOptions() HeaderOptions
+type Request interface {
+	getHeaderOptions() HeaderOptions
 }
 
-func HeaderOptionsOf(request interface{}) HeaderOptions {
-	if carrier, ok := request.(headerOptionsCarrier); ok {
-		return carrier.ToHeaderOptions()
+func headerOptionsOf(request Request) HeaderOptions {
+	if request == nil {
+		return HeaderOptions{}
 	}
-	return HeaderOptions{}
+	return request.getHeaderOptions()
 }
 
 func setRequestScopedHeaders(req *http.Request, headerOptions HeaderOptions) {

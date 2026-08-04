@@ -91,7 +91,7 @@ func (api *Fraud) CreateFraudValueList(ctx context.Context, listName string, fra
 
 func (api *Fraud) DeleteFraudValueList(ctx context.Context, request DeleteValueListRequest) error {
 	newRequest, err := api.Client.NewRequestWithoutBody(ctx, http.MethodDelete,
-		"/fraud/v1/value-lists/"+request.ListName, request.ToHeaderOptions())
+		"/fraud/v1/value-lists/"+request.ListName, request)
 	if err != nil {
 		return err
 	}
@@ -137,7 +137,7 @@ func (api *Fraud) AddValueToFraudValueList(ctx context.Context, request FraudVal
 
 func (api *Fraud) RemoveValueFromFraudValueList(ctx context.Context, request RemoveValueFromValueListRequest) error {
 	newRequest, err := api.Client.NewRequestWithoutBody(ctx, http.MethodDelete,
-		"/fraud/v1/value-lists/"+request.ListName+"/values/"+request.ValueId, request.ToHeaderOptions())
+		"/fraud/v1/value-lists/"+request.ListName+"/values/"+request.ValueId, request)
 	if err != nil {
 		return err
 	}
