@@ -2857,6 +2857,12 @@ type RemoveValueFromValueListRequest struct {
     ValueId  string
 }
 
+type UpdateFraudCheckStatusRequest struct {
+    BaseRequest
+    Id          int64            `json:"-"`
+    CheckStatus FraudCheckStatus `json:"checkStatus,omitempty"`
+}
+
 type UpdateMerchantPosStatusRequest struct {
     BaseRequest
     MerchantPosId int64
