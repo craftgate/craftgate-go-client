@@ -216,3 +216,26 @@ func Test_Idempotency_WrappersCarryPathVariables(t *testing.T) {
 		t.Errorf("unexpected wrapper contents: %+v", posStatus)
 	}
 }
+
+func Test_Idempotency_UpdateFraudCheckStatus_SendsKeyAndBodyWithoutId(t *testing.T) {
+	request := adapter.UpdateFraudCheckStatusRequest{Id: 2613, CheckStatus: adapter.FraudCheckStatus_FRAUD}
+	request.HeaderOptions = adapter.HeaderOptions{IdempotencyKey: "idempotency-key-1"}
+
+	req, err := idempotencyClient.NewRequest(context.Background(), http.MethodPut,
+		"/fraud/v1/fraud-checks/2613/check-status", request)
+	if err != nil {
+		t.Fatalf("Error %s", err)
+	}
+
+	if got := req.Header.Get(idempotencyKeyHeaderName); got != "idempotency-key-1" {
+		t.Errorf("expected header idempotency-key-1, got %q", got)
+	}
+
+	body := strings.TrimSpace(readBody(t, req))
+	if body != `{"checkStatus":"FRAUD"}` {
+		t.Errorf("unexpected body: %q", body)
+	}
+	if strings.Contains(body, "2613") || strings.Contains(body, "Id") {
+		t.Errorf("path variable leaked into body: %q", body)
+	}
+}
