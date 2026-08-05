@@ -24,6 +24,10 @@ var schemaEncoder = schema.NewEncoder()
 const (
 	timeEncodeLayout = "2006-01-02T15:04:05"
 	timeDecodeLayout = "\"2006-01-02T15:04:05\""
+
+	jsonContentType  = "application/json; charset=utf-8"
+	byteContentType  = "application/octet-stream; charset=utf-8"
+	byteAcceptHeader = "application/octet-stream,application/json; charset=utf-8"
 )
 
 type TimeResponse struct {
@@ -160,59 +164,37 @@ func newClient(apiKey, secretKey string) *Client {
 	return client
 }
 
-func (c *Client) NewRequest(ctx context.Context, method, urlStr string, body interface{}) (*http.Request, error) {
-	u, err := c.baseURL.Parse(urlStr)
-	if err != nil {
-		return nil, err
-	}
-
-	var req *http.Request
-
-	switch method {
-	case http.MethodGet, http.MethodDelete, http.MethodHead, http.MethodOptions:
-		req, err = http.NewRequestWithContext(ctx, method, u.String(), nil)
-		if err != nil {
-			return nil, err
-		}
-
-		if body != nil {
-			req.URL.RawQuery, _ = QueryParams(body)
-		}
-	default:
-		buf := new(bytes.Buffer)
-		if body != nil {
-			err = json.NewEncoder(buf).Encode(body)
-			if err != nil {
-				return nil, err
-			}
-		}
-
-		req, err = http.NewRequest(method, u.String(), buf)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	for k, v := range c.headers {
-		req.Header.Add(k, v)
-	}
-
-	authorizationRequestBody := c.extractRequestBodyForAuthorization(body, method, req)
-	randomStr := GenerateRandomString()
-	hashStr := GenerateHash(req.URL.String(), c.apiKey, c.secretKey, randomStr, authorizationRequestBody)
-
-	req.Header.Set(ApiKeyHeaderName, c.apiKey)
-	req.Header.Set(RandomHeaderName, randomStr)
-	req.Header.Set(AuthVersionHeaderName, AuthVersion)
-	req.Header.Set(ClientVersionHeaderName, ClientVersion)
-	req.Header.Set(SignatureHeaderName, hashStr)
-	req.Header.Set("Content-Type", "application/json; charset=utf-8")
-	req.Header.Set("Accept", "application/json; charset=utf-8")
-
-	return req, nil
+func (c *Client) NewRequest(ctx context.Context, method, urlStr string, body Request) (*http.Request, error) {
+	return c.newRequest(ctx, method, urlStr, body, headerOptionsOf(body), jsonContentType, jsonContentType)
 }
 
-func (c *Client) NewRequestForByteResponse(ctx context.Context, method, urlStr string, body interface{}) (*http.Request, error) {
+func (c *Client) NewRequestWithoutBody(ctx context.Context, method, urlStr string, request Request) (*http.Request, error) {
+	return c.newRequest(ctx, method, urlStr, nil, headerOptionsOf(request), jsonContentType, jsonContentType)
+}
+
+func (c *Client) NewRequestForByteResponse(ctx context.Context, method, urlStr string, body Request) (*http.Request, error) {
+	return c.newRequest(ctx, method, urlStr, body, headerOptionsOf(body), byteContentType, byteAcceptHeader)
+}
+
+type Request interface {
+	getHeaderOptions() HeaderOptions
+}
+
+func headerOptionsOf(request Request) HeaderOptions {
+	if request == nil {
+		return HeaderOptions{}
+	}
+	return request.getHeaderOptions()
+}
+
+func setRequestScopedHeaders(req *http.Request, headerOptions HeaderOptions) {
+	if headerOptions.IdempotencyKey != "" {
+		req.Header.Set(IdempotencyKeyHeaderName, headerOptions.IdempotencyKey)
+	}
+}
+
+func (c *Client) newRequest(ctx context.Context, method, urlStr string, body interface{},
+	headerOptions HeaderOptions, contentType, accept string) (*http.Request, error) {
 	u, err := c.baseURL.Parse(urlStr)
 	if err != nil {
 		return nil, err
@@ -258,8 +240,9 @@ func (c *Client) NewRequestForByteResponse(ctx context.Context, method, urlStr s
 	req.Header.Set(AuthVersionHeaderName, AuthVersion)
 	req.Header.Set(ClientVersionHeaderName, ClientVersion)
 	req.Header.Set(SignatureHeaderName, hashStr)
-	req.Header.Set("Content-Type", "application/octet-stream; charset=utf-8")
-	req.Header.Set("Accept", "application/octet-stream,application/json; charset=utf-8")
+	req.Header.Set("Content-Type", contentType)
+	req.Header.Set("Accept", accept)
+	setRequestScopedHeaders(req, headerOptions)
 
 	return req, nil
 }

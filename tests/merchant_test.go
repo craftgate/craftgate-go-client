@@ -55,7 +55,8 @@ func Test_RetrieveMerchantPos(t *testing.T) {
 }
 
 func Test_UpdateMerchantPosStatus(t *testing.T) {
-	err := merchantClient.Merchant.UpdateMerchantPosStatus(context.Background(), 1, craftgate.PosStatus_ACTIVE)
+	err := merchantClient.Merchant.UpdateMerchantPosStatus(context.Background(),
+		adapter.UpdateMerchantPosStatusRequest{MerchantPosId: 1, PosStatus: craftgate.PosStatus_ACTIVE})
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -63,7 +64,8 @@ func Test_UpdateMerchantPosStatus(t *testing.T) {
 }
 
 func Test_DeleteMerchantPosStatus(t *testing.T) {
-	err := merchantClient.Merchant.DeleteMerchantPosStatus(context.Background(), 1)
+	err := merchantClient.Merchant.DeleteMerchantPosStatus(context.Background(),
+		adapter.DeleteMerchantPosRequest{MerchantPosId: 1})
 
 	if err != nil {
 		t.Errorf("Error %s", err)
