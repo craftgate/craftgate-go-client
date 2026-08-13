@@ -1058,7 +1058,7 @@ func TestPayment_RetrieveLoyaltiesByInstallment(t *testing.T) {
 		ExpireMonth: "07",
 		Cvc:         "000",
 		Installment: 2,
-		LoyaltyType: craftgate.LoyaltyType_ADDITIONAL_INSTALLMENT
+		LoyaltyType: craftgate.LoyaltyType_ADDITIONAL_INSTALLMENT,
 	}
 	res, err := paymentClient.Payment.RetrieveLoyalties(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
