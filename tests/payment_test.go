@@ -1051,6 +1051,23 @@ func TestPayment_RetrieveLoyalties(t *testing.T) {
 	}
 }
 
+func TestPayment_RetrieveLoyaltiesByInstallment(t *testing.T) {
+	request := adapter.RetrieveLoyaltiesRequest{
+		CardNumber:  "5482370000000003",
+		ExpireYear:  "2044",
+		ExpireMonth: "07",
+		Cvc:         "000",
+		Installment: 2,
+		LoyaltyType: craftgate.LoyaltyType_ADDITIONAL_INSTALLMENT,
+	}
+	res, err := paymentClient.Payment.RetrieveLoyalties(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_RefundPaymentTransaction(t *testing.T) {
 	request := adapter.RefundPaymentTransactionRequest{
 		PaymentTransactionId:  1,
