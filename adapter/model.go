@@ -100,7 +100,7 @@ const (
     ApmType_KLARNA                 ApmType = "KLARNA"
     ApmType_AFTERPAY               ApmType = "AFTERPAY"
     ApmType_KASPI                  ApmType = "KASPI"
-    ApmType_INSTANT_TRANSFER       ApmType = "INSTANT_TRANSFER"
+    ApmType_COMPAY                 ApmType = "COMPAY"
     ApmType_TOMPAY                 ApmType = "TOMPAY"
     ApmType_MASLAK                 ApmType = "MASLAK"
     ApmType_ALFABANK               ApmType = "ALFABANK"
@@ -165,7 +165,7 @@ const (
     PaymentProvider_HEPSIPAY                    PaymentProvider = "HEPSIPAY"
     PaymentProvider_STRIPE                      PaymentProvider = "STRIPE"
     PaymentProvider_KASPI                       PaymentProvider = "KASPI"
-    PaymentProvider_INSTANT_TRANSFER            PaymentProvider = "INSTANT_TRANSFER"
+    PaymentProvider_COMPAY                      PaymentProvider = "COMPAY"
     PaymentProvider_MASLAK                      PaymentProvider = "MASLAK"
     PaymentProvider_TOMPAY                      PaymentProvider = "TOMPAY"
     PaymentProvider_TOM_FINANCE                 PaymentProvider = "TOM_FINANCE"
@@ -265,7 +265,7 @@ const (
     PaymentMethod_PAYPAL                      PaymentMethod = "PAYPAL"
     PaymentMethod_KLARNA                      PaymentMethod = "KLARNA"
     PaymentMethod_AFTERPAY                    PaymentMethod = "AFTERPAY"
-    PaymentMethod_INSTANT_TRANSFER            PaymentMethod = "INSTANT_TRANSFER"
+    PaymentMethod_COMPAY                      PaymentMethod = "COMPAY"
     PaymentMethod_STRIPE                      PaymentMethod = "STRIPE"
     PaymentMethod_HEPSIPAY                    PaymentMethod = "HEPSIPAY"
     PaymentMethod_GARANTI_PAY                 PaymentMethod = "GARANTI_PAY"
@@ -1787,11 +1787,11 @@ type InstallmentResponse struct {
     InstallmentPrices []InstallmentPrice `json:"installmentPrices"`
 }
 
-type InstantTransferBanksResponse struct {
-    Items []InstantTransferBank `json:"items"`
+type CompayBanksResponse struct {
+    Items []CompayBank `json:"items"`
 }
 
-type InstantTransferBank struct {
+type CompayBank struct {
     BankCode    *string `json:"bankCode"`
     BankName    *string `json:"bankName"`
     BankLogoUrl *string `json:"bankLogoUrl"`
