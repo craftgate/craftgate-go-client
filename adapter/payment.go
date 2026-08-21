@@ -707,12 +707,12 @@ func (api *Payment) VerifyBnplPayment(ctx context.Context, request VerifyBnplPay
 	return response.Data, nil
 }
 
-func (api *Payment) RetrieveActiveBanks(ctx context.Context) (*InstantTransferBanksResponse, error) {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/payment/v1/instant-transfer-banks", nil)
+func (api *Payment) RetrieveActiveBanks(ctx context.Context) (*CompayBanksResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/payment/v1/compay-banks", nil)
 	if err != nil {
 		return nil, err
 	}
-	response := &Response[InstantTransferBanksResponse]{}
+	response := &Response[CompayBanksResponse]{}
 	err = api.Client.Do(ctx, newRequest, response)
 	if err != nil {
 		return nil, err
