@@ -708,7 +708,7 @@ func (api *Payment) VerifyBnplPayment(ctx context.Context, request VerifyBnplPay
 }
 
 func (api *Payment) RetrieveActiveBanks(ctx context.Context) (*CompayBanksResponse, error) {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/payment/v1/compay-banks", nil)
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/payment/v1/compay/banks", nil)
 	if err != nil {
 		return nil, err
 	}
