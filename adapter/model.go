@@ -1895,6 +1895,7 @@ type CreateProductRequest struct {
     Currency            Currency   `json:"currency"`
     Description         string     `json:"description,omitempty"`
     MultiPayment        bool       `json:"multiPayment,omitempty"`
+    ForceThreeDS        bool       `json:"forceThreeDS,omitempty"`
     ExpiresAt           *time.Time `json:"expiresAt,omitempty"`
     EnabledInstallments []int      `json:"enabledInstallments"`
     BasketIdentifier    string     `json:"basketIdentifier,omitempty"`
@@ -1913,6 +1914,7 @@ type UpdateProductRequest struct {
     Currency            Currency   `json:"currency"`
     Description         string     `json:"description,omitempty"`
     MultiPayment        bool       `json:"multiPayment,omitempty"`
+    ForceThreeDS        bool       `json:"forceThreeDS,omitempty"`
     ExpiresAt           *time.Time `json:"expiresAt,omitempty"`
     EnabledInstallments []int      `json:"enabledInstallments"`
     BasketIdentifier    string     `json:"basketIdentifier,omitempty"`
@@ -1953,6 +1955,7 @@ type ProductResponse struct {
     QrCodeUrl           *string       `json:"qrCodeUrl"`
     Channel             *string       `json:"channel"`
     MultiPayment        *bool         `json:"multiPayment"`
+    ForceThreeDS        *bool         `json:"forceThreeDS"`
     ExpiresAt           *TimeResponse `json:"expiresAt"`
     BasketIdentifier    *string       `json:"basketIdentifier,omitempty"`
 }
