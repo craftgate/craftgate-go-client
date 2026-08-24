@@ -1026,15 +1026,16 @@ type InitApmDepositPaymentRequest struct {
 
 type RetrieveLoyaltiesRequest struct {
     BaseRequest
-    CardNumber     string                `json:"cardNumber,omitempty"`
-    ExpireYear     string                `json:"expireYear,omitempty"`
-    ExpireMonth    string                `json:"expireMonth,omitempty"`
-    Cvc            string                `json:"cvc,omitempty"`
-    CardUserKey    string                `json:"cardUserKey,omitempty"`
-    CardToken      string                `json:"cardToken,omitempty"`
-    ClientIp       *string               `json:"clientIp,omitempty"`
-    ConversationId *string               `json:"conversationId,omitempty"`
-    FraudParams    *FraudCheckParameters `json:"fraudParams,omitempty"`
+    CardNumber        string                `json:"cardNumber,omitempty"`
+    ExpireYear        string                `json:"expireYear,omitempty"`
+    ExpireMonth       string                `json:"expireMonth,omitempty"`
+    Cvc               string                `json:"cvc,omitempty"`
+    CardUserKey       string                `json:"cardUserKey,omitempty"`
+    CardToken         string                `json:"cardToken,omitempty"`
+    SecureFieldsToken string                `json:"secureFieldsToken,omitempty"`
+    ClientIp          *string               `json:"clientIp,omitempty"`
+    ConversationId    *string               `json:"conversationId,omitempty"`
+    FraudParams       *FraudCheckParameters `json:"fraudParams,omitempty"`
 }
 
 type RetrieveProviderCardRequest struct {
