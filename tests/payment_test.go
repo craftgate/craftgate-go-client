@@ -1051,6 +1051,18 @@ func TestPayment_RetrieveLoyalties(t *testing.T) {
 	}
 }
 
+func TestPayment_RetrieveLoyaltiesWithSecureFields(t *testing.T) {
+	request := adapter.RetrieveLoyaltiesRequest{
+		SecureFieldsToken: "xxXXxx",
+	}
+	res, err := paymentClient.Payment.RetrieveLoyalties(context.Background(), request)
+	_, _ = spew.Printf("%#v\n", res)
+
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
+
 func TestPayment_RefundPaymentTransaction(t *testing.T) {
 	request := adapter.RefundPaymentTransactionRequest{
 		PaymentTransactionId:  1,
