@@ -36,6 +36,7 @@ type FraudAction string
 type FraudCheckStatus string
 type FraudValueType string
 type FraudOperation string
+type FraudRuleScope string
 type AdditionalAction string
 type ApmAdditionalAction string
 type ReportFileType string
@@ -435,6 +436,12 @@ const (
 const (
     FraudAction_BLOCK  FraudAction = "BLOCK"
     FraudAction_REVIEW FraudAction = "REVIEW"
+)
+
+// fraud rule scope type declaration
+const (
+    FraudRuleScope_MERCHANT FraudRuleScope = "MERCHANT"
+    FraudRuleScope_GLOBAL   FraudRuleScope = "GLOBAL"
 )
 
 // fraud check status type declaration
@@ -2334,6 +2341,7 @@ type SearchFraudRuleRequest struct {
     MaxCreatedDate time.Time      `schema:"maxCreatedDate,omitempty"`
     Action         FraudAction    `schema:"action,omitempty"`
     Operation      FraudOperation `schema:"operation,omitempty"`
+    Scope          FraudRuleScope `schema:"scope,omitempty"`
     Size           int            `schema:"size,omitempty"`
     Page           int            `schema:"page,omitempty"`
 }
@@ -2347,6 +2355,7 @@ type FraudCheckResponse struct {
     RuleId         *int64            `json:"ruleId"`
     RuleName       *string           `json:"ruleName"`
     RuleConditions *string           `json:"ruleConditions"`
+    IsGlobalRule   *bool             `json:"isGlobalRule"`
     PaymentId      *int64            `json:"paymentId"`
     PaymentStatus  *PaymentStatus    `json:"paymentStatus"`
 }
@@ -2357,6 +2366,7 @@ type FraudRuleResponse struct {
     Action     *FraudAction      `json:"action"`
     Conditions *string           `json:"conditions"`
     Operations *[]FraudOperation `json:"operations"`
+    IsGlobal   *bool             `json:"isGlobal"`
 }
 
 type FraudPaymentData struct {
