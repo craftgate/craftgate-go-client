@@ -1228,6 +1228,12 @@ type MasterpassPaymentTokenGenerateRequest struct {
     ValidationType               MasterpassValidationType `json:"validationType,omitempty"`
 }
 
+type MasterpassAccountTokenGenerateRequest struct {
+    BaseRequest
+    Msisdn string `json:"msisdn,omitempty"`
+    UserId string `json:"userId,omitempty"`
+}
+
 type MasterpassPaymentCompleteRequest struct {
     BaseRequest
     ReferenceId string `json:"referenceId,omitempty"`
@@ -1483,6 +1489,10 @@ type MasterpassPaymentTokenGenerateResponse struct {
     ReferenceId     *string `json:"referenceId"`
     OrderNo         *string `json:"orderNo"`
     TerminalGroupId *string `json:"terminalGroupId"`
+}
+
+type MasterpassAccountTokenGenerateResponse struct {
+    Token *string `json:"token"`
 }
 
 type RefundWalletTransactionRequest struct {

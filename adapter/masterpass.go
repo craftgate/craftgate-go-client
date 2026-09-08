@@ -39,6 +39,21 @@ func (api *Masterpass) GenerateMasterpassPaymentToken(ctx context.Context, reque
 	return response.Data, nil
 }
 
+func (api *Masterpass) GenerateMasterpassAccountToken(ctx context.Context, request MasterpassAccountTokenGenerateRequest) (*MasterpassAccountTokenGenerateResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "payment/v2/masterpass-accounts/generate-token", request)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[MasterpassAccountTokenGenerateResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
 func (api *Masterpass) CompleteMasterpassPayment(ctx context.Context, request MasterpassPaymentCompleteRequest) (*PaymentResponse, error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "payment/v2/masterpass-payments/complete", request)
 	if err != nil {
