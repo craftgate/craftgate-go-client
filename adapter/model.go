@@ -1050,7 +1050,7 @@ type RetrieveLoyaltiesRequest struct {
     CardToken         string                `json:"cardToken,omitempty"`
     SecureFieldsToken string                `json:"secureFieldsToken,omitempty"`
     ClientIp          *string               `json:"clientIp,omitempty"`
-    ClientPort        *int                  `json:"clientPort,omitempty"`
+    ClientPort        int                   `json:"clientPort,omitempty"`
     ConversationId    *string               `json:"conversationId,omitempty"`
     FraudParams       *FraudCheckParameters `json:"fraudParams,omitempty"`
 }
