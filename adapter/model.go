@@ -776,6 +776,7 @@ type CreatePaymentRequest struct {
     ConversationId   string                 `json:"conversationId,omitempty"`
     ExternalId       string                 `json:"externalId,omitempty"`
     ClientIp         string                 `json:"clientIp,omitempty"`
+    ClientPort       int                    `json:"clientPort,omitempty"`
     PaymentPhase     PaymentPhase           `json:"paymentPhase,omitempty"`
     PaymentChannel   string                 `json:"paymentChannel,omitempty"`
     BuyerMemberId    int64                  `json:"buyerMemberId,omitempty"`
@@ -801,6 +802,7 @@ type CreateApmPaymentRequest struct {
     BuyerMemberId  int64         `json:"buyerMemberId,omitempty"`
     ApmOrderId     string        `json:"apmOrderId,omitempty"`
     ClientIp       string        `json:"clientIp,omitempty"`
+    ClientPort     int           `json:"clientPort,omitempty"`
     Items          []PaymentItem `json:"items"`
 }
 
@@ -816,6 +818,7 @@ type Init3DSPaymentRequest struct {
     ConversationId   string                 `json:"conversationId,omitempty"`
     ExternalId       string                 `json:"externalId,omitempty"`
     ClientIp         string                 `json:"clientIp,omitempty"`
+    ClientPort       int                    `json:"clientPort,omitempty"`
     PaymentPhase     PaymentPhase           `json:"paymentPhase,omitempty"`
     PaymentChannel   string                 `json:"paymentChannel,omitempty"`
     BuyerMemberId    int64                  `json:"buyerMemberId,omitempty"`
@@ -929,6 +932,7 @@ type VerifyCardRequest struct {
     VerificationPrice         float64                  `json:"verificationPrice,omitempty"`
     Currency                  Currency                 `json:"currency,omitempty"`
     ClientIp                  string                   `json:"clientIp,omitempty"`
+    ClientPort                int                      `json:"clientPort,omitempty"`
     ConversationId            string                   `json:"conversationId,omitempty"`
     CallbackUrl               string                   `json:"callbackUrl,omitempty"`
 }
@@ -949,6 +953,7 @@ type InitApmPaymentRequest struct {
     ApmOrderId       string            `json:"apmOrderId,omitempty"`
     ApmUserIdentity  string            `json:"apmUserIdentity,omitempty"`
     ClientIp         string            `json:"clientIp,omitempty"`
+    ClientPort       int               `json:"clientPort,omitempty"`
     AdditionalParams map[string]string `json:"additionalParams,omitempty"`
     Items            []PaymentItem     `json:"items"`
 }
@@ -974,6 +979,7 @@ type InitPosApmPaymentRequest struct {
     BuyerMemberId     int64                 `json:"buyerMemberId,omitempty"`
     BankOrderId       string                `json:"bankOrderId,omitempty"`
     ClientIp          string                `json:"clientIp,omitempty"`
+    ClientPort        int                   `json:"clientPort,omitempty"`
     Items             []PaymentItem         `json:"items"`
     AdditionalParams  map[string]string     `json:"additionalParams"`
     Installments      []PosApmInstallment   `json:"installments"`
@@ -1002,6 +1008,7 @@ type DepositPaymentRequest struct {
     CallbackUrl    string          `json:"callbackUrl,omitempty"`
     PosAlias       string          `json:"posAlias,omitempty"`
     ClientIp       string          `json:"clientIp,omitempty"`
+    ClientPort     int             `json:"clientPort,omitempty"`
     Card           Card            `json:"card"`
     RoutingOptions *RoutingOptions `json:"routingOptions,omitempty"`
 }
@@ -1012,6 +1019,7 @@ type CreateFundTransferDepositPaymentRequest struct {
     BuyerMemberId  int64   `json:"buyerMemberId,omitempty"`
     ConversationId string  `json:"conversationId,omitempty"`
     ClientIp       string  `json:"clientIp,omitempty"`
+    ClientPort     int     `json:"clientPort,omitempty"`
 }
 
 type InitApmDepositPaymentRequest struct {
@@ -1028,6 +1036,7 @@ type InitApmDepositPaymentRequest struct {
     ApmOrderId       string            `json:"apmOrderId,omitempty"`
     ApmUserIdentity  string            `json:"apmUserIdentity,omitempty"`
     ClientIp         string            `json:"clientIp,omitempty"`
+    ClientPort       int               `json:"clientPort,omitempty"`
     AdditionalParams map[string]string `json:"additionalParams,omitempty"`
 }
 
@@ -1041,6 +1050,7 @@ type RetrieveLoyaltiesRequest struct {
     CardToken         string                `json:"cardToken,omitempty"`
     SecureFieldsToken string                `json:"secureFieldsToken,omitempty"`
     ClientIp          *string               `json:"clientIp,omitempty"`
+    ClientPort        int                   `json:"clientPort,omitempty"`
     ConversationId    *string               `json:"conversationId,omitempty"`
     FraudParams       *FraudCheckParameters `json:"fraudParams,omitempty"`
 }
@@ -1078,6 +1088,7 @@ type InitGarantiPayPaymentRequest struct {
     ExternalId          string                  `json:"externalId,omitempty"`
     CallbackUrl         string                  `json:"callbackUrl,omitempty"`
     ClientIp            string                  `json:"clientIp,omitempty"`
+    ClientPort          int                     `json:"clientPort,omitempty"`
     PaymentChannel      string                  `json:"paymentChannel,omitempty"`
     BuyerMemberId       int64                   `json:"buyerMemberId,omitempty"`
     BankOrderId         string                  `json:"bankOrderId,omitempty"`
@@ -1263,6 +1274,7 @@ type InitBnplPaymentRequest struct {
     BuyerMemberId    int64                 `json:"buyerMemberId,omitempty"`
     ApmOrderId       string                `json:"apmOrderId,omitempty"`
     ClientIp         string                `json:"clientIp,omitempty"`
+    ClientPort       int                   `json:"clientPort,omitempty"`
     ApmUserIdentity  string                `json:"apmUserIdentity,omitempty"`
     AdditionalParams map[string]string     `json:"additionalParams"`
     Items            []PaymentItem         `json:"items"`
@@ -2583,6 +2595,7 @@ type MasterpassCreatePayment struct {
     ConversationId   string                 `json:"conversationId,omitempty"`
     ExternalId       string                 `json:"externalId,omitempty"`
     ClientIp         string                 `json:"clientIp,omitempty"`
+    ClientPort       int                    `json:"clientPort,omitempty"`
     PaymentPhase     PaymentPhase           `json:"paymentPhase,omitempty"`
     PaymentChannel   string                 `json:"paymentChannel,omitempty"`
     BuyerMemberId    int64                  `json:"buyerMemberId,omitempty"`
