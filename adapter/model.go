@@ -665,7 +665,8 @@ const (
 
 // tokenized card type declaration
 const (
-    TokenizedCardType_APPLE_PAY TokenizedCardType = "APPLE_PAY"
+    TokenizedCardType_APPLE_PAY   TokenizedCardType = "APPLE_PAY"
+    TokenizedCardType_BKM_EXPRESS TokenizedCardType = "BKM_EXPRESS"
 )
 
 const (
@@ -767,6 +768,8 @@ type InitCheckoutPaymentRequest struct {
     EnabledPaymentMethods       []PaymentMethod                `json:"enabledPaymentMethods,omitempty"`
     MasterpassGsmNumber         string                         `json:"masterpassGsmNumber,omitempty"`
     MasterpassUserId            string                         `json:"masterpassUserId,omitempty"`
+    BexGsmNumber                string                         `json:"bexGsmNumber,omitempty"`
+    BexUserId                   string                         `json:"bexUserId,omitempty"`
     CardUserKey                 string                         `json:"cardUserKey,omitempty"`
     BuyerMemberId               int64                          `json:"buyerMemberId,omitempty"`
     EnabledInstallments         []int                          `json:"enabledInstallments,omitempty"`
@@ -821,6 +824,8 @@ type InitMultiPaymentRequest struct {
     ForceThreeDS                        bool                   `json:"forceThreeDS,omitempty"`
     MasterpassGsmNumber                 string                 `json:"masterpassGsmNumber,omitempty"`
     MasterpassUserId                    string                 `json:"masterpassUserId,omitempty"`
+    BexGsmNumber                        string                 `json:"bexGsmNumber,omitempty"`
+    BexUserId                           string                 `json:"bexUserId,omitempty"`
     ApmUserIdentity                     string                 `json:"apmUserIdentity,omitempty"`
     Items                               []PaymentItem          `json:"items"`
     Ttl                                 int64                  `json:"ttl,omitempty"`
