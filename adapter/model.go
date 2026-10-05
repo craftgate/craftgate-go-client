@@ -824,8 +824,6 @@ type InitMultiPaymentRequest struct {
     ForceThreeDS                        bool                   `json:"forceThreeDS,omitempty"`
     MasterpassGsmNumber                 string                 `json:"masterpassGsmNumber,omitempty"`
     MasterpassUserId                    string                 `json:"masterpassUserId,omitempty"`
-    BexGsmNumber                        string                 `json:"bexGsmNumber,omitempty"`
-    BexUserId                           string                 `json:"bexUserId,omitempty"`
     ApmUserIdentity                     string                 `json:"apmUserIdentity,omitempty"`
     Items                               []PaymentItem          `json:"items"`
     Ttl                                 int64                  `json:"ttl,omitempty"`
