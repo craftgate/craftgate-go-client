@@ -1762,8 +1762,6 @@ type InitBkmExpressResponse struct {
 
 type BkmExpressGenerateTokenResponse struct {
     Token           *string `json:"token"`
-    ErrorCode       *string `json:"errorCode"`
-    ErrorMessage    *string `json:"errorMessage"`
 }
 
 type InstallmentPrice struct {
@@ -2634,6 +2632,7 @@ type InitBkmExpressRequest struct {
 }
 
 type BkmExpressGenerateTokenRequest struct {
+    BaseRequest
     GsmNumber        string       `json:"gsmNumber"`
     UserId           string       `json:"userId"`
 }
