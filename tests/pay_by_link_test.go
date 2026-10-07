@@ -75,7 +75,7 @@ func Test_RetrieveProduct(t *testing.T) {
 }
 
 func Test_DeleteProduct(t *testing.T) {
-	err := payByLinkClient.PayByLink.DeleteProduct(context.Background(), 1)
+	err := payByLinkClient.PayByLink.DeleteProduct(context.Background(), adapter.DeleteProductRequest{Id: 1})
 
 	if err != nil {
 		t.Errorf("Error %s", err)

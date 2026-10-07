@@ -55,8 +55,9 @@ func (api *Merchant) SearchMerchantPos(ctx context.Context, request SearchMercha
 	return response.Data, nil
 }
 
-func (api *Merchant) UpdateMerchantPosStatus(ctx context.Context, id int64, status PosStatus) error {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodPut, fmt.Sprintf("/merchant/v1/merchant-poses/%d/status/%s", id, status), nil)
+func (api *Merchant) UpdateMerchantPosStatus(ctx context.Context, request UpdateMerchantPosStatusRequest) error {
+	newRequest, err := api.Client.NewRequestWithoutBody(ctx, http.MethodPut,
+		fmt.Sprintf("/merchant/v1/merchant-poses/%d/status/%s", request.MerchantPosId, request.PosStatus), request)
 
 	if err != nil {
 		return err
@@ -70,8 +71,9 @@ func (api *Merchant) UpdateMerchantPosStatus(ctx context.Context, id int64, stat
 	return nil
 }
 
-func (api *Merchant) DeleteMerchantPosStatus(ctx context.Context, id int64) error {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodDelete, fmt.Sprintf("/merchant/v1/merchant-poses/%d", id), nil)
+func (api *Merchant) DeleteMerchantPosStatus(ctx context.Context, request DeleteMerchantPosRequest) error {
+	newRequest, err := api.Client.NewRequestWithoutBody(ctx, http.MethodDelete,
+		fmt.Sprintf("/merchant/v1/merchant-poses/%d", request.MerchantPosId), request)
 
 	if err != nil {
 		return err

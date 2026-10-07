@@ -37,6 +37,19 @@ func Test_SearchFraudRules(t *testing.T) {
     }
 }
 
+func Test_SearchGlobalFraudRules(t *testing.T) {
+    request := adapter.SearchFraudRuleRequest{
+        Page: 0, Size: 10, Scope: adapter.FraudRuleScope_GLOBAL,
+    }
+
+    res, err := fraudClient.Fraud.SearchFraudRules(context.Background(), request)
+    _, _ = spew.Printf("%#v\n", res)
+
+    if err != nil {
+        t.Errorf("Error %s", err)
+    }
+}
+
 func Test_RetrieveAllFraudValueList(t *testing.T) {
 	res, err := fraudClient.Fraud.RetrieveAllFraudValueList(context.Background())
 	_, _ = spew.Printf("%#v\n", res)
@@ -64,7 +77,8 @@ func Test_CreateFraudValueList(t *testing.T) {
 }
 
 func Test_DeleteFraudValueList(t *testing.T) {
-	err := fraudClient.Fraud.DeleteFraudValueList(context.Background(), "myTestList")
+	err := fraudClient.Fraud.DeleteFraudValueList(context.Background(),
+		adapter.DeleteValueListRequest{ListName: "myTestList"})
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -116,7 +130,8 @@ func Test_AddCardFingerprintToFraudValueList(t *testing.T) {
 }
 
 func Test_RemoveValueFromFraudValueList(t *testing.T) {
-	err := fraudClient.Fraud.RemoveValueFromFraudValueList(context.Background(), "ipList", "7aac0ad8-d170-4c2b-89d3-440fcf145b35")
+	err := fraudClient.Fraud.RemoveValueFromFraudValueList(context.Background(),
+		adapter.RemoveValueFromValueListRequest{ListName: "ipList", ValueId: "7aac0ad8-d170-4c2b-89d3-440fcf145b35"})
 
 	if err != nil {
 		t.Errorf("Error %s", err)
