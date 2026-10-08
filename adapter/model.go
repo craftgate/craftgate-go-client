@@ -731,7 +731,8 @@ const (
 
 // tokenized card type declaration
 const (
-    TokenizedCardType_APPLE_PAY TokenizedCardType = "APPLE_PAY"
+    TokenizedCardType_APPLE_PAY   TokenizedCardType = "APPLE_PAY"
+    TokenizedCardType_BKM_EXPRESS TokenizedCardType = "BKM_EXPRESS"
 )
 
 const (
@@ -854,6 +855,8 @@ type InitCheckoutPaymentRequest struct {
     EnabledPaymentMethods       []PaymentMethod                `json:"enabledPaymentMethods,omitempty"`
     MasterpassGsmNumber         string                         `json:"masterpassGsmNumber,omitempty"`
     MasterpassUserId            string                         `json:"masterpassUserId,omitempty"`
+    BexGsmNumber                string                         `json:"bexGsmNumber,omitempty"`
+    BexUserId                   string                         `json:"bexUserId,omitempty"`
     CardUserKey                 string                         `json:"cardUserKey,omitempty"`
     BuyerMemberId               int64                          `json:"buyerMemberId,omitempty"`
     EnabledInstallments         []int                          `json:"enabledInstallments,omitempty"`
@@ -1757,6 +1760,10 @@ type InitBkmExpressResponse struct {
     Token *string `json:"token"`
 }
 
+type BkmExpressGenerateTokenResponse struct {
+    Token           *string `json:"token"`
+}
+
 type InstallmentPrice struct {
     InstallmentPrice       *float64 `json:"installmentPrice"`
     BankCommissionRate     *float64 `json:"bankCommissionRate"`
@@ -2622,6 +2629,12 @@ type InitBkmExpressRequest struct {
     BankOrderId         string        `json:"bankOrderId,omitempty"`
     Items               []PaymentItem `json:"items"`
     EnabledInstallments []int         `json:"enabledInstallments,omitempty"`
+}
+
+type BkmExpressGenerateTokenRequest struct {
+    BaseRequest
+    GsmNumber        string       `json:"gsmNumber"`
+    UserId           string       `json:"userId"`
 }
 
 type CreateMerchantRequest struct {
