@@ -2727,7 +2727,6 @@ type MerchantPosResponse struct {
     TerminalId                        string                      `json:"terminalId"`
     ThreedsPosnetId                   string                      `json:"threedsPosnetId"`
     ThreedsTerminalId                 string                      `json:"threedsTerminalId"`
-    ThreedsKey                        string                      `json:"threedsKey"`
     ThreedsPath                       string                      `json:"threedsPath"`
     EnableForeignCard                 bool                        `json:"enableForeignCard"`
     EnableInstallment                 bool                        `json:"enableInstallment"`
