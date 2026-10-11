@@ -1538,8 +1538,8 @@ type CreateWithdrawRequest struct {
 type SearchWalletTransactionsRequest struct {
     BaseRequest
     WalletTransactionTypes []WalletTransactionType `schema:"walletTransactionTypes,omitempty"`
-    MinAmount              float64                 `schema:"minWithdrawPrice,omitempty"`
-    MaxAmount              float64                 `schema:"maxWithdrawPrice,omitempty"`
+    MinAmount              float64                 `schema:"minAmount,omitempty"`
+    MaxAmount              float64                 `schema:"maxAmount,omitempty"`
     MinCreatedDate         time.Time               `schema:"minCreatedDate,omitempty"`
     MaxCreatedDate         time.Time               `schema:"maxCreatedDate,omitempty"`
     Page                   int                     `schema:"page,omitempty"`
@@ -1548,7 +1548,7 @@ type SearchWalletTransactionsRequest struct {
 
 type SearchWithdrawsRequest struct {
     BaseRequest
-    MemberId         int64     `schema:"walletId,omitempty"`
+    MemberId         int64     `schema:"memberId,omitempty"`
     PayoutStatus     string    `schema:"payoutStatus,omitempty"`
     Currency         Currency  `schema:"currency,omitempty"`
     MinWithdrawPrice float64   `schema:"minWithdrawPrice,omitempty"`
@@ -2115,7 +2115,7 @@ type ReportingPaymentRefundResponse struct {
     PaymentType           *PaymentType           `json:"paymentType"`
     TransId               *string                `json:"transId"`
     PaymentId             *int64                 `json:"paymentId"`
-    PaymentError          *PaymentError          `json:"paymentError"`
+    PaymentError          *PaymentError          `json:"error"`
 }
 
 type ReportingPaymentTransactionRefundResponse struct {
@@ -2132,7 +2132,7 @@ type ReportingPaymentTransactionRefundResponse struct {
     TransId               *string                `json:"transId"`
     IsAfterSettlement     *bool                  `json:"isAfterSettlement"`
     PaymentTransactionId  *int64                 `json:"paymentTransactionId"`
-    PaymentError          *PaymentError          `json:"paymentError"`
+    PaymentError          *PaymentError          `json:"error"`
 }
 
 type ReportingPaymentTransactionResponse struct {
@@ -2180,7 +2180,7 @@ type BnplPaymentVerifyResponse struct {
 type BnplPaymentOfferResponse struct {
     OfferId        string           `json:"offerId"`
     Price          *float64         `json:"price"`
-    BnplBankOffers *[]BnplBankOffer `json:"nnplBankOffers"`
+    BnplBankOffers *[]BnplBankOffer `json:"bankOffers"`
 }
 
 type BnplLimitInquiryResponse struct {
