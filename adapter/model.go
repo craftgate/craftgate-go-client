@@ -732,7 +732,8 @@ const (
 
 // tokenized card type declaration
 const (
-    TokenizedCardType_APPLE_PAY TokenizedCardType = "APPLE_PAY"
+    TokenizedCardType_APPLE_PAY   TokenizedCardType = "APPLE_PAY"
+    TokenizedCardType_BKM_EXPRESS TokenizedCardType = "BKM_EXPRESS"
 )
 
 const (
@@ -848,6 +849,7 @@ type InitCheckoutPaymentRequest struct {
     ConversationId              string                         `json:"conversationId,omitempty"`
     ExternalId                  string                         `json:"externalId,omitempty"`
     OrderId                     string                         `json:"orderId,omitempty"`
+    BasketIdentifier            string                         `json:"basketIdentifier,omitempty"`
     CallbackUrl                 string                         `json:"callbackUrl,omitempty"`
     ClientIp                    string                         `json:"clientIp,omitempty"`
     PaymentPhase                PaymentPhase                   `json:"paymentPhase,omitempty"`
@@ -855,6 +857,8 @@ type InitCheckoutPaymentRequest struct {
     EnabledPaymentMethods       []PaymentMethod                `json:"enabledPaymentMethods,omitempty"`
     MasterpassGsmNumber         string                         `json:"masterpassGsmNumber,omitempty"`
     MasterpassUserId            string                         `json:"masterpassUserId,omitempty"`
+    BexGsmNumber                string                         `json:"bexGsmNumber,omitempty"`
+    BexUserId                   string                         `json:"bexUserId,omitempty"`
     CardUserKey                 string                         `json:"cardUserKey,omitempty"`
     BuyerMemberId               int64                          `json:"buyerMemberId,omitempty"`
     EnabledInstallments         []int                          `json:"enabledInstallments,omitempty"`
@@ -1049,6 +1053,8 @@ type RetrieveLoyaltiesRequest struct {
     ExpireYear        string                `json:"expireYear,omitempty"`
     ExpireMonth       string                `json:"expireMonth,omitempty"`
     Cvc               string                `json:"cvc,omitempty"`
+    LoyaltyType       LoyaltyType           `json:"loyaltyType,omitempty"`
+    Installment       int                   `json:"installment,omitempty"`
     CardUserKey       string                `json:"cardUserKey,omitempty"`
     CardToken         string                `json:"cardToken,omitempty"`
     SecureFieldsToken string                `json:"secureFieldsToken,omitempty"`
@@ -1240,6 +1246,12 @@ type MasterpassPaymentTokenGenerateRequest struct {
     Loyalty                      *Loyalty                 `json:"loyalty,omitempty"`
     MasterpassIntegrationVersion int                      `json:"masterpassIntegrationVersion,omitempty"`
     ValidationType               MasterpassValidationType `json:"validationType,omitempty"`
+}
+
+type MasterpassAccountTokenGenerateRequest struct {
+    BaseRequest
+    Msisdn string `json:"msisdn,omitempty"`
+    UserId string `json:"userId,omitempty"`
 }
 
 type MasterpassPaymentCompleteRequest struct {
@@ -1500,6 +1512,10 @@ type MasterpassPaymentTokenGenerateResponse struct {
     TerminalGroupId *string `json:"terminalGroupId"`
 }
 
+type MasterpassAccountTokenGenerateResponse struct {
+    Token *string `json:"token"`
+}
+
 type RefundWalletTransactionRequest struct {
     BaseRequest
     RefundPrice float64 `json:"refundPrice"`
@@ -1758,6 +1774,10 @@ type InitBkmExpressResponse struct {
     Token *string `json:"token"`
 }
 
+type BkmExpressGenerateTokenResponse struct {
+    Token           *string `json:"token"`
+}
+
 type InstallmentPrice struct {
     InstallmentPrice       *float64 `json:"installmentPrice"`
     BankCommissionRate     *float64 `json:"bankCommissionRate"`
@@ -1918,6 +1938,7 @@ type CreateProductRequest struct {
     Currency            Currency   `json:"currency"`
     Description         string     `json:"description,omitempty"`
     MultiPayment        bool       `json:"multiPayment,omitempty"`
+    ForceThreeDS        bool       `json:"forceThreeDS,omitempty"`
     ExpiresAt           *time.Time `json:"expiresAt,omitempty"`
     EnabledInstallments []int      `json:"enabledInstallments"`
     BasketIdentifier    string     `json:"basketIdentifier,omitempty"`
@@ -1936,6 +1957,7 @@ type UpdateProductRequest struct {
     Currency            Currency   `json:"currency"`
     Description         string     `json:"description,omitempty"`
     MultiPayment        bool       `json:"multiPayment,omitempty"`
+    ForceThreeDS        bool       `json:"forceThreeDS,omitempty"`
     ExpiresAt           *time.Time `json:"expiresAt,omitempty"`
     EnabledInstallments []int      `json:"enabledInstallments"`
     BasketIdentifier    string     `json:"basketIdentifier,omitempty"`
@@ -1976,6 +1998,7 @@ type ProductResponse struct {
     QrCodeUrl           *string       `json:"qrCodeUrl"`
     Channel             *string       `json:"channel"`
     MultiPayment        *bool         `json:"multiPayment"`
+    ForceThreeDS        *bool         `json:"forceThreeDS"`
     ExpiresAt           *TimeResponse `json:"expiresAt"`
     BasketIdentifier    *string       `json:"basketIdentifier,omitempty"`
 }
@@ -2620,6 +2643,12 @@ type InitBkmExpressRequest struct {
     BankOrderId         string        `json:"bankOrderId,omitempty"`
     Items               []PaymentItem `json:"items"`
     EnabledInstallments []int         `json:"enabledInstallments,omitempty"`
+}
+
+type BkmExpressGenerateTokenRequest struct {
+    BaseRequest
+    GsmNumber        string       `json:"gsmNumber"`
+    UserId           string       `json:"userId"`
 }
 
 type CreateMerchantRequest struct {
