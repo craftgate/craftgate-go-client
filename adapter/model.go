@@ -561,6 +561,7 @@ const (
     PosIntegrator_CHECKOUT          PosIntegrator = "CHECKOUT"
     PosIntegrator_DENIZBANK         PosIntegrator = "DENIZBANK"
     PosIntegrator_ELEKSE            PosIntegrator = "ELEKSE"
+    PosIntegrator_ENPARA            PosIntegrator = "ENPARA"
     PosIntegrator_FIBABANK          PosIntegrator = "FIBABANK"
     PosIntegrator_FIBABANK_ASSECO   PosIntegrator = "FIBABANK_ASSECO"
     PosIntegrator_FINANSBANK        PosIntegrator = "FINANSBANK"
@@ -848,6 +849,7 @@ type InitCheckoutPaymentRequest struct {
     ConversationId              string                         `json:"conversationId,omitempty"`
     ExternalId                  string                         `json:"externalId,omitempty"`
     OrderId                     string                         `json:"orderId,omitempty"`
+    BasketIdentifier            string                         `json:"basketIdentifier,omitempty"`
     CallbackUrl                 string                         `json:"callbackUrl,omitempty"`
     ClientIp                    string                         `json:"clientIp,omitempty"`
     PaymentPhase                PaymentPhase                   `json:"paymentPhase,omitempty"`
@@ -1051,6 +1053,8 @@ type RetrieveLoyaltiesRequest struct {
     ExpireYear        string                `json:"expireYear,omitempty"`
     ExpireMonth       string                `json:"expireMonth,omitempty"`
     Cvc               string                `json:"cvc,omitempty"`
+    LoyaltyType       LoyaltyType           `json:"loyaltyType,omitempty"`
+    Installment       int                   `json:"installment,omitempty"`
     CardUserKey       string                `json:"cardUserKey,omitempty"`
     CardToken         string                `json:"cardToken,omitempty"`
     SecureFieldsToken string                `json:"secureFieldsToken,omitempty"`
@@ -1242,6 +1246,12 @@ type MasterpassPaymentTokenGenerateRequest struct {
     Loyalty                      *Loyalty                 `json:"loyalty,omitempty"`
     MasterpassIntegrationVersion int                      `json:"masterpassIntegrationVersion,omitempty"`
     ValidationType               MasterpassValidationType `json:"validationType,omitempty"`
+}
+
+type MasterpassAccountTokenGenerateRequest struct {
+    BaseRequest
+    Msisdn string `json:"msisdn,omitempty"`
+    UserId string `json:"userId,omitempty"`
 }
 
 type MasterpassPaymentCompleteRequest struct {
@@ -1500,6 +1510,10 @@ type MasterpassPaymentTokenGenerateResponse struct {
     ReferenceId     *string `json:"referenceId"`
     OrderNo         *string `json:"orderNo"`
     TerminalGroupId *string `json:"terminalGroupId"`
+}
+
+type MasterpassAccountTokenGenerateResponse struct {
+    Token *string `json:"token"`
 }
 
 type RefundWalletTransactionRequest struct {
@@ -2727,7 +2741,6 @@ type MerchantPosResponse struct {
     TerminalId                        string                      `json:"terminalId"`
     ThreedsPosnetId                   string                      `json:"threedsPosnetId"`
     ThreedsTerminalId                 string                      `json:"threedsTerminalId"`
-    ThreedsKey                        string                      `json:"threedsKey"`
     ThreedsPath                       string                      `json:"threedsPath"`
     EnableForeignCard                 bool                        `json:"enableForeignCard"`
     EnableInstallment                 bool                        `json:"enableInstallment"`
