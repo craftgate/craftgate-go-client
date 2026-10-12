@@ -89,6 +89,38 @@ if err != nil {
 }
 ```
 
+## Idempotency
+
+Mutating operations accept an optional idempotency key. Set it on the request and the client sends it as the `x-idempotency-key` header, so a request can be safely retried (e.g. after a timeout) without the operation being performed twice — the server returns the result of the first request when it sees a repeated key.
+
+Every request embeds `BaseRequest`, which carries a `HeaderOptions` struct, so the key is available on any request:
+
+```go
+request := craftgate.CreatePaymentRequest{
+    Price:     100,
+    PaidPrice: 100,
+    Currency:  craftgate.Currency_TRY,
+}
+request.HeaderOptions = craftgate.HeaderOptions{IdempotencyKey: uuid.NewString()}
+
+res, err := client.Payment.CreatePayment(context.Background(), request)
+```
+
+It can also be set inline through the embedded struct:
+
+```go
+err := client.Payment.ExpireCheckoutPayment(context.Background(), craftgate.ExpireCheckoutPaymentRequest{
+    BaseRequest: craftgate.BaseRequest{HeaderOptions: craftgate.HeaderOptions{IdempotencyKey: uuid.NewString()}},
+    Token:       "456d1297-908e-4bd6-a13b-4be31a6e47d5",
+})
+```
+
+> Use a fresh key per distinct operation, and reuse the same key when retrying that operation.
+
+> The API honours the key on `POST`, `PATCH` and `DELETE` only. It is ignored on `PUT` endpoints, so retrying one of those is not de-duplicated.
+
+`HeaderOptions` is sent as headers only — `json:"-"` keeps it out of the request body and signature, and `schema:"-"` keeps it out of the query string of read requests.
+
 ### Contributions
 
 For all contributions to this client please see the contribution guide [here](CONTRIBUTING.md). By participating in this project, you agree to abide by our [Code of Conduct](CODE_OF_CONDUCT.md).

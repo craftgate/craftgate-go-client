@@ -2,6 +2,7 @@ package adapter
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 )
 
@@ -37,6 +38,22 @@ func (api *Fraud) SearchFraudRules(ctx context.Context, request SearchFraudRuleR
     }
 
     return response.Data, nil
+}
+
+func (api *Fraud) UpdateFraudCheckStatus(ctx context.Context, request UpdateFraudCheckStatusRequest) error {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPut,
+		fmt.Sprintf("/fraud/v1/fraud-checks/%d/check-status", request.Id), request)
+	if err != nil {
+		return err
+	}
+
+	response := &Void{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (api *Fraud) RetrieveAllFraudValueList(ctx context.Context) (*DataResponse[FraudValuesResponse], error) {
@@ -89,8 +106,9 @@ func (api *Fraud) CreateFraudValueList(ctx context.Context, listName string, fra
 	return nil
 }
 
-func (api *Fraud) DeleteFraudValueList(ctx context.Context, listName string) error {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodDelete, "/fraud/v1/value-lists/"+listName, nil)
+func (api *Fraud) DeleteFraudValueList(ctx context.Context, request DeleteValueListRequest) error {
+	newRequest, err := api.Client.NewRequestWithoutBody(ctx, http.MethodDelete,
+		"/fraud/v1/value-lists/"+request.ListName, request)
 	if err != nil {
 		return err
 	}
@@ -134,8 +152,9 @@ func (api *Fraud) AddValueToFraudValueList(ctx context.Context, request FraudVal
 	return nil
 }
 
-func (api *Fraud) RemoveValueFromFraudValueList(ctx context.Context, listName, valueId string) error {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodDelete, "/fraud/v1/value-lists/"+listName+"/values/"+valueId, nil)
+func (api *Fraud) RemoveValueFromFraudValueList(ctx context.Context, request RemoveValueFromValueListRequest) error {
+	newRequest, err := api.Client.NewRequestWithoutBody(ctx, http.MethodDelete,
+		"/fraud/v1/value-lists/"+request.ListName+"/values/"+request.ValueId, request)
 	if err != nil {
 		return err
 	}

@@ -17,7 +17,7 @@ func (api *MerchantApm) RetrieveApms(ctx context.Context) (*MerchantApmListRespo
 
 	response := &Response[MerchantApmListResponse]{}
 	respErr := api.Client.Do(ctx, newRequest, response)
-	if err != nil {
+	if respErr != nil {
 		return nil, respErr
 	}
 

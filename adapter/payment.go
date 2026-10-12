@@ -172,8 +172,9 @@ func (api *Payment) RetrieveCheckoutPayment(ctx context.Context, token string) (
 	return response.Data, nil
 }
 
-func (api *Payment) ExpireCheckoutPayment(ctx context.Context, token string) error {
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodDelete, fmt.Sprintf("/payment/v1/checkout-payments/%s", token), nil)
+func (api *Payment) ExpireCheckoutPayment(ctx context.Context, request ExpireCheckoutPaymentRequest) error {
+	newRequest, err := api.Client.NewRequestWithoutBody(ctx, http.MethodDelete,
+		fmt.Sprintf("/payment/v1/checkout-payments/%s", request.Token), request)
 	if err != nil {
 		return err
 	}
@@ -672,9 +673,10 @@ func (api *Payment) BnplLimitInquiry(ctx context.Context, request BnplLimitInqui
     return response.Data, nil
 }
 
-func (api *Payment) ApproveBnplPayment(ctx context.Context, paymentId int64) (*PaymentResponse, error) {
+func (api *Payment) ApproveBnplPayment(ctx context.Context, request ApproveBnplPaymentRequest) (*PaymentResponse, error) {
 
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, fmt.Sprintf("/payment/v1/bnpl-payments/%d/approve", paymentId), nil)
+	newRequest, err := api.Client.NewRequestWithoutBody(ctx, http.MethodPost,
+		fmt.Sprintf("/payment/v1/bnpl-payments/%d/approve", request.PaymentId), request)
 	if err != nil {
 		return nil, err
 	}
@@ -688,9 +690,10 @@ func (api *Payment) ApproveBnplPayment(ctx context.Context, paymentId int64) (*P
 	return response.Data, nil
 }
 
-func (api *Payment) VerifyBnplPayment(ctx context.Context, paymentId int64) (*BnplPaymentVerifyResponse, error) {
+func (api *Payment) VerifyBnplPayment(ctx context.Context, request VerifyBnplPaymentRequest) (*BnplPaymentVerifyResponse, error) {
 
-	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, fmt.Sprintf("/payment/v1/bnpl-payments/%d/verify", paymentId), nil)
+	newRequest, err := api.Client.NewRequestWithoutBody(ctx, http.MethodPost,
+		fmt.Sprintf("/payment/v1/bnpl-payments/%d/verify", request.PaymentId), request)
 	if err != nil {
 		return nil, err
 	}
@@ -769,6 +772,20 @@ func (api *Payment) RetrieveProviderCards(ctx context.Context, request RetrieveP
 		return nil, err
 	}
 	response := &Response[DataResponse[StoredCardResponse]]{}
+	respErr := api.Client.Do(ctx, newRequest, response)
+	if respErr != nil {
+		return nil, respErr
+	}
+
+	return response.Data, nil
+}
+
+func (api *Payment) RetrieveCardFromIvr(ctx context.Context, request RetrieveCardFromIvrRequest) (*IVRCardTokenizationResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodGet, "/payment/v1/ivr-cards", request)
+	if err != nil {
+		return nil, err
+	}
+	response := &Response[IVRCardTokenizationResponse]{}
 	respErr := api.Client.Do(ctx, newRequest, response)
 	if err != nil {
 		return nil, respErr

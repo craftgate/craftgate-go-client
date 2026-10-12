@@ -134,7 +134,7 @@ func TestWallet_CreateWithdraw(t *testing.T) {
 }
 
 func TestWallet_CancelWithdraw(t *testing.T) {
-	res, err := walletClient.Wallet.CancelWithdraw(context.Background(), 1)
+	res, err := walletClient.Wallet.CancelWithdraw(context.Background(), adapter.CancelWithdrawRequest{WithdrawId: 1})
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
