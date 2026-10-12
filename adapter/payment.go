@@ -616,13 +616,13 @@ func (api *Payment) DisapprovePaymentTransactions(ctx context.Context, request P
 	return response.Data, nil
 }
 
-func (api *Payment) RetrieveBnplOffers(ctx context.Context, request BnplPaymentOfferRequest) (*DataResponse[BnplPaymentOfferResponse], error) {
+func (api *Payment) RetrieveBnplOffers(ctx context.Context, request BnplPaymentOfferRequest) (*BnplPaymentOfferResponse, error) {
 	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, "/payment/v1/bnpl-payments/offers", request)
 	if err != nil {
 		return nil, err
 	}
 
-	response := &Response[DataResponse[BnplPaymentOfferResponse]]{}
+	response := &Response[BnplPaymentOfferResponse]{}
 	err = api.Client.Do(ctx, newRequest, response)
 	if err != nil {
 		return nil, err
