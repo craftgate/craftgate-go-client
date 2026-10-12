@@ -92,6 +92,7 @@ const (
     ApmType_SODEXO                 ApmType = "SODEXO"
     ApmType_SODEXO_GIFT            ApmType = "SODEXO_GIFT"
     ApmType_SETCARD                ApmType = "SETCARD"
+    ApmType_SETCARD_GIFT           ApmType = "SETCARD_GIFT"
     ApmType_METROPOL               ApmType = "METROPOL"
     ApmType_EDENRED                ApmType = "EDENRED"
     ApmType_EDENRED_GIFT           ApmType = "EDENRED_GIFT"
@@ -289,6 +290,7 @@ const (
     PaymentMethod_DKB                         PaymentMethod = "DKB"
     PaymentMethod_PAYCELL_DCB                 PaymentMethod = "PAYCELL_DCB"
     PaymentMethod_SETCARD                     PaymentMethod = "SETCARD"
+    PaymentMethod_SETCARD_GIFT                PaymentMethod = "SETCARD_GIFT"
     PaymentMethod_IWALLET                     PaymentMethod = "IWALLET"
     PaymentMethod_PAPEL                       PaymentMethod = "PAPEL"
     PaymentMethod_BKM_EXPRESS                 PaymentMethod = "BKM_EXPRESS"
@@ -729,7 +731,8 @@ const (
 
 // tokenized card type declaration
 const (
-    TokenizedCardType_APPLE_PAY TokenizedCardType = "APPLE_PAY"
+    TokenizedCardType_APPLE_PAY   TokenizedCardType = "APPLE_PAY"
+    TokenizedCardType_BKM_EXPRESS TokenizedCardType = "BKM_EXPRESS"
 )
 
 const (
@@ -776,6 +779,7 @@ type CreatePaymentRequest struct {
     ConversationId   string                 `json:"conversationId,omitempty"`
     ExternalId       string                 `json:"externalId,omitempty"`
     ClientIp         string                 `json:"clientIp,omitempty"`
+    ClientPort       int                    `json:"clientPort,omitempty"`
     PaymentPhase     PaymentPhase           `json:"paymentPhase,omitempty"`
     PaymentChannel   string                 `json:"paymentChannel,omitempty"`
     BuyerMemberId    int64                  `json:"buyerMemberId,omitempty"`
@@ -801,6 +805,7 @@ type CreateApmPaymentRequest struct {
     BuyerMemberId  int64         `json:"buyerMemberId,omitempty"`
     ApmOrderId     string        `json:"apmOrderId,omitempty"`
     ClientIp       string        `json:"clientIp,omitempty"`
+    ClientPort     int           `json:"clientPort,omitempty"`
     Items          []PaymentItem `json:"items"`
 }
 
@@ -816,6 +821,7 @@ type Init3DSPaymentRequest struct {
     ConversationId   string                 `json:"conversationId,omitempty"`
     ExternalId       string                 `json:"externalId,omitempty"`
     ClientIp         string                 `json:"clientIp,omitempty"`
+    ClientPort       int                    `json:"clientPort,omitempty"`
     PaymentPhase     PaymentPhase           `json:"paymentPhase,omitempty"`
     PaymentChannel   string                 `json:"paymentChannel,omitempty"`
     BuyerMemberId    int64                  `json:"buyerMemberId,omitempty"`
@@ -850,6 +856,8 @@ type InitCheckoutPaymentRequest struct {
     EnabledPaymentMethods       []PaymentMethod                `json:"enabledPaymentMethods,omitempty"`
     MasterpassGsmNumber         string                         `json:"masterpassGsmNumber,omitempty"`
     MasterpassUserId            string                         `json:"masterpassUserId,omitempty"`
+    BexGsmNumber                string                         `json:"bexGsmNumber,omitempty"`
+    BexUserId                   string                         `json:"bexUserId,omitempty"`
     CardUserKey                 string                         `json:"cardUserKey,omitempty"`
     BuyerMemberId               int64                          `json:"buyerMemberId,omitempty"`
     EnabledInstallments         []int                          `json:"enabledInstallments,omitempty"`
@@ -930,6 +938,7 @@ type VerifyCardRequest struct {
     VerificationPrice         float64                  `json:"verificationPrice,omitempty"`
     Currency                  Currency                 `json:"currency,omitempty"`
     ClientIp                  string                   `json:"clientIp,omitempty"`
+    ClientPort                int                      `json:"clientPort,omitempty"`
     ConversationId            string                   `json:"conversationId,omitempty"`
     CallbackUrl               string                   `json:"callbackUrl,omitempty"`
 }
@@ -950,6 +959,7 @@ type InitApmPaymentRequest struct {
     ApmOrderId       string            `json:"apmOrderId,omitempty"`
     ApmUserIdentity  string            `json:"apmUserIdentity,omitempty"`
     ClientIp         string            `json:"clientIp,omitempty"`
+    ClientPort       int               `json:"clientPort,omitempty"`
     AdditionalParams map[string]string `json:"additionalParams,omitempty"`
     Items            []PaymentItem     `json:"items"`
 }
@@ -975,6 +985,7 @@ type InitPosApmPaymentRequest struct {
     BuyerMemberId     int64                 `json:"buyerMemberId,omitempty"`
     BankOrderId       string                `json:"bankOrderId,omitempty"`
     ClientIp          string                `json:"clientIp,omitempty"`
+    ClientPort        int                   `json:"clientPort,omitempty"`
     Items             []PaymentItem         `json:"items"`
     AdditionalParams  map[string]string     `json:"additionalParams"`
     Installments      []PosApmInstallment   `json:"installments"`
@@ -1003,6 +1014,7 @@ type DepositPaymentRequest struct {
     CallbackUrl    string          `json:"callbackUrl,omitempty"`
     PosAlias       string          `json:"posAlias,omitempty"`
     ClientIp       string          `json:"clientIp,omitempty"`
+    ClientPort     int             `json:"clientPort,omitempty"`
     Card           Card            `json:"card"`
     RoutingOptions *RoutingOptions `json:"routingOptions,omitempty"`
 }
@@ -1013,6 +1025,7 @@ type CreateFundTransferDepositPaymentRequest struct {
     BuyerMemberId  int64   `json:"buyerMemberId,omitempty"`
     ConversationId string  `json:"conversationId,omitempty"`
     ClientIp       string  `json:"clientIp,omitempty"`
+    ClientPort     int     `json:"clientPort,omitempty"`
 }
 
 type InitApmDepositPaymentRequest struct {
@@ -1029,6 +1042,7 @@ type InitApmDepositPaymentRequest struct {
     ApmOrderId       string            `json:"apmOrderId,omitempty"`
     ApmUserIdentity  string            `json:"apmUserIdentity,omitempty"`
     ClientIp         string            `json:"clientIp,omitempty"`
+    ClientPort       int               `json:"clientPort,omitempty"`
     AdditionalParams map[string]string `json:"additionalParams,omitempty"`
 }
 
@@ -1042,6 +1056,7 @@ type RetrieveLoyaltiesRequest struct {
     CardToken         string                `json:"cardToken,omitempty"`
     SecureFieldsToken string                `json:"secureFieldsToken,omitempty"`
     ClientIp          *string               `json:"clientIp,omitempty"`
+    ClientPort        int                   `json:"clientPort,omitempty"`
     ConversationId    *string               `json:"conversationId,omitempty"`
     FraudParams       *FraudCheckParameters `json:"fraudParams,omitempty"`
 }
@@ -1079,6 +1094,7 @@ type InitGarantiPayPaymentRequest struct {
     ExternalId          string                  `json:"externalId,omitempty"`
     CallbackUrl         string                  `json:"callbackUrl,omitempty"`
     ClientIp            string                  `json:"clientIp,omitempty"`
+    ClientPort          int                     `json:"clientPort,omitempty"`
     PaymentChannel      string                  `json:"paymentChannel,omitempty"`
     BuyerMemberId       int64                   `json:"buyerMemberId,omitempty"`
     BankOrderId         string                  `json:"bankOrderId,omitempty"`
@@ -1264,6 +1280,7 @@ type InitBnplPaymentRequest struct {
     BuyerMemberId    int64                 `json:"buyerMemberId,omitempty"`
     ApmOrderId       string                `json:"apmOrderId,omitempty"`
     ClientIp         string                `json:"clientIp,omitempty"`
+    ClientPort       int                   `json:"clientPort,omitempty"`
     ApmUserIdentity  string                `json:"apmUserIdentity,omitempty"`
     AdditionalParams map[string]string     `json:"additionalParams"`
     Items            []PaymentItem         `json:"items"`
@@ -1744,6 +1761,10 @@ type InitBkmExpressResponse struct {
     Token *string `json:"token"`
 }
 
+type BkmExpressGenerateTokenResponse struct {
+    Token           *string `json:"token"`
+}
+
 type InstallmentPrice struct {
     InstallmentPrice       *float64 `json:"installmentPrice"`
     BankCommissionRate     *float64 `json:"bankCommissionRate"`
@@ -1904,6 +1925,7 @@ type CreateProductRequest struct {
     Currency            Currency   `json:"currency"`
     Description         string     `json:"description,omitempty"`
     MultiPayment        bool       `json:"multiPayment,omitempty"`
+    ForceThreeDS        bool       `json:"forceThreeDS,omitempty"`
     ExpiresAt           *time.Time `json:"expiresAt,omitempty"`
     EnabledInstallments []int      `json:"enabledInstallments"`
     BasketIdentifier    string     `json:"basketIdentifier,omitempty"`
@@ -1922,6 +1944,7 @@ type UpdateProductRequest struct {
     Currency            Currency   `json:"currency"`
     Description         string     `json:"description,omitempty"`
     MultiPayment        bool       `json:"multiPayment,omitempty"`
+    ForceThreeDS        bool       `json:"forceThreeDS,omitempty"`
     ExpiresAt           *time.Time `json:"expiresAt,omitempty"`
     EnabledInstallments []int      `json:"enabledInstallments"`
     BasketIdentifier    string     `json:"basketIdentifier,omitempty"`
@@ -1962,6 +1985,7 @@ type ProductResponse struct {
     QrCodeUrl           *string       `json:"qrCodeUrl"`
     Channel             *string       `json:"channel"`
     MultiPayment        *bool         `json:"multiPayment"`
+    ForceThreeDS        *bool         `json:"forceThreeDS"`
     ExpiresAt           *TimeResponse `json:"expiresAt"`
     BasketIdentifier    *string       `json:"basketIdentifier,omitempty"`
 }
@@ -2584,6 +2608,7 @@ type MasterpassCreatePayment struct {
     ConversationId   string                 `json:"conversationId,omitempty"`
     ExternalId       string                 `json:"externalId,omitempty"`
     ClientIp         string                 `json:"clientIp,omitempty"`
+    ClientPort       int                    `json:"clientPort,omitempty"`
     PaymentPhase     PaymentPhase           `json:"paymentPhase,omitempty"`
     PaymentChannel   string                 `json:"paymentChannel,omitempty"`
     BuyerMemberId    int64                  `json:"buyerMemberId,omitempty"`
@@ -2605,6 +2630,12 @@ type InitBkmExpressRequest struct {
     BankOrderId         string        `json:"bankOrderId,omitempty"`
     Items               []PaymentItem `json:"items"`
     EnabledInstallments []int         `json:"enabledInstallments,omitempty"`
+}
+
+type BkmExpressGenerateTokenRequest struct {
+    BaseRequest
+    GsmNumber        string       `json:"gsmNumber"`
+    UserId           string       `json:"userId"`
 }
 
 type CreateMerchantRequest struct {
