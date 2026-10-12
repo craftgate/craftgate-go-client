@@ -37,6 +37,19 @@ func Test_SearchFraudRules(t *testing.T) {
     }
 }
 
+func Test_SearchGlobalFraudRules(t *testing.T) {
+    request := adapter.SearchFraudRuleRequest{
+        Page: 0, Size: 10, Scope: adapter.FraudRuleScope_GLOBAL,
+    }
+
+    res, err := fraudClient.Fraud.SearchFraudRules(context.Background(), request)
+    _, _ = spew.Printf("%#v\n", res)
+
+    if err != nil {
+        t.Errorf("Error %s", err)
+    }
+}
+
 func Test_RetrieveAllFraudValueList(t *testing.T) {
 	res, err := fraudClient.Fraud.RetrieveAllFraudValueList(context.Background())
 	_, _ = spew.Printf("%#v\n", res)
