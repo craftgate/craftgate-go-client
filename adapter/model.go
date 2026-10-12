@@ -1052,6 +1052,8 @@ type RetrieveLoyaltiesRequest struct {
     ExpireYear        string                `json:"expireYear,omitempty"`
     ExpireMonth       string                `json:"expireMonth,omitempty"`
     Cvc               string                `json:"cvc,omitempty"`
+    LoyaltyType       LoyaltyType           `json:"loyaltyType,omitempty"`
+    Installment       int                   `json:"installment,omitempty"`
     CardUserKey       string                `json:"cardUserKey,omitempty"`
     CardToken         string                `json:"cardToken,omitempty"`
     SecureFieldsToken string                `json:"secureFieldsToken,omitempty"`
