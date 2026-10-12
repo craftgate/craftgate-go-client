@@ -81,7 +81,6 @@ const (
     PaymentType_CARD_AND_WALLET_PAYMENT  PaymentType = "CARD_AND_WALLET_PAYMENT"
     PaymentType_DEPOSIT_PAYMENT          PaymentType = "DEPOSIT_PAYMENT"
     PaymentType_HEPSIPAY_DEPOSIT_PAYMENT PaymentType = "HEPSIPAY_DEPOSIT_PAYMENT"
-    PaymentType_BANK_TRANSFER            PaymentType = "BANK_TRANSFER"
     PaymentType_APM                      PaymentType = "APM"
 )
 
@@ -133,6 +132,11 @@ const (
     ApmType_FUND_TRANSFER          ApmType = "FUND_TRANSFER"
     ApmType_CASH_ON_DELIVERY       ApmType = "CASH_ON_DELIVERY"
     ApmType_KARACA_FINANS          ApmType = "KARACA_FINANS"
+    ApmType_CECABANK_BIZUM         ApmType = "CECABANK_BIZUM"
+    ApmType_COMPAY_BNPL            ApmType = "COMPAY_BNPL"
+    ApmType_ISBANK_IDEAL           ApmType = "ISBANK_IDEAL"
+    ApmType_PAYGURU                ApmType = "PAYGURU"
+    ApmType_PAYLANDS_BIZUM         ApmType = "PAYLANDS_BIZUM"
 )
 
 // card provider declaration
@@ -141,6 +145,7 @@ const (
     CardProvider_IPARA          CardProvider = "IPARA"
     CardProvider_BIRLESIK_ODEME CardProvider = "BIRLESIK_ODEME"
     CardProvider_MEX            CardProvider = "MEX"
+    CardProvider_PARAM          CardProvider = "PARAM"
 )
 
 // payment provider declaration
@@ -173,7 +178,6 @@ const (
     PaymentProvider_TOM_FINANCE                 PaymentProvider = "TOM_FINANCE"
     PaymentProvider_ALFABANK                    PaymentProvider = "ALFABANK"
     PaymentProvider_ZIP                         PaymentProvider = "ZIP"
-    PaymentProvider_DKB                         PaymentProvider = "DKB"
     PaymentProvider_HASO                        PaymentProvider = "HASO"
     PaymentProvider_PAYCELL                     PaymentProvider = "PAYCELL"
     PaymentProvider_MULTINET                    PaymentProvider = "MULTINET"
@@ -188,6 +192,12 @@ const (
     PaymentProvider_BKM_EXPRESS                 PaymentProvider = "BKM_EXPRESS"
     PaymentProvider_ALBARAKA                    PaymentProvider = "ALBARAKA"
     PaymentProvider_OFFLINE                     PaymentProvider = "OFFLINE"
+    PaymentProvider_CECABANK_BIZUM              PaymentProvider = "CECABANK_BIZUM"
+    PaymentProvider_COMPAY                      PaymentProvider = "COMPAY"
+    PaymentProvider_ISBANK_IDEAL                PaymentProvider = "ISBANK_IDEAL"
+    PaymentProvider_KARACA_FINANS               PaymentProvider = "KARACA_FINANS"
+    PaymentProvider_PAYGURU                     PaymentProvider = "PAYGURU"
+    PaymentProvider_PAYLANDS_BIZUM              PaymentProvider = "PAYLANDS_BIZUM"
 )
 
 // pos apm payment provider declaration
@@ -196,6 +206,7 @@ const (
     PosApmPaymentProvider_YKB_WORLD_PAY_SHOPPING_LOAN PosApmPaymentProvider = "YKB_WORLD_PAY_SHOPPING_LOAN"
     PosApmPaymentProvider_GOOGLEPAY                   PosApmPaymentProvider = "GOOGLEPAY"
     PosApmPaymentProvider_GARANTI_PAY                 PosApmPaymentProvider = "GARANTI_PAY"
+    PosApmPaymentProvider_ISPAY                       PosApmPaymentProvider = "ISPAY"
 )
 
 // payment status declaration
@@ -215,6 +226,7 @@ const (
     PaymentSource_HEPSIPAY      PaymentSource = "HEPSIPAY"
     PaymentSource_JUZDAN        PaymentSource = "JUZDAN"
     PaymentSource_MONO          PaymentSource = "MONO"
+    PaymentSource_MASTERPASS    PaymentSource = "MASTERPASS"
 )
 
 // currency declaration
@@ -244,6 +256,7 @@ const (
 const (
     PaymentGroup_PRODUCT                 PaymentGroup = "PRODUCT"
     PaymentGroup_LISTING_OR_SUBSCRIPTION PaymentGroup = "LISTING_OR_SUBSCRIPTION"
+    PaymentGroup_OTHER                   PaymentGroup = "OTHER"
 )
 
 // payment phase declaration
@@ -287,13 +300,16 @@ const (
     PaymentMethod_BIZUM                       PaymentMethod = "BIZUM"
     PaymentMethod_PAYLANDS_MB_WAY             PaymentMethod = "PAYLANDS_MB_WAY"
     PaymentMethod_ZIP                         PaymentMethod = "ZIP"
-    PaymentMethod_DKB                         PaymentMethod = "DKB"
     PaymentMethod_PAYCELL_DCB                 PaymentMethod = "PAYCELL_DCB"
     PaymentMethod_SETCARD                     PaymentMethod = "SETCARD"
     PaymentMethod_SETCARD_GIFT                PaymentMethod = "SETCARD_GIFT"
     PaymentMethod_IWALLET                     PaymentMethod = "IWALLET"
     PaymentMethod_PAPEL                       PaymentMethod = "PAPEL"
     PaymentMethod_BKM_EXPRESS                 PaymentMethod = "BKM_EXPRESS"
+    PaymentMethod_CECABANK_BIZUM              PaymentMethod = "CECABANK_BIZUM"
+    PaymentMethod_ISBANK_IDEAL                PaymentMethod = "ISBANK_IDEAL"
+    PaymentMethod_KARACA_FINANS               PaymentMethod = "KARACA_FINANS"
+    PaymentMethod_PAYLANDS_BIZUM              PaymentMethod = "PAYLANDS_BIZUM"
 )
 
 // card type declaration
@@ -311,7 +327,6 @@ const (
     CardAssociation_TROY        CardAssociation = "TROY"
     CardAssociation_JCB         CardAssociation = "JCB"
     CardAssociation_UNION_PAY   CardAssociation = "UNION_PAY"
-    CardAssociation_MAESTRO     CardAssociation = "MAESTRO"
     CardAssociation_DISCOVER    CardAssociation = "DISCOVER"
     CardAssociation_DINERS_CLUB CardAssociation = "DINERS_CLUB"
 )
@@ -331,13 +346,14 @@ const (
     LoyaltyType_EXTRA_POINTS           LoyaltyType = "EXTRA_POINTS"
     LoyaltyType_GAINING_MINUTES        LoyaltyType = "GAINING_MINUTES"
     LoyaltyType_POSTPONING_STATEMENT   LoyaltyType = "POSTPONING_STATEMENT"
-    LoyaltyType_POSTPONING_PAYMENT     LoyaltyType = "POSTPONING_STATEMENT"
+    LoyaltyType_POSTPONING_PAYMENT     LoyaltyType = "POSTPONING_PAYMENT"
 )
 
 // multi payment status declaration
 const (
     MultiPaymentStatus_CREATED   MultiPaymentStatus = "CREATED"
     MultiPaymentStatus_COMPLETED MultiPaymentStatus = "COMPLETED"
+    MultiPaymentStatus_EXPIRED   MultiPaymentStatus = "EXPIRED"
 )
 
 // payment refund status declaration
@@ -381,6 +397,7 @@ const (
 const (
     Status_ACTIVE  Status = "ACTIVE"
     Status_PASSIVE Status = "PASSIVE"
+    Status_SIMULATION Status = "SIMULATION"
 )
 
 // member type declaration
@@ -489,11 +506,14 @@ const (
 const (
     ReportType_TRANSACTION ReportType = "TRANSACTION"
     ReportType_PAYMENT     ReportType = "PAYMENT"
+    ReportType_SETTLEMENT  ReportType = "SETTLEMENT"
+    ReportType_SUB_MERCHANT_MEMBER_WALLET_TX ReportType = "SUB_MERCHANT_MEMBER_WALLET_TX"
 )
 
 // report period declaration
 const (
     ReportPeriod_INSTANT ReportPeriod = "INSTANT"
+    ReportPeriod_DAILY   ReportPeriod = "DAILY"
 )
 
 // wallet transaction type declaration
@@ -535,6 +555,8 @@ const (
     WebhookEventType_MULTI_PAYMENT_COMPLETED          WebhookEventType = "MULTI_PAYMENT_COMPLETED"
     WebhookEventType_MULTI_PAYMENT_EXPIRED            WebhookEventType = "MULTI_PAYMENT_EXPIRED"
     WebhookEventType_REPORT_CREATED                   WebhookEventType = "REPORT_CREATED"
+    WebhookEventType_FRAUD_CHECK                      WebhookEventType = "FRAUD_CHECK"
+    WebhookEventType_REPORT_GENERATED                 WebhookEventType = "REPORT_GENERATED"
 )
 
 const (
@@ -607,6 +629,27 @@ const (
     PosIntegrator_ZIRAATBANK        PosIntegrator = "ZIRAATBANK"
     PosIntegrator_ZIRAATBANK_INNOVA PosIntegrator = "ZIRAATBANK_INNOVA"
     PosIntegrator_ZIRAATKATILIM     PosIntegrator = "ZIRAATKATILIM"
+    PosIntegrator_AKODE             PosIntegrator = "AKODE"
+    PosIntegrator_ALBANK            PosIntegrator = "ALBANK"
+    PosIntegrator_CECABANK_ABANCA   PosIntegrator = "CECABANK_ABANCA"
+    PosIntegrator_CECABANK_ANDBANK  PosIntegrator = "CECABANK_ANDBANK"
+    PosIntegrator_CECABANK_BANCA_PUEYO PosIntegrator = "CECABANK_BANCA_PUEYO"
+    PosIntegrator_CECABANK_BANCO_DE_POLLENSA PosIntegrator = "CECABANK_BANCO_DE_POLLENSA"
+    PosIntegrator_CECABANK_CAIXA_ONTINYENT PosIntegrator = "CECABANK_CAIXA_ONTINYENT"
+    PosIntegrator_CECABANK_CAJA_ALMENDRALEJO PosIntegrator = "CECABANK_CAJA_ALMENDRALEJO"
+    PosIntegrator_CECABANK_EUROCAJA_RURAL PosIntegrator = "CECABANK_EUROCAJA_RURAL"
+    PosIntegrator_CECABANK_IBERCAJA PosIntegrator = "CECABANK_IBERCAJA"
+    PosIntegrator_CECABANK_UNICAJA  PosIntegrator = "CECABANK_UNICAJA"
+    PosIntegrator_REDSYS_ABANCA     PosIntegrator = "REDSYS_ABANCA"
+    PosIntegrator_REDSYS_BANCO_COOPERATIVO_ESPANOL PosIntegrator = "REDSYS_BANCO_COOPERATIVO_ESPANOL"
+    PosIntegrator_REDSYS_BANCO_SABADELL PosIntegrator = "REDSYS_BANCO_SABADELL"
+    PosIntegrator_REDSYS_BANCO_SANTANDER PosIntegrator = "REDSYS_BANCO_SANTANDER"
+    PosIntegrator_REDSYS_BANKINTER  PosIntegrator = "REDSYS_BANKINTER"
+    PosIntegrator_REDSYS_BBVA       PosIntegrator = "REDSYS_BBVA"
+    PosIntegrator_REDSYS_CAIXABANK  PosIntegrator = "REDSYS_CAIXABANK"
+    PosIntegrator_TKPAY             PosIntegrator = "TKPAY"
+    PosIntegrator_TURK_TICARET      PosIntegrator = "TURK_TICARET"
+    PosIntegrator_UNITED_PAYMENT_AZ PosIntegrator = "UNITED_PAYMENT_AZ"
 )
 
 const (
@@ -620,6 +663,7 @@ const (
     PosOperationType_PAYMENT  PosOperationType = "PAYMENT"
     PosOperationType_REFUND   PosOperationType = "REFUND"
     PosOperationType_INQUIRY  PosOperationType = "INQUIRY"
+    PosOperationType_POS_APM  PosOperationType = "POS_APM"
 )
 
 const (
@@ -674,6 +718,7 @@ const (
     BnplCartItemType_AUTOMOBILE_MOTORCYCLE                     BnplCartItemType = "AUTOMOBILE_MOTORCYCLE"
     BnplCartItemType_MOBILE_PHONE_REFURBISHED                  BnplCartItemType = "MOBILE_PHONE_REFURBISHED"
     BnplCartItemType_OTHER                                     BnplCartItemType = "OTHER"
+    BnplCartItemType_JEWELRY                                   BnplCartItemType = "JEWELRY"
 )
 
 // RecordType declaration
@@ -699,12 +744,17 @@ const (
     PaymentAuthenticationType_YKB_WORLD_PAY_SHOPPING_LOAN       PaymentAuthenticationType = "YKB_WORLD_PAY_SHOPPING_LOAN"
     PaymentAuthenticationType_GARANTI_PAY                       PaymentAuthenticationType = "GARANTI_PAY"
     PaymentAuthenticationType_JUZDAN                            PaymentAuthenticationType = "JUZDAN"
+    PaymentAuthenticationType_CARD_VERIFICATION                 PaymentAuthenticationType = "CARD_VERIFICATION"
+    PaymentAuthenticationType_ISPAY                             PaymentAuthenticationType = "ISPAY"
+    PaymentAuthenticationType_POS_APM                           PaymentAuthenticationType = "POS_APM"
 )
 
 const (
     CardVerificationAuthType_NON_THREE_DS CardVerificationAuthType = "NON_THREE_DS"
     CardVerificationAuthType_THREE_DS     CardVerificationAuthType = "THREE_DS"
     CardVerificationAuthType_NONE         CardVerificationAuthType = "NONE"
+    CardVerificationAuthType_THREE_DS_WITHOUT_PAYMENT CardVerificationAuthType = "THREE_DS_WITHOUT_PAYMENT"
+    CardVerificationAuthType_WITHOUT_PAYMENT CardVerificationAuthType = "WITHOUT_PAYMENT"
 )
 
 const (
@@ -734,6 +784,7 @@ const (
 const (
     TokenizedCardType_APPLE_PAY   TokenizedCardType = "APPLE_PAY"
     TokenizedCardType_BKM_EXPRESS TokenizedCardType = "BKM_EXPRESS"
+    TokenizedCardType_GOOGLEPAY   TokenizedCardType = "GOOGLEPAY"
 )
 
 const (
