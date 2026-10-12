@@ -561,6 +561,7 @@ const (
     PosIntegrator_CHECKOUT          PosIntegrator = "CHECKOUT"
     PosIntegrator_DENIZBANK         PosIntegrator = "DENIZBANK"
     PosIntegrator_ELEKSE            PosIntegrator = "ELEKSE"
+    PosIntegrator_ENPARA            PosIntegrator = "ENPARA"
     PosIntegrator_FIBABANK          PosIntegrator = "FIBABANK"
     PosIntegrator_FIBABANK_ASSECO   PosIntegrator = "FIBABANK_ASSECO"
     PosIntegrator_FINANSBANK        PosIntegrator = "FINANSBANK"
