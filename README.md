@@ -5,7 +5,7 @@
 This repo contains the Go library for Craftgate API.
 
 ## Requirements
-- Go 1.19 or newer
+- Go 1.21 or newer
 
 ## Installation
 
@@ -62,10 +62,10 @@ if err != nil {
 You should use production API servers at `https://api.craftgate.io` for real world. For testing purposes, please use the sandbox URL `https://sandbox-api.craftgate.io`.
 
 ## Examples
-Included in the project are a number of examples that cover almost all use-cases. Refer to [the `tests/` folder](./tests/)] for more info.
+Included in the project are a number of examples that cover almost all use-cases. Refer to [the `tests/` folder](./tests/) for more info.
 
 ### Running the Examples
-If you've cloned this repo on your development machine and wish to run the examples you can run an example with the command `go test ./...` or run single test with the command `go test tests/installment_test.go`
+If you've cloned this repo on your development machine and wish to run the examples, replace the `api-key` and `secret-key` values in the example file with your sandbox credentials, then run them against the sandbox API with `go test ./tests`, or a single one with `go test ./tests -run Test_RetrieveBinNumber`.
 
 ### Credit Card Payment Use Case
 Let's quickly review an example where we implement a credit card payment scenario.
