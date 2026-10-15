@@ -71,7 +71,6 @@ const (
     SignatureHeaderName      = "x-signature"
     IdempotencyKeyHeaderName = "x-idempotency-key"
     AuthVersion              = "1"
-    ClientVersion            = "craftgate-go-client:1.0.31"
 )
 
 // payment type declaration
