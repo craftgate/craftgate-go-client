@@ -10,22 +10,24 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-var instantTransferPaymentClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var compayPaymentClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func TestRetrieveActiveBanks(t *testing.T) {
-	res, err := instantTransferPaymentClient.Payment.RetrieveActiveBanks(context.Background())
+	res, err := compayPaymentClient.Payment.RetrieveActiveBanks(context.Background())
 	require.NotEmpty(t, res.Items)
 	if err != nil {
 		t.Errorf("Error %s", err)
 	}
 }
 
-func TestInitInstantTransferAPMPayment(t *testing.T) {
+func TestInitCompayAPMPayment(t *testing.T) {
 	additionalParams := make(map[string]string)
 	additionalParams["bankCode"] = "0"
+    additionalParams["shopUrl"] = "your-website.com"
+    additionalParams["receiptDescription"] = "Your receipt description"
 
 	request := adapter.InitApmPaymentRequest{
-		ApmType:        craftgate.ApmType_INSTANT_TRANSFER,
+		ApmType:        craftgate.ApmType_COMPAY,
 		Price:          1,
 		PaidPrice:      1,
 		Currency:       craftgate.Currency_TRY,
@@ -44,7 +46,7 @@ func TestInitInstantTransferAPMPayment(t *testing.T) {
 		},
 		AdditionalParams: additionalParams,
 	}
-	res, err := instantTransferPaymentClient.Payment.InitApmPayment(context.Background(), request)
+	res, err := compayPaymentClient.Payment.InitApmPayment(context.Background(), request)
 	_, _ = spew.Printf("%#v\n", res)
 
 	if err != nil {
