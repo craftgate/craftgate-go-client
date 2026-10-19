@@ -3,20 +3,19 @@ package tests
 import (
 	"context"
 	"github.com/craftgate/craftgate-go-client/adapter"
-	craftgate "github.com/craftgate/craftgate-go-client/adapter"
 	"github.com/davecgh/go-spew/spew"
 	"testing"
 	"time"
 )
 
-var payByLinkClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var payByLinkClient, _ = adapter.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func Test_CreateProduct(t *testing.T) {
 	request := adapter.CreateProductRequest{
 		Name:                "A new Product",
 		Channel:             "API",
 		Price:               10,
-		Currency:            craftgate.Currency_TRY,
+		Currency:            adapter.Currency_TRY,
 		EnabledInstallments: []int{1, 2, 3, 6},
 	}
 
@@ -34,7 +33,7 @@ func Test_CreateProduct_WithExpiresAt(t *testing.T) {
 		Name:                "A new Product 2",
 		Channel:             "API",
 		Price:               10,
-		Currency:            craftgate.Currency_TRY,
+		Currency:            adapter.Currency_TRY,
 		ExpiresAt:           &expiresAt,
 		EnabledInstallments: []int{1, 2, 3, 6},
 	}
@@ -50,10 +49,10 @@ func Test_CreateProduct_WithExpiresAt(t *testing.T) {
 func Test_UpdateProduct(t *testing.T) {
 	request := adapter.UpdateProductRequest{
 		Name:                "A new Product",
-		Status:              craftgate.Status_ACTIVE,
+		Status:              adapter.Status_ACTIVE,
 		Channel:             "API",
 		Price:               10,
-		Currency:            craftgate.Currency_TRY,
+		Currency:            adapter.Currency_TRY,
 		EnabledInstallments: []int{1, 2, 3, 6, 9},
 	}
 
@@ -86,7 +85,7 @@ func Test_SearchProducts(t *testing.T) {
 	request := adapter.SearchProductsRequest{
 		Page:     0,
 		Size:     10,
-		Currency: craftgate.Currency_TRY,
+		Currency: adapter.Currency_TRY,
 	}
 
 	res, err := payByLinkClient.PayByLink.SearchProducts(context.Background(), request)
