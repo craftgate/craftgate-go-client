@@ -42,9 +42,13 @@ jobs:
           go test ./adapter/
           go test ./tests -run Idempotency
 
-      # Serves HEAD as v1.999.0 from a local module proxy and checks the header in a module that requires it.
+      # Same version validation as the release workflow, with a fake version.
+      - name: Validate version for release dry run
+        run: .github/scripts/prepare-release.sh 1.999.0 v
+
+      # Serves HEAD as the validated tag from a local module proxy and checks the header in a module that requires it.
       - name: Release dry run
-        run: .github/scripts/release-dry-run.sh v1.999.0
+        run: .github/scripts/release-dry-run.sh "$TAG"
 
   # Single "build" status for branch protection: passes only if every job above passed.
   build:
