@@ -7,11 +7,10 @@ import (
 	"time"
 
 	"github.com/craftgate/craftgate-go-client/adapter"
-	craftgate "github.com/craftgate/craftgate-go-client/adapter"
 	"github.com/davecgh/go-spew/spew"
 )
 
-var onboardingClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var onboardingClient, _ = adapter.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func Test_CreateBuyerMember(t *testing.T) {
 	request := adapter.CreateMemberRequest{
@@ -44,7 +43,7 @@ func Test_CreateSubMerchantMember(t *testing.T) {
 		Iban:              "TR930006701000000001111111",
 		LegalCompanyTitle: "Dem Zeytinyağı Üretim Ltd. Şti.",
 		Name:              "Dem Zeytinyağı Üretim Ltd. Şti.",
-		MemberType:        craftgate.MemberType_LIMITED_OR_JOINT_STOCK_COMPANY,
+		MemberType:        adapter.MemberType_LIMITED_OR_JOINT_STOCK_COMPANY,
 		TaxNumber:         "1111111114",
 		TaxOffice:         "Erenköy",
 		Address:           "Suadiye Mah. Örnek Cd. No:23, 34740 Kadıköy/İstanbul",
@@ -70,7 +69,7 @@ func Test_CreateBuyerAndSubMerchantMember(t *testing.T) {
 		Iban:              "TR930006701000000001111111",
 		LegalCompanyTitle: "Dem Zeytinyağı Üretim Ltd. Şti.",
 		Name:              "Dem Zeytinyağı Üretim Ltd. Şti.",
-		MemberType:        craftgate.MemberType_LIMITED_OR_JOINT_STOCK_COMPANY,
+		MemberType:        adapter.MemberType_LIMITED_OR_JOINT_STOCK_COMPANY,
 		TaxNumber:         "1111111114",
 		TaxOffice:         "Erenköy",
 		Address:           "Suadiye Mah. Örnek Cd. No:23, 34740 Kadıköy/İstanbul",
@@ -95,8 +94,8 @@ func Test_UpdateSubMerchantMember(t *testing.T) {
 		Iban:                          "TR930006701000000001111111",
 		LegalCompanyTitle:             "Dem Zeytinyağı Üretim Ltd. Şti.",
 		Name:                          "Dem Zeytinyağı Üretim Ltd. Şti.",
-		MemberType:                    craftgate.MemberType_LIMITED_OR_JOINT_STOCK_COMPANY,
-		SettlementEarningsDestination: craftgate.SettlementEarningsDestination_WALLET,
+		MemberType:                    adapter.MemberType_LIMITED_OR_JOINT_STOCK_COMPANY,
+		SettlementEarningsDestination: adapter.SettlementEarningsDestination_WALLET,
 		TaxNumber:                     "1111111114",
 		TaxOffice:                     "Erenköy",
 		Address:                       "Suadiye Mah. Örnek Cd. No:23, 34740 Kadıköy/İstanbul",
@@ -121,7 +120,7 @@ func Test_UpdateBuyerMember(t *testing.T) {
 		Iban:              "TR930006701000000001111111",
 		LegalCompanyTitle: "Dem Zeytinyağı Üretim Ltd. Şti.",
 		Name:              "Dem Zeytinyağı Üretim Ltd. Şti.",
-		MemberType:        craftgate.MemberType_PERSONAL,
+		MemberType:        adapter.MemberType_PERSONAL,
 		TaxNumber:         "1111111114",
 		TaxOffice:         "Erenköy",
 		Address:           "Suadiye Mah. Örnek Cd. No:23, 34740 Kadıköy/İstanbul",

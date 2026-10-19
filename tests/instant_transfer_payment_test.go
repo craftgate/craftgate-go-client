@@ -5,12 +5,11 @@ import (
 	"testing"
 
 	"github.com/craftgate/craftgate-go-client/adapter"
-	craftgate "github.com/craftgate/craftgate-go-client/adapter"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/stretchr/testify/require"
 )
 
-var instantTransferPaymentClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var instantTransferPaymentClient, _ = adapter.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func TestRetrieveActiveBanks(t *testing.T) {
 	res, err := instantTransferPaymentClient.Payment.RetrieveActiveBanks(context.Background())
@@ -25,14 +24,14 @@ func TestInitInstantTransferAPMPayment(t *testing.T) {
 	additionalParams["bankCode"] = "0"
 
 	request := adapter.InitApmPaymentRequest{
-		ApmType:        craftgate.ApmType_INSTANT_TRANSFER,
+		ApmType:        adapter.ApmType_INSTANT_TRANSFER,
 		Price:          1,
 		PaidPrice:      1,
-		Currency:       craftgate.Currency_TRY,
-		PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		Currency:       adapter.Currency_TRY,
+		PaymentGroup:   adapter.PaymentGroup_LISTING_OR_SUBSCRIPTION,
 		ConversationId: "foo-bar",
 		CallbackUrl:    "https://www.your-website.com/callback",
-		Items: []craftgate.PaymentItem{
+		Items: []adapter.PaymentItem{
 			{
 				Name:  "Item 1",
 				Price: 0.6,

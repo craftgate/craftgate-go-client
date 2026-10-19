@@ -3,18 +3,17 @@ package tests
 import (
 	"context"
 	"github.com/craftgate/craftgate-go-client/adapter"
-	craftgate "github.com/craftgate/craftgate-go-client/adapter"
 	"github.com/davecgh/go-spew/spew"
 	"testing"
 )
 
-var bankAccountTrackingClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var bankAccountTrackingClient, _ = adapter.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func TestBankAccountTracking_SearchBankAccountTrackingRecords(t *testing.T) {
 	request := adapter.SearchBankAccountTrackingRecordRequest{
 		Page:     0,
 		Size:     10,
-		Currency: craftgate.Currency_TRY,
+		Currency: adapter.Currency_TRY,
 	}
 
 	res, err := bankAccountTrackingClient.BankAccountTracking.SearchRecords(context.Background(), request)

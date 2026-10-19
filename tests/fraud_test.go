@@ -5,11 +5,10 @@ import (
     "testing"
 
     "github.com/craftgate/craftgate-go-client/adapter"
-    craftgate "github.com/craftgate/craftgate-go-client/adapter"
     "github.com/davecgh/go-spew/spew"
 )
 
-var fraudClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var fraudClient, _ = adapter.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func Test_SearchFraudChecks(t *testing.T) {
 	request := adapter.SearchFraudChecksRequest{
@@ -69,7 +68,7 @@ func Test_RetrieveFraudValueList(t *testing.T) {
 }
 
 func Test_CreateFraudValueList(t *testing.T) {
-	err := fraudClient.Fraud.CreateFraudValueList(context.Background(), "ipList", craftgate.FraudValueType_IP)
+	err := fraudClient.Fraud.CreateFraudValueList(context.Background(), "ipList", adapter.FraudValueType_IP)
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -88,7 +87,7 @@ func Test_DeleteFraudValueList(t *testing.T) {
 func Test_AddValueToFraudValueList(t *testing.T) {
 	request := adapter.FraudValueListRequest{
 		ListName: "ipList",
-		Type:     craftgate.FraudValueType_IP,
+		Type:     adapter.FraudValueType_IP,
 		Label:    "local ip 1",
 		Value:    "127.0.0.1",
 	}
@@ -102,7 +101,7 @@ func Test_AddValueToFraudValueList(t *testing.T) {
 func Test_AddTemporaryValueToFraudValueList(t *testing.T) {
 	request := adapter.FraudValueListRequest{
 		ListName:          "ipList",
-		Type:              craftgate.FraudValueType_IP,
+		Type:              adapter.FraudValueType_IP,
 		Label:             "local ip 2",
 		Value:             "127.0.0.2",
 		DurationInSeconds: 60,
@@ -118,7 +117,7 @@ func Test_AddTemporaryValueToFraudValueList(t *testing.T) {
 func Test_AddCardFingerprintToFraudValueList(t *testing.T) {
 	request := adapter.AddCardFingerprintFraudValueListRequest{
 		Label:             "John Doe's Card",
-		Operation:         craftgate.FraudOperation_PAYMENT,
+		Operation:         adapter.FraudOperation_PAYMENT,
 		OperationId:       "11675", //PaymentId
 		DurationInSeconds: 3600,
 	}

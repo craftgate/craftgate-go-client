@@ -5,16 +5,15 @@ import (
 	"testing"
 
 	"github.com/craftgate/craftgate-go-client/adapter"
-	craftgate "github.com/craftgate/craftgate-go-client/adapter"
 	"github.com/davecgh/go-spew/spew"
     "github.com/stretchr/testify/require"
 )
 
-var mealVoucherClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var mealVoucherClient, _ = adapter.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func TestMealVoucherCardTokenization_Init(t *testing.T) {
 	request := adapter.MealVoucherCardTokenizationInitRequest{
-		ApmType: craftgate.ApmType_SETCARD,
+		ApmType: adapter.ApmType_SETCARD,
 		MealVoucherCardTokenizationData: adapter.MealVoucherCardTokenizationData{
 			CallbackUrl: "https://www.yourdomain.com/callback",
 		},

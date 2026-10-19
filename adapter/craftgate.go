@@ -362,7 +362,7 @@ func QueryParams(req interface{}) (string, error) {
 		return "", err
 	}
 	encoded := queryParams.Encode()
-	encoded = strings.Replace(encoded, "%3A", ":", -1)
+	encoded = strings.ReplaceAll(encoded, "%3A", ":")
 	return encoded, nil
 }
 

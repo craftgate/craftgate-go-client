@@ -3,20 +3,19 @@ package tests
 import (
 	"context"
 	"github.com/craftgate/craftgate-go-client/adapter"
-	craftgate "github.com/craftgate/craftgate-go-client/adapter"
 	"github.com/davecgh/go-spew/spew"
 	"testing"
 	"time"
 )
 
-var paymentReportingClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var paymentReportingClient, _ = adapter.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func Test_SearchPayment(t *testing.T) {
 	request := adapter.SearchPaymentsRequest{
 		Page: 0, Size: 10,
-		PaymentType:    craftgate.PaymentType_CARD_PAYMENT,
-		PaymentStatus:  craftgate.PaymentStatus_SUCCESS,
-		Currency:       craftgate.Currency_TRY,
+		PaymentType:    adapter.PaymentType_CARD_PAYMENT,
+		PaymentStatus:  adapter.PaymentStatus_SUCCESS,
+		Currency:       adapter.Currency_TRY,
 		MinCreatedDate: time.Now().AddDate(0, 0, -180),
 		MaxCreatedDate: time.Now(),
 	}
@@ -31,7 +30,7 @@ func Test_SearchPayment(t *testing.T) {
 func Test_SearchPaymentRefunds(t *testing.T) {
 	request := adapter.SearchPaymentRefundsRequest{
 		Page: 0, Size: 10,
-		Currency:       craftgate.Currency_TRY,
+		Currency:       adapter.Currency_TRY,
 		MinCreatedDate: time.Now().AddDate(0, 0, -180),
 		MaxCreatedDate: time.Now(),
 	}
@@ -46,7 +45,7 @@ func Test_SearchPaymentRefunds(t *testing.T) {
 func Test_SearchPaymentTransactionRefunds(t *testing.T) {
 	request := adapter.SearchPaymentTransactionRefundsRequest{
 		Page: 0, Size: 10,
-		Currency:       craftgate.Currency_TRY,
+		Currency:       adapter.Currency_TRY,
 		MinCreatedDate: time.Now().AddDate(0, 0, -180),
 		MaxCreatedDate: time.Now(),
 	}
