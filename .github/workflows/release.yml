@@ -1,0 +1,67 @@
+name: Craftgate Go Client Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version (format: 1.2.3)"
+        required: true
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Ensure branch context
+        run: |
+          if [[ "${GITHUB_REF}" != refs/heads/* ]]; then
+            echo "::error::Release workflow must run against a branch ref."
+            exit 1
+          fi
+
+      # Go module tags need the "v" prefix.
+      - name: Validate version
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: .github/scripts/prepare-release.sh "$INPUT_VERSION" v
+
+      - name: Set up Go
+        uses: actions/setup-go@v7
+        with:
+          go-version: stable
+          cache: true
+          cache-dependency-path: go.sum
+
+      - name: Test
+        run: |
+          go test
+          go test ./adapter/
+
+      - name: Release dry run
+        run: .github/scripts/release-dry-run.sh "$TAG"
+
+      - name: Create tag
+        run: |
+          git tag "$TAG"
+          git push origin "refs/tags/$TAG"
+
+      # Go modules are served straight from the tag; this only asks the public proxy to fetch it now.
+      - name: Notify Go module proxy
+        run: |
+          cd "$(mktemp -d)"
+          GOPROXY=https://proxy.golang.org GOFLAGS=-mod=mod go list -m "github.com/craftgate/craftgate-go-client@$TAG"
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ env.TAG }}
+          name: ${{ env.TAG }}
+          generate_release_notes: true
