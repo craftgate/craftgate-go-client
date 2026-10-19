@@ -3,12 +3,11 @@ package tests
 import (
 	"context"
 	"github.com/craftgate/craftgate-go-client/adapter"
-	craftgate "github.com/craftgate/craftgate-go-client/adapter"
 	"github.com/davecgh/go-spew/spew"
 	"testing"
 )
 
-var settlementClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var settlementClient, _ = adapter.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func TestSettlement_CreateInstantWalletSettlement(t *testing.T) {
 	request := adapter.CreateInstantWalletSettlementRequest{ExcludedSubMerchantMemberIds: []int64{1, 2}}
@@ -23,10 +22,10 @@ func TestSettlement_CreateInstantWalletSettlement(t *testing.T) {
 
 func TestSettlement_CreateMerchantPayoutAccount(t *testing.T) {
 	request := adapter.CreatePayoutAccountRequest{
-		AccountType:       craftgate.PayoutAccountType_WISE,
+		AccountType:       adapter.PayoutAccountType_WISE,
 		ExternalAccountId: "wiseRecipientId",
-		Currency:          craftgate.Currency_USD,
-		AccountOwner:      craftgate.AccountOwner_MERCHANT,
+		Currency:          adapter.Currency_USD,
+		AccountOwner:      adapter.AccountOwner_MERCHANT,
 	}
 
 	res, err := settlementClient.Settlement.CreatePayoutAccount(context.Background(), request)
@@ -39,10 +38,10 @@ func TestSettlement_CreateMerchantPayoutAccount(t *testing.T) {
 
 func TestSettlement_CreateSubMerchantPayoutAccount(t *testing.T) {
 	request := adapter.CreatePayoutAccountRequest{
-		AccountType:         craftgate.PayoutAccountType_WISE,
+		AccountType:         adapter.PayoutAccountType_WISE,
 		ExternalAccountId:   "wiseRecipientId",
-		Currency:            craftgate.Currency_EUR,
-		AccountOwner:        craftgate.AccountOwner_SUB_MERCHANT_MEMBER,
+		Currency:            adapter.Currency_EUR,
+		AccountOwner:        adapter.AccountOwner_SUB_MERCHANT_MEMBER,
 		SubMerchantMemberId: 1,
 	}
 
@@ -56,7 +55,7 @@ func TestSettlement_CreateSubMerchantPayoutAccount(t *testing.T) {
 
 func TestSettlement_UpdatePayoutAccount(t *testing.T) {
 	request := adapter.UpdatePayoutAccountRequest{
-		AccountType:       craftgate.PayoutAccountType_WISE,
+		AccountType:       adapter.PayoutAccountType_WISE,
 		ExternalAccountId: "wiseRecipientId2",
 	}
 
@@ -78,8 +77,8 @@ func TestSettlement_DeletePayoutAccount(t *testing.T) {
 
 func TestSettlement_SearchPayoutAccounts(t *testing.T) {
 	request := adapter.SearchPayoutAccountRequest{
-		Currency:     craftgate.Currency_USD,
-		AccountOwner: craftgate.AccountOwner_MERCHANT,
+		Currency:     adapter.Currency_USD,
+		AccountOwner: adapter.AccountOwner_MERCHANT,
 	}
 
 	res, err := settlementClient.Settlement.SearchPayoutAccounts(context.Background(), request)

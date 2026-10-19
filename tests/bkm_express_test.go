@@ -5,23 +5,22 @@ import (
     "testing"
 
     "github.com/craftgate/craftgate-go-client/adapter"
-    craftgate "github.com/craftgate/craftgate-go-client/adapter"
     "github.com/davecgh/go-spew/spew"
     "github.com/stretchr/testify/require"
 )
 
-var bkmExpressClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var bkmExpressClient, _ = adapter.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func TestBkm_Express_Init(t *testing.T) {
 	request := adapter.InitBkmExpressRequest{
 		Price:               1.25,
 		PaidPrice:           1.25,
-		Currency:            craftgate.Currency_TRY,
-		PaymentGroup:        craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+		Currency:            adapter.Currency_TRY,
+		PaymentGroup:        adapter.PaymentGroup_LISTING_OR_SUBSCRIPTION,
 		ConversationId:      "foo-bar",
 		ExternalId:          "externalId",
 		EnabledInstallments: []int{1, 2},
-		Items: []craftgate.PaymentItem{
+		Items: []adapter.PaymentItem{
 			{
 				Name:       "Item 1",
 				Price:      1,

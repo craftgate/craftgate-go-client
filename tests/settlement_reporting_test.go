@@ -3,13 +3,12 @@ package tests
 import (
 	"context"
 	"github.com/craftgate/craftgate-go-client/adapter"
-	craftgate "github.com/craftgate/craftgate-go-client/adapter"
 	"github.com/davecgh/go-spew/spew"
 	"testing"
 	"time"
 )
 
-var settlementReportingClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var settlementReportingClient, _ = adapter.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func TestSettlementReporting_SearchPayoutCompletedTransactions(t *testing.T) {
 	request := adapter.SearchPayoutCompletedTransactionsRequest{
@@ -52,7 +51,7 @@ func TestSettlementReporting_RetrievePayoutDetails(t *testing.T) {
 
 func TestSettlementReporting_SearchPayoutRows(t *testing.T) {
 	request := adapter.SearchPayoutRowRequest{
-		FileStatus: craftgate.FileStatus_CREATED,
+		FileStatus: adapter.FileStatus_CREATED,
 		StartDate:  time.Now().AddDate(0, 0, -180),
 		EndDate:    time.Now(),
 	}

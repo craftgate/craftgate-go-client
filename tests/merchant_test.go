@@ -3,12 +3,11 @@ package tests
 import (
 	"context"
 	"github.com/craftgate/craftgate-go-client/adapter"
-	craftgate "github.com/craftgate/craftgate-go-client/adapter"
 	"github.com/davecgh/go-spew/spew"
 	"testing"
 )
 
-var merchantClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var merchantClient, _ = adapter.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func Test_CreateMerchantPos(t *testing.T) {
 	request := adapter.CreateMerchantPosRequest{
@@ -16,21 +15,21 @@ func Test_CreateMerchantPos(t *testing.T) {
 		ClientId:                "client id",
 		TerminalId:              "terminal id",
 		ThreedsKey:              "3d secure key",
-		Status:                  craftgate.PosStatus_AUTOPILOT,
-		Currency:                craftgate.Currency_TRY,
+		Status:                  adapter.PosStatus_AUTOPILOT,
+		Currency:                adapter.Currency_TRY,
 		OrderNumber:             1,
 		EnableInstallment:       true,
 		EnableForeignCard:       true,
 		EnablePaymentWithoutCvc: true,
-		PosIntegrator:           craftgate.PosIntegrator_AKBANK,
-		EnabledPaymentAuthenticationTypes: []craftgate.PaymentAuthenticationType{
-			craftgate.PaymentAuthenticationType_NON_THREE_DS,
-			craftgate.PaymentAuthenticationType_NON_THREE_DS,
+		PosIntegrator:           adapter.PosIntegrator_AKBANK,
+		EnabledPaymentAuthenticationTypes: []adapter.PaymentAuthenticationType{
+			adapter.PaymentAuthenticationType_NON_THREE_DS,
+			adapter.PaymentAuthenticationType_NON_THREE_DS,
 		},
-		MerchantPosUsers: []craftgate.CreateMerchantPosUser{
+		MerchantPosUsers: []adapter.CreateMerchantPosUser{
 			{
-				PosOperationType: craftgate.PosOperationType_STANDARD,
-				PosUserType:      craftgate.PosUserType_API,
+				PosOperationType: adapter.PosOperationType_STANDARD,
+				PosUserType:      adapter.PosUserType_API,
 				PosUsername:      "username",
 				PosPassword:      "password",
 			},
@@ -56,7 +55,7 @@ func Test_RetrieveMerchantPos(t *testing.T) {
 
 func Test_UpdateMerchantPosStatus(t *testing.T) {
 	err := merchantClient.Merchant.UpdateMerchantPosStatus(context.Background(),
-		adapter.UpdateMerchantPosStatusRequest{MerchantPosId: 1, PosStatus: craftgate.PosStatus_ACTIVE})
+		adapter.UpdateMerchantPosStatusRequest{MerchantPosId: 1, PosStatus: adapter.PosStatus_ACTIVE})
 
 	if err != nil {
 		t.Errorf("Error %s", err)
@@ -83,12 +82,12 @@ func Test_RetrieveMerchantPosCommission(t *testing.T) {
 
 func Test_UpdateMerchantPosCommissions(t *testing.T) {
 	req := adapter.CreateMerchantPosCommissionRequest{
-		Commissions: []craftgate.CreateMerchantPosCommission{
+		Commissions: []adapter.CreateMerchantPosCommission{
 			{
 				Installment:                         1,
 				BlockageDay:                         7,
-				Status:                              craftgate.Status_ACTIVE,
-				CardBrandName:                       craftgate.CardBrand_AXESS,
+				Status:                              adapter.Status_ACTIVE,
+				CardBrandName:                       adapter.CardBrand_AXESS,
 				InstallmentLabel:                    "Single installment",
 				BankOnUsDebitCardCommissionRate:     1.0,
 				BankOnUsCreditCardCommissionRate:    1.1,
@@ -99,8 +98,8 @@ func Test_UpdateMerchantPosCommissions(t *testing.T) {
 			{
 				Installment:                      2,
 				BlockageDay:                      7,
-				Status:                           craftgate.Status_ACTIVE,
-				CardBrandName:                    craftgate.CardBrand_AXESS,
+				Status:                           adapter.Status_ACTIVE,
+				CardBrandName:                    adapter.CardBrand_AXESS,
 				InstallmentLabel:                 "installment 2",
 				BankOnUsCreditCardCommissionRate: 2.1,
 				MerchantCommissionRate:           2.3,

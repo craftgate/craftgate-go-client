@@ -3,13 +3,12 @@ package tests
 import (
 	"context"
 	"github.com/craftgate/craftgate-go-client/adapter"
-	craftgate "github.com/craftgate/craftgate-go-client/adapter"
 	"github.com/davecgh/go-spew/spew"
 	"testing"
 	"time"
 )
 
-var walletClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var walletClient, _ = adapter.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func TestWallet_RetrieveMemberWallet(t *testing.T) {
 	res, err := walletClient.Wallet.RetrieveMemberWallet(context.Background(), 1)
@@ -41,7 +40,7 @@ func TestWallet_ResetMerchantMemberWalletBalance(t *testing.T) {
 
 func TestWallet_SearchWalletTransactions(t *testing.T) {
 	request := adapter.SearchWalletTransactionsRequest{
-		WalletTransactionTypes: []craftgate.WalletTransactionType{craftgate.WalletTransactionType_DEPOSIT_FROM_CARD},
+		WalletTransactionTypes: []adapter.WalletTransactionType{adapter.WalletTransactionType_DEPOSIT_FROM_CARD},
 	}
 	res, err := walletClient.Wallet.SearchWalletTransactions(context.Background(), 1, request)
 	_, _ = spew.Printf("%#v\n", res)

@@ -3,13 +3,12 @@ package tests
 import (
 	"context"
 	"github.com/craftgate/craftgate-go-client/adapter"
-	craftgate "github.com/craftgate/craftgate-go-client/adapter"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/stretchr/testify/require"
 	"testing"
 )
 
-var masterpassClient, _ = craftgate.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
+var masterpassClient, _ = adapter.New("api-key", "secret-key", "https://sandbox-api.craftgate.io")
 
 func TestMasterpass_CheckMasterpassUser(t *testing.T) {
 	request := adapter.CheckMasterpassUserRequest{
@@ -29,15 +28,15 @@ func TestMasterpass_GenerateMasterpassPaymentToken(t *testing.T) {
 		Msisdn:       "900000000000",
 		BinNumber:    "404308",
 		ForceThreeDS: true,
-		CreatePayment: craftgate.MasterpassCreatePayment{
+		CreatePayment: adapter.MasterpassCreatePayment{
 			Price:          1.25,
 			PaidPrice:      1.25,
 			Installment:    1,
-			Currency:       craftgate.Currency_TRY,
-			PaymentGroup:   craftgate.PaymentGroup_LISTING_OR_SUBSCRIPTION,
+			Currency:       adapter.Currency_TRY,
+			PaymentGroup:   adapter.PaymentGroup_LISTING_OR_SUBSCRIPTION,
 			ConversationId: "foo-bar",
 			ExternalId:     "115",
-			Items: []craftgate.PaymentItem{
+			Items: []adapter.PaymentItem{
 				{
 					Name:       "Item 1",
 					Price:      1,
