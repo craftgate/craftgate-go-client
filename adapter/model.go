@@ -50,8 +50,6 @@ type PosIntegrator string
 type PosUserType string
 type PosOperationType string
 type FileStatus string
-type AccountOwner string
-type PayoutAccountType string
 type RecordType string
 type BankAccountTrackingSource string
 type BnplCartItemType string
@@ -391,10 +389,9 @@ const (
 
 // settlementEarningsDestination type declaration
 const (
-    SettlementEarningsDestination_IBAN         SettlementEarningsDestination = "IBAN"
-    SettlementEarningsDestination_WALLET       SettlementEarningsDestination = "WALLET"
-    SettlementEarningsDestination_CROSS_BORDER SettlementEarningsDestination = "CROSS_BORDER"
-    SettlementEarningsDestination_NONE         SettlementEarningsDestination = "NONE"
+    SettlementEarningsDestination_IBAN   SettlementEarningsDestination = "IBAN"
+    SettlementEarningsDestination_WALLET SettlementEarningsDestination = "WALLET"
+    SettlementEarningsDestination_NONE   SettlementEarningsDestination = "NONE"
 )
 
 // refundDestinationType type declaration
@@ -632,15 +629,6 @@ const (
     AdditionalAction_SHOW_HTML_CONTENT  AdditionalAction = "SHOW_HTML_CONTENT"
     AdditionalAction_REDIRECT_TO_URL    AdditionalAction = "REDIRECT_TO_URL"
     AdditionalAction_NONE               AdditionalAction = "NONE"
-)
-
-const (
-    AccountOwner_MERCHANT            AccountOwner = "MERCHANT"
-    AccountOwner_SUB_MERCHANT_MEMBER AccountOwner = "SUB_MERCHANT_MEMBER"
-)
-
-const (
-    PayoutAccountType_WISE PayoutAccountType = "WISE"
 )
 
 // BnplCartItemType type declaration
@@ -1211,30 +1199,6 @@ type CheckMasterpassUserRequest struct {
     MasterpassGsmNumber string `json:"masterpassGsmNumber"`
 }
 
-type CreatePayoutAccountRequest struct {
-    BaseRequest
-    AccountType         PayoutAccountType `json:"type,omitempty"`
-    ExternalAccountId   string            `json:"externalAccountId,omitempty"`
-    Currency            Currency          `json:"currency,omitempty"`
-    AccountOwner        AccountOwner      `json:"accountOwner,omitempty"`
-    SubMerchantMemberId int64             `json:"subMerchantMemberId,omitempty"`
-}
-
-type UpdatePayoutAccountRequest struct {
-    BaseRequest
-    AccountType       PayoutAccountType `json:"type,omitempty"`
-    ExternalAccountId string            `json:"externalAccountId,omitempty"`
-}
-
-type SearchPayoutAccountRequest struct {
-    BaseRequest
-    Currency            Currency     `json:"currency,omitempty"`
-    AccountOwner        AccountOwner `json:"accountOwner,omitempty"`
-    SubMerchantMemberId int64        `json:"subMerchantMemberId,omitempty"`
-    Page                int          `schema:"page,omitempty"`
-    Size                int          `schema:"size,omitempty"`
-}
-
 type MasterpassPaymentTokenGenerateRequest struct {
     BaseRequest
     Msisdn                       string                   `json:"msisdn,omitempty"`
@@ -1488,15 +1452,6 @@ type ApmDepositPaymentResponse struct {
     ApmAdditionalAction *ApmAdditionalAction `json:"additionalAction"`
     PaymentError        *PaymentError        `json:"paymentError"`
     WalletTransaction   *WalletTransaction   `json:"walletTransaction"`
-}
-
-type PayoutAccountResponse struct {
-    Id                  int64             `json:"id"`
-    AccountType         PayoutAccountType `json:"type"`
-    ExternalAccountId   string            `json:"externalAccountId"`
-    Currency            Currency          `json:"currency"`
-    AccountOwner        AccountOwner      `json:"accountOwner"`
-    SubMerchantMemberId *int64            `json:"subMerchantMemberId"`
 }
 
 type MasterpassPaymentThreeDSInitResponse struct {
@@ -2891,11 +2846,6 @@ type DeleteMerchantPosRequest struct {
 }
 
 type DeleteProductRequest struct {
-    BaseRequest
-    Id int64
-}
-
-type DeletePayoutAccountRequest struct {
     BaseRequest
     Id int64
 }
