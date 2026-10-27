@@ -62,6 +62,11 @@ type CardBrand string
 type ClientType string
 type MasterpassValidationType string
 type OrderingRule string
+type MerchantType string
+type SettlementSource string
+type PayoutApprovalStatus string
+type PayoutItemSubject string
+type SettlementRowItemSubject string
 
 const (
     ApiKeyHeaderName         = "x-api-key"
@@ -412,11 +417,12 @@ const (
 
 // transaction payout status declaration
 const (
-    TransactionPayoutStatus_CANCELLED          TransactionPayoutStatus = "CANCELLED"
-    TransactionPayoutStatus_NO_PAYOUT          TransactionPayoutStatus = "NO_PAYOUT"
-    TransactionPayoutStatus_WAITING_FOR_PAYOUT TransactionPayoutStatus = "WAITING_FOR_PAYOUT"
-    TransactionPayoutStatus_PAYOUT_STARTED     TransactionPayoutStatus = "PAYOUT_STARTED"
-    TransactionPayoutStatus_PAYOUT_COMPLETED   TransactionPayoutStatus = "PAYOUT_COMPLETED"
+    TransactionPayoutStatus_CANCELLED                  TransactionPayoutStatus = "CANCELLED"
+    TransactionPayoutStatus_ELIMINATED_BY_FULLY_REFUND TransactionPayoutStatus = "ELIMINATED_BY_FULLY_REFUND"
+    TransactionPayoutStatus_NO_PAYOUT                  TransactionPayoutStatus = "NO_PAYOUT"
+    TransactionPayoutStatus_WAITING_FOR_PAYOUT         TransactionPayoutStatus = "WAITING_FOR_PAYOUT"
+    TransactionPayoutStatus_PAYOUT_STARTED             TransactionPayoutStatus = "PAYOUT_STARTED"
+    TransactionPayoutStatus_PAYOUT_COMPLETED           TransactionPayoutStatus = "PAYOUT_COMPLETED"
 )
 
 // settlement type declaration
@@ -745,6 +751,36 @@ const (
     OrderingRule_ON_US               OrderingRule = "ON_US"
     OrderingRule_LOW_COMMISSION_RATE OrderingRule = "LOW_COMMISSION_RATE"
     OrderingRule_IN_ORDER            OrderingRule = "IN_ORDER"
+)
+
+const (
+    MerchantType_MERCHANT            MerchantType = "MERCHANT"
+    MerchantType_SUB_MERCHANT_MEMBER MerchantType = "SUB_MERCHANT_MEMBER"
+)
+
+const (
+    SettlementSource_COLLECTION SettlementSource = "COLLECTION"
+    SettlementSource_WITHDRAW   SettlementSource = "WITHDRAW"
+    SettlementSource_BOUNCED    SettlementSource = "BOUNCED"
+)
+
+const (
+    PayoutApprovalStatus_WAITING  PayoutApprovalStatus = "WAITING"
+    PayoutApprovalStatus_APPROVED PayoutApprovalStatus = "APPROVED"
+)
+
+const (
+    PayoutItemSubject_PAYMENT_TX PayoutItemSubject = "PAYMENT_TX"
+    PayoutItemSubject_REFUND     PayoutItemSubject = "REFUND"
+    PayoutItemSubject_REFUND_TX  PayoutItemSubject = "REFUND_TX"
+)
+
+const (
+    SettlementRowItemSubject_PAYMENT_TX     SettlementRowItemSubject = "PAYMENT_TX"
+    SettlementRowItemSubject_REFUND         SettlementRowItemSubject = "REFUND"
+    SettlementRowItemSubject_REFUND_TX      SettlementRowItemSubject = "REFUND_TX"
+    SettlementRowItemSubject_MONEY_TRANSFER SettlementRowItemSubject = "MONEY_TRANSFER"
+    SettlementRowItemSubject_WITHDRAW       SettlementRowItemSubject = "WITHDRAW"
 )
 
 type RoutingOptions struct {
@@ -1378,22 +1414,18 @@ type PaymentResponse struct {
 }
 
 type PaymentTransactionResponse struct {
-    ID                            *int64   `json:"id"`
-    ExternalID                    *string  `json:"externalId"`
-    Name                          *string  `json:"name"`
-    TransactionStatus             *string  `json:"transactionStatus"`
-    BlockageResolvedDate          *string  `json:"blockageResolvedDate"`
-    Price                         *float64 `json:"price"`
-    PaidPrice                     *float64 `json:"paidPrice"`
-    WalletPrice                   *float64 `json:"walletPrice"`
-    MerchantCommissionRate        *float64 `json:"merchantCommissionRate"`
-    MerchantCommissionRateAmount  *float64 `json:"merchantCommissionRateAmount"`
-    MerchantPayoutAmount          *float64 `json:"merchantPayoutAmount"`
-    SubMerchantMemberID           *int64   `json:"subMerchantMemberId"`
-    SubMerchantMemberPrice        *float64 `json:"subMerchantMemberPrice"`
-    SubMerchantMemberPayoutRate   *float64 `json:"subMerchantMemberPayoutRate"`
-    SubMerchantMemberPayoutAmount *float64 `json:"subMerchantMemberPayoutAmount"`
-    Payout                        *Payout  `json:"payout"`
+    ID                           *int64   `json:"id"`
+    ExternalID                   *string  `json:"externalId"`
+    Name                         *string  `json:"name"`
+    TransactionStatus            *string  `json:"transactionStatus"`
+    BlockageResolvedDate         *string  `json:"blockageResolvedDate"`
+    Price                        *float64 `json:"price"`
+    PaidPrice                    *float64 `json:"paidPrice"`
+    WalletPrice                  *float64 `json:"walletPrice"`
+    MerchantCommissionRate       *float64 `json:"merchantCommissionRate"`
+    MerchantCommissionRateAmount *float64 `json:"merchantCommissionRateAmount"`
+    SubMerchantMemberID          *int64   `json:"subMerchantMemberId"`
+    SubMerchantMemberPrice       *float64 `json:"subMerchantMemberPrice"`
 }
 
 type Init3DSPaymentResponse struct {
@@ -1754,6 +1786,7 @@ type PaymentTransactionsApprovalResponse struct {
     PaymentTransactionId *int64          `json:"paymentTransactionId"`
     ApprovalStatus       *ApprovalStatus `json:"approvalStatus"`
     FailedReason         *string         `json:"failedReason"`
+    FailedReasonCode     *string         `json:"failedReasonCode"`
 }
 
 type CheckMasterpassUserResponse struct {
@@ -2149,30 +2182,25 @@ type ReportingPaymentTransactionRefundResponse struct {
 }
 
 type ReportingPaymentTransactionResponse struct {
-    Id                            *int64               `json:"id"`
-    Name                          *string              `json:"name"`
-    ExternalId                    *string              `json:"externalId"`
-    Price                         *float64             `json:"price"`
-    PaidPrice                     *float64             `json:"paidPrice"`
-    WalletPrice                   *float64             `json:"walletPrice"`
-    MerchantCommissionRate        *float64             `json:"merchantCommissionRate"`
-    MerchantCommissionRateAmount  *float64             `json:"merchantCommissionRateAmount"`
-    MerchantPayoutAmount          *float64             `json:"merchantPayoutAmount"`
-    SubMerchantMemberId           *int64               `json:"subMerchantMemberId"`
-    SubMerchantMemberPrice        *float64             `json:"subMerchantMemberPrice"`
-    SubMerchantMemberPayoutRate   *float64             `json:"subMerchantMemberPayoutRate"`
-    SubMerchantMemberPayoutAmount *float64             `json:"subMerchantMemberPayoutAmount"`
-    TransactionStatus             *TransactionStatus   `json:"transactionStatus"`
-    BlockageResolvedDate          *TimeResponse        `json:"blockageResolvedDate"`
-    CreatedDate                   *TimeResponse        `json:"createdDate"`
-    TransactionStatusDate         *TimeResponse        `json:"transactionStatusDate"`
-    RefundablePrice               *float64             `json:"refundablePrice"`
-    BankCommissionRate            *float64             `json:"bankCommissionRate"`
-    BankCommissionRateAmount      *float64             `json:"bankCommissionRateAmount"`
-    Payout                        *Payout              `json:"payout"`
-    SubMerchantMember             *MemberResponse      `json:"subMerchantMember"`
-    RefundStatus                  *PaymentRefundStatus `json:"refundStatus"`
-    PayoutStatus                  *PayoutStatus        `json:"payoutStatus"`
+    Id                           *int64               `json:"id"`
+    Name                         *string              `json:"name"`
+    ExternalId                   *string              `json:"externalId"`
+    Price                        *float64             `json:"price"`
+    PaidPrice                    *float64             `json:"paidPrice"`
+    WalletPrice                  *float64             `json:"walletPrice"`
+    MerchantCommissionRate       *float64             `json:"merchantCommissionRate"`
+    MerchantCommissionRateAmount *float64             `json:"merchantCommissionRateAmount"`
+    SubMerchantMemberId          *int64               `json:"subMerchantMemberId"`
+    SubMerchantMemberPrice       *float64             `json:"subMerchantMemberPrice"`
+    TransactionStatus            *TransactionStatus   `json:"transactionStatus"`
+    BlockageResolvedDate         *TimeResponse        `json:"blockageResolvedDate"`
+    CreatedDate                  *TimeResponse        `json:"createdDate"`
+    TransactionStatusDate        *TimeResponse        `json:"transactionStatusDate"`
+    RefundablePrice              *float64             `json:"refundablePrice"`
+    BankCommissionRate           *float64             `json:"bankCommissionRate"`
+    BankCommissionRateAmount     *float64             `json:"bankCommissionRateAmount"`
+    SubMerchantMember            *MemberResponse      `json:"subMerchantMember"`
+    RefundStatus                 *PaymentRefundStatus `json:"refundStatus"`
 }
 
 type InitBnplPaymentResponse struct {
@@ -2224,21 +2252,6 @@ type BnplBankOfferTerm struct {
     AnnualInterestRate *float64 `json:"annualInterestRate"`
 }
 
-type Payout struct {
-    PaidPrice                     *float64  `json:"paidPrice"`
-    Parity                        *float64  `json:"parity"`
-    Currency                      *Currency `json:"currency"`
-    MerchantPayoutAmount          *float64  `json:"merchantPayoutAmount"`
-    SubMerchantMemberPayoutAmount *float64  `json:"subMerchantMemberPayoutAmount"`
-}
-
-type PayoutStatus struct {
-    MerchantStatus              *TransactionPayoutStatus `json:"merchantStatus"`
-    MerchantStatusDate          *TimeResponse            `json:"merchantStatusDate"`
-    SubMerchantMemberStatus     *TransactionPayoutStatus `json:"subMerchantMemberStatus"`
-    SubMerchantMemberStatusDate *TimeResponse            `json:"subMerchantMemberStatusDate"`
-}
-
 type CreateInstantWalletSettlementRequest struct {
     BaseRequest
     ExcludedSubMerchantMemberIds []int64
@@ -2248,14 +2261,14 @@ type CreateInstantWalletSettlementResponse struct {
     SettlementResultStatus *string `json:"settlementResultStatus"`
 }
 
-type SearchPayoutCompletedTransactionsRequest struct {
+type SearchPayoutCompletedItemsRequest struct {
     BaseRequest
     SettlementFileId int64          `schema:"settlementFileId,omitempty"`
     SettlementType   SettlementType `schema:"settlementType,omitempty"`
     StartDate        time.Time      `schema:"startDate,omitempty"`
     EndDate          time.Time      `schema:"endDate,omitempty"`
-    Page             int            `schema:"page"`
-    Size             int            `schema:"size"`
+    Page             int            `schema:"page,omitempty"`
+    Size             int            `schema:"size,omitempty"`
 }
 
 type SearchPayoutBouncedTransactionsRequest struct {
@@ -2273,22 +2286,24 @@ type SearchPayoutRowRequest struct {
     EndDate    time.Time  `schema:"endDate,omitempty"`
 }
 
-type RetrievePayoutDetailsRequest struct {
+type SearchPaymentTransactionPayoutsRequest struct {
     BaseRequest
-    PayoutDetailId int64
+    PaymentTransactionIds []int64 `schema:"paymentTransactionIds,omitempty"`
 }
 
-type SearchPayoutCompletedTransactionsResponse struct {
-    PayoutId                      *int64        `json:"payoutId"`
-    TransactionId                 *int64        `json:"transactionId"`
-    TransactionType               *string       `json:"transactionType"`
-    PayoutAmount                  *float64      `json:"payoutAmount"`
-    PayoutDate                    *TimeResponse `json:"payoutDate"`
-    Currency                      *Currency     `json:"currency"`
-    MerchantId                    *int64        `json:"merchantId"`
-    MerchantType                  *string       `json:"merchantType"`
-    SettlementEarningsDestination *string       `json:"settlementEarningsDestination"`
-    SettlementSource              *string       `json:"settlementSource"`
+type PayoutCompletedItem struct {
+    SettlementRowId               *int64                         `json:"settlementRowId"`
+    SettlementFileId              *int64                         `json:"settlementFileId"`
+    Subject                       *SettlementRowItemSubject      `json:"subject"`
+    SubjectId                     *int64                         `json:"subjectId"`
+    PaymentTransactionId          *int64                         `json:"paymentTransactionId"`
+    MerchantType                  *MerchantType                  `json:"merchantType"`
+    MerchantId                    *int64                         `json:"merchantId"`
+    PayoutAmount                  *float64                       `json:"payoutAmount"`
+    Currency                      *Currency                      `json:"currency"`
+    PayoutDate                    *TimeResponse                  `json:"payoutDate"`
+    SettlementEarningsDestination *SettlementEarningsDestination `json:"settlementEarningsDestination"`
+    SettlementSource              *SettlementSource              `json:"settlementSource"`
 }
 
 type SearchPayoutBouncedTransactionsResponse struct {
@@ -2304,25 +2319,49 @@ type SearchPayoutBouncedTransactionsResponse struct {
     RowDescription    *string       `json:"rowDescription"`
 }
 
-type PayoutDetailResponse struct {
-    RowDescription                *string                           `json:"rowDescription"`
-    PayoutDate                    *TimeResponse                     `json:"payoutDate"`
-    Name                          *string                           `json:"name"`
-    Iban                          *string                           `json:"iban"`
-    PayoutAmount                  *float64                          `json:"payoutAmount"`
-    Currency                      *string                           `json:"currency"`
-    MerchantId                    *int64                            `json:"merchantId"`
-    MerchantType                  *string                           `json:"merchantType"`
-    SettlementEarningsDestination *string                           `json:"settlementEarningsDestination"`
-    SettlementSource              *string                           `json:"settlementSource"`
-    BounceStatus                  *string                           `json:"bounceStatus"`
-    PayoutTransactions            []PayoutDetailTransactionResponse `json:"payoutTransactions"`
+type SettlementRowItem struct {
+    Subject              *SettlementRowItemSubject `json:"subject"`
+    SubjectId            *int64                    `json:"subjectId"`
+    PaymentTransactionId *int64                    `json:"paymentTransactionId"`
+    PayoutAmount         *float64                  `json:"payoutAmount"`
 }
 
-type PayoutDetailTransactionResponse struct {
-    TransactionId   *int64   `json:"transactionId"`
-    TransactionType *string  `json:"transactionType"`
-    PayoutAmount    *float64 `json:"payoutAmount"`
+type SettlementRowResponse struct {
+    RowDescription                *string                        `json:"rowDescription"`
+    PayoutDate                    *TimeResponse                  `json:"payoutDate"`
+    Name                          *string                        `json:"name"`
+    Iban                          *string                        `json:"iban"`
+    PayoutAmount                  *float64                       `json:"payoutAmount"`
+    Currency                      *Currency                      `json:"currency"`
+    MerchantType                  *MerchantType                  `json:"merchantType"`
+    MerchantId                    *int64                         `json:"merchantId"`
+    SettlementEarningsDestination *SettlementEarningsDestination `json:"settlementEarningsDestination"`
+    SettlementSource              *SettlementSource              `json:"settlementSource"`
+    BounceStatus                  *string                        `json:"bounceStatus"`
+    Items                         []SettlementRowItem            `json:"items"`
+}
+
+type PaymentTxPayoutResponse struct {
+    PaymentTransactionId *int64                `json:"paymentTransactionId"`
+    Currency             *Currency             `json:"currency"`
+    Parity               *float64              `json:"parity"`
+    ApprovalStatus       *PayoutApprovalStatus `json:"approvalStatus"`
+    ApprovalStatusDate   *TimeResponse         `json:"approvalStatusDate"`
+    BlockageResolvedDate *TimeResponse         `json:"blockageResolvedDate"`
+    CreatedDate          *TimeResponse         `json:"createdDate"`
+    PayoutItems          []PayoutItem          `json:"payoutItems"`
+}
+
+type PayoutItem struct {
+    Subject      *PayoutItemSubject       `json:"subject"`
+    SubjectId    *int64                   `json:"subjectId"`
+    MerchantType *MerchantType            `json:"merchantType"`
+    MerchantId   *int64                   `json:"merchantId"`
+    PayoutAmount *float64                 `json:"payoutAmount"`
+    Currency     *Currency                `json:"currency"`
+    PayoutStatus *TransactionPayoutStatus `json:"payoutStatus"`
+    PayoutDate   *TimeResponse            `json:"payoutDate"`
+    CreatedDate  *TimeResponse            `json:"createdDate"`
 }
 
 type RetrieveDailyTransactionReportRequest struct {
@@ -2452,13 +2491,14 @@ type FraudResult struct {
 }
 
 type PayoutRowResponse struct {
-    Name         *string       `json:"name"`
-    Iban         *string       `json:"iban"`
-    PayoutId     *int64        `json:"payoutId"`
-    MerchantId   *int64        `json:"merchantId"`
-    MerchantType *string       `json:"merchantType"`
-    PayoutAmount *float64      `json:"payoutAmount"`
-    PayoutDate   *TimeResponse `json:"payoutDate"`
+    Name            *string       `json:"name"`
+    Iban            *string       `json:"iban"`
+    SettlementRowId *int64        `json:"settlementRowId"`
+    PayoutId        *int64        `json:"payoutId"`
+    MerchantId      *int64        `json:"merchantId"`
+    MerchantType    *string       `json:"merchantType"`
+    PayoutAmount    *float64      `json:"payoutAmount"`
+    PayoutDate      *TimeResponse `json:"payoutDate"`
 }
 
 type WebhookData struct {
