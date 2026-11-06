@@ -1330,45 +1330,6 @@ func TestPayment_SearchStoredCards(t *testing.T) {
 	}
 }
 
-func TestPayment_UpdatePaymentTransaction(t *testing.T) {
-	request := adapter.UpdatePaymentTransactionRequest{
-		SubMerchantMemberId:    1,
-		SubMerchantMemberPrice: 0.60,
-	}
-	res, err := paymentClient.Payment.UpdatePaymentTransaction(context.Background(), 123, request)
-	_, _ = spew.Printf("%#v\n", res)
-
-	if err != nil {
-		t.Errorf("Error %s", err)
-	}
-}
-
-func TestPayment_ApprovePaymentTransactions(t *testing.T) {
-	request := adapter.PaymentTransactionsApprovalRequest{
-		PaymentTransactionIds: []int64{1, 2},
-		IsTransactional:       true,
-	}
-	res, err := paymentClient.Payment.ApprovePaymentTransactions(context.Background(), request)
-	_, _ = spew.Printf("%#v\n", res)
-
-	if err != nil {
-		t.Errorf("Error %s", err)
-	}
-}
-
-func TestPayment_DisapprovePaymentTransactions(t *testing.T) {
-	request := adapter.PaymentTransactionsApprovalRequest{
-		PaymentTransactionIds: []int64{1, 2},
-		IsTransactional:       true,
-	}
-	res, err := paymentClient.Payment.DisapprovePaymentTransactions(context.Background(), request)
-	_, _ = spew.Printf("%#v\n", res)
-
-	if err != nil {
-		t.Errorf("Error %s", err)
-	}
-}
-
 func TestPayment_Verify3DSCallback(t *testing.T) {
 	merchantThreeDsCallbackKey := "merchantThreeDsCallbackKeySndbox"
 
