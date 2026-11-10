@@ -678,7 +678,6 @@ const (
 const (
     PaymentAuthenticationType_THREE_DS                          PaymentAuthenticationType = "THREE_DS"
     PaymentAuthenticationType_NON_THREE_DS                      PaymentAuthenticationType = "NON_THREE_DS"
-    PaymentAuthenticationType_BKM_EXPRESS                       PaymentAuthenticationType = "BKM_EXPRESS"
     PaymentAuthenticationType_THREE_DS_FALLBACK_TO_NON_THREE_DS PaymentAuthenticationType = "THREE_DS_FALLBACK_TO_NON_THREE_DS"
     PaymentAuthenticationType_GOOGLEPAY                         PaymentAuthenticationType = "GOOGLEPAY"
     PaymentAuthenticationType_APPLEPAY                          PaymentAuthenticationType = "APPLEPAY"
@@ -1722,12 +1721,6 @@ type CheckMasterpassUserResponse struct {
     AccountStatus                         *string `json:"accountStatus"`
 }
 
-type InitBkmExpressResponse struct {
-    Id    *string `json:"id"`
-    Path  *string `json:"path"`
-    Token *string `json:"token"`
-}
-
 type BkmExpressGenerateTokenResponse struct {
     Token           *string `json:"token"`
 }
@@ -2584,21 +2577,6 @@ type MasterpassCreatePayment struct {
     AdditionalParams map[string]interface{} `json:"additionalParams,omitempty"`
 }
 
-type InitBkmExpressRequest struct {
-    BaseRequest
-    Price               float64       `json:"price,omitempty"`
-    PaidPrice           float64       `json:"paidPrice,omitempty"`
-    Currency            Currency      `json:"currency,omitempty"`
-    PaymentGroup        PaymentGroup  `json:"paymentGroup,omitempty"`
-    ConversationId      string        `json:"conversationId,omitempty"`
-    ExternalId          string        `json:"externalId,omitempty"`
-    PaymentPhase        PaymentPhase  `json:"paymentPhase,omitempty"`
-    BuyerMemberId       int64         `json:"buyerMemberId,omitempty"`
-    BankOrderId         string        `json:"bankOrderId,omitempty"`
-    Items               []PaymentItem `json:"items"`
-    EnabledInstallments []int         `json:"enabledInstallments,omitempty"`
-}
-
 type BkmExpressGenerateTokenRequest struct {
     BaseRequest
     GsmNumber        string       `json:"gsmNumber"`
@@ -2616,14 +2594,6 @@ type CreateMerchantRequest struct {
     ContactName        string `json:"contactName"`
     ContactSurname     string `json:"contactSurname"`
     ContactPhoneNumber string `json:"contactPhoneNumber"`
-}
-
-type CompleteBkmExpressRequest struct {
-    BaseRequest
-    Status                 bool   `json:"status"`
-    Message                string `json:"message"`
-    TicketId               string `json:"ticketId"`
-    BkmExpressPaymentToken string `json:"bkmExpressPaymentToken,omitempty"`
 }
 
 type MerchantApiCredential struct {
