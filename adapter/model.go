@@ -588,6 +588,7 @@ const (
     PosIntegrator_QNB_PAY           PosIntegrator = "QNB_PAY"
     PosIntegrator_REDSYS            PosIntegrator = "REDSYS"
     PosIntegrator_RUBIK             PosIntegrator = "RUBIK"
+    PosIntegrator_SAGLAMPAY         PosIntegrator = "SAGLAMPAY"
     PosIntegrator_BIN_PAY           PosIntegrator = "BIN_PAY"
     PosIntegrator_TURKONAY          PosIntegrator = "TURKONAY"
     PosIntegrator_SIPAY             PosIntegrator = "SIPAY"
@@ -1311,6 +1312,7 @@ type PaymentResponse struct {
     FraudRuleId                  *int64                       `json:"fraudRuleId"`
     PaymentChannel               *string                      `json:"paymentChannel"`
     IsThreeDS                    *bool                        `json:"isThreeDS"`
+    IsMaskedCardPayment          *bool                        `json:"isMaskedCardPayment"`
     MerchantCommissionRate       *float64                     `json:"merchantCommissionRate"`
     MerchantCommissionRateAmount *float64                     `json:"merchantCommissionRateAmount"`
     BankCommissionRate           *float64                     `json:"bankCommissionRate"`
@@ -1980,6 +1982,7 @@ type SearchPaymentsRequest struct {
     MaxPaidPrice         float64         `schema:"maxPaidPrice,omitempty"`
     Installment          int             `schema:"installment,omitempty"`
     IsThreeDS            bool            `schema:"isThreeDS,omitempty"`
+    IsMaskedCardPayment  bool            `schema:"isMaskedCardPayment,omitempty"`
     MinCreatedDate       time.Time       `schema:"minCreatedDate,omitempty"`
     MaxCreatedDate       time.Time       `schema:"maxCreatedDate,omitempty"`
 }
@@ -2037,6 +2040,7 @@ type ReportingPaymentResponse struct {
     PaymentPhase                 *PaymentPhase                     `json:"paymentPhase"`
     PaymentChannel               *string                           `json:"paymentChannel"`
     IsThreeDS                    *bool                             `json:"isThreeDS"`
+    IsMaskedCardPayment          *bool                             `json:"isMaskedCardPayment"`
     MerchantCommissionRate       *float64                          `json:"merchantCommissionRate"`
     MerchantCommissionRateAmount *float64                          `json:"merchantCommissionRateAmount"`
     BankCommissionRate           *float64                          `json:"bankCommissionRate"`
