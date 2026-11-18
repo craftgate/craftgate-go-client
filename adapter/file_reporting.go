@@ -53,6 +53,21 @@ func (api *FileReporting) CreateReport(ctx context.Context, request CreateReport
 	return response.Data, nil
 }
 
+func (api *FileReporting) CreateReportFromTemplate(ctx context.Context, templateId int64, request CreateReportFromTemplateRequest) (*ReportFromTemplateResponse, error) {
+	newRequest, err := api.Client.NewRequest(ctx, http.MethodPost, fmt.Sprintf("/file-reporting/v1/report-templates/%d/reports", templateId), request)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &Response[ReportFromTemplateResponse]{}
+	err = api.Client.Do(ctx, newRequest, response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
 func (api *FileReporting) RetrieveReport(ctx context.Context, retrieveReportRequest RetrieveReportRequest, reportId int64) ([]byte, error) {
 	newRequest, err := api.Client.NewRequestForByteResponse(ctx, http.MethodGet, fmt.Sprintf("/file-reporting/v1/reports/%d", reportId), retrieveReportRequest)
 	if err != nil {

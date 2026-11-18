@@ -42,6 +42,7 @@ type ApmAdditionalAction string
 type ReportFileType string
 type ReportType string
 type ReportPeriod string
+type ReportState string
 type WalletTransactionType string
 type WebhookEventType string
 type WebhookStatus string
@@ -490,6 +491,13 @@ const (
 // report period declaration
 const (
     ReportPeriod_INSTANT ReportPeriod = "INSTANT"
+)
+
+// report state declaration
+const (
+    ReportState_DEMANDED ReportState = "DEMANDED"
+    ReportState_READY    ReportState = "READY"
+    ReportState_FAILED   ReportState = "FAILED"
 )
 
 // wallet transaction type declaration
@@ -2298,6 +2306,32 @@ type CreateReportRequest struct {
     EndDate      time.Time    `json:"endDate,omitempty"`
     ReportType   ReportType   `json:"reportType,omitempty"`
     ReportPeriod ReportPeriod `json:"reportPeriod,omitempty"`
+}
+
+type ReportFilter struct {
+    Name   string        `json:"name"`
+    Values []interface{} `json:"values"`
+}
+
+func ReportDateFilter(start, end time.Time) ReportFilter {
+    return ReportFilter{
+        Name:   "reportDate",
+        Values: []interface{}{start.Format(timeEncodeLayout), end.Format(timeEncodeLayout)},
+    }
+}
+
+type CreateReportFromTemplateRequest struct {
+    BaseRequest
+    Filters     []ReportFilter   `json:"filters"`
+    FileFormats []ReportFileType `json:"fileFormats,omitempty"`
+}
+
+type ReportFromTemplateResponse struct {
+    Id             *int64         `json:"id"`
+    ReportState    *ReportState   `json:"reportState"`
+    Filters        []ReportFilter `json:"filters"`
+    Columns        []string       `json:"columns"`
+    ReportSchemaId *int64         `json:"reportSchemaId"`
 }
 
 type RetrieveReportRequest struct {
