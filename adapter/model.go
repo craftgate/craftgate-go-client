@@ -278,6 +278,7 @@ const (
     PaymentMethod_MULTINET_NEO_GIFT           PaymentMethod = "MULTINET_NEO_GIFT"
     PaymentMethod_METROPOL                    PaymentMethod = "METROPOL"
     PaymentMethod_ISPAY                       PaymentMethod = "ISPAY"
+    PaymentMethod_ISPAY_POS_APM               PaymentMethod = "ISPAY_POS_APM"
     PaymentMethod_PAYMOB                      PaymentMethod = "PAYMOB"
     PaymentMethod_VODAFONE_DCB                PaymentMethod = "VODAFONE_DCB"
     PaymentMethod_KASPI                       PaymentMethod = "KASPI"
