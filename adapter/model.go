@@ -193,6 +193,7 @@ const (
     PosApmPaymentProvider_YKB_WORLD_PAY_SHOPPING_LOAN PosApmPaymentProvider = "YKB_WORLD_PAY_SHOPPING_LOAN"
     PosApmPaymentProvider_GOOGLEPAY                   PosApmPaymentProvider = "GOOGLEPAY"
     PosApmPaymentProvider_GARANTI_PAY                 PosApmPaymentProvider = "GARANTI_PAY"
+    PosApmPaymentProvider_ISPAY                       PosApmPaymentProvider = "ISPAY"
 )
 
 // payment status declaration
