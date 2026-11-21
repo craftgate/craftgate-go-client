@@ -73,6 +73,19 @@ func TestFileReporting_CreateReportFromTemplate(t *testing.T) {
     }
 }
 
+func TestFileReporting_DownloadReport(t *testing.T) {
+    request := adapter.RetrieveReportRequest{
+        FileType: adapter.ReportFileType_CSV,
+    }
+    reportId := int64(1) // Id returned by CreateReportFromTemplate
+    res, err := fileReportingClient.FileReporting.DownloadReport(context.Background(), request, reportId)
+    _, _ = spew.Printf("%#v\n", res)
+
+    if err != nil {
+        t.Errorf("Error %s", err)
+    }
+}
+
 func TestFileReporting_RetrieveReport(t *testing.T) {
     retrieveReportRequest := adapter.RetrieveReportRequest{
         FileType: adapter.ReportFileType_CSV,

@@ -81,3 +81,17 @@ func (api *FileReporting) RetrieveReport(ctx context.Context, retrieveReportRequ
 
 	return response, nil
 }
+
+func (api *FileReporting) DownloadReport(ctx context.Context, request RetrieveReportRequest, reportId int64) ([]byte, error) {
+	newRequest, err := api.Client.NewRequestForByteResponse(ctx, http.MethodGet, fmt.Sprintf("/file-reporting/v1/reports/%d/download", reportId), request)
+	if err != nil {
+		return nil, err
+	}
+
+	response, err := api.Client.DoForByteResponse(ctx, newRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}

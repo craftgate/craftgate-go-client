@@ -1,7 +1,10 @@
 package adapter
 
 import (
+	"context"
 	"encoding/json"
+	"net/http"
+	"net/http/httptest"
 	"testing"
 	"time"
 )
@@ -52,5 +55,38 @@ func TestCreateReportFromTemplateRequest_JSON(t *testing.T) {
 				t.Errorf("Marshal() = %s, want %s", got, tt.want)
 			}
 		})
+	}
+}
+
+func TestFileReporting_DownloadReport(t *testing.T) {
+	want := []byte("id,amount\n1,10.50\n")
+	var gotMethod, gotPath, gotFileType string
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		gotMethod, gotPath, gotFileType = r.Method, r.URL.Path, r.URL.Query().Get("fileType")
+		w.Header().Set("Content-Type", "application/octet-stream")
+		_, _ = w.Write(want)
+	}))
+	defer server.Close()
+
+	client, err := New("api-key", "secret-key", server.URL)
+	if err != nil {
+		t.Fatalf("New() error = %v", err)
+	}
+
+	got, err := client.FileReporting.DownloadReport(context.Background(), RetrieveReportRequest{FileType: ReportFileType_CSV}, 42)
+	if err != nil {
+		t.Fatalf("DownloadReport() error = %v", err)
+	}
+	if gotMethod != http.MethodGet {
+		t.Errorf("method = %s, want GET", gotMethod)
+	}
+	if gotPath != "/file-reporting/v1/reports/42/download" {
+		t.Errorf("path = %s", gotPath)
+	}
+	if gotFileType != "CSV" {
+		t.Errorf("fileType = %q, want CSV", gotFileType)
+	}
+	if string(got) != string(want) {
+		t.Errorf("body = %q, want %q", got, want)
 	}
 }
