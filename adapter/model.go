@@ -1746,11 +1746,12 @@ type InstallmentPrice struct {
 
 type SearchInstallmentsRequest struct {
     BaseRequest
-    BinNumber                               string   `schema:"binNumber,omitempty"`
-    Price                                   float64  `schema:"price"`
-    Currency                                Currency `schema:"currency"`
-    DistinctCardBrandsWithLowestCommissions bool     `schema:"distinctCardBrandsWithLowestCommissions"`
-    LoyaltyExists                           bool     `schema:"loyaltyExists"`
+    BinNumber                               string          `schema:"binNumber,omitempty"`
+    Price                                   float64         `schema:"price"`
+    Currency                                Currency        `schema:"currency"`
+    DistinctCardBrandsWithLowestCommissions bool            `schema:"distinctCardBrandsWithLowestCommissions"`
+    LoyaltyExists                           bool            `schema:"loyaltyExists"`
+    PaymentProvider                         PaymentProvider `schema:"paymentProvider,omitempty"`
 }
 
 type MerchantApmListResponse struct {

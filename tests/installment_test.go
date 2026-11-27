@@ -31,3 +31,18 @@ func Test_SearchInstallments(t *testing.T) {
 		t.Errorf("Error %s", err)
 	}
 }
+
+func Test_SearchInstallmentsWithPaymentProvider(t *testing.T) {
+	request := adapter.SearchInstallmentsRequest{
+		BinNumber:       "487074",
+		Price:           100,
+		Currency:        adapter.Currency_TRY,
+		PaymentProvider: adapter.PaymentProvider_MASTERPASS,
+	}
+	res, err := installmentClient.Installment.SearchInstallments(context.Background(), request)
+
+	require.Equal(t, *res.Items[0].BinNumber, "487074")
+	if err != nil {
+		t.Errorf("Error %s", err)
+	}
+}
