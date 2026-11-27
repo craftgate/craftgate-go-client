@@ -13,10 +13,11 @@ var paymentReportingClient, _ = adapter.New("api-key", "secret-key", "https://sa
 func Test_SearchPayment(t *testing.T) {
 	request := adapter.SearchPaymentsRequest{
 		Page: 0, Size: 10,
-		PaymentType:    adapter.PaymentType_CARD_PAYMENT,
-		PaymentStatus:  adapter.PaymentStatus_SUCCESS,
-		Currency:       adapter.Currency_TRY,
-		MinCreatedDate: time.Now().AddDate(0, 0, -180),
+		PaymentType:         adapter.PaymentType_CARD_PAYMENT,
+		PaymentStatus:       adapter.PaymentStatus_SUCCESS,
+		Currency:            adapter.Currency_TRY,
+		IsMaskedCardPayment: false,
+		MinCreatedDate:      time.Now().AddDate(0, 0, -180),
 		MaxCreatedDate: time.Now(),
 	}
 	res, err := paymentReportingClient.PaymentReporting.SearchPayments(context.Background(), request)
